@@ -1,0 +1,78 @@
+#
+# This file contains 'Framework Code' and is licensed as such
+# under the terms of your license agreement with Intel or your
+# vendor.  This file may not be modified, except as allowed by
+# additional terms of your license agreement.
+#
+## @file
+#  Platform status code implementation.
+#
+# Copyright (c) 2010 - 2019, Intel Corporation. All rights reserved.<BR>
+#
+#  This software and associated documentation (if any) is furnished
+#  under a license and may only be used or copied in accordance
+#  with the terms of the license. Except as permitted by such
+#  license, no part of this software or documentation may be
+#  reproduced, stored in a retrieval system, or transmitted in any
+#  form or by any means without the express written consent of
+#  Intel Corporation.
+#
+#
+##
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = PlatformStatusCodeHandlerSmm2
+  FILE_GUID                      = 4E4E97F9-63FF-4BDA-90BB-C6F943FA5100
+  MODULE_TYPE                    = DXE_SMM_DRIVER
+  PI_SPECIFICATION_VERSION       = 0x0001000A
+  ENTRY_POINT                    = StatusCodeHandlerSmmEntry
+
+#
+# The following information is for reference only and not required by the build tools.
+#
+#  VALID_ARCHITECTURES           = IA32 X64
+#
+
+[Sources]
+  PlatformStatusCodeHandlerSmm.c
+  PlatformStatusCodeHandlerSmm.h
+  RamStatusCodeWorker.c
+  SerialIoUartStatusCodeWorker.c
+  Usb3StatusCodeWorker.c
+
+[Packages]
+  MdePkg/MdePkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+  BpCommonPkg/BpCommonPkg.dec
+  ClientCommonPkg/ClientCommonPkg.dec
+  ClientOneSiliconPkg/SiPkg.dec
+  ElkhartLakePlatSamplePkg/PlatformPkg.dec
+
+[LibraryClasses]
+  SmmServicesTableLib
+  UefiDriverEntryPoint
+  ReportStatusCodeLib
+  DebugLib
+  PrintLib
+  DebugPrintErrorLevelLib
+  HobLib
+  PcdLib
+  RamDebugLib
+  Usb3DebugPortLib
+  SerialPortParameterLib
+  SerialIoUartDebugHelperLib
+
+[Guids]
+  gEfiStatusCodeDataTypeStringGuid                            ## SOMETIMES_CONSUMES ## GUID
+
+[Pcd]
+  gPlatformModuleTokenSpaceGuid.PcdStatusCodeUseRam           ## CONSUMES
+  gPlatformModuleTokenSpaceGuid.PcdStatusCodeUseUsb3          ## CONSUMES
+  gPlatformModuleTokenSpaceGuid.PcdStatusCodeUseSerialIoUart  ## CONSUMES
+
+[Protocols]
+  gEfiSmmRscHandlerProtocolGuid                               ## CONSUMES
+
+[Depex]
+  gEfiSmmRscHandlerProtocolGuid

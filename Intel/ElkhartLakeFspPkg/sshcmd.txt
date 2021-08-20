@@ -1,0 +1,3 @@
+cd  /work/peifsp/FspLcn.2010
+touch  src/mainboard/intel/lavacanyon/FvFsp.bin
+make

@@ -1,0 +1,271 @@
+/**@file
+
+ @copyright
+  INTEL CONFIDENTIAL
+  Copyright 2009 - 2019 Intel Corporation.
+
+  The source code contained or described herein and all documents related to the
+  source code ("Material") are owned by Intel Corporation or its suppliers or
+  licensors. Title to the Material remains with Intel Corporation or its suppliers
+  and licensors. The Material may contain trade secrets and proprietary and
+  confidential information of Intel Corporation and its suppliers and licensors,
+  and is protected by worldwide copyright and trade secret laws and treaty
+  provisions. No part of the Material may be used, copied, reproduced, modified,
+  published, uploaded, posted, transmitted, distributed, or disclosed in any way
+  without Intel's prior express written permission.
+
+  No license under any patent, copyright, trade secret or other intellectual
+  property right is granted to or conferred upon you by disclosure or delivery
+  of the Materials, either expressly, by implication, inducement, estoppel or
+  otherwise. Any license under such intellectual property rights must be
+  express and approved by Intel in writing.
+
+  Unless otherwise agreed by Intel in writing, you may not remove or alter
+  this notice or any other notice embedded in Materials by Intel or
+  Intel's suppliers or licensors in any way.
+
+  This file contains a 'Sample Driver' and is licensed as such under the terms
+  of your license agreement with Intel or your vendor. This file may be modified
+  by the user, subject to the additional terms of the license agreement.
+
+@par Specification
+**/
+
+//
+// Name:        MeSetup.UNI
+//
+// Description: ME Form String Definitions.
+//
+//**********************************************************************
+//**********************************************************************
+/=#
+
+#include "VFR.uni"
+
+#string STR_ENABLED                           #language en-US "Enabled"
+#string STR_DISABLED                          #language en-US "Disabled"
+
+#string STR_ME_FORM                           #language en-US "PCH-FW Configuration"
+#string STR_ME_FORM_HELP                      #language en-US "Configure Management Engine Technology Parameters"
+
+//---------------------------------------------------------------------------
+// ME Configuration
+//---------------------------------------------------------------------------
+#string STR_ME_FW_VERSION_HELP                #language en-US  "ME Firmware Version"
+#string STR_ME_FW_VERSION_PROMPT              #language en-US  "ME Firmware Version"
+#string STR_ME_FW_VERSION_VALUE               #language en-US  "N/A" //dynamically updated
+
+#string STR_ME_FW_MODE_HELP                   #language en-US  "ME Firmware Mode"
+#string STR_ME_FW_MODE_PROMPT                 #language en-US  "ME Firmware Mode"
+#string STR_ME_FW_MODE_VALUE                  #language en-US  "N/A" //dynamically updated
+#string STR_ME_FW_MODE_NORMAL_MODE            #language en-US  "Normal Mode"
+#string STR_ME_FW_MODE_FAILED                 #language en-US  "ME Failed"
+#string STR_ME_FW_MODE_TEMP_DISABLED          #language en-US  "ME Temporarily Disabled"
+#string STR_ME_FW_MODE_SECOVER                #language en-US  "Secovr Jmpr/Heci MSG"
+#string STR_ME_FW_MODE_ALT_DISABLED           #language en-US  "ME ALT Disabled"
+
+#string STR_ME_FW_SKU_HELP                    #language en-US  "ME Firmware SKU"
+#string STR_ME_FW_SKU_PROMPT                  #language en-US  "ME Firmware SKU"
+#string STR_ME_FW_SKU_VALUE                   #language en-US  "N/A" //dynamically updated
+
+#string STR_ME_FW_STATUS_1_HELP               #language en-US  "ME Firmware Status 1"
+#string STR_ME_FW_STATUS_1_PROMPT             #language en-US  "ME Firmware Status 1"
+#string STR_ME_FW_STATUS_1_VALUE              #language en-US  "N/A" //dynamically updated
+
+#string STR_ME_FW_STATUS_2_HELP               #language en-US  "ME Firmware Status 2"
+#string STR_ME_FW_STATUS_2_PROMPT             #language en-US  "ME Firmware Status 2"
+#string STR_ME_FW_STATUS_2_VALUE              #language en-US  "N/A" //dynamically updated
+
+//---------------------------------------------------------------------------
+// ME State control definitions
+//---------------------------------------------------------------------------
+#string STR_ME_STATE_CONTROL_PROMPT           #language en-US "ME State"
+#string STR_ME_STATE_CONTROL_HELP             #language en-US "When Disabled ME will be put into ME Temporarily Disabled Mode."
+
+#if FixedPcdGetBool(PcdAmtEnable) == 1
+//---------------------------------------------------------------------------
+// Manageability Features State definitions
+//---------------------------------------------------------------------------
+#string STR_MNG_STATE_PROMPT                  #language en-US "Manageability Features State"
+#string STR_MNG_STATE_HELP                    #language en-US "Enable/Disable Intel(R) Manageability features.\n\nNOTE:\nThis option disables/enables Manageability Features support in FW.\nTo disable support platform must be in an unprovisioned state first."
+
+//---------------------------------------------------------------------------
+// AMT BIOS Features definitions
+//---------------------------------------------------------------------------
+#string STR_AMT_PROMPT                        #language en-US "AMT BIOS Features"
+#string STR_AMT_HELP                          #language en-US "When disabled AMT BIOS Features are no longer supported and user is no longer able to access MEBx Setup.\n\nNote:\nThis option does not disable Manageability Features in FW."
+#endif
+
+//---------------------------------------------------------------------------
+// ME Unconfig on RTC Clear State Definitions
+//---------------------------------------------------------------------------
+#string STR_ME_UNCONF_RTC_STATE_PROMPT        #language en-US "ME Unconfig on RTC Clear"
+#string STR_ME_UNCONF_RTC_STATE_PROMPT_HELP   #language en-US "When Disabled ME will not be unconfigured on RTC Clear"
+
+//---------------------------------------------------------------------------
+// Comms Hub definitions
+//---------------------------------------------------------------------------
+#string STR_COMMS_HUB_PROMPT                  #language en-US "Comms Hub Support"
+#string STR_COMMS_HUB_HELP                    #language en-US "Enables/Disables support for Comms Hub."
+
+
+//---------------------------------------------------------------------------
+// JHI control Definitions
+//---------------------------------------------------------------------------
+#string STR_ME_JHI_CONTROL_PROMPT             #language en-US "JHI Support"
+#string STR_ME_JHI_CONTROL_PROMPT_HELP        #language en-US "Enable/Disable Intel(R) DAL Host Interface Service (JHI)"
+
+//---------------------------------------------------------------------------
+// ME Extended Measurement to TPM PCR Definitions
+//---------------------------------------------------------------------------
+#string STR_EXTEND_ME_MEASURED_BOOT_PROMPT          #language en-US  "Extend CSME Measurement to TPM-PCR"
+#string STR_EXTEND_ME_MEASURED_BOOT_HELP            #language en-US  "Enable/Disable Extend CSME Measurement to TPM-PCR[0] and AMT Config to TPM-PCR[1]"
+
+//---------------------------------------------------------------------------
+// Core Bios Done Message Definitions
+//---------------------------------------------------------------------------
+#string STR_ME_CORE_BIOS_DONE_PROMPT          #language en-US  "Core Bios Done Message"
+#string STR_ME_CORE_BIOS_DONE_HELP            #language en-US  "Enable/Disable Core Bios Done message sent to ME"
+
+
+//---------------------------------------------------------------------------
+// Debug Configuration Menu
+//---------------------------------------------------------------------------
+#string STR_ME_DEBUG_CONFIGURATION_FORM       #language en-US  "ME Debug Configuration"
+#string STR_ME_DEBUG_CONFIGURATION_FORM_HELP  #language en-US  "Configure ME debug options\n\nNOTE:\nThis menu is provided for testing purposes. It is recommended to leave the options in their default states"
+
+//---------------------------------------------------------------------------
+// End of Post Message Definitions
+//---------------------------------------------------------------------------
+#string STR_END_OF_POST_PROMPT                #language en-US  "End Of Post Message"
+#string STR_END_OF_POST_HELP                  #language en-US  "Enable/Disable End of Post message sent to ME"
+#string STR_END_OF_POST_SEND_IN_DXE           #language en-US  "Send in DXE"
+
+//---------------------------------------------------------------------------
+// FW Update Configuration Menu
+//---------------------------------------------------------------------------
+#string STR_FW_UPGRADE_FORM                   #language en-US  "Firmware Update Configuration"
+#string STR_FW_UPGRADE_FORM_HELP              #language en-US  "Configure Management Engine Technology Parameters"
+
+#string STR_AMT_ME_FW_DOWNGRADE_PROMPT        #language en-US  "Me FW Image Re-Flash"
+#string STR_AMT_ME_FW_DOWNGRADE_HELP          #language en-US  "Enable/Disable Me FW Image Re-Flash function."
+
+#string STR_FW_UPDATE_PROMPT                  #language en-US  "FW Update"
+#string STR_FW_UPDATE_HELP                    #language en-US  "Enable/Disable ME FW Update function."
+
+//---------------------------------------------------------------------------
+// PTT Configuration Menu
+//---------------------------------------------------------------------------
+#string STR_ME_PTT_CONFIGURATION_FORM         #language en-US  "PTT Configuration"
+#string STR_ME_PTT_CONFIGURATION_FORM_HELP    #language en-US  "Configure PTT"
+
+//---------------------------------------------------------------------------
+// PTT State Definitions
+//---------------------------------------------------------------------------
+
+#string STR_PTT_STATE_PROMPT                  #language en-US  "TPM Device Selection"
+#string STR_PTT_STATE_PROMPT_HELP             #language en-US  "Selects TPM device: PTT or discrete TPM.\nPTT - enables PTT in SkuMgr\ndTPM - disables PTT is SkuMgr\n\nWarning!\nPTT/dTPM will be disabled and all data saved on it will be lost."
+#string STR_PTT                               #language en-US  "PTT"
+#string STR_DTPM                              #language en-US  "dTPM"
+
+#string STR_PTT_CAP_STATE_PROMPT              #language en-US  "PTT Capability / State"
+#string STR_PTT_CAP_STATE_VALUE               #language en-US  "N/A"
+#string STR_PTT_CAP_STATE_HELP                #language en-US  "Platform Trust Technology Capability / Enablement State"
+
+#string STR_TPM_1_2_DEACTIVATE_PROMPT         #language en-US  "TPM 1.2 Deactivate"
+#string STR_TPM_1_2_DEACTIVATE_PROMPT_HELP    #language en-US  "Enabling this option will invoke the TPM 1.2 De-activate flow"
+
+//---------------------------------------------------------------------------
+// PTT Revoke Trust Definitions
+//---------------------------------------------------------------------------
+#string STR_CHANGE_EPS_PROMPT                 #language en-US "Revoke Trust"
+#string STR_CHANGE_EPS_HELP                   #language en-US "Sends Change EPS command on next boot"
+#string STR_CHANGE_EPS                        #language en-US "Change EPS"
+#string STR_DONT_CHANGE_EPS                   #language en-US "Don't Change"
+
+//---------------------------------------------------------------------------
+// PTT Ptp Aware OS Definitions
+//---------------------------------------------------------------------------
+#string STR_PTT_PTP_AWARE_PROMPT              #language en-US "PTP aware OS"
+#string STR_PTT_PTP_AWARE_HELP                #language en-US "Select whether or not the OS you will boot to will be PTP aware"
+#string STR_PTP_AWARE                         #language en-US "PTP Aware"
+#string STR_NOT_PTP_AWARE                     #language en-US "Not PTP Aware"
+
+//---------------------------------------------------------------------------
+// FIPS Mode Definitions
+//---------------------------------------------------------------------------
+#string STR_ME_FW_FIPS_MODE_FORM              #language en-US "FIPS Mode"
+#string STR_FIPS_MODE_PROMPT                  #language en-US "FIPS Mode Select"
+#string STR_FIPS_MODE_HELP                    #language en-US "FIPS Mode configuration"
+
+#string STR_FW_FIPS_MODE                      #language en-US "FIPS Configuration"
+#string STR_FW_FIPS_MODE_HELP                 #language en-US "FIPS Mode help"
+
+#string STR_ME_FW_FIPS_CURRENT_MODE_PROMPT    #language en-US "Current FIPS mode"
+#string STR_ME_FW_FIPS_CURRENT_MODE_HELP      #language en-US "N/A"
+#string STR_ME_FW_FIPS_CURRENT_MODE_VALUE     #language en-US "Current mode unavailable"
+
+#string STR_ME_FW_FIPS_CRYPTO_VER_PROMPT      #language en-US "Crypto driver FIPS version"
+#string STR_ME_FW_FIPS_CRYPTO_VER_HELP        #language en-US "N/A"
+#string STR_ME_FW_FIPS_CRYPTO_VER_VALUE       #language en-US "Version unavailable"
+
+//---------------------------------------------------------------------------
+// HW Anti-Rollback (ARB) Security Version Number Definitions
+//---------------------------------------------------------------------------
+#string STR_ARB_SVN_FORM                      #language en-US  "Anti-Rollback SVN Configuration"
+#string STR_ARB_SVN_FORM_HELP                 #language en-US  "Configure Anti-Rollback SVN"
+
+#string STR_ARB_SVN_MIN_PROMPT                #language en-US  "Minimal Allowed Anti-Rollback SVN"
+#string STR_ARB_SVN_MIN_HELP                  #language en-US  "Minimum ARB-SVN allowed on this platform. ME FW with lower ARB-SVN will not boot."
+#string STR_ARB_SVN_MIN_VALUE                 #language en-US  "N/A" //dynamically updated
+
+#string STR_ARB_SVN_CURR_PROMPT               #language en-US  "Executing Anti-Rollback SVN"
+#string STR_ARB_SVN_CURR_HELP                 #language en-US  "ARB-SVN of executing ME FW"
+#string STR_ARB_SVN_CURR_VALUE                #language en-US  "N/A" //dynamically updated
+
+#string STR_ARB_SVN_AUTO_PROMPT               #language en-US "Automatic HW-Enforced Anti-Rollback SVN"
+#string STR_ARB_SVN_AUTO_HELP                 #language en-US "When enabled, hardware-enforced Anti-Rollback mechanism is automatically activated: once ME FW was successfully run on a platform, FW with lower ARB-SVN will be blocked from execution"
+
+#string STR_ARB_SVN_COMMIT_PROMPT             #language en-US "Set HW-Enforced Anti-Rollback for Current SVN"
+#string STR_ARB_SVN_COMMIT_HELP               #language en-US "Enable hardware-enforced Anti-Rollback mechanism for current ARB-SVN value. FW with lower ARB-SVN will be blocked from execution. The value will be restored to disable after the command is sent."
+
+//---------------------------------------------------------------------------
+// Definition for ME test policies
+//---------------------------------------------------------------------------
+
+#string STR_HECI_TIMEOUTS_PROMPT                #language en-US  "HECI Timeouts"
+#string STR_HECI_TIMEOUTS_HELP                  #language en-US  "Enable/Disable HECI Send/Receive Timeouts."
+
+#string STR_ME_DID_INIT_STAT_PROMPT             #language en-US  "Force ME DID Init Status"
+#string STR_ME_DID_INIT_STAT_HELP               #language en-US  "Forces the DID Initialization Status value."
+#string STR_ME_DID_INIT_STAT_0                  #language en-US  "0 - Success"
+#string STR_ME_DID_INIT_STAT_1                  #language en-US  "1 - No Memory in Channels"
+#string STR_ME_DID_INIT_STAT_2                  #language en-US  "2 - Memory Init Error"
+
+#string STR_CPU_REPLACED_POLLING_DISABLE_PROMPT #language en-US  "CPU Replaced Polling Disable"
+#string STR_CPU_REPLACED_POLLING_DISABLE_HELP   #language en-US  "Setting this option disables CPU replacement polling loop"
+
+#string STR_SEND_ME_DID_MSG_PROMPT              #language en-US  "ME DID Message"
+#string STR_SEND_ME_DID_MSG_HELP                #language en-US  "Enable/Disable ME DID Message (disable will prevent the DID message from being sent)."
+
+#string STR_DISABLE_HECI_RETRY_PROMPT           #language en-US  "HECI Retry Disable"
+#string STR_DISABLE_HECI_RETRY_HELP             #language en-US  "Setting this option disables retry mechanism for all HECI APIs"
+
+#string STR_DISABLE_MESSAGE_CHECK_PROMPT        #language en-US  "HECI Message check Disable"
+#string STR_DISABLE_MESSAGE_CHECK_HELP          #language en-US  "Setting this option disables message check for Bios Boot Path when sending"
+
+#string STR_SKIP_MBP_HOB_PROMPT                 #language en-US  "MBP HOB Skip"
+#string STR_SKIP_MBP_HOB_HELP                   #language en-US  "Setting this option will skip MBP HOB"
+
+#string STR_HECI_COMM_PROMPT2                   #language en-US  "HECI2 Interface Communication"
+#string STR_HECI_COMM_HELP2                     #language en-US  "Adds and Removes HECI2 Device from PCI space."
+
+#string STR_KT_DEVICE_ENABLE_PROMPT             #language en-US  "KT Device"
+#string STR_KT_DEVICE_ENABLE_HELP               #language en-US  "Enable/Disable KT Device"
+
+#string STR_D0I3_SETTING_DISABLE_PROMPT         #language en-US  "D0I3 Setting for HECI Disable"
+#string STR_D0I3_SETTING_DISABLE_HELP           #language en-US  "Setting this option disables setting D0I3 bit for all HECI devices"
+
+#string STR_MCTP_BROADCAST_CYCLE_PROMPT         #language en-US  "MCTP Broadcast Cycle"
+#string STR_MCTP_BROADCAST_CYCLE_HELP           #language en-US  "Enable/Disable Management Component Transport Protocol Broadcast Cycle and Set PMT as Bus Owner"
+

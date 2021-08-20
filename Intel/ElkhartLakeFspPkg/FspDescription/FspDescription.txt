@@ -1,0 +1,2 @@
+This FSP supports the following:
+Elkhart Lake processor and Elkhart Lake PCH

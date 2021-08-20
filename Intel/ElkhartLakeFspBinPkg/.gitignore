@@ -1,0 +1,8 @@
+Include/MemInfoHob.h
+Include/SmbiosCacheInfoHob.h
+Include/SmbiosProcessorInfoHob.h
+Include/FirmwareVersionInfoHob.h
+Include/HobUsageDataHob.h
+Include/Fsp*Upd.h
+*.fd
+Fsp.bsf

@@ -1,0 +1,71 @@
+#/*++
+# This file contains a 'Sample Driver' and is licensed as such
+# under the terms of your license agreement with Intel or your
+# vendor.  This file may be modified by the user, subject to
+# the additional terms of the license agreement
+#--*/
+## @file
+# Component name for module TcgLegacy
+#
+#  Caution: This module requires additional review when modified.
+#  This driver will have external input - TCG INT1A parameter in SMM mode.
+#  This external input must be validated carefully to avoid security issue like
+#  buffer overflow, integer overflow.
+#
+# Copyright (c) 2010 - 2016, Intel Corporation. All rights reserved.<BR>
+# This software and associated documentation (if any) is furnished
+# under a license and may only be used or copied in accordance
+# with the terms of the license. Except as permitted by such
+# license, no part of this software or documentation may be
+# reproduced, stored in a retrieval system, or transmitted in any
+# form or by any means without the express written consent of
+# Intel Corporation.
+#
+# NOTE: TcgLegacyInstallInt1A depends on TcgLegacy to provide SwSmiInputValue
+#       and it's safer that SMI handler gets registered before hooking INT1A.
+##
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = TcgLegacy
+  FILE_GUID                      = CDC11AE9-01E7-42cb-88EB-FDFFD8819893
+  MODULE_TYPE                    = DXE_SMM_DRIVER
+  PI_SPECIFICATION_VERSION       = 0x0001000A
+  VERSION_STRING                 = 1.0
+  ENTRY_POINT                    = InitializeTcgLegacy
+
+[Sources]
+  TcgLegacy.c
+  TcgLegacy.h
+
+[Packages]
+  MdePkg/MdePkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+  SecurityPkg/SecurityPkg.dec
+  ClientCommonPkg/ClientCommonPkg.dec
+
+[LibraryClasses]
+  MemoryAllocationLib
+  BaseLib
+  UefiBootServicesTableLib
+  HobLib
+  UefiDriverEntryPoint
+  SmmServicesTableLib
+  BaseMemoryLib
+  DebugLib
+  UefiLib
+  SmmMemLib
+
+[Guids]
+  gEfiMemoryOverwriteControlDataGuid            ## SOMETIMES_CONSUMES ## GUID
+
+[Protocols]
+  gEfiSmmCpuProtocolGuid                        ## CONSUMES
+  gEfiTcgProtocolGuid                           ## CONSUMES
+  gEfiSmmSwDispatch2ProtocolGuid                ## CONSUMES
+  gEfiSmmVariableProtocolGuid                   ## CONSUMES
+  gTcgLegacyInt1AReadyProtocolGuid              ## PRODUCES
+
+[Depex]
+  gEfiSmmSwDispatch2ProtocolGuid AND
+  gEfiSmmVariableProtocolGuid

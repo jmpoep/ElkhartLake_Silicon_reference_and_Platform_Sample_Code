@@ -1,0 +1,4 @@
+SiPkg.dec
+Cpu/IncludePrivate/CpuNvsAreaDef.h
+Pch/IncludePrivate/PchNvsAreaDef.h
+SystemAgent/IncludePrivate/SaNvsAreaDef.h

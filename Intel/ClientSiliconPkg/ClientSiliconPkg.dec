@@ -1,0 +1,199 @@
+## @file
+# This Package provides all definitions, library classes and libraries instances.
+#
+# Copyright (c) 2015 - 2019, Intel Corporation. All rights reserved.<BR>
+#
+# This program and the accompanying materials are licensed and made available under
+# the terms and conditions of the BSD License which accompanies this distribution.
+# The full text of the license may be found at
+# http://opensource.org/licenses/bsd-license.php
+#
+# THE PROGRAM IS DISTRIBUTED UNDER THE BSD LICENSE ON AN "AS IS" BASIS,
+# WITHOUT WARRANTIES OR REPRESENTATIONS OF ANY KIND, EITHER EXPRESS OR IMPLIED.
+#
+##
+
+
+[Defines]
+DEC_SPECIFICATION = 0x00010017
+PACKAGE_NAME = ClientSiliconPkg
+PACKAGE_VERSION = 0.1
+PACKAGE_GUID = 8423AB46-C89A-47af-A0D3-F29E19FEBF4D
+
+
+[Includes]
+Include
+Csm/Include
+
+[Guids]
+gClientSiliconPkgTokenSpaceGuid    =  {0xddf913cf, 0x8c2e, 0x449d, {0x8f, 0x6b, 0xd6, 0x44, 0xd2, 0xb6, 0x22, 0xf6}}
+gSmbiosFirmwareVersionInfoHobGuid  =  {0x947c974a, 0xc5aa, 0x48a2, {0xa4, 0x77, 0x1a, 0x4c, 0x9f, 0x52, 0xe7, 0x82}}
+gSmbiosProcessorInfoHobGuid        =  {0xe6d73d92, 0xff56, 0x4146, {0xaf, 0xac, 0x1c, 0x18, 0x81, 0x7d, 0x68, 0x71}}
+gSmbiosCacheInfoHobGuid            =  {0xd805b74e, 0x1460, 0x4755, {0xbb, 0x36, 0x1e, 0x8c, 0x8a, 0xd6, 0x78, 0xd7}}
+##
+## IntelFrameworkPkg
+##
+# MsegSmramPei.inf
+gEfiSmmPeiSmramMemoryReserveGuid   =  {0x6dadf1d1, 0xd4cc, 0x4910, {0xbb, 0x6e, 0x82, 0xb1, 0xfd, 0x80, 0xff, 0x3d}}
+
+## IntelFrameworkModule package token space guid
+#  Include/Guid/IntelFrameworkModulePkgTokenSpace.h
+gEfiIntelFrameworkModulePkgTokenSpaceGuid = { 0xD3705011, 0xBC19, 0x4af7, { 0xBE, 0x16, 0xF6, 0x80, 0x30, 0x37, 0x8C, 0x15 }}
+
+##
+## PcAtChipsetPkg
+##
+gPcAtChipsetPkgTokenSpaceGuid      = { 0x326ae723, 0xae32, 0x4589, { 0x98, 0xb8, 0xca, 0xc2, 0x3c, 0xdc, 0xc1, 0xb1 } }
+
+[Ppis]
+gSiInitErrorPpiGuid                = { 0x88bc28a0, 0xb666, 0x4be6, { 0x91, 0x59, 0xf3, 0xb9, 0x9b, 0x11, 0x70, 0x3d }}
+
+[Protocols]
+##
+## gEfiLegacyBiosProtocolGuid and gEfiLegacyBiosPlatformProtocolGuid from
+## IntelFrameworkPkg are used
+# AmiLegacyBiosHook.inf | IntelRaidAtaAtapiPassThru.inf | VideoDxe.inf | IntelRaidBiosThunk.inf | LegacyBiosDxe.inf | BlockIoDxe.inf | LegacyInterruptHook.inf | LegacyBiosReverseThunk.inf
+## Include/Protocol/LegacyBios.h
+gEfiLegacyBiosProtocolGuid     = { 0xdb9a1e3d, 0x45cb, 0x4abb, { 0x85, 0x3b, 0xe5, 0x38, 0x7f, 0xdb, 0x2e, 0x2d }}
+# LegacyBiosDxe.inf | LegacyBiosPlatform.inf
+## Include/Protocol/LegacyBiosPlatform.h
+gEfiLegacyBiosPlatformProtocolGuid = { 0x783658a3, 0x4172, 0x4421, { 0xa2, 0x99, 0xe0, 0x09, 0x07, 0x9c, 0x0c, 0xb4 }}
+## Vga Mini port binding for a VGA controller
+# VideoDxe.inf
+#  Include/Protocol/VgaMiniPort.h
+gEfiVgaMiniPortProtocolGuid    = { 0xc7735a2f, 0x88f5, 0x4882, { 0xae, 0x63, 0xfa, 0xac, 0x8c, 0x8b, 0x86, 0xb3 }}
+# IrqTableInfo.inf | LegacyBiosDxe.inf
+## Include/Protocol/LegacyInterrupt.h
+gEfiLegacyInterruptProtocolGuid = { 0x31ce593d, 0x108a, 0x485d, { 0xad, 0xb2, 0x78, 0xf2, 0x1f, 0x29, 0x66, 0xbe }}
+## ISA I/O Protocol is used to perform ISA device Io/Mem operations.
+#  Include/Protocol/IsaIo.h
+# LegacyBiosDxe.inf
+gEfiIsaIoProtocolGuid          = { 0x7ee2bd44, 0x3da0, 0x11d4, { 0x9a, 0x38, 0x0, 0x90, 0x27, 0x3f, 0xc1, 0x4d }}
+
+[LibraryClasses]
+## @libraryclass
+## Common
+##
+ConfigBlockLib|Include/Library/ConfigBlockLib.h
+PchTraceHubInitLib|Include/Library/PchTraceHubInitLib.h
+
+[PcdsFixedAtBuild]
+gClientSiliconPkgTokenSpaceGuid.PcdClientSiliconVersionMajor|0x00|UINT8|0x00000001
+gClientSiliconPkgTokenSpaceGuid.PcdClientSiliconVersionMinor|0x02|UINT8|0x00000002
+gClientSiliconPkgTokenSpaceGuid.PcdClientSiliconVersionRevision|0x00|UINT8|0x00000003
+gClientSiliconPkgTokenSpaceGuid.PcdClientSiliconVersionBuild|0x0F|UINT8|0x00000004
+gClientSiliconPkgTokenSpaceGuid.PcdPchTraceHubPciSeg|0x0|UINT16|0x00000010
+gClientSiliconPkgTokenSpaceGuid.PcdPchTraceHubPciBus|0x0|UINT8|0x00000011
+gClientSiliconPkgTokenSpaceGuid.PcdPchTraceHubPciDev|0x1F|UINT8|0x00000012
+gClientSiliconPkgTokenSpaceGuid.PcdPchTraceHubPciFun|0x7|UINT8|0x00000013
+gClientSiliconPkgTokenSpaceGuid.PcdPchTraceHubFwBaseAddr|0xFE200000|UINT64|0x00000014
+gClientSiliconPkgTokenSpaceGuid.PcdPchTraceHubMtbBaseAddr|0xFE100000|UINT64|0x00000015
+gClientSiliconPkgTokenSpaceGuid.PcdPchTraceHubSwBaseAddr|0xFC800000|UINT64|0x00000016
+gClientSiliconPkgTokenSpaceGuid.PcdPeiCoreFv|0x00000000|UINT32|0x00000017
+
+[PcdsFixedAtBuild, PcdsDynamic, PcdsDynamicEx, PcdsPatchableInModule]
+
+#
+# FSP
+#
+gClientSiliconPkgTokenSpaceGuid.PcdFspmBaseAddress|0x00000000|UINT32|0x20000000
+gClientSiliconPkgTokenSpaceGuid.PcdFspsBaseAddress|0x00000000|UINT32|0x20000001
+
+
+#
+# VideoDxe.inf
+#
+## Indicates if BiosVideo driver will switch to 80x25 Text VGA Mode when exiting boot service.<BR><BR>
+#   TRUE  - Switch to Text VGA Mode.<BR>
+#   FALSE - Does not switch to Text VGA Mode.<BR>
+# @Prompt Switch to Text VGA Mode on UEFI Boot
+gEfiIntelFrameworkModulePkgTokenSpaceGuid.PcdBiosVideoSetTextVgaModeEnable|FALSE|BOOLEAN|0x30000001
+
+## Indicates if BiosVideo driver will check for VESA BIOS Extension service support.<BR><BR>
+#   TRUE  - Check for VESA BIOS Extension service.<BR>
+#   FALSE - Does not check for VESA BIOS Extension service.<BR>
+# @Prompt Enable Check for VESA BIOS Extension Service
+gEfiIntelFrameworkModulePkgTokenSpaceGuid.PcdBiosVideoCheckVbeEnable|TRUE|BOOLEAN|0x30000002
+
+## Indicates if BiosVideo driver will check for VGA service support.
+#  NOTE: If both PcdBiosVideoCheckVbeEnable and PcdBiosVideoCheckVgaEnable are set to FALSE,
+#  that means Graphics Output protocol will not be installed, the VGA miniport protocol will be installed instead.<BR><BR>
+#   TRUE  - Check for VGA service.<BR>
+#   FALSE - Does not check for VGA service.<BR>
+# @Prompt Enable Check for VGA Service
+gEfiIntelFrameworkModulePkgTokenSpaceGuid.PcdBiosVideoCheckVgaEnable|TRUE|BOOLEAN|0x30000003
+
+#
+# LegacyBiosDxe.inf
+#
+## Specify memory base address for OPROM to find free memory.
+# Some OPROMs do not use EBDA or PMM to allocate memory for its usage,
+# instead they find the memory filled with zero from 0x20000.
+# The value should be a multiple of 4KB.
+# The range should be below the EBDA reserved range from
+# (CONVENTIONAL_MEMORY_TOP - Reserved EBDA Memory Size) to CONVENTIONAL_MEMORY_TOP.
+# @Prompt Reserved Memory Base Address for OPROM
+# @Expression 0x80000001 | (gEfiIntelFrameworkModulePkgTokenSpaceGuid.PcdOpromReservedMemoryBase >= 0x20000) AND ((gEfiIntelFrameworkModulePkgTokenSpaceGuid.PcdOpromReservedMemoryBase & 0x1000) == 0)
+gEfiIntelFrameworkModulePkgTokenSpaceGuid.PcdOpromReservedMemoryBase|0x60000|UINT32|0x3000000c
+
+## Specify memory size with bytes for OPROM to find free memory.
+#  The value should be a multiple of 4KB. And the range should be below the EBDA reserved range from
+# (CONVENTIONAL_MEMORY_TOP - Reserved EBDA Memory Size) to CONVENTIONAL_MEMORY_TOP.
+# @Prompt Reserved Memory Size for OPROM
+# @Expression 0x80000001 | (gEfiIntelFrameworkModulePkgTokenSpaceGuid.PcdOpromReservedMemorySize < 0x80000) AND ((gEfiIntelFrameworkModulePkgTokenSpaceGuid.PcdOpromReservedMemorySize & 0x1000) == 0)
+gEfiIntelFrameworkModulePkgTokenSpaceGuid.PcdOpromReservedMemorySize|0x28000|UINT32|0x3000000d
+
+## Specify the low PMM (Post Memory Manager) size with bytes below 1MB.
+#  The value should be a multiple of 4KB.
+# @Prompt Low PMM (Post Memory Manager) Size
+# @Expression 0x80000001 | (gEfiIntelFrameworkModulePkgTokenSpaceGuid.PcdLowPmmMemorySize < 0x100000) AND ((gEfiIntelFrameworkModulePkgTokenSpaceGuid.PcdLowPmmMemorySize & 0x1000) == 0)
+gEfiIntelFrameworkModulePkgTokenSpaceGuid.PcdLowPmmMemorySize|0x10000|UINT32|0x30000009
+
+## Specify the high PMM (Post Memory Manager) size with bytes above 1MB.
+#  The value should be a multiple of 4KB.
+# @Prompt High PMM (Post Memory Manager) Size
+# @Expression 0x80000001 | (gEfiIntelFrameworkModulePkgTokenSpaceGuid.PcdHighPmmMemorySize & 0x1000) == 0
+gEfiIntelFrameworkModulePkgTokenSpaceGuid.PcdHighPmmMemorySize|0x400000|UINT32|0x3000000a
+
+## Indicates if memory space for legacy region will be set as cacheable.<BR><BR>
+#   TRUE  - Set cachebility for legacy region.<BR>
+#   FALSE - Does not set cachebility for legacy region.<BR>
+# @Prompt Enable Cachebility for Legacy Region
+gEfiIntelFrameworkModulePkgTokenSpaceGuid.PcdLegacyBiosCacheLegacyRegion|TRUE|BOOLEAN|0x00000004
+
+## Specify memory size with bytes to reserve EBDA below 640K for OPROM.
+# The value should be a multiple of 4KB.
+# @Prompt Reserved EBDA Memory Size
+# @Expression 0x80000001 | (gEfiIntelFrameworkModulePkgTokenSpaceGuid.PcdEbdaReservedMemorySize < 0xA0000) AND ((gEfiIntelFrameworkModulePkgTokenSpaceGuid.PcdEbdaReservedMemorySize & 0x1000) == 0)
+gEfiIntelFrameworkModulePkgTokenSpaceGuid.PcdEbdaReservedMemorySize|0x8000|UINT32|0x30000005
+
+## Specify the end of address below 1MB for the OPROM.
+#  The last shadowed OpROM should not exceed this address.
+# @Prompt Top Address of Shadowed Legacy OpROM
+# @Expression 0x80000001 | gEfiIntelFrameworkModulePkgTokenSpaceGuid.PcdEndOpromShadowAddress < 0x100000
+gEfiIntelFrameworkModulePkgTokenSpaceGuid.PcdEndOpromShadowAddress|0xdffff|UINT32|0x30000008
+
+#
+# 8259.inf
+#
+## Pcd8259LegacyModeMask defines the default mask value for platform. This value is determined<BR><BR>
+#  1) If platform only support pure UEFI, value should be set to 0xFFFF or 0xFFFE;
+#     Because only clock interrupt is allowed in legacy mode in pure UEFI platform.<BR>
+#  2) If platform install CSM and use thunk module:<BR>
+#     a) If thunk call provided by CSM binary requires some legacy interrupt support, the corresponding bit
+#        should be opened as 0.<BR>
+#        For example, if keyboard interfaces provided CSM binary use legacy keyboard interrupt in 8259 bit 1, then
+#        the value should be set to 0xFFFC.<BR>
+#     b) If all thunk call provied by CSM binary do not require legacy interrupt support, value should be set
+#        to 0xFFFF or 0xFFFE.<BR>
+#
+#  The default value of legacy mode mask could be changed by EFI_LEGACY_8259_PROTOCOL->SetMask(). But it is rarely
+#  need change it except some special cases such as when initializing the CSM binary, it should be set to 0xFFFF to
+#  mask all legacy interrupt. Please restore the original legacy mask value if changing is made for these special case.<BR>
+# @Prompt 8259 Legacy Mode mask.
+gPcAtChipsetPkgTokenSpaceGuid.Pcd8259LegacyModeMask|0xFFFF|UINT16|0x00000001
+
+## Pcd8259LegacyModeEdgeLevel defines the default edge level for legacy mode's interrrupt controller.
+#  For the corresponding bits, 0 = Edge triggered and 1 = Level triggered.
+# @Prompt 8259 Legacy Mode edge level.
+gPcAtChipsetPkgTokenSpaceGuid.Pcd8259LegacyModeEdgeLevel|0x0000|UINT16|0x00000002

@@ -1,0 +1,295 @@
+/**@file
+
+ @copyright
+  INTEL CONFIDENTIAL
+  Copyright 2009 - 2019 Intel Corporation.
+
+  The source code contained or described herein and all documents related to the
+  source code ("Material") are owned by Intel Corporation or its suppliers or
+  licensors. Title to the Material remains with Intel Corporation or its suppliers
+  and licensors. The Material may contain trade secrets and proprietary and
+  confidential information of Intel Corporation and its suppliers and licensors,
+  and is protected by worldwide copyright and trade secret laws and treaty
+  provisions. No part of the Material may be used, copied, reproduced, modified,
+  published, uploaded, posted, transmitted, distributed, or disclosed in any way
+  without Intel's prior express written permission.
+
+  No license under any patent, copyright, trade secret or other intellectual
+  property right is granted to or conferred upon you by disclosure or delivery
+  of the Materials, either expressly, by implication, inducement, estoppel or
+  otherwise. Any license under such intellectual property rights must be
+  express and approved by Intel in writing.
+
+  Unless otherwise agreed by Intel in writing, you may not remove or alter
+  this notice or any other notice embedded in Materials by Intel or
+  Intel's suppliers or licensors in any way.
+
+  This file contains a 'Sample Driver' and is licensed as such under the terms
+  of your license agreement with Intel or your vendor. This file may be modified
+  by the user, subject to the additional terms of the license agreement.
+
+@par Specification
+**/
+
+//
+// Name: TbtSetup.uni
+//
+// Description: AMT Form String Definitions.
+//
+//**********************************************************************
+//**********************************************************************
+/=#
+
+#include "VFR.uni"
+
+#string STR_TBT_FORM                             #language en-US "Thunderbolt(TM) Configuration"
+#string STR_TBT_FORM_HELP                        #language en-US "Thunderbolt(TM) Related Configuration"
+
+#string STR_DISCRETE_TBT_FORM                    #language en-US "Discrete Thunderbolt(TM) Configuration"
+#string STR_DISCRETE_TBT_FORM_HELP               #language en-US "Discrete Thunderbolt(TM) Related Configuration"
+
+#string STR_TBT_OSSELECT_FORM                    #language en-US "Thunderbolt(TM) OS select"
+#string STR_TBT_OSSELECT_FORM_HELP               #language en-US "Thunderbolt(TM) Related Configuration"
+
+
+#string STR_DTBT_CONTROLLER0_FORM                    #language en-US " DTBT Controller 0 Configuration"
+#string STR_DTBT_CONTROLLER1_FORM                    #language en-US " DTBT Controller 1 Configuration"
+#string STR_DTBT_CONTROLLER2_FORM                    #language en-US " DTBT Controller 2 Configuration"
+
+
+//---------------------------------------------------------------------------
+// TBT Configuration
+//---------------------------------------------------------------------------
+#string STR_DISCRETE_TBT_SUPPORT_PROMPT         #language en-US "Discrete Thunderbolt(TM) Support"
+#string STR_DISCRETE_TBT_SUPPORT_HELP           #language en-US "Enable or Disable Discrete Thunderbolt(TM) Support."
+
+#string STR_INTEGRATED_TBT_SUPPORT_PROMPT       #language en-US "Integrated Thunderbolt(TM) Support"
+#string STR_INTEGRATED_TBT_SUPPORT_HELP         #language en-US "Enable or Disable Integrated Thunderbolt(TM) Support."
+
+#string STR_ITBT_CONTROLLER_FORCEPOWERON_TIMEOUT_PROMPT    #language en-US "Force Poweron Timeout value for ITBT"
+#string STR_ITBT_CONTROLLER_FORCEPOWERON_TIMEOUT_HELP      #language en-US "Force Poweron Timeout value for Integrated Thunderbolt(TM)"
+
+#string STR_ITBT_RTD3_PROMPT                    #language en-US "ITBT RTD3"
+#string STR_ITBT_RTD3_HELP                      #language en-US "ITBT RTD3"
+
+#string STR_ITBT_RTD3_EXIT_DELAY_PROMPT         #language en-US "ITBT RTD3 EXIT DELAY"
+#string STR_ITBT_RTD3_EXIT_DELAY_HELP           #language en-US "ITBT RTD3 EXIT DELAY (milli seconds)"
+
+
+#string STR_ITBT_CONNECTTOPOLOGY_TIMEOUT_PROMPT    #language en-US "Connect Topology Timeout value for ITBT"
+#string STR_ITBT_CONNECTTOPOLOGY_TIMEOUT_HELP      #language en-US "Connect Topology Timeout value for Integrated Thunderbolt(TM) Controller"
+
+#string STR_TBT_VTD_SECURITY_SETTINGS                  #language en-US "Native OS security for TBT"
+#string STR_TBT_VTD_SECURITY_SETTINGS_HELP             #language en-US "Enable Native OS security solution for Thunderbolt hosts"
+#string STR_TBT_VTD_SECURITY_ENABLED                   #language en-US "Enable Native OS security for TBT"
+#string STR_TBT_VTD_SECURITY_DISABLED                  #language en-US "Disable Native OS security for TBT"
+
+#string STR_TBT_USB_ON_PROMPT                   #language en-US "Thunderbolt Usb Support"
+#string STR_TBT_USB_ON_HELP                     #language en-US "Enabled allows boot from Usb devices which is present behind Thunderbolt"
+
+#string STR_TBT_BOOT_ON_PROMPT                   #language en-US "Thunderbolt Boot Support"
+#string STR_TBT_BOOT_ON_HELP                     #language en-US "Enabled allows boot from Bootable devices which is present behind Thunderbolt"
+
+#string STR_TROSUP_PROMPT                       #language en-US "Titan Ridge Workaround for OSUP"
+#string STR_TROSUP_HELP                         #language en-US "Enable or Disable Titan Ridge Workaround for OSUP"
+
+#string STR_TBT_BOOT_SUPPORT_PROMPT             #language en-US "Thunderbolt(TM) Boot Support"
+#string STR_TBT_BOOT_SUPPORT_HELP               #language en-US "Enable or Disable Thunderbolt(TM) attached device as a bootable device."
+
+#string STR_ENABLED                             #language en-US "Enabled"
+#string STR_DISABLED                            #language en-US "Disabled"
+
+#string STR_TBT_DEVICE_WAKE_UP_SUPPORT_PROMPT   #language en-US "Wake From Thunderbolt(TM) Devices"
+#string STR_TBT_DEVICE_WAKE_UP_SUPPORT_HELP     #language en-US "Enable or disable system wake from Thunderbolt(TM) devices."
+
+#string STR_TBT_ACDC_DYNAMIC_SWITCH_PROMPT       #language en-US "Tbt Dynamic AC/DC L1"
+#string STR_TBT_ACDC_DYNAMIC_SWITCH_HELP         #language en-US "Enable or Disable Tbt Dynamic AC/DC L1 Support"
+
+#string STR_PCI_CALL_SMI_BEFORE_BOOT            #language en-US "Call pre boot Smi handler"
+#string STR_PCI_CALL_SMI_BEFR_BOOT_HLP          #language en-US "Call TBT Smi Handler before boot to OS bit 0 - TBT, bit 1 - Clean Tree"
+#string STR_RESET_HR                            #language en-US "Reset Host router"
+#string STR_ENUMERATE_HR                        #language en-US "Enumerate Host router"
+#string STR_RESET_ENUMERATE_HR                  #language en-US "Reset and Enumerate Host router"
+
+#string STR_TBT_SKIP_PCI_OPROM_PROMPT           #language en-US "Skip PCI OptionRom"
+#string STR_TBT_SKIP_PCI_OPROM_HELP             #language en-US "Enable or Disable PCI OptionRom loading for Thunderbolt(TM) devices"
+
+#string STR_TBT_ACPI_REMOVAL_SUPPORT_PROMPT     #language en-US "ACPI Removal Object Suppport"
+#string STR_TBT_ACPI_REMOVAL_SUPPORT_HELP       #language en-US "Enable or Disable ACPI method _RMV support for Thunderbolt(TM) devices"
+
+#string STR_TBT_SECURITY_LEVEL_PROMPT           #language en-US "Security Level"
+#string STR_TBT_SECURITY_LEVEL_HELP             #language en-US "Security level selection."
+#string STR_TBT_MODE0                           #language en-US "No Security"
+#string STR_TBT_MODE1                           #language en-US "User Authorization"
+#string STR_TBT_MODE2                           #language en-US "Secure Connect"
+#string STR_TBT_MODE3                           #language en-US "Display Port only"
+#string STR_TBT_MODE4                           #language en-US "USB Docking Only"
+
+#string STR_PCI_IGNORE_OP_ROM                   #language en-US "Ignore OpROM for TBT"
+#string STR_PCI_IGNORE_OP_ROM_HELP              #language en-US "Ignore OpROM for PCIe devices behind TBT"
+
+#string STR_PCI_HOT_PLUG_SCI                    #language en-US "TBT hot-plug SCI"
+#string STR_PCI_HOT_PLUG_SCI_HELP               #language en-US "Enable/Disable SCI on TBT hot-plug"
+
+#string STR_PCI_HOT_PLUG_SW_SMI                 #language en-US "    SW SMI on TBT hot-plug"
+#string STR_PCI_HOT_PLUG_SW_SMI_HELP            #language en-US "When enabled, BIOS generates software SMI to assign resource to TBT devices"
+#string STR_PCI_HOT_PLUG_SW_SMI_NO_CHNG         #language en-US "Take from CMOS"
+
+#string STR_PCI_GPIO5_FILTER                    #language en-US "GPIO filter"
+#string STR_PCI_GPIO5_FILTER_HELP               #language en-US "GPIO filter is needed to avoid electrical noise on PCH GPIOs during hotplug of 12V USB devices"
+
+#string STR_PCI_HOT_PLUG_NOTIFY                 #language en-US "    ACPI Notify on TBT Hot-plug"
+#string STR_PCI_HOT_PLUG_NOTIFY_HELP            #language en-US "When enabled, BIOS generates ACPI Notify"
+
+
+#string STR_PCI_DTBT_CONTROLLER0                 #language en-US "DTBT Controller 0"
+#string STR_PCI_DTBT_CONTROLLER0_HELP            #language en-US "AUTO - Default, Enable - RVP3 PCIe Root Port1, CNL RVP5 - PCIe Root Port5, CNL SDS - PCIe Root Port5"
+#string STR_PCI_DTBT_CONTROLLER1                 #language en-US "DTBT Controller 1"
+#string STR_PCI_DTBT_CONTROLLER1_HELP            #language en-US "None"
+#string STR_PCI_DTBT_CONTROLLER2                 #language en-US "DTBT Controller 2"
+#string STR_PCI_DTBT_CONTROLLER1_HELP            #language en-US "None"
+
+
+#string STR_AUTO                                #language en-US "AUTO"
+#string STR_TBT_PCIERP1_PROMPT                  #language en-US "PCH-PCI Express Root Port 1"
+#string STR_TBT_PCIERP2_PROMPT                  #language en-US "PCH-PCI Express Root Port 2"
+#string STR_TBT_PCIERP3_PROMPT                  #language en-US "PCH-PCI Express Root Port 3"
+#string STR_TBT_PCIERP4_PROMPT                  #language en-US "PCH-PCI Express Root Port 4"
+#string STR_TBT_PCIERP5_PROMPT                  #language en-US "PCH-PCI Express Root Port 5"
+#string STR_TBT_PCIERP6_PROMPT                  #language en-US "PCH-PCI Express Root Port 6"
+#string STR_TBT_PCIERP7_PROMPT                  #language en-US "PCH-PCI Express Root Port 7"
+#string STR_TBT_PCIERP8_PROMPT                  #language en-US "PCH-PCI Express Root Port 8"
+#string STR_TBT_PCIERP9_PROMPT                  #language en-US "PCH-PCI Express Root Port 9"
+#string STR_TBT_PCIERP10_PROMPT                 #language en-US "PCH-PCI Express Root Port 10"
+#string STR_TBT_PCIERP11_PROMPT                 #language en-US "PCH-PCI Express Root Port 11"
+#string STR_TBT_PCIERP12_PROMPT                 #language en-US "PCH-PCI Express Root Port 12"
+#string STR_TBT_PCIERP13_PROMPT                 #language en-US "PCH-PCI Express Root Port 13"
+#string STR_TBT_PCIERP14_PROMPT                 #language en-US "PCH-PCI Express Root Port 14"
+#string STR_TBT_PCIERP15_PROMPT                 #language en-US "PCH-PCI Express Root Port 15"
+#string STR_TBT_PCIERP16_PROMPT                 #language en-US "PCH-PCI Express Root Port 16"
+#string STR_TBT_PCIERP17_PROMPT                 #language en-US "PCH-PCI Express Root Port 17"
+#string STR_TBT_PCIERP18_PROMPT                 #language en-US "PCH-PCI Express Root Port 18"
+#string STR_TBT_PCIERP19_PROMPT                 #language en-US "PCH-PCI Express Root Port 19"
+#string STR_TBT_PCIERP20_PROMPT                 #language en-US "PCH-PCI Express Root Port 20"
+#string STR_TBT_PEGRP0_PROMPT                   #language en-US "PEG Root Port 0"
+#string STR_TBT_PEGRP1_PROMPT                   #language en-US "PEG Root Port 1"
+#string STR_TBT_PEGRP2_PROMPT                   #language en-US "PEG Root Port 2"
+#string STR_TBT_PEGRP3_PROMPT                   #language en-US "PEG Root Port 3"
+
+#string STR_PCI_DTBT_CONTROLLER_TYPE            #language en-US "DTbt Root Port Type"
+#string STR_PCI_DTBT_CONTROLLER_TYPE_HELP       #language en-US "Select the TBT Root Port Type. PCH or PEG"
+#string STR_DTBT_PCI_TYPE                       #language en-US "PCH Root Port"
+#string STR_DTBT_PEG_TYPE                       #language en-US "PEG Root Port"
+
+#string STR_PCI_DTBT_CONTROLLER0_HOSTROUTER     #language en-US "TBT Host Router"
+#string STR_PCI_DTBT_CONTROLLER1_HOSTROUTER     #language en-US "TBT Host Router"
+#string STR_PCI_TBT_HOSTROUTER_HELP             #language en-US "Enable the host router based on ports available."
+#string STR_PCI_TBT_ONEPORT_PROMPT              #language en-US "One port"
+#string STR_PCI_TBT_TWOPORT_PROMPT              #language en-US "Two port"
+
+#string STR_PCI_GPIO3_FORCE_PWR                 #language en-US "GPIO3 Force Pwr"
+#string STR_PCI_GPIO3_FORCE_PWR_HELP            #language en-US "Set GPIO3 to 1/0"
+
+#string STR_PCI_TBT_CLKREQ                      #language en-US "Enable CLK REQ"
+#string STR_PCI_TBT_CLKREQ_HELP                 #language en-US "Enable clock request (CLKREQ#) for all upstream ports"
+
+#string STR_PCI_GPIO3_FORCE_PWR_DLY             #language en-US "Wait time in ms after applying Force Pwr"
+#string STR_PCI_GPIO3_FORCE_PWR_DLY_HELP        #language en-US "After Force Pwr is asserted the wait time (in milli seconds) before access the TBT controller"
+
+#string STR_PCI_TBT_ASPM                        #language en-US "Enable ASPM"
+#string STR_PCI_TBT_ASPM_HELP                   #language en-US "Enable ASPM support for all the downstreams ports and endpoints devices"
+
+#string STR_TBTL1SUB_PROMPT                     #language en-US "Enable TBT ASPM"
+#string STR_TBTL1SUB_HELP                       #language en-US "Enable TBT ASPM support for all the downstreams ports and endpoints devices"
+#string STR_TBTL1SUB_1_STRING                   #language en-US "L1.1"
+#string STR_TBTL1SUB_1_2_STRING                 #language en-US "L1.1 & L1.2"
+
+#string STR_PCI_TBT_LTR                         #language en-US "Enable LTR"
+#string STR_PCI_TBT_LTR_HELP                    #language en-US "Enable Latency Tolerance Reporting support for all the Thunderbolt(TM) devices"
+
+#string STR_PCI_TBT_PTM                         #language en-US "Enable PTM"
+#string STR_PCI_TBT_PTM_HELP                    #language en-US "Enable Ptm support for all the downstreams ports and endpoints devices"
+
+#string STR_PCI_DTBT_CONTROLLER0_PCIE_RBUS_PROMPT                #language en-US "Extra Bus Reserved"
+#string STR_DTBT_PCIE_RBUS_HELP                                  #language en-US "Extra Bus Reserved 56-One port Host,106-Two port Host."
+#string STR_PCI_DTBT_CONTROLLER0_PCIE_RMEM_PROMPT                #language en-US "Reserved Memory"
+#string STR_DTBT_PCIE_RMEM_HELP                                  #language en-US "Reserved Memory for this Root Bridge (1-4096) MB"
+#string STR_PCI_DTBT_CONTROLLER0_PCIE_RMEM_ADDRRNGMAX            #language en-US "Memory Alignment"
+#string STR_DTBT_PCIE_RMEM_RNG_HELP                              #language en-US "Memory Alignment (0-31 bits)"
+#string STR_PCI_DTBT_CONTROLLER0_PCIE_RPMEM_PROMPT               #language en-US "Reserved PMemory"
+#string STR_DTBT_PCIE_RPMEM_HELP                                 #language en-US "Reserved Prefetchable Memory for this Root Bridge (1-4096) MB"
+#string STR_PCI_DTBT_CONTROLLER0_PCIE_RPMEM_ADDRRNGMAX           #language en-US "PMemory Alignment"
+#string STR_DTBT_PCIE_RPMEM_RNG_HELP                             #language en-US "PMemory Alignment (0-31 bits)"
+
+#string STR_PCI_DTBT_CONTROLLER1_PCIE_RBUS_PROMPT                #language en-US "Extra Bus Reserved"
+#string STR_PCI_DTBT_CONTROLLER1_PCIE_RMEM_PROMPT                #language en-US "Reserved Memory"
+#string STR_PCI_DTBT_CONTROLLER1_PCIE_RMEM_ADDRRNGMAX            #language en-US "Memory Alignment"
+#string STR_PCI_DTBT_CONTROLLER1_PCIE_RPMEM_PROMPT               #language en-US "Reserved PMemory"
+#string STR_PCI_DTBT_CONTROLLER1_PCIE_RPMEM_ADDRRNGMAX           #language en-US "PMemory Alignment"
+#string STR_PCI_DTBT_CONTROLLER1_PCIE_RVIO_PROMPT                #language en-US "Reserved I/O"
+
+
+#string STR_WIN10_SUPPORT_PROMPT                #language en-US "Windows 10 Thunderbolt support"
+#string STR_PCI_WIN10_SUPPORT_ENABLE            #language en-US "Enabled"
+#string STR_PCI_WIN10_SUPPORT_DISABLE           #language en-US "Disabled"
+#string STR_PCI_WIN10_SUPPORT_UNKNOWN           #language en-US "Unknown"
+#string STR_WIN10_SUPPORT_HELP                  #language en-US "Windows 10 Thunderbolt support"
+
+
+#string STR_INTEGRATED_TBT_FORM                    #language en-US "Integrated Thunderbolt(TM) Configuration"
+#string STR_INTEGRATED_TBT_FORM_HELP               #language en-US "Integrated Thunderbolt(TM) Related Configuration"
+
+#string STR_ITBT_ROOTPORT0_FORM                    #language en-US " ITBT Root Port 0 Configuration"
+#string STR_ITBT_ROOTPORT1_FORM                    #language en-US " ITBT Root Port 1 Configuration"
+#string STR_ITBT_ROOTPORT2_FORM                    #language en-US " ITBT Root Port 2 Configuration"
+#string STR_ITBT_ROOTPORT3_FORM                    #language en-US " ITBT Root Port 3 Configuration"
+
+#string STR_PCI_ITBT_ROOTPORT0                     #language en-US "ITBT Root Port 0"
+#string STR_PCI_ITBT_ROOTPORT0_HELP                #language en-US "AUTO - Default(Platform Specific) "
+#string STR_PCI_ITBT_ROOTPORT1                     #language en-US "ITBT Root Port 1"
+#string STR_PCI_ITBT_ROOTPORT1_HELP                #language en-US "None"
+#string STR_PCI_ITBT_ROOTPORT2                     #language en-US "ITBT Root Port 2"
+#string STR_PCI_ITBT_ROOTPORT2_HELP                #language en-US "None"
+#string STR_PCI_ITBT_ROOTPORT3                     #language en-US "ITBT Root Port 3"
+#string STR_PCI_ITBT_ROOTPORT3_HELP                #language en-US "None"
+
+#string STR_ITBT_RP0_PCIE_ALLOCATION               #language en-US "Root Port 0 Resource Allocation"
+#string STR_ITBT_RP0_PCIE_RBUS_PROMPT              #language en-US "Extra Bus Reserved"
+#string STR_ITBT_PCIE_RBUS_HELP                    #language en-US "Extra Bus Reserved 42 "
+#string STR_ITBT_RP0_PCIE_RMEM_PROMPT              #language en-US "Reserved Memory"
+#string STR_ITBT_PCIE_RMEM_HELP                    #language en-US "Reserved Memory for this Root Bridge (1-4096) MB"
+#string STR_ITBT_RP0_PCIE_RMEM_ADDRRNGMAX          #language en-US "Memory Alignment"
+#string STR_ITBT_PCIE_RMEM_RNG_HELP                #language en-US "Memory Alignment (0-31 bits)"
+#string STR_ITBT_RP0_PCIE_RPMEM_PROMPT             #language en-US "Reserved PMemory"
+#string STR_ITBT_PCIE_RPMEM_HELP                   #language en-US "Reserved Prefetchable Memory for this Root Bridge (1-4096) MB"
+#string STR_ITBT_RP0_PCIE_RPMEM_ADDRRNGMAX         #language en-US "PMemory Alignment"
+#string STR_ITBT_PCIE_RPMEM_RNG_HELP               #language en-US "PMemory Alignment (0-31 bits)"
+#string STR_ITBT_RP0_PCIE_RVIO_PROMPT              #language en-US "Reserved I/O"
+#string STR_ITBT_PCIE_RVIO_HELP                    #language en-US "Reserved I/O (4K/8K/12K/16K/20K) Range for this Root Bridge."
+
+#string STR_ITBT_RP1_PCIE_ALLOCATION                 #language en-US "Root Port 1 Resource Allocation"
+#string STR_ITBT_RP1_PCIE_RBUS_PROMPT                #language en-US "Extra Bus Reserved"
+#string STR_ITBT_RP1_PCIE_RMEM_PROMPT                #language en-US "Reserved Memory"
+#string STR_ITBT_RP1_PCIE_RMEM_ADDRRNGMAX            #language en-US "Memory Alignment"
+#string STR_ITBT_RP1_PCIE_RPMEM_PROMPT               #language en-US "Reserved PMemory"
+#string STR_ITBT_RP1_PCIE_RPMEM_ADDRRNGMAX           #language en-US "PMemory Alignment"
+#string STR_ITBT_RP1_PCIE_RVIO_PROMPT                #language en-US "Reserved I/O"
+
+#string STR_ITBT_RP2_PCIE_ALLOCATION                 #language en-US "Root Port 2 Resource Allocation"
+#string STR_ITBT_RP2_PCIE_RBUS_PROMPT                #language en-US "Extra Bus Reserved"
+#string STR_ITBT_RP2_PCIE_RMEM_PROMPT                #language en-US "Reserved Memory"
+#string STR_ITBT_RP2_PCIE_RMEM_ADDRRNGMAX            #language en-US "Memory Alignment"
+#string STR_ITBT_RP2_PCIE_RPMEM_PROMPT               #language en-US "Reserved PMemory"
+#string STR_ITBT_RP2_PCIE_RPMEM_ADDRRNGMAX           #language en-US "PMemory Alignment"
+#string STR_ITBT_RP2_PCIE_RVIO_PROMPT                #language en-US "Reserved I/O"
+
+#string STR_ITBT_RP3_PCIE_ALLOCATION                 #language en-US "Root Port 3 Resource Allocation"
+#string STR_ITBT_RP3_PCIE_RBUS_PROMPT                #language en-US "Extra Bus Reserved"
+#string STR_ITBT_RP3_PCIE_RMEM_PROMPT                #language en-US "Reserved Memory"
+#string STR_ITBT_RP3_PCIE_RMEM_ADDRRNGMAX            #language en-US "Memory Alignment"
+#string STR_ITBT_RP3_PCIE_RPMEM_PROMPT               #language en-US "Reserved PMemory"
+#string STR_ITBT_RP3_PCIE_RPMEM_ADDRRNGMAX           #language en-US "PMemory Alignment"
+#string STR_ITBT_RP3_PCIE_RVIO_PROMPT                #language en-US "Reserved I/O"
+
+#string STR_OS_NATIVE_RESOURCE_BALANCE_PROMPT        #language en-US "Os Native Resource Balance"
+#string STR_OS_NATIVE_RESOURCE_BALANCE_HELP          #language en-US "Os Native Resource Balance"

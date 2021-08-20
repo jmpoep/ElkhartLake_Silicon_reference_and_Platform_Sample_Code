@@ -1,0 +1,424 @@
+/** @file
+  Setup form for PCIe equalization control
+
+@copyright
+  INTEL CONFIDENTIAL
+  Copyright 2019 Intel Corporation.
+
+  The source code contained or described herein and all documents related to the
+  source code ("Material") are owned by Intel Corporation or its suppliers or
+  licensors. Title to the Material remains with Intel Corporation or its suppliers
+  and licensors. The Material may contain trade secrets and proprietary and
+  confidential information of Intel Corporation and its suppliers and licensors,
+  and is protected by worldwide copyright and trade secret laws and treaty
+  provisions. No part of the Material may be used, copied, reproduced, modified,
+  published, uploaded, posted, transmitted, distributed, or disclosed in any way
+  without Intel's prior express written permission.
+
+  No license under any patent, copyright, trade secret or other intellectual
+  property right is granted to or conferred upon you by disclosure or delivery
+  of the Materials, either expressly, by implication, inducement, estoppel or
+  otherwise. Any license under such intellectual property rights must be
+  express and approved by Intel in writing.
+
+  Unless otherwise agreed by Intel in writing, you may not remove or alter
+  this notice or any other notice embedded in Materials by Intel or
+  Intel's suppliers or licensors in any way.
+
+  This file contains a 'Sample Driver' and is licensed as such under the terms
+  of your license agreement with Intel or your vendor. This file may be modified
+  by the user, subject to the additional terms of the license agreement.
+
+@par Specification
+**/
+
+form formid = PCIE_EQ_SETTINGS_FORM_ID,
+  title     = STRING_TOKEN(STR_PCIE_EQ_SETTINGS_FORM_TITLE);
+  checkbox varid  = PCH_SETUP.PcieEqOverrideDefault,
+    prompt   = STRING_TOKEN(STR_PCIE_EQ_OVERRIDE_PROMPT),
+    help     = STRING_TOKEN(STR_PCIE_EQ_OVERRIDE_HELP),
+    default  = 0,
+  endcheckbox;
+
+  suppressif ideqval PCH_SETUP.PcieEqOverrideDefault == 0;
+    oneof varid = PCH_SETUP.PcieEqMethod,
+          prompt = STRING_TOKEN(STR_PCIE_EQ_METHOD_PROMPT),
+          help = STRING_TOKEN(STR_PCIE_EQ_METHOD_HELP),
+          option text = STRING_TOKEN(STR_PCIE_EQ_METHOD_HW), value = 0, flags = RESET_REQUIRED | DEFAULT;
+          option text = STRING_TOKEN(STR_PCIE_EQ_METHOD_FIXED), value = 1, flags = RESET_REQUIRED;
+    endoneof;
+
+    oneof varid = PCH_SETUP.PcieEqMode,
+          prompt = STRING_TOKEN(STR_PCIE_EQ_MODE_PROMPT),
+          help = STRING_TOKEN(STR_PCIE_EQ_MODE_HELP),
+          option text = STRING_TOKEN(STR_PCIE_EQ_MODE_PRESET), value = 0, flags = RESET_REQUIRED | DEFAULT;
+          option text = STRING_TOKEN(STR_PCIE_EQ_MODE_COEFFICIENT), value = 1, flags = RESET_REQUIRED;
+    endoneof;
+
+    numeric varid = PCH_SETUP.PcieEqPh1DownstreamPortTransmitterPreset,
+          prompt = STRING_TOKEN(STR_PCIE_EQ_PH1_DOWNSTREAM_PORT_TRANSMITTER_PRESET_PROMPT),
+          help = STRING_TOKEN(STR_PCIE_EQ_PH1_TRANSMITTER_PRESET_HELP),
+          flags = RESET_REQUIRED,
+          minimum = 0,
+          maximum = 10,
+          step = 1,
+          default = 0,
+    endnumeric;
+
+    numeric varid = PCH_SETUP.PcieEqPh1UpstreamPortTransmitterPreset,
+            prompt = STRING_TOKEN(STR_PCIE_EQ_PH1_UPSTREAM_PORT_TRANSMITTER_PRESET_PROMPT),
+            help = STRING_TOKEN(STR_PCIE_EQ_PH1_TRANSMITTER_PRESET_HELP),
+            flags = RESET_REQUIRED,
+            minimum = 0,
+            maximum = 10,
+            step = 1,
+            default = 0,
+    endnumeric;
+
+    checkbox varid = PCH_SETUP.PcieEqPh2LocalTransmitterOverrideEnable,
+      prompt = STRING_TOKEN(STR_PCIE_EQ_PH2_LOCAL_TRANSMITTER_OVERRIDE_PROMPT),
+      help = STRING_TOKEN(STR_PCIE_EQ_PH2_LOCAL_TRANSMITTER_OVERRIDE_HELP),
+      default = 0,
+    endcheckbox;
+
+    suppressif ideqval PCH_SETUP.PcieEqPh2LocalTransmitterOverrideEnable == 0;
+      numeric varid = PCH_SETUP.PcieEqPh2LocalTransmitterOverridePreset,
+              prompt = STRING_TOKEN(STR_PCIE_EQ_PH2_LOCAL_TRANSMITTER_OVERRIDE_PRESET_PROMPT),
+              help = STRING_TOKEN(STR_PCIE_EQ_PH2_LOCAL_TRANSMITTER_OVERRIDE_PRESET_HELP),
+              flags = RESET_REQUIRED,
+              minimum = 0,
+              maximum = 10,
+              step = 1,
+              default = 0,
+      endnumeric;
+    endif;
+
+    numeric varid = PCH_SETUP.PcieEqPh3NumberOfPresetsOrCoefficients,
+            prompt = STRING_TOKEN(STR_PCIE_EQ_PRESET_COEFF_NUMBER_PROMPT),
+            help = STRING_TOKEN(STR_PCIE_EQ_PRESET_COEFF_NUMBER_HELP),
+            flags = RESET_REQUIRED,
+            minimum = 0,
+            maximum = 11, // Maximum number of presets supported in the hardware
+            step = 1,
+            default = 0,
+    endnumeric;
+
+    suppressif NOT ideqval PCH_SETUP.PcieEqMode == 0; // PCIe EQ preset mode
+      numeric varid = PCH_SETUP.PcieEqPh3PresetList[0],
+              prompt = STRING_TOKEN(STR_PCIE_EQ_PRESET_LIST_PROMPT_0),
+              help = STRING_TOKEN(STR_PCIE_EQ_PRESET_LIST_HELP),
+              flags = RESET_REQUIRED,
+              minimum = 0,
+              maximum = 63, // Maximum preset value supported by hardware
+              step = 1,
+              default = 0,
+      endnumeric;
+
+      numeric varid = PCH_SETUP.PcieEqPh3PresetList[1],
+              prompt = STRING_TOKEN(STR_PCIE_EQ_PRESET_LIST_PROMPT_1),
+              help = STRING_TOKEN(STR_PCIE_EQ_PRESET_LIST_HELP),
+              flags = RESET_REQUIRED,
+              minimum = 0,
+              maximum = 63, // Maximum preset value supported by hardware
+              step = 1,
+              default = 0,
+      endnumeric;
+
+      numeric varid = PCH_SETUP.PcieEqPh3PresetList[2],
+              prompt = STRING_TOKEN(STR_PCIE_EQ_PRESET_LIST_PROMPT_2),
+              help = STRING_TOKEN(STR_PCIE_EQ_PRESET_LIST_HELP),
+              flags = RESET_REQUIRED,
+              minimum = 0,
+              maximum = 63, // Maximum preset value supported by hardware
+              step = 1,
+              default = 0,
+      endnumeric;
+
+      numeric varid = PCH_SETUP.PcieEqPh3PresetList[3],
+              prompt = STRING_TOKEN(STR_PCIE_EQ_PRESET_LIST_PROMPT_3),
+              help = STRING_TOKEN(STR_PCIE_EQ_PRESET_LIST_HELP),
+              flags = RESET_REQUIRED,
+              minimum = 0,
+              maximum = 63, // Maximum preset value supported by hardware
+              step = 1,
+              default = 0,
+      endnumeric;
+
+      numeric varid = PCH_SETUP.PcieEqPh3PresetList[4],
+              prompt = STRING_TOKEN(STR_PCIE_EQ_PRESET_LIST_PROMPT_4),
+              help = STRING_TOKEN(STR_PCIE_EQ_PRESET_LIST_HELP),
+              flags = RESET_REQUIRED,
+              minimum = 0,
+              maximum = 63, // Maximum preset value supported by hardware
+              step = 1,
+              default = 0,
+      endnumeric;
+
+      numeric varid = PCH_SETUP.PcieEqPh3PresetList[5],
+              prompt = STRING_TOKEN(STR_PCIE_EQ_PRESET_LIST_PROMPT_5),
+              help = STRING_TOKEN(STR_PCIE_EQ_PRESET_LIST_HELP),
+              flags = RESET_REQUIRED,
+              minimum = 0,
+              maximum = 63, // Maximum preset value supported by hardware
+              step = 1,
+              default = 0,
+      endnumeric;
+
+      numeric varid = PCH_SETUP.PcieEqPh3PresetList[6],
+              prompt = STRING_TOKEN(STR_PCIE_EQ_PRESET_LIST_PROMPT_6),
+              help = STRING_TOKEN(STR_PCIE_EQ_PRESET_LIST_HELP),
+              flags = RESET_REQUIRED,
+              minimum = 0,
+              maximum = 63, // Maximum preset value supported by hardware
+              step = 1,
+              default = 0,
+      endnumeric;
+
+      numeric varid = PCH_SETUP.PcieEqPh3PresetList[7],
+              prompt = STRING_TOKEN(STR_PCIE_EQ_PRESET_LIST_PROMPT_7),
+              help = STRING_TOKEN(STR_PCIE_EQ_PRESET_LIST_HELP),
+              flags = RESET_REQUIRED,
+              minimum = 0,
+              maximum = 63, // Maximum preset value supported by hardware
+              step = 1,
+              default = 0,
+      endnumeric;
+
+      numeric varid = PCH_SETUP.PcieEqPh3PresetList[8],
+              prompt = STRING_TOKEN(STR_PCIE_EQ_PRESET_LIST_PROMPT_8),
+              help = STRING_TOKEN(STR_PCIE_EQ_PRESET_LIST_HELP),
+              flags = RESET_REQUIRED,
+              minimum = 0,
+              maximum = 63, // Maximum preset value supported by hardware
+              step = 1,
+              default = 0,
+      endnumeric;
+
+      numeric varid = PCH_SETUP.PcieEqPh3PresetList[9],
+              prompt = STRING_TOKEN(STR_PCIE_EQ_PRESET_LIST_PROMPT_9),
+              help = STRING_TOKEN(STR_PCIE_EQ_PRESET_LIST_HELP),
+              flags = RESET_REQUIRED,
+              minimum = 0,
+              maximum = 63, // Maximum preset value supported by hardware
+              step = 1,
+              default = 0,
+      endnumeric;
+
+      numeric varid = PCH_SETUP.PcieEqPh3PresetList[10],
+              prompt = STRING_TOKEN(STR_PCIE_EQ_PRESET_LIST_PROMPT_10),
+              help = STRING_TOKEN(STR_PCIE_EQ_PRESET_LIST_HELP),
+              flags = RESET_REQUIRED,
+              minimum = 0,
+              maximum = 63, // Maximum preset value supported by hardware
+              step = 1,
+              default = 0,
+      endnumeric;
+    endif;
+
+    suppressif NOT ideqval PCH_SETUP.PcieEqMode == 1; // Coefficient mode
+
+      numeric varid = PCH_SETUP.PcieEqPh3PreCursorList[0],
+              prompt = STRING_TOKEN(STR_PCIE_EQ_PRE_CURSOR_COEFF_PROMPT_0),
+              help = STRING_TOKEN(STR_PCIE_EQ_PRE_CURSOR_COEFF_HELP),
+              flags = RESET_REQUIRED,
+              minimum = 0,
+              maximum = 63,
+              step = 1,
+              default = 0,
+      endnumeric;
+
+      numeric varid = PCH_SETUP.PcieEqPh3PostCursorList[0],
+              prompt = STRING_TOKEN(STR_PCIE_EQ_POST_CURSOR_COEFF_PROMPT_0),
+              help = STRING_TOKEN(STR_PCIE_EQ_POST_CURSOR_COEFF_HELP),
+              flags = RESET_REQUIRED,
+              minimum = 0,
+              maximum = 63,
+              step = 1,
+              default = 0,
+      endnumeric;
+
+      numeric varid = PCH_SETUP.PcieEqPh3PreCursorList[1],
+              prompt = STRING_TOKEN(STR_PCIE_EQ_PRE_CURSOR_COEFF_PROMPT_1),
+              help = STRING_TOKEN(STR_PCIE_EQ_PRE_CURSOR_COEFF_HELP),
+              flags = RESET_REQUIRED,
+              minimum = 0,
+              maximum = 63,
+              step = 1,
+              default = 0,
+      endnumeric;
+
+      numeric varid = PCH_SETUP.PcieEqPh3PostCursorList[1],
+              prompt = STRING_TOKEN(STR_PCIE_EQ_POST_CURSOR_COEFF_PROMPT_1),
+              help = STRING_TOKEN(STR_PCIE_EQ_POST_CURSOR_COEFF_HELP),
+              flags = RESET_REQUIRED,
+              minimum = 0,
+              maximum = 63,
+              step = 1,
+              default = 0,
+      endnumeric;
+
+      numeric varid = PCH_SETUP.PcieEqPh3PreCursorList[2],
+              prompt = STRING_TOKEN(STR_PCIE_EQ_PRE_CURSOR_COEFF_PROMPT_2),
+              help = STRING_TOKEN(STR_PCIE_EQ_PRE_CURSOR_COEFF_HELP),
+              flags = RESET_REQUIRED,
+              minimum = 0,
+              maximum = 63,
+              step = 1,
+              default = 0,
+      endnumeric;
+
+      numeric varid = PCH_SETUP.PcieEqPh3PostCursorList[2],
+              prompt = STRING_TOKEN(STR_PCIE_EQ_POST_CURSOR_COEFF_PROMPT_2),
+              help = STRING_TOKEN(STR_PCIE_EQ_POST_CURSOR_COEFF_HELP),
+              flags = RESET_REQUIRED,
+              minimum = 0,
+              maximum = 63,
+              step = 1,
+              default = 0,
+      endnumeric;
+
+      numeric varid = PCH_SETUP.PcieEqPh3PreCursorList[3],
+              prompt = STRING_TOKEN(STR_PCIE_EQ_PRE_CURSOR_COEFF_PROMPT_3),
+              help = STRING_TOKEN(STR_PCIE_EQ_PRE_CURSOR_COEFF_HELP),
+              flags = RESET_REQUIRED,
+              minimum = 0,
+              maximum = 63,
+              step = 1,
+              default = 0,
+      endnumeric;
+
+      numeric varid = PCH_SETUP.PcieEqPh3PostCursorList[3],
+              prompt = STRING_TOKEN(STR_PCIE_EQ_POST_CURSOR_COEFF_PROMPT_3),
+              help = STRING_TOKEN(STR_PCIE_EQ_POST_CURSOR_COEFF_HELP),
+              flags = RESET_REQUIRED,
+              minimum = 0,
+              maximum = 63,
+              step = 1,
+              default = 0,
+      endnumeric;
+
+      numeric varid = PCH_SETUP.PcieEqPh3PreCursorList[4],
+              prompt = STRING_TOKEN(STR_PCIE_EQ_PRE_CURSOR_COEFF_PROMPT_4),
+              help = STRING_TOKEN(STR_PCIE_EQ_PRE_CURSOR_COEFF_HELP),
+              flags = RESET_REQUIRED,
+              minimum = 0,
+              maximum = 63,
+              step = 1,
+              default = 0,
+      endnumeric;
+
+      numeric varid = PCH_SETUP.PcieEqPh3PostCursorList[4],
+              prompt = STRING_TOKEN(STR_PCIE_EQ_POST_CURSOR_COEFF_PROMPT_4),
+              help = STRING_TOKEN(STR_PCIE_EQ_POST_CURSOR_COEFF_HELP),
+              flags = RESET_REQUIRED,
+              minimum = 0,
+              maximum = 63,
+              step = 1,
+              default = 0,
+      endnumeric;
+
+      numeric varid = PCH_SETUP.PcieEqPh3PreCursorList[5],
+              prompt = STRING_TOKEN(STR_PCIE_EQ_PRE_CURSOR_COEFF_PROMPT_5),
+              help = STRING_TOKEN(STR_PCIE_EQ_PRE_CURSOR_COEFF_HELP),
+              flags = RESET_REQUIRED,
+              minimum = 0,
+              maximum = 63,
+              step = 1,
+              default = 0,
+      endnumeric;
+
+      numeric varid = PCH_SETUP.PcieEqPh3PostCursorList[5],
+              prompt = STRING_TOKEN(STR_PCIE_EQ_POST_CURSOR_COEFF_PROMPT_5),
+              help = STRING_TOKEN(STR_PCIE_EQ_POST_CURSOR_COEFF_HELP),
+              flags = RESET_REQUIRED,
+              minimum = 0,
+              maximum = 63,
+              step = 1,
+              default = 0,
+      endnumeric;
+
+      numeric varid = PCH_SETUP.PcieEqPh3PreCursorList[6],
+              prompt = STRING_TOKEN(STR_PCIE_EQ_PRE_CURSOR_COEFF_PROMPT_6),
+              help = STRING_TOKEN(STR_PCIE_EQ_PRE_CURSOR_COEFF_HELP),
+              flags = RESET_REQUIRED,
+              minimum = 0,
+              maximum = 63,
+              step = 1,
+              default = 0,
+      endnumeric;
+
+      numeric varid = PCH_SETUP.PcieEqPh3PostCursorList[6],
+              prompt = STRING_TOKEN(STR_PCIE_EQ_POST_CURSOR_COEFF_PROMPT_6),
+              help = STRING_TOKEN(STR_PCIE_EQ_POST_CURSOR_COEFF_HELP),
+              flags = RESET_REQUIRED,
+              minimum = 0,
+              maximum = 63,
+              step = 1,
+              default = 0,
+      endnumeric;
+
+      numeric varid = PCH_SETUP.PcieEqPh3PreCursorList[7],
+              prompt = STRING_TOKEN(STR_PCIE_EQ_PRE_CURSOR_COEFF_PROMPT_7),
+              help = STRING_TOKEN(STR_PCIE_EQ_PRE_CURSOR_COEFF_HELP),
+              flags = RESET_REQUIRED,
+              minimum = 0,
+              maximum = 63,
+              step = 1,
+              default = 0,
+      endnumeric;
+
+      numeric varid = PCH_SETUP.PcieEqPh3PostCursorList[7],
+              prompt = STRING_TOKEN(STR_PCIE_EQ_POST_CURSOR_COEFF_PROMPT_7),
+              help = STRING_TOKEN(STR_PCIE_EQ_POST_CURSOR_COEFF_HELP),
+              flags = RESET_REQUIRED,
+              minimum = 0,
+              maximum = 63,
+              step = 1,
+              default = 0,
+      endnumeric;
+
+      numeric varid = PCH_SETUP.PcieEqPh3PreCursorList[8],
+              prompt = STRING_TOKEN(STR_PCIE_EQ_PRE_CURSOR_COEFF_PROMPT_8),
+              help = STRING_TOKEN(STR_PCIE_EQ_PRE_CURSOR_COEFF_HELP),
+              flags = RESET_REQUIRED,
+              minimum = 0,
+              maximum = 63,
+              step = 1,
+              default = 0,
+      endnumeric;
+
+      numeric varid = PCH_SETUP.PcieEqPh3PostCursorList[8],
+              prompt = STRING_TOKEN(STR_PCIE_EQ_POST_CURSOR_COEFF_PROMPT_8),
+              help = STRING_TOKEN(STR_PCIE_EQ_POST_CURSOR_COEFF_HELP),
+              flags = RESET_REQUIRED,
+              minimum = 0,
+              maximum = 63,
+              step = 1,
+              default = 0,
+      endnumeric;
+
+      numeric varid = PCH_SETUP.PcieEqPh3PreCursorList[9],
+              prompt = STRING_TOKEN(STR_PCIE_EQ_PRE_CURSOR_COEFF_PROMPT_9),
+              help = STRING_TOKEN(STR_PCIE_EQ_PRE_CURSOR_COEFF_HELP),
+              flags = RESET_REQUIRED,
+              minimum = 0,
+              maximum = 63,
+              step = 1,
+              default = 0,
+      endnumeric;
+
+      numeric varid = PCH_SETUP.PcieEqPh3PostCursorList[9],
+              prompt = STRING_TOKEN(STR_PCIE_EQ_POST_CURSOR_COEFF_PROMPT_9),
+              help = STRING_TOKEN(STR_PCIE_EQ_POST_CURSOR_COEFF_HELP),
+              flags = RESET_REQUIRED,
+              minimum = 0,
+              maximum = 63,
+              step = 1,
+              default = 0,
+      endnumeric;
+
+    endif;
+
+  endif;
+
+endform;

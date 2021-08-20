@@ -1,0 +1,23 @@
+## @file
+#  FDF file of Platform.
+#
+# Copyright (c) 2017 - 2019, Intel Corporation. All rights reserved.<BR>
+#
+# SPDX-License-Identifier: BSD-2-Clause-Patent
+#
+##
+
+!if gMinPlatformPkgTokenSpaceGuid.PcdUefiSecureBootEnable == TRUE
+INF  SecurityPkg/VariableAuthenticated/SecureBootConfigDxe/SecureBootConfigDxe.inf
+!endif
+
+!if gMinPlatformPkgTokenSpaceGuid.PcdTpm2Enable == TRUE
+INF  SecurityPkg/Tcg/MemoryOverwriteControl/TcgMor.inf
+#INF  SecurityPkg/Tcg/Tcg2Dxe/Tcg2Dxe.inf
+  !if gSiPkgTokenSpaceGuid.PcdBfxEnable == TRUE
+    INF  RuleOverride = DRIVER_ACPITABLE $(PLATFORM_FULL_PACKAGE)/Override/SecurityPkg/Tcg/Tcg2Smm/Tcg2Smm.inf
+  !else
+    INF  RuleOverride = DRIVER_ACPITABLE SecurityPkg/Tcg/Tcg2Smm/Tcg2Smm.inf
+  !endif
+#INF  SecurityPkg/Tcg/Tcg2Config/Tcg2ConfigDxe.inf
+!endif

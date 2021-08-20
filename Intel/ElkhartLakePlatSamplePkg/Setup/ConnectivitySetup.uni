@@ -1,0 +1,229 @@
+/** @file
+
+@copyright
+  INTEL CONFIDENTIAL
+  Copyright 2016 - 2018 Intel Corporation.
+
+  The source code contained or described herein and all documents related to the
+  source code ("Material") are owned by Intel Corporation or its suppliers or
+  licensors. Title to the Material remains with Intel Corporation or its suppliers
+  and licensors. The Material may contain trade secrets and proprietary and
+  confidential information of Intel Corporation and its suppliers and licensors,
+  and is protected by worldwide copyright and trade secret laws and treaty
+  provisions. No part of the Material may be used, copied, reproduced, modified,
+  published, uploaded, posted, transmitted, distributed, or disclosed in any way
+  without Intel's prior express written permission.
+
+  No license under any patent, copyright, trade secret or other intellectual
+  property right is granted to or conferred upon you by disclosure or delivery
+  of the Materials, either expressly, by implication, inducement, estoppel or
+  otherwise. Any license under such intellectual property rights must be
+  express and approved by Intel in writing.
+
+  Unless otherwise agreed by Intel in writing, you may not remove or alter
+  this notice or any other notice embedded in Materials by Intel or
+  Intel's suppliers or licensors in any way.
+
+  This file contains a 'Sample Driver' and is licensed as such under the terms
+  of your license agreement with Intel or your vendor. This file may be modified
+  by the user, subject to the additional terms of the license agreement.
+
+@par Specification Reference:
+**/
+
+//
+// Name: ConnectivitySetup.uni
+//
+// Description: Connectivity Form String Definitions.
+//
+//**********************************************************************
+/=#
+
+#include "VFR.uni"
+//---------------------------------------------------------------------------
+// Connectivity configuration strings
+//---------------------------------------------------------------------------
+
+#string STR_CONNECTIVITY_CONFIGURATION                 #language en-US  "Connectivity Configuration"
+#string STR_CONNECTIVITY_HELP                          #language en-US  "Configure Connectivity related options"
+
+//---------------------------------------------------------------------------
+// CNVI configuration strings
+//---------------------------------------------------------------------------
+#string STR_CNVI_STATE                                 #language en-US "CNVi present"
+#string STR_CNVI_HELP                                  #language en-US "[Yes] means CNVi is the active Connectivity Solution, [No] means CNVi was not discovered"
+#string STR_CNVI_CURRENT_STATE                         #language en-US "No"
+#string STR_CNVI_IS_NOT_PRESENT_PATTERN                #language en-US "No"
+#string STR_CNVI_CONFIG                                #language en-US "CNVi Configuration"
+#string STR_CNVI_MODE                                  #language en-US "  CNVi Mode"
+#string STR_CNVI_MODE_HELP                             #language en-US "This option configures Connectivity. \n[Auto Detection] means that if Discrete solution is discovered it will be enabled by default. Otherwise Integrated solution (CNVi) will be enabled; \n[Disable Integrated] disables Integrated Solution. \nNOTE: When CNVi is present, the GPIO pins that are used for radio interface cannot be assigned to the other native function."
+#string STR_CNVI_AUTO                                  #language en-US "Auto Detection"
+#string STR_CNVI_DISABLE                               #language en-US "Disable Integrated"
+#string STR_CNVI_BT_CORE                               #language en-US "  BT Core"
+#string STR_CNVI_BT_CORE_HELP                          #language en-US "This is an option intended to Enable/Disable BT Core in CNVi"
+#string STR_CNVI_BT_AUDIO_OFFLOAD                      #language en-US "  BT Audio Offload"
+#string STR_CNVI_BT_AUDIO_OFFLOAD_HELP                 #language en-US "This is an option to Enable/Disable BT Audio Offload which enables audio input from BT device in HFP format to the audio DSP and enables power efficient audio output to BT device via A2DP format. This feature only support with Intel(R) Wireless-AX 22560"
+
+// Discrete Bluetooth over UART
+#string STR_BT_MODULE                                  #language en-US "Discrete Bluetooth Module"
+#string STR_BT_MODULE_HELP                             #language en-US "SerialIo UART0 needs to be enabled to select BT Module"
+#string STR_BT_THUNDER_PEAK_USB                        #language en-US "Thunder Peak - USB"
+#string STR_BT_THUNDER_PEAK_UART                       #language en-US "Thunder Peak - UART"
+#string STR_BT_IRQ_MODE                                #language en-US " BT Interrupt Mode"
+#string STR_BT_IRQ_MODE_HELP                           #language en-US "Selects routing of interrupt from BT Module"
+#string STR_GNSS_MOVED                                 #language en-US "GNSS moved to Connectivity Configuration"
+
+// Wireless
+#string STR_WIFI_ENABLE_PROMPT                         #language en-US "Advanced settings"
+#string STR_WIFI_ENABLE_HELP                           #language en-US "Configure ACPI objects for wireless devices"
+#string STR_WIFI_POWER_LIMIT1_PROMPT                   #language en-US " Default Power Limit"
+#string STR_WIFI_POWER_LIMIT2_PROMPT                   #language en-US " Default Power Limit"
+#string STR_WIFI_POWER_LIMIT3_PROMPT                   #language en-US " Default Power Limit"
+#string STR_WIFI_POWER_LIMIT_HELP                      #language en-US "Power Limit in milli watts"
+#string STR_WIFI_TIME_WINDOW1_PROMPT                   #language en-US " Default Time Window"
+#string STR_WIFI_TIME_WINDOW2_PROMPT                   #language en-US " Default Time Window"
+#string STR_WIFI_TIME_WINDOW3_PROMPT                   #language en-US " Default Time Window"
+#string STR_WIFI_TIME_WINDOW_HELP                      #language en-US "Time Window in milli seconds"
+#string STR_TR_DELAY0_PROMPT                           #language en-US " TRxDelay_A"
+#string STR_TR_DELAY0_HELP                             #language en-US "Antenna A delay possible values: 1-100 in 10ths of nano seconds resolution"
+#string STR_TR_CABLE_LENGTH0_PROMPT                    #language en-US " TRxCableLength_A"
+#string STR_TR_CABLE_LENGTH0_HELP                      #language en-US "Antenna A cable length possible values: 1-100cm in 1cm resolution"
+#string STR_TR_DELAY1_PROMPT                           #language en-US " TRxDelay_B"
+#string STR_TR_DELAY1_HELP                             #language en-US "Antenna B delay possible values: 1-100 in 10ths of nano seconds resolution"
+#string STR_TR_CABLE_LENGTH1_PROMPT                    #language en-US " TRxCableLength_B"
+#string STR_TR_CABLE_LENGTH1_HELP                      #language en-US "Antenna B cable length possible values: 1-100cm in 1cm resolution"
+#string STR_WRDD_PACKAGE1                              #language en-US "WRDD Package 1"
+#string STR_WRDD_PACKAGE2                              #language en-US "WRDD Package 2"
+#string STR_DOMAIN_TYPE1_PROMPT                        #language en-US " Domain Type"
+#string STR_DOMAIN_TYPE2_PROMPT                        #language en-US " Domain Type"
+#string STR_DOMAIN_TYPE_HELP                           #language en-US "09h: Module; 07h: WiFi/WLAN; 0Fh: WWAN; 10h WiGig; 14h: RFEM"
+#string STR_COUNTRY_IDENTIFIER1_PROMPT                 #language en-US " Country Identifier"
+#string STR_COUNTRY_IDENTIFIER2_PROMPT                 #language en-US " Country Identifier"
+#string STR_COUNTRY_IDENTIFIER_HELP                    #language en-US "Country identifier as defined in ISO/IEC 3166-1 Alpha 2 code"
+#string STR_WRDS_PACKAGE                               #language en-US "WRDS Package"
+#string STR_WIFI_SAR_PROMPT                            #language en-US " WiFi SAR"
+#string STR_WIFI_SAR_HELP                              #language en-US "Enable/Disable WiFi SAR Tx Power Limit; DISABLE - Device ignores WiFi SAR Configuration Table; ENABLE - Device uses WiFi SAR Configuration Table"
+
+#string STR_EWRD_PACKAGE                               #language en-US "EWRD Package"
+#string STR_WIFI_DYNAMIC_SAR_PROMPT                    #language en-US " WiFi Dynamic SAR"
+#string STR_WIFI_DYNAMIC_SAR_HELP                      #language en-US "Enable/Disable WiFi Dynamic SAR Tx Power Limit which shell be set dynamically accorting to the Proximity Sensor"
+#string STR_WIFI_EXTENDED_SAR_RANGE_SETS_PROMPT        #language en-US "Extended SAR Range Sets"
+#string STR_WIFI_EXTENDED_SAR_RANGE_SETS_HELP          #language en-US "Defines the WiFi SAR Sets that can be used to set the power limts dynamically based on the Proximity Sensor,Set 1 is always present if Wifi SAR enabled and Set 2-3 are additinoal sets"
+#string STR_NO_ADDITIONAL_SETS                         #language en-US "No Additional sets"
+#string STR_ADDITIONAL_SET_1                           #language en-US "Set 1"
+#string STR_ADDITIONAL_SET_2                           #language en-US "Set 2"
+#string STR_ADDITIONAL_SET_3                           #language en-US "Set 3"
+#string STR_ADDITIONAL_SET_4                           #language en-US "Set 4"
+#string STR_DEFAULT_OTP_TABLE                          #language en-US "Default OTP table"
+#string STR_WIFI_EXTENDED_SAR_ANTENNA_A_CURRENT_SET_PROMPT       #language en-US "Antenna A Current Set"
+#string STR_WIFI_EXTENDED_SAR_ANTENNA_B_CURRENT_SET_PROMPT       #language en-US "Antenna B Current Set"
+#string STR_WIFI_EXTENDED_SAR_CURRENT_SET_PROMPT_HELP            #language en-US "Current Set to be used 0 :Default OTP table 1-3 SAR Sets "
+
+#string STR_WIFI_SAR_TX_HELP                           #language en-US "Defines the WiFi SAR Tx Power Limit - 8bit unsigned with 5bit integer and 3bit fractional. 0x00 = 0b00000000 = 0.125dB; 0xFF = 0b11111111 = 31.875dB. Each step is equivalent to 0.125dB"
+#string STR_WIFI_SAR_SET1_TX1_PROMPT                   #language en-US " SAR 2400 MHz Set1 Chain A"
+#string STR_WIFI_SAR_SET1_TX2_PROMPT                   #language en-US " SAR 5150-5350 MHz Set1 Chain A"
+#string STR_WIFI_SAR_SET1_TX3_PROMPT                   #language en-US " SAR 5350-5470 MHz Set1 Chain A"
+#string STR_WIFI_SAR_SET1_TX4_PROMPT                   #language en-US " SAR 5470-5725 MHz Set1 Chain A"
+#string STR_WIFI_SAR_SET1_TX5_PROMPT                   #language en-US " SAR 5725-5950 MHz Set1 Chain A"
+#string STR_WIFI_SAR_SET1_TX6_PROMPT                   #language en-US " SAR 2400 MHz Set1 Chain B"
+#string STR_WIFI_SAR_SET1_TX7_PROMPT                   #language en-US " SAR 5150-5350 MHz Set1 Chain B"
+#string STR_WIFI_SAR_SET1_TX8_PROMPT                   #language en-US " SAR 5350-5470 MHz Set1 Chain B"
+#string STR_WIFI_SAR_SET1_TX9_PROMPT                   #language en-US " SAR 5470-5725 MHz Set1 Chain B"
+#string STR_WIFI_SAR_SET1_TX10_PROMPT                  #language en-US " SAR 5725-5950 MHz Set1 Chain B"
+
+#string STR_WIFI_SAR_SET2_TX1_PROMPT                   #language en-US " SAR 2400 MHz Set2 Chain A"
+#string STR_WIFI_SAR_SET2_TX2_PROMPT                   #language en-US " SAR 5150-5350 MHz Set2 Chain A"
+#string STR_WIFI_SAR_SET2_TX3_PROMPT                   #language en-US " SAR 5350-5470 MHz Set2 Chain A"
+#string STR_WIFI_SAR_SET2_TX4_PROMPT                   #language en-US " SAR 5470-5725 MHz Set2 Chain A"
+#string STR_WIFI_SAR_SET2_TX5_PROMPT                   #language en-US " SAR 5725-5950 MHz Set2 Chain A"
+#string STR_WIFI_SAR_SET2_TX6_PROMPT                   #language en-US " SAR 2400 MHz Set2 Chain B"
+#string STR_WIFI_SAR_SET2_TX7_PROMPT                   #language en-US " SAR 5150-5350 MHz Set2 Chain B"
+#string STR_WIFI_SAR_SET2_TX8_PROMPT                   #language en-US " SAR 5350-5470 MHz Set2 Chain B"
+#string STR_WIFI_SAR_SET2_TX9_PROMPT                   #language en-US " SAR 5470-5725 MHz Set2 Chain B"
+#string STR_WIFI_SAR_SET2_TX10_PROMPT                  #language en-US " SAR 5725-5950 MHz Set2 Chain B"
+#string STR_WIFI_SAR_SET3_TX1_PROMPT                   #language en-US " SAR 2400 MHz Set3 Chain A"
+#string STR_WIFI_SAR_SET3_TX2_PROMPT                   #language en-US " SAR 5150-5350 MHz Set3 Chain A"
+#string STR_WIFI_SAR_SET3_TX3_PROMPT                   #language en-US " SAR 5350-5470 MHz Set3 Chain A"
+#string STR_WIFI_SAR_SET3_TX4_PROMPT                   #language en-US " SAR 5470-5725 MHz Set3 Chain A"
+#string STR_WIFI_SAR_SET3_TX5_PROMPT                   #language en-US " SAR 5725-5950 MHz Set3 Chain A"
+#string STR_WIFI_SAR_SET3_TX6_PROMPT                   #language en-US " SAR 2400 MHz Set3 Chain B"
+#string STR_WIFI_SAR_SET3_TX7_PROMPT                   #language en-US " SAR 5150-5350 MHz Set3 Chain B"
+#string STR_WIFI_SAR_SET3_TX8_PROMPT                   #language en-US " SAR 5350-5470 MHz Set3 Chain B"
+#string STR_WIFI_SAR_SET3_TX9_PROMPT                   #language en-US " SAR 5470-5725 MHz Set3 Chain B"
+#string STR_WIFI_SAR_SET3_TX10_PROMPT                  #language en-US " SAR 5725-5950 MHz Set3 Chain B"
+#string STR_WIFI_SAR_SET4_TX1_PROMPT                   #language en-US " SAR 2400 MHz Set4 Chain A"
+#string STR_WIFI_SAR_SET4_TX2_PROMPT                   #language en-US " SAR 5150-5350 MHz Set4 Chain A"
+#string STR_WIFI_SAR_SET4_TX3_PROMPT                   #language en-US " SAR 5350-5470 MHz Set4 Chain A"
+#string STR_WIFI_SAR_SET4_TX4_PROMPT                   #language en-US " SAR 5470-5725 MHz Set4 Chain A"
+#string STR_WIFI_SAR_SET4_TX5_PROMPT                   #language en-US " SAR 5725-5950 MHz Set4 Chain A"
+#string STR_WIFI_SAR_SET4_TX6_PROMPT                   #language en-US " SAR 2400 MHz Set4 Chain B"
+#string STR_WIFI_SAR_SET4_TX7_PROMPT                   #language en-US " SAR 5150-5350 MHz Set4 Chain B"
+#string STR_WIFI_SAR_SET4_TX8_PROMPT                   #language en-US " SAR 5350-5470 MHz Set4 Chain B"
+#string STR_WIFI_SAR_SET4_TX9_PROMPT                   #language en-US " SAR 5470-5725 MHz Set4 Chain B"
+#string STR_WIFI_SAR_SET4_TX10_PROMPT                  #language en-US " SAR 5725-5950 MHz Set4 Chain B"
+
+#string STR_WGDS_PACKAGE                                      #language en-US "WGDS Package"
+#string STR_WIFI_SAR_DELTA_HELP                               #language en-US "Defines the WiFi SAR Delta Value to be applied - 8bit unsigned with 5bit integer and 3bit fractional. 0x00 = 0b00000000 = 0.125dB; 0xFF = 0b11111111 = 31.875dB. Each step is equivalent to 0.125dB"
+#string STR_WIFI_SAR_DELTA_2400MHZ_MAX_GROUP1_PROMPT          #language en-US " SAR 2400 MHz Max Allowed for Group 1 (FCC)"
+#string STR_WIFI_SAR_DELTA_2400MHZ_CHAIN_A_GROUP1_PROMPT      #language en-US " SAR 2400 MHz Chain A Offset for Group 1 (FCC)"
+#string STR_WIFI_SAR_DELTA_2400MHZ_CHAIN_B_GROUP1_PROMPT      #language en-US " SAR 2400 MHz Chain B Offset for Group 1 (FCC)"
+#string STR_WIFI_SAR_DELTA_5200MHZ_MAX_GROUP1_PROMPT          #language en-US " SAR 5200 MHz Max Allowed for Group 1 (FCC)"
+#string STR_WIFI_SAR_DELTA_5200MHZ_CHAIN_A_GROUP1_PROMPT      #language en-US " SAR 5200 MHz Chain A Offset for Group 1 (FCC)"
+#string STR_WIFI_SAR_DELTA_5200MHZ_CHAIN_B_GROUP1_PROMPT      #language en-US " SAR 5200 MHz Chain B Offset for Group 1 (FCC)"
+
+#string STR_WIFI_SAR_DELTA_2400MHZ_MAX_GROUP2_PROMPT          #language en-US " SAR 2400 MHz Max Allowed for Group 2 (EU Japan)"
+#string STR_WIFI_SAR_DELTA_2400MHZ_CHAIN_A_GROUP2_PROMPT      #language en-US " SAR 2400 MHz Chain A Offset for Group 2 (EU Japan)"
+#string STR_WIFI_SAR_DELTA_2400MHZ_CHAIN_B_GROUP2_PROMPT      #language en-US " SAR 2400 MHz Chain B Offset for Group 2 (EU Japan)"
+#string STR_WIFI_SAR_DELTA_5200MHZ_MAX_GROUP2_PROMPT          #language en-US " SAR 5200 MHz Max Allowed for Group 2 (EU Japan)"
+#string STR_WIFI_SAR_DELTA_5200MHZ_CHAIN_A_GROUP2_PROMPT      #language en-US " SAR 5200 MHz Chain A Offset for Group 2 (EU Japan)"
+#string STR_WIFI_SAR_DELTA_5200MHZ_CHAIN_B_GROUP2_PROMPT      #language en-US " SAR 5200 MHz Chain B Offset for Group 2 (EU Japan)"
+
+#string STR_WIFI_SAR_DELTA_2400MHZ_MAX_GROUP3_PROMPT          #language en-US " SAR 2400 MHz Max Allowed for Group 3 (ROW)"
+#string STR_WIFI_SAR_DELTA_2400MHZ_CHAIN_A_GROUP3_PROMPT      #language en-US " SAR 2400 MHz Chain A Offset for Group 3 (ROW)"
+#string STR_WIFI_SAR_DELTA_2400MHZ_CHAIN_B_GROUP3_PROMPT      #language en-US " SAR 2400 MHz Chain B Offset for Group 3 (ROW)"
+#string STR_WIFI_SAR_DELTA_5200MHZ_MAX_GROUP3_PROMPT          #language en-US " SAR 5200 MHz Max Allowed for Group 3 (ROW)"
+#string STR_WIFI_SAR_DELTA_5200MHZ_CHAIN_A_GROUP3_PROMPT      #language en-US " SAR 5200 MHz Chain A Offset for Group 3 (ROW)"
+#string STR_WIFI_SAR_DELTA_5200MHZ_CHAIN_B_GROUP3_PROMPT      #language en-US " SAR 5200 MHz Chain B Offset for Group 3 (ROW)"
+
+#string STR_BT_SAR_PROMPT                              #language en-US " Bluetooth SAR"
+#string STR_BT_SAR_HELP                                #language en-US "Define the mode of SAR control to be used.\n\nDisabled: Tx power shall be mandated by device NVM\n\nEnabled: Tx power shall be the minimum between BIOS SAR table and BT Device NVM (either Module or Platform)"
+#string STR_BT_SAR_BR_MODULATION_PROMPT                #language en-US " Bluetooth SAR BR "
+#string STR_BT_SAR_BR_MODULATION_HELP                  #language en-US "Defines the SAR power restriction for BR Modulation"
+#string STR_BT_SAR_EDR2_MODULATION_PROMPT              #language en-US " Bluetooth SAR EDR2 "
+#string STR_BT_SAR_EDR2_MODULATION_HELP                #language en-US "Defines the SAR power restriction for EDR2 Modulation"
+#string STR_BT_SAR_EDR3_MODULATION_PROMPT              #language en-US " Bluetooth SAR EDR3 "
+#string STR_BT_SAR_EDR3_MODULATION_HELP                #language en-US "Defines the SAR power restriction for EDR3 Modulation"
+#string STR_BT_SAR_LE_MODULATION_PROMPT                #language en-US " Bluetooth SAR LE "
+#string STR_BT_SAR_LE_MODULATION_HELP                  #language en-US "Defines the SAR power restriction for LE Modulation"
+#string STR_BT_SAR_LE_2MHZ_MODULATION_PROMPT           #language en-US " Bluetooth SAR LE 2Mhz"
+#string STR_BT_SAR_LE_2MHZ_MODULATION_HELP             #language en-US "Defines the SAR power restriction for LE 2Mhz Modulation"
+#string STR_BT_SAR_LE_LR_MODULATION_PROMPT             #language en-US " Bluetooth SAR LE LR"
+#string STR_BT_SAR_LE_LR_MODULATION_HELP               #language en-US "Defines the SAR power restriction for LE LR Modulation"
+
+#string STR_COEX_MANAGER_PROMPT                        #language en-US "CoExistence Manager"
+#string STR_COEX_MANAGER_HELP                          #language en-US "CoEx Manager mitigates radio coexistence issues between Intel WWAN (modem) and Intel WLAN (WiFi/BT).\nThis should be enabled only if both WWAN and WLAN solutions are based on Intel components"
+
+//---------------------------------------------------------------------------
+// WWAN configuration strings
+//---------------------------------------------------------------------------
+
+#string STR_WWAN_CONFIGURATION                         #language en-US "WWAN Configuration"
+#string STR_WWAN_HELP                                  #language en-US "Configure WWAN related options"
+
+#string STR_M2_WWAN_DEVICE_PROMPT                      #language en-US "WWAN Device"
+#string STR_M2_WWAN_DEVICE_HELP                        #language en-US "Enable or Disable M.2 WWAN Device"
+
+#string STR_WWAN_RESET_WORKAROUND_PROMPT               #language en-US "WWAN Reset Workaround"
+#string STR_WWAN_RESET_WORKAROUND_HELP                 #language en-US "Enabling this workardound will result in BIOS asserting FULL_CARD_POWER_OFF#, PERST# and RESET# WWAN signals before the WWAN Device Power-On Sequence is executed.\nDisabling it has no impact."
+
+#string STR_ANTENNA_DIVERSITY_PROMPT                   #language en-US "Switched Antenna Diversity Selection"
+#string STR_ANTENNA_DIVERSITY_HELP                     #language en-US "This allows WiFi modules which have only one antenna to use one of the 2 possible antennas with the options:\n 0 - Antenna1\n 1 - Antenna2\n 2 - Diversity\n 3 - Diversity Antenna1\n 4 - Diversity Antenna2"
+#string STR_ANTENNA1                                   #language en-US "Antenna1"
+#string STR_ANTENNA2                                   #language en-US "Antenna2"
+#string STR_DIVERSITY                                  #language en-US "Diversity"
+#string STR_DIVERSITY_ANTENNA1                         #language en-US "Diversity Antenna1"
+#string STR_DIVERSITY_ANTENNA2                         #language en-US "Diversity Antenna2"
+#string STR_PREBOOT_BLE_PROMPT                         #language en-US "Preboot BLE"
+#string STR_PREBOOT_BLE_HELP                           #language en-US "This will be used to enable Preboot Bluetooth function"
+#string STR_BLE_RECONNECTION_DELAY                     #language en-US "  BLE Reconnection Delay"
+#string STR_BLE_RECONNECTION_DELAY_HELP                #language en-US "Delay prior to connecting BLE host controller. Value between 0-1000ms. Default is 100ms"

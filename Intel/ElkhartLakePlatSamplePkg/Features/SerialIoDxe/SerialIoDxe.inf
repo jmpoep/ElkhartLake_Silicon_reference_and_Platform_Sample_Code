@@ -1,0 +1,56 @@
+## @file
+#  Serial driver that layers on top of a Serial IO Port Library instance.
+#
+#  Copyright (c) 2008 - 2019, Intel Corporation. All rights reserved.<BR>
+#  This program and the accompanying materials
+#  are licensed and made available under the terms and conditions of the BSD License
+#  which accompanies this distribution.  The full text of the license may be found at
+#  http://opensource.org/licenses/bsd-license.php
+#
+#  THE PROGRAM IS DISTRIBUTED UNDER THE BSD LICENSE ON AN "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR REPRESENTATIONS OF ANY KIND, EITHER EXPRESS OR IMPLIED.
+#
+#
+##
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = SerialIoDxe
+  MODULE_UNI_FILE                = SerialIoDxe.uni
+  FILE_GUID                      = F9CD1703-8108-45CD-9384-5B247B8CAFF5
+  MODULE_TYPE                    = DXE_DRIVER
+  VERSION_STRING                 = 1.0
+
+  ENTRY_POINT                    = SerialIoDxeInitialize
+
+[Sources.common]
+  SerialIo.c
+
+[Packages]
+  MdePkg/MdePkg.dec
+  ClientOneSiliconPkg/SiPkg.dec
+
+[LibraryClasses]
+  UefiDriverEntryPoint
+  UefiBootServicesTableLib
+  DebugLib
+  PcdLib
+  SerialPortLib
+  SerialIoUartDebugHelperLib
+
+[Protocols]
+  gEfiSerialIoProtocolGuid      ## PRODUCES
+  gEfiDevicePathProtocolGuid    ## PRODUCES
+
+[Pcd]
+  gEfiMdePkgTokenSpaceGuid.PcdUartDefaultBaudRate         ## CONSUMES
+  gEfiMdePkgTokenSpaceGuid.PcdUartDefaultDataBits         ## CONSUMES
+  gEfiMdePkgTokenSpaceGuid.PcdUartDefaultParity           ## CONSUMES
+  gEfiMdePkgTokenSpaceGuid.PcdUartDefaultStopBits         ## CONSUMES
+  gEfiMdePkgTokenSpaceGuid.PcdUartDefaultReceiveFifoDepth ## CONSUMES
+
+[Depex]
+  TRUE
+
+[UserExtensions.TianoCore."ExtraFiles"]
+  SerialDxeExtra.uni

@@ -1,0 +1,430 @@
+## @file
+# ClientCommon Package
+#
+# This package provides client platform common modules.
+#
+# @copyright
+#  INTEL CONFIDENTIAL
+#  Copyright 2009 - 2019 Intel Corporation.
+#
+#  The source code contained or described herein and all documents related to the
+#  source code ("Material") are owned by Intel Corporation or its suppliers or
+#  licensors. Title to the Material remains with Intel Corporation or its suppliers
+#  and licensors. The Material may contain trade secrets and proprietary and
+#  confidential information of Intel Corporation and its suppliers and licensors,
+#  and is protected by worldwide copyright and trade secret laws and treaty
+#  provisions. No part of the Material may be used, copied, reproduced, modified,
+#  published, uploaded, posted, transmitted, distributed, or disclosed in any way
+#  without Intel's prior express written permission.
+#
+#  No license under any patent, copyright, trade secret or other intellectual
+#  property right is granted to or conferred upon you by disclosure or delivery
+#  of the Materials, either expressly, by implication, inducement, estoppel or
+#  otherwise. Any license under such intellectual property rights must be
+#  express and approved by Intel in writing.
+#
+#  Unless otherwise agreed by Intel in writing, you may not remove or alter
+#  this notice or any other notice embedded in Materials by Intel or
+#  Intel's suppliers or licensors in any way.
+#
+#  This file contains 'Framework Code' and is licensed as such under the terms
+#  of your license agreement with Intel or your vendor. This file may not be
+#  modified, except as allowed by additional terms of your license agreement.
+#
+#@par Specification
+##
+
+
+[Defines]
+DEC_SPECIFICATION = 0x00010017
+PACKAGE_NAME = ClientCommonPkg
+PACKAGE_VERSION = 0.1
+PACKAGE_GUID = 06B21890-BF50-4fcd-9ADC-CF599C4D643A
+
+
+[Includes]
+Include
+LegacyUsb
+Csm/Include
+
+[Guids]
+gClientCommonModuleTokenSpaceGuid                = { 0x6239f660, 0x54dc, 0x4cf2, { 0xb2, 0x07, 0x45, 0xdb, 0x9c, 0x4d, 0x22, 0xeb }}
+gEfiUsbDebugPortTokenSpaceGuid                   = { 0xe5ca2579, 0x9f51, 0x40f6, { 0x8e, 0x45, 0x1c, 0xd3, 0x18, 0xd7, 0xed, 0x0c }}
+gTraceHubTokenSpaceGuid                          = { 0xa69b58a9, 0x6c05, 0x4dc1, { 0x85, 0xbf, 0xaf, 0x80, 0xdc, 0xe6, 0xd9, 0x7d }}
+##
+## IntelFrameworkPkg
+##
+gEfiCapsuleGuid                                  = { 0x3B6686BD, 0x0D76, 0x4030, { 0xB7, 0x0E, 0xB5, 0x51, 0x9E, 0x2F, 0xC5, 0xA0 }}
+
+gBiosInfoGuid                                    = { 0x09d0d15c, 0xe9f0, 0x4dfc, { 0x9e, 0x0b, 0x39, 0x33, 0x1f, 0xca, 0x66, 0x85 }}
+## GUID used for the HOB recording Fast Boot exception information.
+## Include/FastBootExceptionInfo.h
+gFastBootExceptionInfoHobGuid                    = { 0x4ed88276, 0xd4df, 0x4d03, { 0x86, 0x61, 0x29, 0x58, 0x01, 0xb2, 0xda, 0x58 }}
+## GUID used for the HOB indicating Fast Boot function enabled.
+## Include/FastBootFunctionEnabled.h
+gFastBootFunctionEnabledHobGuid                  = { 0x019fb1ca, 0xd411, 0x4948, { 0xb7, 0x3c, 0x4c, 0x05, 0x4a, 0xba, 0x9e, 0x8e }}
+## GUID used for EDK PEI Perf boot record.
+## Include/PeiFirmwarePerformance.h
+gPeiFirmwarePerformanceGuid                      = { 0x55765e8f, 0x021a, 0x41f9, { 0x93, 0x2d, 0x4c, 0x49, 0xc5, 0xb7, 0xef, 0x5d }}
+gRamDebugTokenSpaceGuid                          = { 0x93adad6a, 0x60d1, 0x47f7, { 0xab, 0xdb, 0x20, 0x32, 0xf4, 0xa8, 0x8e, 0xa6 }}
+## Include/BootState.h
+gBootStateGuid                                   = { 0x60b5e939, 0x0fcf, 0x4227, { 0xba, 0x83, 0x6b, 0xbe, 0xd4, 0x5b, 0xc0, 0xe3 }}
+## GUID used for VirtualKeyboardDriver to open TouchPanel protocol.
+gEfiTouchPanelGuid                               = { 0x91b1d27b, 0xe126, 0x48d1, { 0x82, 0x34, 0xd2, 0x8b, 0x81, 0xc8, 0x83, 0x62 }}
+gPlatformInfoHobGuid                             = { 0x54c61c94, 0x287d, 0x4dc5, { 0x99, 0xd5, 0xd3, 0x8d, 0x1a, 0x53, 0xae, 0x6b }}
+gOutOfBandGuid                                   = { 0xbac76586, 0x3515, 0x420b, { 0xa1, 0xb7, 0x23, 0x5a, 0x71, 0x6e, 0xca, 0xad }}
+gSetupVariableGuid                               = { 0xEC87D643, 0xEBA4, 0x4BB5, { 0xA1, 0xE5, 0x3F, 0x3E, 0x36, 0xB2, 0x0D, 0xA9 }}
+gSetupDataHobGuid                                = { 0x822a9b23, 0x2386, 0x4377, { 0xb7, 0x05, 0x87, 0x78, 0xc1, 0xb8, 0xb3, 0x95 }}
+gSystemConfigGuid                                = { 0x0bb533de, 0xc8d9, 0x4e21, { 0x93, 0x42, 0xc4, 0x9c, 0x05, 0xb5, 0xe7, 0x89 }}
+## Include/DisplayCapsule.h
+gFwDisplayCapsuleGuid                            = { 0x3b8c8162, 0x188c, 0x46a4, { 0xae, 0xc9, 0xbe, 0x43, 0xf1, 0xd6, 0x56, 0x97 }}
+gSetupEnterGuid                                  = { 0x71202EEE, 0x5F53, 0x40d9, { 0xAB, 0x3D, 0x9E, 0x0C, 0x26, 0xD9, 0x66, 0x57 }}
+gIfrFrontPageGuid                                = { 0xe58809f8, 0xfbc1, 0x48e2, { 0x88, 0x3a, 0xa3,  0xf, 0xdc, 0x4b, 0x44, 0x1e }}
+gIfrNotInTpvPageGuid                             = { 0x1947c034, 0x062f, 0x44c0, { 0xbc, 0xc4, 0x19, 0x92, 0x7a, 0xfe, 0x9e, 0xa4 }}
+gIfrBootMaintenanceGuid                          = { 0xb2dedc91, 0xd59f, 0x48d2, { 0x89, 0x8a, 0x12, 0x49,  0xc, 0x74, 0xa4, 0xe0 }}
+gHiiExportDatabaseGuid                           = { 0x1b838190, 0x4625, 0x4ead, { 0xab, 0xc9, 0xcd, 0x5e, 0x6a, 0xf1, 0x8f, 0xe0 }}
+gWdtPersistentDataGuid                           = { 0x78ce2354, 0xcfbc, 0x4643, { 0xae, 0xba, 0x07, 0xa2, 0x7f, 0xa8, 0x92, 0xbf }}
+gPubkeyFfsGuid                                   = { 0x31c17abe, 0x6071, 0x435e, { 0xba, 0xa4, 0x0b, 0x8a, 0x8c, 0x36, 0x49, 0xf3 }}
+gUsbDbgGuid                                      = { 0xf880aae0, 0xe4ac, 0x4c64, { 0xa3, 0x26, 0x82, 0x70, 0x9c, 0xc2, 0x41, 0xea }}
+## CapsuleType of GetRecoveryCapsuleInfo
+gRecoveryOnSerialGuid                            = { 0x699add70, 0x8554, 0x4993, { 0x83, 0xf6, 0xd2, 0xcd, 0xc0, 0x81, 0xdd, 0x85 }}
+gInt1ASmiVariableFileGuid                        = { 0xA309AD0E, 0x0447, 0x4edf, { 0xB2, 0x96, 0xAD, 0x1F, 0x13, 0xC5, 0x1F, 0xD5 }}
+gVariableSmiGuid                                 = { 0x1b838190, 0x4625, 0x4ead, { 0xab, 0xc9, 0xcd, 0x5e, 0x6a, 0xf1, 0x8f, 0xe0 }}
+
+##
+## IntelFrameworkModulePkg
+##
+## Include/Guid/LegacyDevOrder.h
+# LegacyBootManagerLib.inf
+gEfiLegacyDevOrderVariableGuid                   = { 0xa56074db, 0x65fe, 0x45f7, { 0xbd, 0x21, 0x2d, 0x2b, 0xdd, 0x8e, 0x96, 0x52 }}
+## Include/Guid/LegacyBios.h
+# IntelRaidAtaAtapiPassThru.inf | IntelRaidBiosThunk.inf | VideoDxe.inf | LegacyBiosDxe.inf | BlockIoDxe.inf
+gEfiLegacyBiosGuid                               = { 0x2E3044AC, 0x879F, 0x490F, { 0x97, 0x60, 0xBB, 0xDF, 0xAF, 0x69, 0x5F, 0x50 }}
+## Include/Guid/BlockIoVendor.h
+# IntelRaidBiosThunk.inf | BlockIoDxe.inf
+gBlockIoVendorGuid                               = { 0xcf31fac5, 0xc24e, 0x11d2, { 0x85, 0xf3,  0x0, 0xa0, 0xc9, 0x3e, 0xc9, 0x3b }}
+gIpStatusHobGuid                                 = { 0xaadc04ee, 0x4acb, 0x4c87, { 0xbb, 0x3c, 0x57, 0xa3, 0xbe, 0x58, 0xb1, 0xfb }}
+gEfiHddPasswordSecurityVariableGuid              = { 0x5e22f4e2, 0x35ea, 0x421b, { 0x8f, 0xd1, 0xd4, 0xae, 0x85, 0x67, 0xa4, 0x51 }}
+
+[Protocols]
+##
+## IntelFrameworkModulePkg
+##
+gEfiOEMBadgingProtocolGuid                       = { 0x170E13C0, 0xBF1B, 0x4218, { 0x87, 0x1D, 0x2A, 0xBD, 0xC6, 0xF8, 0x87, 0xBC }}
+
+## Include/Protocol/FlashDeviceInfo.h
+gFlashDeviceInfoProtocolGuid                     = { 0xcdd3ef06, 0xe873, 0x46ee, { 0xa0, 0x64, 0x7e, 0xc0, 0xb2, 0xc5, 0x6c, 0x11 }}
+gIrqBoardInfoProtocolGuid                        = { 0x0273146c, 0x96c4, 0x45a1, { 0xa7, 0xaf, 0x78, 0xe0, 0x52, 0x4a, 0x0a, 0xe2 }}
+gIrqTableInfoProtocolGuid                        = { 0x8996dcd7, 0x4c6d, 0x4875, { 0x98, 0x0f, 0x21, 0x4e, 0x7f, 0x9d, 0x7c, 0x50 }}
+gSmmThunkProtocolGuid                            = { 0x2a82fce6, 0x8bb6, 0x413e, { 0xb9, 0xeb, 0x45, 0xdf, 0xc0, 0x52, 0x2d, 0xf3 }}
+gCsmLoaderProtocolGuid                           = { 0xd125e282, 0x49a1, 0x4434, { 0x99, 0x13, 0xf7, 0xec, 0xe5, 0xfa, 0x8e, 0x38 }}
+gFixedPciResourceProtocolGuid                    = { 0x2d26849b, 0xd489, 0x4c6d, { 0x81, 0xa5, 0x6b, 0xbf, 0x39, 0x10, 0x3e, 0x68 }}
+gNct6776fHwMonProtocolGuid                       = { 0x1c20e600, 0x2814, 0x4e22, { 0x9e, 0x96, 0x14, 0xe0, 0x46, 0x72, 0xf4, 0xd4 }}
+## This protocol is an indication of an Fast Boot exception occurrence.
+## Include/Protocol/FastBootException.h
+gFastBootExceptionProtocolGuid                   = { 0x3da3f62e, 0x291e, 0x4224, { 0x80, 0x5f, 0x2d, 0x5e, 0xb6, 0xb2, 0x9c, 0xe2 }}
+## EDK FPDT Performance protocols to collect FPDT records.
+## Include/Protocol/FpdtFirmwarePerformance.h
+gFirmwarePerformanceProtocolGuid                 = { 0xbc412d75, 0x2729, 0x4c3a, { 0xb1, 0x93, 0x5b, 0x9a, 0x58, 0x8f, 0xf6, 0x6f }}
+gFpdtPerformanceProtocolGuid                     = { 0x444c3203, 0xf8b1, 0x42a7, { 0xab, 0xe9, 0x2e, 0x58, 0x02, 0x5b, 0xe1, 0x2a }}
+## Include/Protocol/Tcg2Platform.h
+gEfiTcg2PlatformProtocolGuid                     = { 0x77ef4b99, 0x1186, 0x48ab, { 0x9d, 0x0b, 0x0b, 0x78, 0x12, 0xe5, 0xe6, 0xab }}
+gVirtualKeyboardLayoutProtocolGuid               = { 0x0040bbf8, 0x4999, 0x4a9c, { 0x90, 0x53, 0xcf, 0x1d, 0x3d, 0x5e, 0x36, 0x33 }}
+gVirtualKeyboardContextProtocolGuid              = { 0xe7f5717b, 0x234c, 0x4c5b, { 0x81, 0xf0, 0x6c, 0x4d, 0x90, 0x86, 0xcc, 0x6d }}
+gVirtualKeyboardProtocolGuid                     = { 0xcd02855a, 0x8194, 0x4ea7, { 0x8b, 0x5a, 0x78, 0xf1, 0xaa, 0x98, 0x75, 0x79 }}
+gPlatformInfoProtocolGuid                        = { 0xd9035175, 0x8ce2, 0x47de, { 0xa8, 0xb8, 0xcc, 0x98, 0xe5, 0xe2, 0xa8, 0x85 }}
+gKeyboardLedsProtocolGuid                        = { 0x380c0301, 0xdf1d, 0x4cd2, { 0x8b, 0x5d, 0x6b, 0x35, 0x68, 0x02, 0x69, 0x58 }}
+## Include/Protocol/Esrt.h
+gEsrtOperationProtocolGuid                       = { 0x4549AB47, 0x6E60, 0x4293, { 0xB9, 0x1D, 0x31, 0xB6, 0x10, 0xAD, 0x80, 0x56 }}
+## LegacyUsb/Protocol/UsbController.h
+gLegacyUsbProtocolGuid                           = { 0x2ad8e2d2, 0x2e91, 0x4cd1, { 0x95, 0xf5, 0xe7, 0x8f, 0xe5, 0xeb, 0xe3, 0x16 }}
+gEfiLegacyInterruptHandlerProtocolGuid           = { 0xd765bf98, 0x2f0b, 0x4e07, { 0xae, 0x77, 0x7e, 0x74, 0x1c, 0xb8, 0x9e, 0xff } }
+gLegacyBiosReverseThunkProtocolGuid              = { 0xa7b41da5, 0x6667, 0x43c0, { 0x8c, 0xc6, 0x67, 0x89, 0xa6, 0x5c, 0x76, 0x67 } }
+gTcgLegacyInt1AReadyProtocolGuid                 = { 0x41e8252a, 0x9859, 0x4584, { 0xa0, 0x83, 0x2b, 0x6,  0x3,  0x3b, 0x5,  0x5c } }
+
+#
+# LegacyBiosDxe.inf
+#
+## Include/Protocol/Legacy8259.h
+gEfiLegacy8259ProtocolGuid                       = { 0x38321dba, 0x4fe0, 0x4e17, { 0x8a, 0xec, 0x41, 0x30, 0x55, 0xea, 0xed, 0xc1 }}
+
+gEfiHddPasswordNotifyProtocolGuid                = { 0x3cf71ad0, 0xd726, 0x4a26, { 0x8f, 0x68, 0x5c, 0x9b, 0x69, 0x91, 0x1a, 0xa3 } }
+
+[Ppis]
+gEfiPeiBootInNonS3ModePpiGuid                    = { 0x667ef084, 0x74ef, 0x4707, { 0x90, 0xb3, 0x75, 0x14, 0x59, 0x20, 0xb3, 0x9c }}
+gDebugServicePpiGuid                             = { 0xb781df4c, 0xdc36, 0x4230, { 0xb5, 0x6d, 0xa0, 0x01, 0xb6, 0x8c, 0x15, 0xc7 }}
+gPeiReadWriteVariablePpiGuid                     = { 0xf9831e9f, 0xf52b, 0x4750, { 0x9a, 0x3c, 0xd5, 0xfd, 0x79, 0x2a, 0xbe, 0x78 }}
+
+
+[LibraryClasses]
+KeyboardLedsLib|Include/Library/KeyboardLedsLib.h
+PeiDxeSmmThunkLib|Include/Library/PeiDxeSmmThunkLib.h
+##  @libraryclass  Provides single entry for debug output devices.
+
+##  @libraryclass    Provide legacy interrupt reverse thunk support.
+LegacyInterruptSupportLib|Csm/Include/Library/LegacyInterruptSupportLib.h
+
+
+[PcdsFixedAtBuild]
+## This PCD sepcifies the start index in CMOS, it will occupy 4 bytes space.
+gClientCommonModuleTokenSpaceGuid.PcdSerialBaudRateCmosIndex|0x43|UINT8|0x10000002
+gClientCommonModuleTokenSpaceGuid.PcdBootRegisterCmosIndex|0x47|UINT8|0x10000003
+gClientCommonModuleTokenSpaceGuid.PcdBootSuppressDisplay|FALSE|BOOLEAN|0x10000004
+## This PCD sepcifies the start index in CMOS, it will occupy 4 bytes space.
+gClientCommonModuleTokenSpaceGuid.PcdPostCodeBreakCmosIndex|0x48|UINT8|0x10000005
+## This PCD sepcifies the start index in CMOS, it will occupy 4 bytes space.
+gClientCommonModuleTokenSpaceGuid.PcdDebugPrintLevelCmosIndex|0x4C|UINT8|0x10000006
+
+## This PCD specifies the period of the system Timer in 100 ns units.
+## The default value of 10000 100 ns units is the same as 1 ms.
+gClientCommonModuleTokenSpaceGuid.PcdSystemTimerPeriod|10000|UINT64|0x10000008
+
+gClientCommonModuleTokenSpaceGuid.PcdFullLogoFile|{ 0x84, 0x0d, 0x18, 0xfc, 0x31, 0x51, 0x3d, 0x41, 0xa0, 0x7e, 0x6f, 0x96, 0xaf, 0xd5, 0xbe, 0x4b }|VOID*|0x40000001
+
+## This PCD specifies the SMI value used to triger SMI to get SMM profile data.
+##
+gClientCommonModuleTokenSpaceGuid.PcdSmiValueGetSmmProfileData|0xCA|UINT8|0x10000020
+gRamDebugTokenSpaceGuid.PcdRamLogBaseAddress|0x70000|UINT32|0x00000013
+gRamDebugTokenSpaceGuid.PcdRamLogBaseLength|0x10000|UINT32|0x00000014
+
+gClientCommonModuleTokenSpaceGuid.PcdTemporaryRamBase|0xfef00000|UINT32|0x10001001
+gClientCommonModuleTokenSpaceGuid.PcdTemporaryRamSize|0x2000|UINT32|0x10001002
+
+gClientCommonModuleTokenSpaceGuid.PcdNct6776fHwMonBase|0x290|UINT16|0x20000011
+
+gClientCommonModuleTokenSpaceGuid.PcdStatusCodeFlagsCmosIndex|0x5E|UINT8|0x0000002D
+
+## This flag is used to initialize debug output interface.
+#  BIT0 - RAM debug interface.
+#  BIT1 - UART debug interface.
+#  BIT2 - USB debug interface.
+#  BIT3 - USB3 debug interface.
+#  BIT4 - Serial IO debug interface.
+#  BIT5 - TraceHub debug interface.
+#  BIT6 - Reserved.
+#  BIT7 - CMOS control.
+gClientCommonModuleTokenSpaceGuid.PcdStatusCodeFlags|0x82|UINT8|0x00000033
+
+## The PCD is used to specify if SmscLpc module support PS2 keyboards/mice.
+gClientCommonModuleTokenSpaceGuid.PcdSmscLpc100xPs2KeyboardEnable|TRUE|BOOLEAN|0x30000014
+gClientCommonModuleTokenSpaceGuid.PcdSmscLpc100xPs2MouseEnable|TRUE|BOOLEAN|0x30000015
+## MemoryCheck value for checking memory before boot OS.
+## To save the boot performance, the default MemoryCheck is set to 0.
+gClientCommonModuleTokenSpaceGuid.PcdPlatformMemoryCheck|0|UINT8|0x40000005
+gClientCommonModuleTokenSpaceGuid.PcdFastBootEnable|0|BOOLEAN|0x30000041
+gClientCommonModuleTokenSpaceGuid.PcdComPortAttributes0IsEnabled|0|BOOLEAN|0x30000042
+## This PCD specifies the recovery image size used for serial recovery.
+## The default size is set to 0 without enabling serial recovery.
+gClientCommonModuleTokenSpaceGuid.PcdSerialRecoveryImageSize|0|UINT32|0x40000006
+## This PCD specifies the Post IBB Hash verification is enable
+gClientCommonModuleTokenSpaceGuid.PcdPostIbbVerificationEnable|FALSE|BOOLEAN|0x10000023
+## The PCD is used to specify whether or not send HierarchyChangeAuth command for Platform Hierarchy.
+gClientCommonModuleTokenSpaceGuid.PcdTpm2HierarchyChangeAuthPlatform|TRUE|BOOLEAN|0x00010020
+## The PCD is used to specify send HierarchyControl command to enable or disable Platform Hierarchy.
+gClientCommonModuleTokenSpaceGuid.PcdTpm2HierarchyControlPlatform|FALSE|BOOLEAN|0x00010024
+## The PCD is used to specify send HierarchyControl command to enable or disable Endorsement Hierarchy.
+gClientCommonModuleTokenSpaceGuid.PcdTpm2HierarchyControlEndorsement|TRUE|BOOLEAN|0x00010025
+## The PCD is used to specify send HierarchyControl command to enable or disable Storage Hierarchy.
+gClientCommonModuleTokenSpaceGuid.PcdTpm2HierarchyControlOwner|TRUE|BOOLEAN|0x00010026
+## The PCD is used to specify if TrEEPlatform module support TXT provision.
+gClientCommonModuleTokenSpaceGuid.PcdTpm2TxtProvisionSupport|FALSE|BOOLEAN|0x00010027
+
+##
+## SMBIOS defaults
+##
+gClientCommonModuleTokenSpaceGuid.PcdSmbiosDefaultMaxSpeed|0x0|UINT16|0x00000306
+gClientCommonModuleTokenSpaceGuid.PcdSmbiosDefaultSocketDesignation|"U3E1"|VOID*|0x00000307
+gClientCommonModuleTokenSpaceGuid.PcdSmbiosDefaultSerialNumber|"To Be Filled By O.E.M."|VOID*|0x00000308
+gClientCommonModuleTokenSpaceGuid.PcdSmbiosDefaultAssetTag|"To Be Filled By O.E.M."|VOID*|0x00000309
+gClientCommonModuleTokenSpaceGuid.PcdSmbiosDefaultPartNumber|"To Be Filled By O.E.M."|VOID*|0x0000030A
+
+#
+# Virtual Keyboard configuration
+#
+# The PCD is used to specify the Virtul Keyboard redraw rate 0x05 means 500ms
+gClientCommonModuleTokenSpaceGuid.PcdVirtualKeyboardRedrawRate|0x05|UINT16|0x00000015
+# The PCD is used to specify the driver always redraw the keyboard without checking the frame buffer status.
+gClientCommonModuleTokenSpaceGuid.PcdVirtualKeyboardForceRedraw|TRUE|BOOLEAN|0x00000016
+
+gClientCommonModuleTokenSpaceGuid.PcdSimpleIconFile |{ 0x88, 0x5f, 0xa3, 0x40, 0x23, 0x9f, 0x4d, 0x8b, 0xa7, 0x0e, 0x5d, 0x90, 0xaf, 0x63, 0xf5, 0x37 }|VOID*|0x00010041
+gClientCommonModuleTokenSpaceGuid.PcdFullIconFile |{ 0x3b, 0xed, 0x75, 0x01, 0xf4, 0x2a, 0x49, 0x21, 0xb4, 0x20, 0xf5, 0x5a, 0x30, 0xd7, 0xb5, 0x17 }|VOID*|0x00010042
+gClientCommonModuleTokenSpaceGuid.PcdSimpleKeyboardFile |{ 0xd8, 0xcf, 0xec, 0x5a, 0xda, 0xf7, 0x43, 0x08, 0x9e, 0x02, 0x63, 0x2c, 0x9d, 0xb1, 0xda, 0xb0 }|VOID*|0x00010043
+gClientCommonModuleTokenSpaceGuid.PcdDigitKeyboardFile |{ 0xa2, 0x43, 0xf4, 0xc1, 0x4e, 0x43, 0x4a, 0xc9, 0x81, 0xd3, 0xa7, 0x3a, 0x18, 0x88, 0xac, 0x2a }|VOID*|0x00010044
+gClientCommonModuleTokenSpaceGuid.PcdCapitalLetterKeyboardFile |{ 0xd8, 0x83, 0x57, 0x30, 0x92, 0xe1, 0x46, 0xdc, 0x9b, 0x8e, 0x73, 0x46, 0x6b, 0xfc, 0xbe, 0x6c }|VOID*|0x00010045
+
+## This PCD specifies whether StatusCode is reported via PostCode
+gClientCommonModuleTokenSpaceGuid.PcdStatusCodeUsePostCode|FALSE|BOOLEAN|0x00000004
+
+## This PCD specifies whether StatusCode is reported via Beep
+gClientCommonModuleTokenSpaceGuid.PcdStatusCodeUseBeep|FALSE|BOOLEAN|0x00000005
+
+## This PCD specifies whether StatusCode is reported via Serial Port Plaftorm solution
+gClientCommonModuleTokenSpaceGuid.PcdStatusCodeUseSerialPortPlatform|FALSE|BOOLEAN|0x00000006
+
+## This PCD specifies whether unregister Serial Port StatusCode Handler
+gClientCommonModuleTokenSpaceGuid.PcdStatusCodeUnregisterSerialPort|TRUE|BOOLEAN|0x00000007
+
+[PcdsDynamic]
+## The PCD is used to specify if SmscLpc module support PS2 keyboards/mice.
+gClientCommonModuleTokenSpaceGuid.PcdSmscLpc100xPs2KeyboardEnable|TRUE|BOOLEAN|0x30000014
+gClientCommonModuleTokenSpaceGuid.PcdSmscLpc100xPs2MouseEnable|TRUE|BOOLEAN|0x30000015
+## MemoryCheck value for checking memory before boot OS.
+## To save the boot performance, the default MemoryCheck is set to 0.
+gClientCommonModuleTokenSpaceGuid.PcdPlatformMemoryCheck|0|UINT8|0x40000005
+gClientCommonModuleTokenSpaceGuid.PcdFastBootEnable|0|BOOLEAN|0x30000041
+gClientCommonModuleTokenSpaceGuid.PcdComPortAttributes0IsEnabled|0|BOOLEAN|0x30000042
+## This PCD specifies the recovery image size used for serial recovery.
+## The default size is set to 0 without enabling serial recovery.
+gClientCommonModuleTokenSpaceGuid.PcdSerialRecoveryImageSize|0|UINT32|0x40000006
+## This PCD specifies the ACPI IO base address.
+gClientCommonModuleTokenSpaceGuid.PcdAcpiIoBaseAddress|0x1800|UINT16|0x10000021
+## This PCD specifies the length of ACPI Timer. (only 24 and 32 are supported)
+gClientCommonModuleTokenSpaceGuid.AcpiTimerLength|24|UINT8|0x10000022
+## This PCD specifies the Post IBB Hash verification is enable
+gClientCommonModuleTokenSpaceGuid.PcdPostIbbVerificationEnable|FALSE|BOOLEAN|0x10000023
+## Smsc SIO attributes
+gClientCommonModuleTokenSpaceGuid.PcdSmscLpc100xCom1Implemented|0|UINT8|0x30000020
+gClientCommonModuleTokenSpaceGuid.PcdSmscLpc100xCom2Implemented|0|UINT8|0x30000021
+gClientCommonModuleTokenSpaceGuid.PcdSmscLpc100xCom1ComBase1|0x3F8|UINT16|0x30000022
+gClientCommonModuleTokenSpaceGuid.PcdSmscLpc100xCom2ComBase1|0x2F8|UINT16|0x30000023
+gClientCommonModuleTokenSpaceGuid.PcdSmscLpc100xCom2ComBase2|0x7E8|UINT16|0x30000025
+gClientCommonModuleTokenSpaceGuid.PcdSmscLpc100xCom1ComIrq1|4|UINT8|0x30000026
+gClientCommonModuleTokenSpaceGuid.PcdSmscLpc100xCom2ComIrq1|3|UINT8|0x30000027
+gClientCommonModuleTokenSpaceGuid.PcdSmscLpc100xCom2ComDma1|3|UINT8|0x30000028
+gClientCommonModuleTokenSpaceGuid.PcdSmscLpc100xCom1Enable|1|UINT8|0x30000030
+gClientCommonModuleTokenSpaceGuid.PcdSmscLpc100xCom2Enable|1|UINT8|0x30000031
+gClientCommonModuleTokenSpaceGuid.PcdSmscLpc100xCom1ComPrsId|0|UINT8|0x30000032
+gClientCommonModuleTokenSpaceGuid.PcdSmscLpc100xCom2ComPrsId|0|UINT8|0x30000033
+gClientCommonModuleTokenSpaceGuid.PcdSmscLpc100xCom1ComMode|0|UINT8|0x30000034
+gClientCommonModuleTokenSpaceGuid.PcdSmscLpc100xCom2ComMode|0|UINT8|0x30000035
+gClientCommonModuleTokenSpaceGuid.PcdHiiDataExport|FALSE|BOOLEAN|0x00000036
+
+## WDT
+gClientCommonModuleTokenSpaceGuid.PcdWdtTimeoutValue|8|UINT8|0x00001000
+gClientCommonModuleTokenSpaceGuid.PcdWdtReloadTimer|20000000|UINT32|0x00001001
+gClientCommonModuleTokenSpaceGuid.PcdWdtTimeoutBetweenPeiDxe|60|UINT8|0x00001002
+
+
+## The PCD is used to specify whether or not send HierarchyChangeAuth command for Platform Hierarchy.
+gClientCommonModuleTokenSpaceGuid.PcdTpm2HierarchyChangeAuthPlatform|TRUE|BOOLEAN|0x00010020
+
+## The PCD is used to specify send HierarchyControl command to enable or disable Platform Hierarchy.
+gClientCommonModuleTokenSpaceGuid.PcdTpm2HierarchyControlPlatform|FALSE|BOOLEAN|0x00010024
+
+## The PCD is used to specify send HierarchyControl command to enable or disable Endorsement Hierarchy.
+gClientCommonModuleTokenSpaceGuid.PcdTpm2HierarchyControlEndorsement|TRUE|BOOLEAN|0x00010025
+
+## The PCD is used to specify send HierarchyControl command to enable or disable Storage Hierarchy.
+gClientCommonModuleTokenSpaceGuid.PcdTpm2HierarchyControlOwner|TRUE|BOOLEAN|0x00010026
+
+## The PCD is used to specify if TrEEPlatform module support TXT provision.
+gClientCommonModuleTokenSpaceGuid.PcdTpm2TxtProvisionSupport|FALSE|BOOLEAN|0x00010027
+
+## The PCD is used to specify whether or not send ChangeEPS command to reprovision Endorsement Hierarchy.
+gClientCommonModuleTokenSpaceGuid.PcdTpm2ChangeEps|FALSE|BOOLEAN|0x00010021
+
+## The PCD is used to specify whether or not send ChangePPS command to reprovision Platform Hierarchy.
+gClientCommonModuleTokenSpaceGuid.PcdTpm2ChangePps|FALSE|BOOLEAN|0x00010022
+
+## The PCD is used to specify whether or not send Clear command to reprovision Storage Hierarchy.
+gClientCommonModuleTokenSpaceGuid.PcdTpm2Clear|FALSE|BOOLEAN|0x00010023
+
+## CSM Setup value
+gClientCommonModuleTokenSpaceGuid.PcdCsmEnable|TRUE|BOOLEAN|0x30000036
+
+## Over-clocking Support Setup value
+gClientCommonModuleTokenSpaceGuid.PcdRuntimeOverclockEnable|FALSE|BOOLEAN|0x30000037
+
+##
+## ISVT
+##
+gClientCommonModuleTokenSpaceGuid.PcdIsvtIoPort|0x99|UINT8|0x10000024
+gClientCommonModuleTokenSpaceGuid.PcdIsvtSmbiosType|0xDE|UINT8|0x10000025
+## Tbt Support
+gClientCommonModuleTokenSpaceGuid.PcdTbtSupport|FALSE|BOOLEAN|0x10000027
+## BootTime
+gClientCommonModuleTokenSpaceGuid.PcdBootTime|FALSE|BOOLEAN|0x10000028
+## AHCI max ports
+gClientCommonModuleTokenSpaceGuid.PcdAhciMaxPorts|3|UINT8|0x10000029
+
+gClientCommonModuleTokenSpaceGuid.PcdSkipHddPasswordPrompt|FALSE|BOOLEAN|0x1000002A #  ROYAL_PARK_OVERRIDE: RoyalParkOverrideContent - RPCO-0104
+
+[PcdsDynamicEx]
+## Tbt Support
+gClientCommonModuleTokenSpaceGuid.PcdTbtSupport|FALSE|BOOLEAN|0x10000027
+## BootTime
+gClientCommonModuleTokenSpaceGuid.PcdBootTime|FALSE|BOOLEAN|0x10000028
+## AHCI max ports
+gClientCommonModuleTokenSpaceGuid.PcdAhciMaxPorts|3|UINT8|0x10000029
+
+
+[PcdsPatchableInModule]
+## The PCD is used to specify if SmscLpc module support PS2 keyboards/mice.
+gClientCommonModuleTokenSpaceGuid.PcdSmscLpc100xPs2KeyboardEnable|TRUE|BOOLEAN|0x30000014
+gClientCommonModuleTokenSpaceGuid.PcdSmscLpc100xPs2MouseEnable|TRUE|BOOLEAN|0x30000015
+## MemoryCheck value for checking memory before boot OS.
+## To save the boot performance, the default MemoryCheck is set to 0.
+gClientCommonModuleTokenSpaceGuid.PcdPlatformMemoryCheck|0|UINT8|0x40000005
+gClientCommonModuleTokenSpaceGuid.PcdFastBootEnable|0|BOOLEAN|0x30000041
+gClientCommonModuleTokenSpaceGuid.PcdComPortAttributes0IsEnabled|0|BOOLEAN|0x30000042
+## This PCD specifies the recovery image size used for serial recovery.
+## The default size is set to 0 without enabling serial recovery.
+gClientCommonModuleTokenSpaceGuid.PcdSerialRecoveryImageSize|0|UINT32|0x40000006
+## This PCD specifies the ACPI IO base address.
+gClientCommonModuleTokenSpaceGuid.PcdAcpiIoBaseAddress|0x1800|UINT16|0x10000021
+## This PCD specifies the length of ACPI Timer. (only 24 and 32 are supported)
+gClientCommonModuleTokenSpaceGuid.AcpiTimerLength|24|UINT8|0x10000022
+## This PCD specifies the Post IBB Hash verification is enable
+gClientCommonModuleTokenSpaceGuid.PcdPostIbbVerificationEnable|FALSE|BOOLEAN|0x10000023
+## The PCD is used to specify whether or not send HierarchyChangeAuth command for Platform Hierarchy.
+gClientCommonModuleTokenSpaceGuid.PcdTpm2HierarchyChangeAuthPlatform|TRUE|BOOLEAN|0x00010020
+## The PCD is used to specify send HierarchyControl command to enable or disable Platform Hierarchy.
+gClientCommonModuleTokenSpaceGuid.PcdTpm2HierarchyControlPlatform|FALSE|BOOLEAN|0x00010024
+## The PCD is used to specify send HierarchyControl command to enable or disable Endorsement Hierarchy.
+gClientCommonModuleTokenSpaceGuid.PcdTpm2HierarchyControlEndorsement|TRUE|BOOLEAN|0x00010025
+## The PCD is used to specify send HierarchyControl command to enable or disable Storage Hierarchy.
+gClientCommonModuleTokenSpaceGuid.PcdTpm2HierarchyControlOwner|TRUE|BOOLEAN|0x00010026
+## The PCD is used to specify if TrEEPlatform module support TXT provision.
+gClientCommonModuleTokenSpaceGuid.PcdTpm2TxtProvisionSupport|FALSE|BOOLEAN|0x00010027
+
+[PcdsFeatureFlag]
+## This PCD specifies whether MP table is supported
+gClientCommonModuleTokenSpaceGuid.PcdMpTableSupport|TRUE|BOOLEAN|0x00000023
+
+## This PCD specified whether ACPI SDT protocol is installed.
+# ROYAL_PARK_OVERRIDE: PcdInstallAcpiSdtProtocol
+gEfiMdeModulePkgTokenSpaceGuid.PcdInstallAcpiSdtProtocol|TRUE|BOOLEAN|0x0001004d
+
+[PcdsFixedAtBuild, PcdsPatchableInModule]
+##
+## PcdSmbiosOemTypeFirmwareVersionInfo determines the SMBIOS OEM type (0x80 to 0xFF) defined in SMBIOS,
+## values 0-0x7F will be treated as disable FVI reporting.
+## FVI structure uses it as SMBIOS OEM type to provide version information.
+##
+gClientCommonModuleTokenSpaceGuid.PcdSmbiosOemTypeFirmwareVersionInfo|0xDD|UINT8|0x20000001
+
+## Major Version from BaileyPark.
+gClientCommonModuleTokenSpaceGuid.PcdClientCommonVersionMajor|0x01|UINT8|0x20000002
+## Minor Version from BaileyPark.
+gClientCommonModuleTokenSpaceGuid.PcdClientCommonVersionMinor|0x06|UINT8|0x20000003
+## Revision from BaileyPark.
+gClientCommonModuleTokenSpaceGuid.PcdClientCommonVersionRevision|0x01|UINT8|0x20000004
+## Build Number from BaileyPark.
+gClientCommonModuleTokenSpaceGuid.PcdClientCommonVersionBuild|0x00|UINT8|0x20000005
+## Release Candidate Number from BaileyPark.
+gClientCommonModuleTokenSpaceGuid.PcdClientCommonVersionRCRev|0xFF|UINT8|0x20000006
+## Revision of RoyalPark.
+gClientCommonModuleTokenSpaceGuid.PcdClientCommonVersionRoyalParkBuild|0x01|UINT8|0x20000007
+
+## Complete RoyalPark version in string format.
+gClientCommonModuleTokenSpaceGuid.PcdClientCommonVersionString|"BP1520_Formal_P01_RP01"|VOID*|0x20000008
+
+gEfiMdeModulePkgTokenSpaceGuid.PcdMaxPeiPerformanceLogEntriesPerHob|10|UINT8|0x20000009
+
+[PcdsFixedAtBuild, PcdsPatchableInModule, PcdsDynamic, PcdsDynamicEx]
+  ## This PCD defines initial setting of TCG2 Persistent Firmware Management Flags
+  # PCD can be configured for different settings in different scenarios
+  # Default setting is TCG2_BIOS_TPM_MANAGEMENT_FLAG_DEFAULT | TCG2_BIOS_STORAGE_MANAGEMENT_FLAG_DEFAULT
+  # @Prompt Initial setting of TCG2 Persistent Firmware Management Flags
+  # Enabled PPI for PPRequiredForTurnOff, PPRequiredForChangeEPS, PPRequiredForChangePCRs, PPRequiredForEnable_BlockSIDFunc, PPRequiredForDisable_BlockSIDFunc
+  gEfiSecurityPkgTokenSpaceGuid.PcdTcg2PhysicalPresenceFlags|0x300E0|UINT32|0x0001001B

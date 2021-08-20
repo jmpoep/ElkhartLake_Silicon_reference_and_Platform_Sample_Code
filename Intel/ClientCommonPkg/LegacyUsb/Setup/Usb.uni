@@ -1,0 +1,130 @@
+/**@file
+
+ @copyright
+  INTEL CONFIDENTIAL
+  Copyright 2009 - 2019 Intel Corporation.
+
+  The source code contained or described herein and all documents related to the
+  source code ("Material") are owned by Intel Corporation or its suppliers or
+  licensors. Title to the Material remains with Intel Corporation or its suppliers
+  and licensors. The Material may contain trade secrets and proprietary and
+  confidential information of Intel Corporation and its suppliers and licensors,
+  and is protected by worldwide copyright and trade secret laws and treaty
+  provisions. No part of the Material may be used, copied, reproduced, modified,
+  published, uploaded, posted, transmitted, distributed, or disclosed in any way
+  without Intel's prior express written permission.
+
+  No license under any patent, copyright, trade secret or other intellectual
+  property right is granted to or conferred upon you by disclosure or delivery
+  of the Materials, either expressly, by implication, inducement, estoppel or
+  otherwise. Any license under such intellectual property rights must be
+  express and approved by Intel in writing.
+
+  Unless otherwise agreed by Intel in writing, you may not remove or alter
+  this notice or any other notice embedded in Materials by Intel or
+  Intel's suppliers or licensors in any way.
+
+  This file contains 'Framework Code' and is licensed as such under the terms
+  of your license agreement with Intel or your vendor. This file may not be
+  modified, except as allowed by additional terms of your license agreement.
+
+@par Specification
+**/
+/=#
+#include "VFR.uni"
+
+#string STR_USB_CONFIGURATION                        #language en-US "LEGACY USB Configuration"
+#string STR_USB_CONFIGURATION_HELP                   #language en-US "LEGACY USB Configuration Parameters"
+#string STR_USB_SUPPORT                              #language en-US "USB Support"
+#string STR_USB_SUPPORT_HELP                         #language en-US "USB Support Parameters"
+#string STR_USB_XHCI_SUPPORT                         #language en-US "XHCI Legacy Support"
+#string STR_USB_XHCI_SUPPORT_HELP                    #language en-US "Enable/Disable XHCI Controller Legacy support."
+#string STR_USB_ENABLED                              #language en-US "Enabled"
+#string STR_USB_DISABLED                             #language en-US "Disabled"
+#string STR_USB_AUTO                                 #language en-US "Auto"
+#string STR_USB_MODULE_VERSION_VALUE                 #language en-US "N/A"
+#string STR_USB_CONTROLLERS_ENABLED                  #language en-US "USB Controllers:"
+#string STR_USB_CONTROLLERS_ENABLED_LIST             #language en-US "N/A" //dynamically updated
+#string STR_USB_DEVICES_ENABLED                      #language en-US "USB Devices:"
+#string STR_USB_DEVICES_ENABLED_LIST                 #language en-US "N/A" //dynamically updated
+#string STR_USB_LEGACY_SUPPORT                       #language en-US "Legacy USB Support"
+#string STR_USB_LEGACY_SUPPORT_HELP                  #language en-US "Enables Legacy USB support. AUTO option disables legacy support if no USB devices are connected. DISABLE option will keep USB devices available only for EFI applications."
+#string STR_USB_LEGACY_SUPPORT_HELP1                 #language en-US "Enables Legacy USB support. AUTO option disables legacy support if no USB devices are connected."
+#string STR_USB_ODD_LEGACY_BOOT_SUPPORT              #language en-US "USB ODD Legacy Boot Support"
+#string STR_USB_ODD_LEGACY_BOOT_SUPPORT_HELP         #language en-US "This W/A for SMM protection, BIOS need to pre-allocate memory for Usb ODD boot, but it will break memory continuity under 640KB, big option rom can't install, so default disable to keep memory continuity under 640KB, "
+#string STR_USB_LEGACY_FREE_DOS_BOOT_SUPPORT         #language en-US "USB Legacy Free Dos Support"
+#string STR_USB_LEGACY_FREE_DOS_BOOT_SUPPORT_HELP    #language en-US "This W/A for SMM protection, BIOS need to pre-allocate memory for Usb Free Dos boot"
+#string STR_USB_BIOS_XHCI_HANDOFF                    #language en-US "XHCI Hand-off"
+#string STR_USB_BIOS_XHCI_HANDOFF_HELP               #language en-US "This is a workaround for OSes without XHCI hand-off support. The XHCI ownership change should be claimed by XHCI driver."
+#string STR_USB_BIOS_EHCI_HANDOFF                    #language en-US "EHCI Hand-off"
+#string STR_USB_BIOS_EHCI_HANDOFF_HELP               #language en-US "This is a workaround for OSes without EHCI hand-off support. The EHCI ownership change should be claimed by EHCI driver."
+#string STR_USB_BIOS_OHCI_HANDOFF                    #language en-US "OHCI Hand-off"
+#string STR_USB_BIOS_OHCI_HANDOFF_HELP               #language en-US "This is a workaround for OSes without OHCI hand-off support. The OHCI ownership change should be claimed by OHCI driver."
+#string STR_USB_HOTPLUG_FDD                          #language en-US "Hotplug USB FDD"
+#string STR_USB_HOTPLUG_FDD_HELP                     #language en-US "A dummy FDD device is created that will be associated with the hot-plugged FDD later. AUTO option creates this dummy device only if there is no USB FDD present."
+#string STR_USB_HOTPLUG_HDD                          #language en-US "Hotplug USB HDD"
+#string STR_USB_HOTPLUG_HDD_HELP                     #language en-US "A dummy HDD device is created that will be associated with the hot-plugged HDD later. AUTO option creates this dummy device only if there is no USB HDD present."
+#string STR_USB_HOTPLUG_CDROM                        #language en-US "Hotplug USB CD-ROM"
+#string STR_USB_HOTPLUG_CDROM_HELP                   #language en-US "A dummy CDROM device is created that will be associated with the hot-plugged CDROM later. AUTO option creates this dummy device only if there is no USB CDROM present."
+#string STR_USB_MASS_DEVICE_CONFIG                   #language en-US "USB Mass Storage Device Configuration"
+#string STR_USB_MASS_DEVICE_CONFIG_HELP              #language en-US "Configure the USB Mass Storage Devices."
+#string STR_USB_DELAYS                               #language en-US "USB hardware delays and time-outs:"
+#string STR_USB_MASS_RESET_DELAY                     #language en-US "Device reset time-out"
+#string STR_USB_MASS_RESET_DELAY_HELP                #language en-US "USB mass storage device Start Unit command time-out."
+#string STR_USB_CONTROL_TIME_OUT                     #language en-US "USB transfer time-out"
+#string STR_USB_CONTROL_TIME_OUT_HELP                #language en-US "The time-out value for Control, Bulk, and Interrupt transfers."
+#string STR_USB_POWERGOOD_DELAY                      #language en-US "Device power-up delay"
+#string STR_USB_POWERGOOD_DELAY_HELP                 #language en-US "Maximum time the device will take before it properly reports itself to the Host Controller. 'Auto' uses default value: for a Root port it is 100 ms, for a Hub port the delay is taken from Hub descriptor."
+#string STR_USB_DELAY_VALUE                          #language en-US "Manual"
+#string STR_USB_DELAY_NUM_VALUE                      #language en-US "Device power-up delay in seconds"
+#string STR_USB_DELAY_NUM_VALUE_HELP                 #language en-US "Delay range is 1..40 seconds, in one second increments"
+#string STR_USB_DELAY_01                             #language en-US "1 sec"
+#string STR_USB_DELAY_05                             #language en-US "5 sec"
+#string STR_USB_DELAY_06                             #language en-US "6 sec"
+#string STR_USB_DELAY_07                             #language en-US "7 sec"
+#string STR_USB_DELAY_08                             #language en-US "8 sec"
+#string STR_USB_DELAY_09                             #language en-US "9 sec"
+#string STR_USB_DELAY_10                             #language en-US "10 sec"
+#string STR_USB_DELAY_20                             #language en-US "20 sec"
+#string STR_USB_DELAY_30                             #language en-US "30 sec"
+#string STR_USB_DELAY_40                             #language en-US "40 sec"
+#string STR_USB_MASS_DEVICE1                         #language en-US "N/A"
+#string STR_USB_MASS_DEVICE2                         #language en-US "N/A"
+#string STR_USB_MASS_DEVICE3                         #language en-US "N/A"
+#string STR_USB_MASS_DEVICE4                         #language en-US "N/A"
+#string STR_USB_MASS_DEVICE5                         #language en-US "N/A"
+#string STR_USB_MASS_DEVICE6                         #language en-US "N/A"
+#string STR_USB_MASS_DEVICE7                         #language en-US "N/A"
+#string STR_USB_MASS_DEVICE8                         #language en-US "N/A"
+#string STR_USB_MASS_DEVICE9                         #language en-US "N/A"
+#string STR_USB_MASS_DEVICE10                        #language en-US "N/A"
+#string STR_USB_MASS_DEVICE11                        #language en-US "N/A"
+#string STR_USB_MASS_DEVICE12                        #language en-US "N/A"
+#string STR_USB_MASS_DEVICE13                        #language en-US "N/A"
+#string STR_USB_MASS_DEVICE14                        #language en-US "N/A"
+#string STR_USB_MASS_DEVICE15                        #language en-US "N/A"
+#string STR_USB_MASS_DEVICE16                        #language en-US "N/A"
+#string STR_USB_EMULATION                            #language en-US "Mass Storage Devices:"
+#string STR_USB_EMUL_FLOPPY                          #language en-US "Floppy"
+#string STR_USB_EMUL_FORCED_FDD                      #language en-US "Forced FDD"
+#string STR_USB_EMUL_HDD                             #language en-US "Hard Disk"
+#string STR_USB_EMUL_CDROM                           #language en-US "CD-ROM"
+#string STR_USB_EMULATION_TYPE_HELP                  #language en-US "Mass storage device emulation type. 'AUTO' enumerates devices less than 530MB as floppies. Forced FDD option can be used to force HDD formatted drive to boot as FDD (e.g. ZIP drive)."
+#string STR_USB_EMULATION_TYPE_HELP1                 #language en-US "Mass storage device emulation type. 'AUTO' enumerates devices according to their media format. Optical drives are emulated as 'CDROM', drives with no media will be emulated according to a drive type."
+#string STR_USB_6064                                 #language en-US "Port 60/64 Emulation"
+#string STR_USB_6064_HELP                            #language en-US "Enables I/O port 60h/64h emulation support. This should be enabled for the complete USB keyboard legacy support for non-USB aware OSes."
+#string STR_USB_HISPEED_SUPPORT                      #language en-US "USB 2.0 Controller Mode"
+#string STR_USB_HISPEED_SUPPORT_HELP                 #language en-US "Configures the USB 2.0 controller in HiSpeed (480Mbps) or FullSpeed (12Mbps)."
+#string STR_USB_HISPEED                              #language en-US "HiSpeed"
+#string STR_USB_FULLSPEED                            #language en-US "FullSpeed"
+#string STR_USB_MASS_DRIVER_SUPPORT                  #language en-US "USB Mass Storage Driver Support"
+#string STR_USB_MASS_DRIVER_SUPPORT_HELP             #language en-US "Enable/Disable USB Mass Storage Driver Support."
+#string STR_USB_MODULE_VER                           #language en-US "00.00"
+#string STR_USB_MODULE_VER_HELP                      #language en-US "USB Module Version"
+#string STR_USB_S5_WAKEUP_SUPPORT                    #language en-US "USB S5 Wakeup Support"
+#string STR_USB_S5_WAKEUP_SUPPORT_HELP               #language en-US "Enable/Disable USB S5 Wakeup Support."
+
+#string STR_USB_VIDEO_TITLE                          #language en-US "USB Camera"
+#string STR_USB_VIDEO_TITLE_HELP                     #language en-US "USB Video Class (UVC) compliant camera settings"
+
+

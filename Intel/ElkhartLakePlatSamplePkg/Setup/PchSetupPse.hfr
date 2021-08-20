@@ -1,0 +1,985 @@
+/** @file
+
+@copyright
+  INTEL CONFIDENTIAL
+  Copyright 2018 - 2020 Intel Corporation.
+
+  The source code contained or described herein and all documents related to the
+  source code ("Material") are owned by Intel Corporation or its suppliers or
+  licensors. Title to the Material remains with Intel Corporation or its suppliers
+  and licensors. The Material may contain trade secrets and proprietary and
+  confidential information of Intel Corporation and its suppliers and licensors,
+  and is protected by worldwide copyright and trade secret laws and treaty
+  provisions. No part of the Material may be used, copied, reproduced, modified,
+  published, uploaded, posted, transmitted, distributed, or disclosed in any way
+  without Intel's prior express written permission.
+
+  No license under any patent, copyright, trade secret or other intellectual
+  property right is granted to or conferred upon you by disclosure or delivery
+  of the Materials, either expressly, by implication, inducement, estoppel or
+  otherwise. Any license under such intellectual property rights must be
+  express and approved by Intel in writing.
+
+  Unless otherwise agreed by Intel in writing, you may not remove or alter
+  this notice or any other notice embedded in Materials by Intel or
+  Intel's suppliers or licensors in any way.
+
+  This file contains a 'Sample Driver' and is licensed as such under the terms
+  of your license agreement with Intel or your vendor. This file may be modified
+  by the user, subject to the additional terms of the license agreement.
+
+@par Specification
+**/
+
+#include "PchPseStringPool.hfr"
+
+form formid = AUTO_ID(PSE_OPTIONS_FORM_ID),
+  title = STRING_TOKEN(STR_PSE_OPTIONS_FORM_TITLE);
+  oneof varid  = PCH_SETUP.PchPseEnable,
+    prompt   = STRING_TOKEN(STR_PSE_PROMPT),
+    help     = STRING_TOKEN(STR_PSE_HELP),
+    option text = STRING_TOKEN(STR_DISABLED), value = 0, flags = RESET_REQUIRED;
+    option text = STRING_TOKEN(STR_ENABLED), value = 1, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+  endoneof;
+
+  suppressif ideqval PCH_SETUP.PchPseEnable == 0;
+    oneof varid  = PCH_SETUP.PchPseI2s0PinAssignment,
+      prompt   = STRING_TOKEN(STR_PSE_I2S0_PIN_ASSIGNMENT_PROMPT),
+      help     = STRING_TOKEN(STR_PSE_I2S0_PIN_ASSIGNMENT_HELP),
+      option text = STRING_TOKEN(STR_GROUP_E), value = 0, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_GROUP_R), value = 1, flags = RESET_REQUIRED;
+    endoneof;
+
+    grayoutif TRUE;
+      numeric varid = PCH_SETUP.PchPseLogOutputChannel,
+        prompt      = STRING_TOKEN(STR_PSE_LOG_OUTPUT_CHANNEL_PROMPT),
+        help        = STRING_TOKEN(STR_PSE_LOG_OUTPUT_CHANNEL_HELP),
+        flags       = RESET_REQUIRED,
+        minimum     = 0,
+        maximum     = 7,
+        step        = 1,
+        default     = 3,
+      endnumeric;
+    endif;
+
+    numeric varid = PCH_SETUP.PchPseLogOutputOffset,
+      prompt      = STRING_TOKEN(STR_PSE_LOG_OUTPUT_OFFSET_PROMPT),
+      help        = STRING_TOKEN(STR_PSE_LOG_OUTPUT_OFFSET_HELP),
+      flags       = RESET_REQUIRED | DISPLAY_UINT_HEX,
+      minimum     = 0,
+      maximum     = 0xFFFF,
+      step        = 1,
+      default     = 0,
+    endnumeric;
+
+    numeric varid = PCH_SETUP.PchPseLogOutputSize,
+      prompt      = STRING_TOKEN(STR_PSE_LOG_OUTPUT_SIZE_PROMPT),
+      help        = STRING_TOKEN(STR_PSE_LOG_OUTPUT_SIZE_HELP),
+      flags       = RESET_REQUIRED | DISPLAY_UINT_HEX,
+      minimum     = 0,
+      maximum     = 0xFFFF,
+      step        = 1,
+      default     = 0,
+    endnumeric;
+
+    checkbox varid  = PCH_SETUP.PchPseJtagEnabled,
+      prompt   = STRING_TOKEN(STR_PSE_JTAG_ENABLED_PROMPT),
+      help     = STRING_TOKEN(STR_PSE_JTAG_ENABLED_HELP),
+      flags    = 0 | RESET_REQUIRED,
+      key      = 0,
+      default  = FALSE,
+    endcheckbox;
+
+    grayoutif ideqval PCH_SETUP.SciPinMuxEnable == 1;
+      oneof varid  = PCH_SETUP.PchPseJtagPinMux,
+        prompt   = STRING_TOKEN(STR_PSE_JTAG_PINMUX_PROMPT),
+        help     = STRING_TOKEN(STR_PSE_JTAG_PINMUX_HELP),
+        option text = STRING_TOKEN(STR_DISABLED), value = 0, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_ENABLED), value = 1, flags = RESET_REQUIRED;
+      endoneof;
+    endif;
+  endif;
+
+  suppressif ideqval PCH_SETUP.PchPseEnable == 0;
+  // PSE GPIO Assignment
+  //
+  // Reason to include PchPseStringPool.hfr is the same as for PchPcieStringPool.hfr
+  //
+  text
+     help   = STRING_TOKEN(STR_PSE_GPIO_ASSIGN_HELP),
+     text   = STRING_TOKEN(STR_PSE_GPIO_ASSIGN_TITLE),
+     flags  = 0,
+     key    = 0;
+
+    grayoutif ideqval PCH_SETUP.PchPseCanEnable[0]>= 1 OR
+              ideqval PCH_SETUP.PchPseCanEnable[1]>= 1 OR
+              ideqval PCH_SETUP.PchPseTgpioPinEnable[14] == 1 OR
+              ideqval PCH_SETUP.PchPseTgpioPinEnable[15] == 1 OR
+              ideqval PCH_SETUP.PchPseTgpioPinEnable[16] == 1 OR
+              ideqval PCH_SETUP.PchPseTgpioPinEnable[17] == 1;
+      oneof varid  = PCH_SETUP.PchPseI2sEnable[0],
+        prompt   = STRING_TOKEN(STR_PSE_GPIO_I2S0_PROMPT),
+        help     = STRING_TOKEN(STR_PSE_GPIO_I2S_ASSIGN_HELP),
+        default = 0, defaultstore = MyStandardDefault,
+          option text = STRING_TOKEN(STR_NONE_PSE), value = 0, flags = RESET_REQUIRED;
+          option text = STRING_TOKEN(STR_PSE_OWNED), value = 1, flags = RESET_REQUIRED;
+          option text = STRING_TOKEN(STR_HOST_OWNED), value = 2, flags = RESET_REQUIRED;
+      endoneof;
+    endif;
+
+    oneof varid  = PCH_SETUP.PchPseI2sEnable[1],
+      prompt   = STRING_TOKEN(STR_PSE_GPIO_I2S1_PROMPT),
+      help     = STRING_TOKEN(STR_PSE_GPIO_I2S_ASSIGN_HELP),
+      default = 0, defaultstore = MyStandardDefault,
+        option text = STRING_TOKEN(STR_NONE_PSE), value = 0, flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_PSE_OWNED), value = 1, flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_HOST_OWNED), value = 2, flags = RESET_REQUIRED;
+    endoneof;
+
+    oneof varid  = PCH_SETUP.PchPsePwmEnable,
+      prompt   = STRING_TOKEN(STR_PSE_GPIO_PWM_PROMPT),
+      help     = STRING_TOKEN(STR_PSE_GPIO_PWM_ASSIGN_HELP),
+      default = 1, defaultstore = MyStandardDefault,
+        option text = STRING_TOKEN(STR_NONE_PSE), value = 0, flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_PSE_OWNED), value = 1, flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_HOST_OWNED), value = 2, flags = RESET_REQUIRED;
+    endoneof;
+
+    suppressif ideqval PCH_SETUP.PchPsePwmEnable == 0;
+      goto PCH_PSE_PWM_PIN_MUX_FORM_ID,
+        prompt = STRING_TOKEN(STR_PSE_PWM_PIN_MUX_OPTIONS_FORM_TITLE),
+        help = STRING_TOKEN(STR_PSE_PWM_PIN_MUX_OPTIONS_FORM_HELP);
+    endif;
+
+    oneof varid  = PCH_SETUP.PchPseUartEnable[0],
+      prompt   = STRING_TOKEN(STR_PSE_GPIO_UART0_PROMPT),
+      help     = STRING_TOKEN(STR_PSE_GPIO_UART_ASSIGN_HELP),
+      default = 1, defaultstore = MyStandardDefault,
+        option text = STRING_TOKEN(STR_NONE_PSE), value = 0, flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_PSE_OWNED), value = 1, flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_HOST_OWNED), value = 2, flags = RESET_REQUIRED;
+    endoneof;
+
+    oneof varid  = PCH_SETUP.PchPseHsuartEnable[0],
+      prompt   = STRING_TOKEN(STR_PSE_GPIO_HSUART0_PROMPT),
+      help     = STRING_TOKEN(STR_PSE_GPIO_HSUART_ASSIGN_HELP),
+      default = 1, defaultstore = MyStandardDefault,
+        option text = STRING_TOKEN(STR_NONE_PSE), value = 0, flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_PSE_OWNED), value = 1, flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_HOST_OWNED), value = 2, flags = RESET_REQUIRED;
+    endoneof;
+
+    grayoutif ideqval PCH_SETUP.PchPseTgpioPinEnable[51] == 1 OR
+              ideqval PCH_SETUP.PchPseTgpioPinEnable[52] == 1 OR
+              ideqval PCH_SETUP.PchPseTgpioPinEnable[54] == 1 OR
+              ideqval PCH_SETUP.PchPseTgpioPinEnable[56] == 1;
+      oneof varid  = PCH_SETUP.PchPseUartEnable[1],
+        prompt   = STRING_TOKEN(STR_PSE_GPIO_UART1_PROMPT),
+        help     = STRING_TOKEN(STR_PSE_GPIO_UART_ASSIGN_HELP),
+        default = 1, defaultstore = MyStandardDefault,
+          option text = STRING_TOKEN(STR_NONE_PSE), value = 0, flags = RESET_REQUIRED;
+          option text = STRING_TOKEN(STR_PSE_OWNED), value = 1, flags = RESET_REQUIRED;
+          option text = STRING_TOKEN(STR_HOST_OWNED), value = 2, flags = RESET_REQUIRED;
+      endoneof;
+    endif;
+
+    grayoutif ideqval PCH_SETUP.PchPseTgpioPinEnable[56] == 1 OR
+              ideqval PCH_SETUP.PchPseTgpioPinEnable[57] == 1 OR
+              ideqval PCH_SETUP.PchPseTgpioPinEnable[58] == 1;
+      oneof varid  = PCH_SETUP.PchPseHsuartEnable[1],
+        prompt   = STRING_TOKEN(STR_PSE_GPIO_HSUART1_PROMPT),
+        help     = STRING_TOKEN(STR_PSE_GPIO_HSUART_ASSIGN_HELP),
+        default = 1, defaultstore = MyStandardDefault,
+          option text = STRING_TOKEN(STR_NONE_PSE), value = 0, flags = RESET_REQUIRED;
+          option text = STRING_TOKEN(STR_PSE_OWNED), value = 1, flags = RESET_REQUIRED;
+          option text = STRING_TOKEN(STR_HOST_OWNED), value = 2, flags = RESET_REQUIRED;
+      endoneof;
+    endif;
+
+    suppressif TRUE;
+      oneof varid  = PCH_SETUP.PchPseUartEnable[2],
+        prompt   = STRING_TOKEN(STR_PSE_GPIO_UART2_PROMPT),
+        help     = STRING_TOKEN(STR_PSE_GPIO_UART_ASSIGN_HELP),
+        default = 1, defaultstore = MyStandardDefault,
+          option text = STRING_TOKEN(STR_NONE_PSE), value = 0, flags = RESET_REQUIRED;
+          option text = STRING_TOKEN(STR_PSE_OWNED), value = 1, flags = RESET_REQUIRED;
+          option text = STRING_TOKEN(STR_HOST_OWNED), value = 2, flags = RESET_REQUIRED;
+      endoneof;
+
+      oneof varid  = PCH_SETUP.PchPseHsuartEnable[2],
+        prompt   = STRING_TOKEN(STR_PSE_GPIO_HSUART2_PROMPT),
+        help     = STRING_TOKEN(STR_PSE_GPIO_HSUART_ASSIGN_HELP),
+        default = 1, defaultstore = MyStandardDefault,
+          option text = STRING_TOKEN(STR_NONE_PSE), value = 0, flags = RESET_REQUIRED;
+          option text = STRING_TOKEN(STR_PSE_OWNED), value = 1, flags = RESET_REQUIRED;
+          option text = STRING_TOKEN(STR_HOST_OWNED), value = 2, flags = RESET_REQUIRED;
+      endoneof;
+    endif;
+
+    grayoutif ideqval PCH_SETUP.PchPseGbeEnable[0] >= 1 OR
+              ideqval PCH_SETUP.PchPseGbeEnable[1] >= 1 OR
+              ideqval PCH_SETUP.PchPsePwmPinEnable[1] == 1 OR
+              ideqval PCH_SETUP.PchPseTgpioPinEnable[30] == 1;
+      oneof varid  = PCH_SETUP.PchPseUartEnable[3],
+        prompt   = STRING_TOKEN(STR_PSE_GPIO_UART3_PROMPT),
+        help     = STRING_TOKEN(STR_PSE_GPIO_UART3_ASSIGN_HELP),
+        default = 0, defaultstore = MyStandardDefault,
+          option text = STRING_TOKEN(STR_NONE_PSE), value = 0, flags = RESET_REQUIRED;
+          option text = STRING_TOKEN(STR_PSE_OWNED), value = 1, flags = RESET_REQUIRED;
+          option text = STRING_TOKEN(STR_HOST_OWNED), value = 2, flags = RESET_REQUIRED;
+      endoneof;
+    endif;
+
+    grayoutif ideqval PCH_SETUP.PchPseGbeEnable[0] >= 1 OR
+              ideqval PCH_SETUP.PchPseGbeEnable[1] >= 1;
+      oneof varid  = PCH_SETUP.PchPseHsuartEnable[3],
+        prompt   = STRING_TOKEN(STR_PSE_GPIO_HSUART3_PROMPT),
+        help     = STRING_TOKEN(STR_PSE_GPIO_HSUART_ASSIGN_HELP),
+        default = 0, defaultstore = MyStandardDefault,
+          option text = STRING_TOKEN(STR_NONE_PSE), value = 0, flags = RESET_REQUIRED;
+          option text = STRING_TOKEN(STR_PSE_OWNED), value = 1, flags = RESET_REQUIRED;
+          option text = STRING_TOKEN(STR_HOST_OWNED), value = 2, flags = RESET_REQUIRED;
+      endoneof;
+    endif;
+
+    oneof varid  = PCH_SETUP.PchPseUartEnable[4],
+      prompt   = STRING_TOKEN(STR_PSE_GPIO_UART4_PROMPT),
+      help     = STRING_TOKEN(STR_PSE_GPIO_UART_ASSIGN_HELP),
+      default = 0, defaultstore = MyStandardDefault,
+        option text = STRING_TOKEN(STR_NONE_PSE), value = 0, flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_PSE_OWNED), value = 1, flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_HOST_OWNED), value = 2, flags = RESET_REQUIRED;
+    endoneof;
+
+    grayoutif ideqval PCH_SETUP.PchPseGbeEnable[1] >= 1;
+      oneof varid  = PCH_SETUP.PchPseUartEnable[5],
+        prompt   = STRING_TOKEN(STR_PSE_GPIO_UART5_PROMPT),
+        help     = STRING_TOKEN(STR_PSE_GPIO_UART_ASSIGN_HELP),
+        default = 0, defaultstore = MyStandardDefault,
+          option text = STRING_TOKEN(STR_NONE_PSE), value = 0, flags = RESET_REQUIRED;
+          option text = STRING_TOKEN(STR_PSE_OWNED), value = 1, flags = RESET_REQUIRED;
+          option text = STRING_TOKEN(STR_HOST_OWNED), value = 2, flags = RESET_REQUIRED;
+      endoneof;
+    endif;
+
+    grayoutif ideqval PCH_SETUP.PchPseSpiEnable[1] >= 1 OR
+              ideqval PCH_SETUP.PchPseTgpioPinEnable[32] == 1 OR
+              ideqval PCH_SETUP.PchPseTgpioPinEnable[33] == 1 OR
+              ideqval PCH_SETUP.PchPseTgpioPinEnable[34] == 1;
+      oneof varid  = PCH_SETUP.PchPseQepEnable[0],
+        prompt   = STRING_TOKEN(STR_PSE_GPIO_QEP0_PROMPT),
+        help     = STRING_TOKEN(STR_PSE_GPIO_QEP_ASSIGN_HELP),
+        default = 0, defaultstore = MyStandardDefault,
+          option text = STRING_TOKEN(STR_NONE_PSE), value = 0, flags = RESET_REQUIRED;
+          option text = STRING_TOKEN(STR_PSE_OWNED), value = 1, flags = RESET_REQUIRED;
+          option text = STRING_TOKEN(STR_HOST_OWNED), value = 2, flags = RESET_REQUIRED;
+      endoneof;
+    endif;
+
+    grayoutif ideqval PCH_SETUP.PchPseTgpioPinEnable[37] == 1 OR
+              ideqval PCH_SETUP.PchPseTgpioPinEnable[38] == 1 OR
+              ideqval PCH_SETUP.PchPseTgpioPinEnable[40] == 1;
+      oneof varid  = PCH_SETUP.PchPseQepEnable[1],
+        prompt   = STRING_TOKEN(STR_PSE_GPIO_QEP1_PROMPT),
+        help     = STRING_TOKEN(STR_PSE_GPIO_QEP_ASSIGN_HELP),
+        default = 0, defaultstore = MyStandardDefault,
+          option text = STRING_TOKEN(STR_NONE_PSE), value = 0, flags = RESET_REQUIRED;
+          option text = STRING_TOKEN(STR_PSE_OWNED), value = 1, flags = RESET_REQUIRED;
+          option text = STRING_TOKEN(STR_HOST_OWNED), value = 2, flags = RESET_REQUIRED;
+      endoneof;
+    endif;
+
+    grayoutif ideqval PCH_SETUP.PchPseTgpioPinEnable[7] == 1 OR
+              ideqval PCH_SETUP.PchPseTgpioPinEnable[8] == 1 OR
+              ideqval PCH_SETUP.PchPseTgpioPinEnable[9] == 1;
+      oneof varid  = PCH_SETUP.PchPseQepEnable[2],
+        prompt   = STRING_TOKEN(STR_PSE_GPIO_QEP2_PROMPT),
+        help     = STRING_TOKEN(STR_PSE_GPIO_QEP_ASSIGN_HELP),
+        default = 0, defaultstore = MyStandardDefault,
+          option text = STRING_TOKEN(STR_NONE_PSE), value = 0, flags = RESET_REQUIRED;
+          option text = STRING_TOKEN(STR_PSE_OWNED), value = 1, flags = RESET_REQUIRED;
+          option text = STRING_TOKEN(STR_HOST_OWNED), value = 2, flags = RESET_REQUIRED;
+      endoneof;
+    endif;
+
+    grayoutif ideqval PCH_SETUP.PchPseSpiEnable[1] >= 1 OR
+              ideqval PCH_SETUP.PchPseTgpioPinEnable[10] == 1 OR
+              ideqval PCH_SETUP.PchPseTgpioPinEnable[11] == 1 OR
+              ideqval PCH_SETUP.PchPseTgpioPinEnable[12] == 1;
+      oneof varid  = PCH_SETUP.PchPseQepEnable[3],
+        prompt   = STRING_TOKEN(STR_PSE_GPIO_QEP3_PROMPT),
+        help     = STRING_TOKEN(STR_PSE_GPIO_QEP_ASSIGN_HELP),
+        default = 0, defaultstore = MyStandardDefault,
+          option text = STRING_TOKEN(STR_NONE_PSE), value = 0, flags = RESET_REQUIRED;
+          option text = STRING_TOKEN(STR_PSE_OWNED), value = 1, flags = RESET_REQUIRED;
+          option text = STRING_TOKEN(STR_HOST_OWNED), value = 2, flags = RESET_REQUIRED;
+      endoneof;
+    endif;
+
+    grayoutif ideqval PCH_SETUP.PchPseTgpioPinEnable[6] == 1 OR
+              ideqval PCH_SETUP.PchPseTgpioPinEnable[7] == 1;
+      oneof varid  = PCH_SETUP.PchPseI2cEnable[0],
+        prompt   = STRING_TOKEN(STR_PSE_GPIO_I2C0_PROMPT),
+        help     = STRING_TOKEN(STR_PSE_GPIO_I2C_ASSIGN_HELP),
+        default = 0, defaultstore = MyStandardDefault,
+          option text = STRING_TOKEN(STR_NONE_PSE), value = 0, flags = RESET_REQUIRED;
+          option text = STRING_TOKEN(STR_PSE_OWNED), value = 1, flags = RESET_REQUIRED;
+          option text = STRING_TOKEN(STR_HOST_OWNED), value = 2, flags = RESET_REQUIRED;
+      endoneof;
+    endif;
+
+    grayoutif ideqval PCH_SETUP.PchPseTgpioPinEnable[8] == 1 OR
+              ideqval PCH_SETUP.PchPseTgpioPinEnable[9] == 1;
+      oneof varid  = PCH_SETUP.PchPseI2cEnable[1],
+        prompt   = STRING_TOKEN(STR_PSE_GPIO_I2C1_PROMPT),
+        help     = STRING_TOKEN(STR_PSE_GPIO_I2C_ASSIGN_HELP),
+        default = 0, defaultstore = MyStandardDefault,
+          option text = STRING_TOKEN(STR_NONE_PSE), value = 0, flags = RESET_REQUIRED;
+          option text = STRING_TOKEN(STR_PSE_OWNED), value = 1, flags = RESET_REQUIRED;
+          option text = STRING_TOKEN(STR_HOST_OWNED), value = 2, flags = RESET_REQUIRED;
+      endoneof;
+    endif;
+
+    grayoutif TRUE;
+      oneof varid  = PCH_SETUP.PchPseI2cEnable[2],
+        prompt   = STRING_TOKEN(STR_PSE_GPIO_I2C2_PROMPT),
+        help     = STRING_TOKEN(STR_PSE_ECLITE_RESERVED_ASSIGN_HELP),
+        default = 1, defaultstore = MyStandardDefault,
+          option text = STRING_TOKEN(STR_NONE_PSE), value = 0, flags = RESET_REQUIRED;
+          option text = STRING_TOKEN(STR_PSE_OWNED), value = 1, flags = RESET_REQUIRED;
+          option text = STRING_TOKEN(STR_HOST_OWNED), value = 2, flags = RESET_REQUIRED;
+      endoneof;
+    endif;
+
+    // PSE I2C3 share same pin with SMBUS, default hidden the option to avoid SMBUS not working after S3.
+    suppressif TRUE;
+      grayoutif ideqval PCH_SETUP.PchPseTgpioPinEnable[18] == 1 OR
+                ideqval PCH_SETUP.PchPseTgpioPinEnable[19] == 1;
+        oneof varid  = PCH_SETUP.PchPseI2cEnable[3],
+          prompt   = STRING_TOKEN(STR_PSE_GPIO_I2C3_PROMPT),
+          help     = STRING_TOKEN(STR_PSE_GPIO_I2C_ASSIGN_HELP),
+          default = 0, defaultstore = MyStandardDefault,
+            option text = STRING_TOKEN(STR_NONE_PSE), value = 0, flags = RESET_REQUIRED;
+            option text = STRING_TOKEN(STR_PSE_OWNED), value = 1, flags = RESET_REQUIRED;
+            option text = STRING_TOKEN(STR_HOST_OWNED), value = 2, flags = RESET_REQUIRED;
+        endoneof;
+      endif;
+    endif;
+
+    oneof varid  = PCH_SETUP.PchPseI2cEnable[4],
+      prompt   = STRING_TOKEN(STR_PSE_GPIO_I2C4_PROMPT),
+      help     = STRING_TOKEN(STR_PSE_GPIO_I2C_ASSIGN_HELP),
+      default = 0, defaultstore = MyStandardDefault,
+        option text = STRING_TOKEN(STR_NONE_PSE), value = 0, flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_PSE_OWNED), value = 1, flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_HOST_OWNED), value = 2, flags = RESET_REQUIRED;
+    endoneof;
+
+    grayoutif ideqval PCH_SETUP.PchPsePwmPinEnable[10] == 1 OR
+              ideqval PCH_SETUP.PchPsePwmPinEnable[11] == 1;
+      oneof varid  = PCH_SETUP.PchPseI2cEnable[5],
+        prompt   = STRING_TOKEN(STR_PSE_GPIO_I2C5_PROMPT),
+        help     = STRING_TOKEN(STR_PSE_GPIO_I2C_ASSIGN_HELP),
+        default = 0, defaultstore = MyStandardDefault,
+          option text = STRING_TOKEN(STR_NONE_PSE), value = 0, flags = RESET_REQUIRED;
+          option text = STRING_TOKEN(STR_PSE_OWNED), value = 1, flags = RESET_REQUIRED;
+          option text = STRING_TOKEN(STR_HOST_OWNED), value = 2, flags = RESET_REQUIRED;
+      endoneof;
+    endif;
+
+    oneof varid  = PCH_SETUP.PchPseI2cEnable[6],
+      prompt   = STRING_TOKEN(STR_PSE_GPIO_I2C6_PROMPT),
+      help     = STRING_TOKEN(STR_PSE_GPIO_I2C_ASSIGN_HELP),
+      default = 0, defaultstore = MyStandardDefault,
+        option text = STRING_TOKEN(STR_NONE_PSE), value = 0, flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_PSE_OWNED), value = 1, flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_HOST_OWNED), value = 2, flags = RESET_REQUIRED;
+    endoneof;
+
+    oneof varid  = PCH_SETUP.PchPseI2cEnable[7],
+      prompt   = STRING_TOKEN(STR_PSE_GPIO_I2C7_PROMPT),
+      help     = STRING_TOKEN(STR_PSE_GPIO_I2C_ASSIGN_HELP),
+      default = 0, defaultstore = MyStandardDefault,
+        option text = STRING_TOKEN(STR_NONE_PSE), value = 0, flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_PSE_OWNED), value = 1, flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_HOST_OWNED), value = 2, flags = RESET_REQUIRED;
+    endoneof;
+
+    grayoutif ideqval PCH_SETUP.PchPsePwmPinEnable[3] == 1 OR
+              ideqval PCH_SETUP.PchPseTgpioPinEnable[10] == 1 OR
+              ideqval PCH_SETUP.PchPseTgpioPinEnable[11] == 1 OR
+              ideqval PCH_SETUP.PchPseTgpioPinEnable[12] == 1 OR
+              ideqval PCH_SETUP.PchPseTgpioPinEnable[13] == 1 OR
+              ideqval PCH_SETUP.PchPseTgpioPinEnable[39] == 1 OR
+              ideqval PCH_SETUP.PchSerialIoSpi[2] == 1;
+      oneof varid  = PCH_SETUP.PchPseSpiEnable[0],
+        prompt   = STRING_TOKEN(STR_PSE_GPIO_SPI0_PROMPT),
+        help     = STRING_TOKEN(STR_PSE_GPIO_SPI_ASSIGN_HELP),
+        default = 0, defaultstore = MyStandardDefault,
+          option text = STRING_TOKEN(STR_NONE_PSE), value = 0, flags = RESET_REQUIRED;
+          option text = STRING_TOKEN(STR_PSE_OWNED), value = 1, flags = RESET_REQUIRED;
+          option text = STRING_TOKEN(STR_HOST_OWNED), value = 2, flags = RESET_REQUIRED;
+      endoneof;
+    endif;
+
+    suppressif ideqval PCH_SETUP.PchPseSpiEnable[0] == 0;
+      checkbox varid  = PCH_SETUP.PchPseSpiCs0Enable[0],
+        prompt   = STRING_TOKEN(STR_PSE_GPIO_SPI0_CS0_PROMPT),
+        help     = STRING_TOKEN(STR_PSE_GPIO_SPI_CS_ASSIGN_HELP),
+        flags    = 0 | RESET_REQUIRED,
+        key      = 0,
+        default  = FALSE,
+      endcheckbox;
+    endif;
+
+    suppressif ideqval PCH_SETUP.PchPseSpiEnable[0] == 0;
+      checkbox varid  = PCH_SETUP.PchPseSpiCs1Enable[0],
+        prompt   = STRING_TOKEN(STR_PSE_GPIO_SPI0_CS1_PROMPT),
+        help     = STRING_TOKEN(STR_PSE_GPIO_SPI_CS_ASSIGN_HELP),
+        flags    = 0 | RESET_REQUIRED,
+        key      = 0,
+        default  = FALSE,
+      endcheckbox;
+    endif;
+
+  grayoutif ideqval PCH_SETUP.PchPsePwmPinEnable[2] == 1 OR
+            ideqval PCH_SETUP.PchPsePwmPinEnable[6] == 1 OR
+            ideqval PCH_SETUP.PchPseTgpioPinEnable[10] == 1 OR
+            ideqval PCH_SETUP.PchPseTgpioPinEnable[32] == 1 OR
+            ideqval PCH_SETUP.PchPseTgpioPinEnable[33] == 1 OR
+            ideqval PCH_SETUP.PchPseTgpioPinEnable[34] == 1 OR
+            ideqval PCH_SETUP.PchPseTgpioPinEnable[35] == 1 OR
+            ideqval PCH_SETUP.PchPseTgpioPinEnable[36] == 1 OR
+            ideqval PCH_SETUP.PchPseQepEnable[0] == 1;
+    oneof varid  = PCH_SETUP.PchPseSpiEnable[1],
+      prompt   = STRING_TOKEN(STR_PSE_GPIO_SPI1_PROMPT),
+      help     = STRING_TOKEN(STR_PSE_GPIO_SPI_ASSIGN_HELP),
+      default = 0, defaultstore = MyStandardDefault,
+        option text = STRING_TOKEN(STR_NONE_PSE), value = 0, flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_PSE_OWNED), value = 1, flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_HOST_OWNED), value = 2, flags = RESET_REQUIRED;
+    endoneof;
+  endif;
+
+    suppressif ideqval PCH_SETUP.PchPseSpiEnable[1] == 0;
+      checkbox varid  = PCH_SETUP.PchPseSpiCs0Enable[1],
+        prompt   = STRING_TOKEN(STR_PSE_GPIO_SPI1_CS0_PROMPT),
+        help     = STRING_TOKEN(STR_PSE_GPIO_SPI_CS_ASSIGN_HELP),
+        flags    = 0 | RESET_REQUIRED,
+        key      = 0,
+        default  = FALSE,
+      endcheckbox;
+    endif;
+
+    suppressif ideqval PCH_SETUP.PchPseSpiEnable[1] == 0;
+      checkbox varid  = PCH_SETUP.PchPseSpiCs1Enable[1],
+        prompt   = STRING_TOKEN(STR_PSE_GPIO_SPI1_CS1_PROMPT),
+        help     = STRING_TOKEN(STR_PSE_GPIO_SPI_CS_ASSIGN_HELP),
+        flags    = 0 | RESET_REQUIRED,
+        key      = 0,
+        default  = FALSE,
+      endcheckbox;
+    endif;
+
+    grayoutif ideqval PCH_SETUP.PchSerialIoSpi[0] == 1;
+      oneof varid  = PCH_SETUP.PchPseSpiEnable[2],
+        prompt   = STRING_TOKEN(STR_PSE_GPIO_SPI2_PROMPT),
+        help     = STRING_TOKEN(STR_PSE_GPIO_SPI_ASSIGN_HELP),
+        default = 0, defaultstore = MyStandardDefault,
+          option text = STRING_TOKEN(STR_NONE_PSE), value = 0, flags = RESET_REQUIRED;
+          option text = STRING_TOKEN(STR_PSE_OWNED), value = 1, flags = RESET_REQUIRED;
+          option text = STRING_TOKEN(STR_HOST_OWNED), value = 2, flags = RESET_REQUIRED;
+      endoneof;
+    endif;
+
+    suppressif ideqval PCH_SETUP.PchPseSpiEnable[2] == 0;
+      checkbox varid  = PCH_SETUP.PchPseSpiCs0Enable[2],
+        prompt   = STRING_TOKEN(STR_PSE_GPIO_SPI2_CS0_PROMPT),
+        help     = STRING_TOKEN(STR_PSE_GPIO_SPI_CS_ASSIGN_HELP),
+        flags    = 0 | RESET_REQUIRED,
+        key      = 0,
+        default  = FALSE,
+      endcheckbox;
+    endif;
+
+    suppressif ideqval PCH_SETUP.PchPseSpiEnable[2] == 0;
+      checkbox varid  = PCH_SETUP.PchPseSpiCs1Enable[2],
+        prompt   = STRING_TOKEN(STR_PSE_GPIO_SPI2_CS1_PROMPT),
+        help     = STRING_TOKEN(STR_PSE_GPIO_SPI_CS_ASSIGN_HELP),
+        flags    = 0 | RESET_REQUIRED,
+        key      = 0,
+        default  = FALSE,
+      endcheckbox;
+    endif;
+
+    grayoutif ideqval PCH_SETUP.PchSerialIoSpi[1] == 1;
+      oneof varid  = PCH_SETUP.PchPseSpiEnable[3],
+        prompt   = STRING_TOKEN(STR_PSE_GPIO_SPI3_PROMPT),
+        help     = STRING_TOKEN(STR_PSE_GPIO_SPI_ASSIGN_HELP),
+        default = 0, defaultstore = MyStandardDefault,
+          option text = STRING_TOKEN(STR_NONE_PSE), value = 0, flags = RESET_REQUIRED;
+          option text = STRING_TOKEN(STR_PSE_OWNED), value = 1, flags = RESET_REQUIRED;
+          option text = STRING_TOKEN(STR_HOST_OWNED), value = 2, flags = RESET_REQUIRED;
+      endoneof;
+    endif;
+
+    suppressif ideqval PCH_SETUP.PchPseSpiEnable[3] == 0;
+      checkbox varid  = PCH_SETUP.PchPseSpiCs0Enable[3],
+        prompt   = STRING_TOKEN(STR_PSE_GPIO_SPI3_CS0_PROMPT),
+        help     = STRING_TOKEN(STR_PSE_GPIO_SPI_CS_ASSIGN_HELP),
+        flags    = 0 | RESET_REQUIRED,
+        key      = 0,
+        default  = FALSE,
+      endcheckbox;
+    endif;
+
+    suppressif ideqval PCH_SETUP.PchPseSpiEnable[3] == 0;
+      checkbox varid  = PCH_SETUP.PchPseSpiCs1Enable[3],
+        prompt   = STRING_TOKEN(STR_PSE_GPIO_SPI3_CS1_PROMPT),
+        help     = STRING_TOKEN(STR_PSE_GPIO_SPI_CS_ASSIGN_HELP),
+        flags    = 0 | RESET_REQUIRED,
+        key      = 0,
+        default  = FALSE,
+      endcheckbox;
+    endif;
+
+    oneof varid  = PCH_SETUP.PchPseAdcEnable,
+      prompt   = STRING_TOKEN(STR_PSE_GPIO_ADC_PROMPT),
+      help     = STRING_TOKEN(STR_PSE_GPIO_ADC_ASSIGN_HELP),
+      default = 0, defaultstore = MyStandardDefault,
+        option text = STRING_TOKEN(STR_NONE_PSE), value = 0, flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_PSE_OWNED), value = 1, flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_HOST_OWNED), value = 2, flags = RESET_REQUIRED;
+    endoneof;
+
+    grayoutif ideqval PCH_SETUP.PchPseI2sEnable[0] >= 1 OR
+              ideqval PCH_SETUP.PchPseTgpioPinEnable[16] == 1 OR
+              ideqval PCH_SETUP.PchPseTgpioPinEnable[17] == 1;
+      oneof varid  = PCH_SETUP.PchPseCanEnable[0],
+        prompt   = STRING_TOKEN(STR_PSE_GPIO_CAN0_PROMPT),
+        help     = STRING_TOKEN(STR_PSE_GPIO_CAN_ASSIGN_HELP),
+        default = 0, defaultstore = MyStandardDefault,
+          option text = STRING_TOKEN(STR_NONE_PSE), value = 0, flags = RESET_REQUIRED;
+          option text = STRING_TOKEN(STR_PSE_OWNED), value = 1, flags = RESET_REQUIRED;
+          option text = STRING_TOKEN(STR_HOST_OWNED), value = 2, flags = RESET_REQUIRED;
+      endoneof;
+    endif;
+
+    grayoutif ideqval PCH_SETUP.PchPseI2sEnable[0] >= 1 OR
+              ideqval PCH_SETUP.PchPseTgpioPinEnable[14] == 1 OR
+              ideqval PCH_SETUP.PchPseTgpioPinEnable[15] == 1;
+      oneof varid  = PCH_SETUP.PchPseCanEnable[1],
+        prompt   = STRING_TOKEN(STR_PSE_GPIO_CAN1_PROMPT),
+        help     = STRING_TOKEN(STR_PSE_GPIO_CAN_ASSIGN_HELP),
+        default = 0, defaultstore = MyStandardDefault,
+          option text = STRING_TOKEN(STR_NONE_PSE), value = 0, flags = RESET_REQUIRED;
+          option text = STRING_TOKEN(STR_PSE_OWNED), value = 1, flags = RESET_REQUIRED;
+          option text = STRING_TOKEN(STR_HOST_OWNED), value = 2, flags = RESET_REQUIRED;
+      endoneof;
+    endif;
+
+    grayoutif TRUE;
+      oneof varid  = PCH_SETUP.PchPseDmaEnable[0],
+        prompt   = STRING_TOKEN(STR_PSE_GPIO_DMA0_PROMPT),
+        help     = STRING_TOKEN(STR_PSE_OWNERSHIP_DMA0_ASSIGN_HELP),
+        default = 1, defaultstore = MyStandardDefault,
+          option text = STRING_TOKEN(STR_NONE_PSE), value = 0, flags = RESET_REQUIRED;
+          option text = STRING_TOKEN(STR_PSE_OWNED), value = 1, flags = RESET_REQUIRED;
+          option text = STRING_TOKEN(STR_HOST_OWNED), value = 2, flags = RESET_REQUIRED;
+      endoneof;
+    endif;
+
+    oneof varid  = PCH_SETUP.PchPseDmaEnable[1],
+      prompt   = STRING_TOKEN(STR_PSE_GPIO_DMA1_PROMPT),
+      help     = STRING_TOKEN(STR_PSE_OWNERSHIP_DMA_ASSIGN_HELP),
+      default = 1, defaultstore = MyStandardDefault,
+        option text = STRING_TOKEN(STR_NONE_PSE), value = 0, flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_PSE_OWNED), value = 1, flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_HOST_OWNED), value = 2, flags = RESET_REQUIRED;
+    endoneof;
+
+    oneof varid  = PCH_SETUP.PchPseDmaEnable[2],
+      prompt   = STRING_TOKEN(STR_PSE_GPIO_DMA2_PROMPT),
+      help     = STRING_TOKEN(STR_PSE_OWNERSHIP_DMA_ASSIGN_HELP),
+      default = 1, defaultstore = MyStandardDefault,
+        option text = STRING_TOKEN(STR_NONE_PSE), value = 0, flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_PSE_OWNED), value = 1, flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_HOST_OWNED), value = 2, flags = RESET_REQUIRED;
+    endoneof;
+
+    oneof varid  = PCH_SETUP.PchPseGbeEnable[0],
+      prompt   = STRING_TOKEN(STR_PSE_GPIO_GBE0_PROMPT),
+      help     = STRING_TOKEN(STR_PSE_OWNERSHIP_GBE_ASSIGN_HELP),
+      default = 1, defaultstore = MyStandardDefault,
+        option text = STRING_TOKEN(STR_NONE_PSE), value = 0, flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_PSE_OWNED), value = 1, flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_HOST_OWNED), value = 2, flags = RESET_REQUIRED;
+    endoneof;
+
+    oneof varid  = PCH_SETUP.PchPseGbeEnable[1],
+      prompt   = STRING_TOKEN(STR_PSE_GPIO_GBE1_PROMPT),
+      help     = STRING_TOKEN(STR_PSE_OWNERSHIP_GBE_ASSIGN_HELP),
+      default = 1, defaultstore = MyStandardDefault,
+        option text = STRING_TOKEN(STR_NONE_PSE), value = 0, flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_PSE_OWNED), value = 1, flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_HOST_OWNED), value = 2, flags = RESET_REQUIRED;
+    endoneof;
+
+    oneof varid  = PCH_SETUP.PchPseTgpioEnable[0],
+      prompt   = STRING_TOKEN(STR_PSE_GPIO_TGPIO0_PROMPT),
+      help     = STRING_TOKEN(STR_PSE_GPIO_TGPIO0_ASSIGN_HELP),
+      default = 1, defaultstore = MyStandardDefault,
+        option text = STRING_TOKEN(STR_NONE_PSE), value = 0, flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_PSE_OWNED), value = 1, flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_HOST_OWNED), value = 2, flags = RESET_REQUIRED;
+    endoneof;
+
+    oneof varid  = PCH_SETUP.PchPseTgpioAllocatePins[0],
+      prompt   = STRING_TOKEN(STR_PSE_GPIO_TGPIO0_ALLOCATE_PINS_PROMPT),
+      help     = STRING_TOKEN(STR_PSE_GPIO_TGPIO0_ALLOCATE_PINS_HELP),
+      default = 0, defaultstore = MyStandardDefault,
+        option text = STRING_TOKEN(STR_LOWER), value = 2, flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_MID), value = 3, flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_TOP), value = 1, flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_ALLGPIO), value = 0, flags = RESET_REQUIRED;
+    endoneof;
+
+    goto PCH_PSE_TGPIO0_PIN_MUX_FORM_ID,
+      prompt = STRING_TOKEN(STR_PSE_TGPIO0_PIN_MUX_OPTIONS_FORM_TITLE),
+      help = STRING_TOKEN(STR_PSE_TGPIO_PIN_MUX_OPTIONS_FORM_HELP);
+
+    oneof varid  = PCH_SETUP.PchPseTgpioEnable[1],
+      prompt   = STRING_TOKEN(STR_PSE_GPIO_TGPIO1_PROMPT),
+      help     = STRING_TOKEN(STR_PSE_GPIO_TGPIO1_ASSIGN_HELP),
+      default = 1, defaultstore = MyStandardDefault,
+        option text = STRING_TOKEN(STR_NONE_PSE), value = 0, flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_PSE_OWNED), value = 1, flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_HOST_OWNED), value = 2, flags = RESET_REQUIRED;
+    endoneof;
+
+    oneof varid  = PCH_SETUP.PchPseTgpioAllocatePins[1],
+      prompt   = STRING_TOKEN(STR_PSE_GPIO_TGPIO1_ALLOCATE_PINS_PROMPT),
+      help     = STRING_TOKEN(STR_PSE_GPIO_TGPIO1_ALLOCATE_PINS_HELP),
+      default = 0, defaultstore = MyStandardDefault,
+        option text = STRING_TOKEN(STR_LOWER), value = 2, flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_MID), value = 3, flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_TOP), value = 1, flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_ALLGPIO), value = 0, flags = RESET_REQUIRED;
+    endoneof;
+
+    goto PCH_PSE_TGPIO1_PIN_MUX_FORM_ID,
+      prompt = STRING_TOKEN(STR_PSE_TGPIO1_PIN_MUX_OPTIONS_FORM_TITLE),
+      help = STRING_TOKEN(STR_PSE_TGPIO_PIN_MUX_OPTIONS_FORM_HELP);
+
+  //
+  // PSE Interrupt Assignment
+  //
+  text
+     help   = STRING_TOKEN(STR_PSE_INTERRUPT_ASSIGN_HELP),
+     text   = STRING_TOKEN(STR_PSE_INTERRUPT_ASSIGN_TITLE),
+     flags  = 0,
+     key    = 0;
+
+    checkbox varid  = PCH_SETUP.PchPseI2sSbInterruptEnable[0],
+      prompt   = STRING_TOKEN(STR_PSE_SB_INTERRUPT_I2S0_PROMPT),
+      help     = STRING_TOKEN(STR_PSE_INTERRUPT_ASSIGN_HELP),
+      flags    = 0 | RESET_REQUIRED,
+      key      = 0,
+      default  = FALSE,
+    endcheckbox;
+
+    checkbox varid  = PCH_SETUP.PchPseI2sSbInterruptEnable[1],
+      prompt   = STRING_TOKEN(STR_PSE_SB_INTERRUPT_I2S1_PROMPT),
+      help     = STRING_TOKEN(STR_PSE_INTERRUPT_ASSIGN_HELP),
+      flags    = 0 | RESET_REQUIRED,
+      key      = 0,
+      default  = FALSE,
+    endcheckbox;
+
+    checkbox varid  = PCH_SETUP.PchPsePwmSbInterruptEnable,
+      prompt   = STRING_TOKEN(STR_PSE_SB_INTERRUPT_PWM_PROMPT),
+      help     = STRING_TOKEN(STR_PSE_INTERRUPT_ASSIGN_HELP),
+      flags    = 0 | RESET_REQUIRED,
+      key      = 0,
+      default  = FALSE,
+    endcheckbox;
+
+    checkbox varid  = PCH_SETUP.PchPseUartSbInterruptEnable[0],
+      prompt   = STRING_TOKEN(STR_PSE_SB_INTERRUPT_UART0_PROMPT),
+      help     = STRING_TOKEN(STR_PSE_INTERRUPT_ASSIGN_HELP),
+      flags    = 0 | RESET_REQUIRED,
+      key      = 0,
+      default  = FALSE,
+    endcheckbox;
+
+    checkbox varid  = PCH_SETUP.PchPseUartSbInterruptEnable[1],
+      prompt   = STRING_TOKEN(STR_PSE_SB_INTERRUPT_UART1_PROMPT),
+      help     = STRING_TOKEN(STR_PSE_INTERRUPT_ASSIGN_HELP),
+      flags    = 0 | RESET_REQUIRED,
+      key      = 0,
+      default  = FALSE,
+    endcheckbox;
+
+    checkbox varid  = PCH_SETUP.PchPseUartSbInterruptEnable[2],
+      prompt   = STRING_TOKEN(STR_PSE_SB_INTERRUPT_UART2_PROMPT),
+      help     = STRING_TOKEN(STR_PSE_INTERRUPT_ASSIGN_HELP),
+      flags    = 0 | RESET_REQUIRED,
+      key      = 0,
+      default  = FALSE,
+    endcheckbox;
+
+    checkbox varid  = PCH_SETUP.PchPseUartSbInterruptEnable[3],
+      prompt   = STRING_TOKEN(STR_PSE_SB_INTERRUPT_UART3_PROMPT),
+      help     = STRING_TOKEN(STR_PSE_INTERRUPT_ASSIGN_HELP),
+      flags    = 0 | RESET_REQUIRED,
+      key      = 0,
+      default  = FALSE,
+    endcheckbox;
+
+    checkbox varid  = PCH_SETUP.PchPseUartSbInterruptEnable[4],
+      prompt   = STRING_TOKEN(STR_PSE_SB_INTERRUPT_UART4_PROMPT),
+      help     = STRING_TOKEN(STR_PSE_INTERRUPT_ASSIGN_HELP),
+      flags    = 0 | RESET_REQUIRED,
+      key      = 0,
+      default  = FALSE,
+    endcheckbox;
+
+    checkbox varid  = PCH_SETUP.PchPseUartSbInterruptEnable[5],
+      prompt   = STRING_TOKEN(STR_PSE_SB_INTERRUPT_UART5_PROMPT),
+      help     = STRING_TOKEN(STR_PSE_INTERRUPT_ASSIGN_HELP),
+      flags    = 0 | RESET_REQUIRED,
+      key      = 0,
+      default  = FALSE,
+    endcheckbox;
+
+    checkbox varid  = PCH_SETUP.PchPseHsuartSbInterruptEnable[0],
+      prompt   = STRING_TOKEN(STR_PSE_SB_INTERRUPT_HSUART0_PROMPT),
+      help     = STRING_TOKEN(STR_PSE_INTERRUPT_ASSIGN_HELP),
+      flags    = 0 | RESET_REQUIRED,
+      key      = 0,
+      default  = FALSE,
+    endcheckbox;
+
+    checkbox varid  = PCH_SETUP.PchPseHsuartSbInterruptEnable[1],
+      prompt   = STRING_TOKEN(STR_PSE_SB_INTERRUPT_HSUART1_PROMPT),
+      help     = STRING_TOKEN(STR_PSE_INTERRUPT_ASSIGN_HELP),
+      flags    = 0 | RESET_REQUIRED,
+      key      = 0,
+      default  = FALSE,
+    endcheckbox;
+
+    checkbox varid  = PCH_SETUP.PchPseHsuartSbInterruptEnable[2],
+      prompt   = STRING_TOKEN(STR_PSE_SB_INTERRUPT_HSUART2_PROMPT),
+      help     = STRING_TOKEN(STR_PSE_INTERRUPT_ASSIGN_HELP),
+      flags    = 0 | RESET_REQUIRED,
+      key      = 0,
+      default  = FALSE,
+    endcheckbox;
+
+    checkbox varid  = PCH_SETUP.PchPseHsuartSbInterruptEnable[3],
+      prompt   = STRING_TOKEN(STR_PSE_SB_INTERRUPT_HSUART3_PROMPT),
+      help     = STRING_TOKEN(STR_PSE_INTERRUPT_ASSIGN_HELP),
+      flags    = 0 | RESET_REQUIRED,
+      key      = 0,
+      default  = FALSE,
+    endcheckbox;
+
+    checkbox varid  = PCH_SETUP.PchPseQepSbInterruptEnable[0],
+      prompt   = STRING_TOKEN(STR_PSE_SB_INTERRUPT_QEP0_PROMPT),
+      help     = STRING_TOKEN(STR_PSE_INTERRUPT_ASSIGN_HELP),
+      flags    = 0 | RESET_REQUIRED,
+      key      = 0,
+      default  = FALSE,
+    endcheckbox;
+
+    checkbox varid  = PCH_SETUP.PchPseQepSbInterruptEnable[1],
+      prompt   = STRING_TOKEN(STR_PSE_SB_INTERRUPT_QEP1_PROMPT),
+      help     = STRING_TOKEN(STR_PSE_INTERRUPT_ASSIGN_HELP),
+      flags    = 0 | RESET_REQUIRED,
+      key      = 0,
+      default  = FALSE,
+    endcheckbox;
+
+    checkbox varid  = PCH_SETUP.PchPseQepSbInterruptEnable[2],
+      prompt   = STRING_TOKEN(STR_PSE_SB_INTERRUPT_QEP2_PROMPT),
+      help     = STRING_TOKEN(STR_PSE_INTERRUPT_ASSIGN_HELP),
+      flags    = 0 | RESET_REQUIRED,
+      key      = 0,
+      default  = FALSE,
+    endcheckbox;
+
+    checkbox varid  = PCH_SETUP.PchPseQepSbInterruptEnable[3],
+      prompt   = STRING_TOKEN(STR_PSE_SB_INTERRUPT_QEP3_PROMPT),
+      help     = STRING_TOKEN(STR_PSE_INTERRUPT_ASSIGN_HELP),
+      flags    = 0 | RESET_REQUIRED,
+      key      = 0,
+      default  = FALSE,
+    endcheckbox;
+
+    checkbox varid  = PCH_SETUP.PchPseI2cSbInterruptEnable[0],
+      prompt   = STRING_TOKEN(STR_PSE_SB_INTERRUPT_I2C0_PROMPT),
+      help     = STRING_TOKEN(STR_PSE_INTERRUPT_ASSIGN_HELP),
+      flags    = 0 | RESET_REQUIRED,
+      key      = 0,
+      default  = FALSE,
+    endcheckbox;
+
+    checkbox varid  = PCH_SETUP.PchPseI2cSbInterruptEnable[1],
+      prompt   = STRING_TOKEN(STR_PSE_SB_INTERRUPT_I2C1_PROMPT),
+      help     = STRING_TOKEN(STR_PSE_INTERRUPT_ASSIGN_HELP),
+      flags    = 0 | RESET_REQUIRED,
+      key      = 0,
+      default  = FALSE,
+    endcheckbox;
+
+    checkbox varid  = PCH_SETUP.PchPseI2cSbInterruptEnable[2],
+      prompt   = STRING_TOKEN(STR_PSE_SB_INTERRUPT_I2C2_PROMPT),
+      help     = STRING_TOKEN(STR_PSE_INTERRUPT_ASSIGN_HELP),
+      flags    = 0 | RESET_REQUIRED,
+      key      = 0,
+      default  = FALSE,
+    endcheckbox;
+
+    checkbox varid  = PCH_SETUP.PchPseI2cSbInterruptEnable[3],
+      prompt   = STRING_TOKEN(STR_PSE_SB_INTERRUPT_I2C3_PROMPT),
+      help     = STRING_TOKEN(STR_PSE_INTERRUPT_ASSIGN_HELP),
+      flags    = 0 | RESET_REQUIRED,
+      key      = 0,
+      default  = FALSE,
+    endcheckbox;
+
+    checkbox varid  = PCH_SETUP.PchPseI2cSbInterruptEnable[4],
+      prompt   = STRING_TOKEN(STR_PSE_SB_INTERRUPT_I2C4_PROMPT),
+      help     = STRING_TOKEN(STR_PSE_INTERRUPT_ASSIGN_HELP),
+      flags    = 0 | RESET_REQUIRED,
+      key      = 0,
+      default  = FALSE,
+    endcheckbox;
+
+    checkbox varid  = PCH_SETUP.PchPseI2cSbInterruptEnable[5],
+      prompt   = STRING_TOKEN(STR_PSE_SB_INTERRUPT_I2C5_PROMPT),
+      help     = STRING_TOKEN(STR_PSE_INTERRUPT_ASSIGN_HELP),
+      flags    = 0 | RESET_REQUIRED,
+      key      = 0,
+      default  = FALSE,
+    endcheckbox;
+
+    checkbox varid  = PCH_SETUP.PchPseI2cSbInterruptEnable[6],
+      prompt   = STRING_TOKEN(STR_PSE_SB_INTERRUPT_I2C6_PROMPT),
+      help     = STRING_TOKEN(STR_PSE_INTERRUPT_ASSIGN_HELP),
+      flags    = 0 | RESET_REQUIRED,
+      key      = 0,
+      default  = FALSE,
+    endcheckbox;
+
+    checkbox varid  = PCH_SETUP.PchPseI2cSbInterruptEnable[7],
+      prompt   = STRING_TOKEN(STR_PSE_SB_INTERRUPT_I2C7_PROMPT),
+      help     = STRING_TOKEN(STR_PSE_INTERRUPT_ASSIGN_HELP),
+      flags    = 0 | RESET_REQUIRED,
+      key      = 0,
+      default  = FALSE,
+    endcheckbox;
+
+    checkbox varid  = PCH_SETUP.PchPseSpiSbInterruptEnable[0],
+      prompt   = STRING_TOKEN(STR_PSE_SB_INTERRUPT_SPI0_PROMPT),
+      help     = STRING_TOKEN(STR_PSE_INTERRUPT_ASSIGN_HELP),
+      flags    = 0 | RESET_REQUIRED,
+      key      = 0,
+      default  = FALSE,
+    endcheckbox;
+
+    checkbox varid  = PCH_SETUP.PchPseSpiSbInterruptEnable[1],
+      prompt   = STRING_TOKEN(STR_PSE_SB_INTERRUPT_SPI1_PROMPT),
+      help     = STRING_TOKEN(STR_PSE_INTERRUPT_ASSIGN_HELP),
+      flags    = 0 | RESET_REQUIRED,
+      key      = 0,
+      default  = FALSE,
+    endcheckbox;
+
+    checkbox varid  = PCH_SETUP.PchPseSpiSbInterruptEnable[2],
+      prompt   = STRING_TOKEN(STR_PSE_SB_INTERRUPT_SPI2_PROMPT),
+      help     = STRING_TOKEN(STR_PSE_INTERRUPT_ASSIGN_HELP),
+      flags    = 0 | RESET_REQUIRED,
+      key      = 0,
+      default  = FALSE,
+    endcheckbox;
+
+    checkbox varid  = PCH_SETUP.PchPseSpiSbInterruptEnable[3],
+      prompt   = STRING_TOKEN(STR_PSE_SB_INTERRUPT_SPI3_PROMPT),
+      help     = STRING_TOKEN(STR_PSE_INTERRUPT_ASSIGN_HELP),
+      flags    = 0 | RESET_REQUIRED,
+      key      = 0,
+      default  = FALSE,
+    endcheckbox;
+
+    checkbox varid  = PCH_SETUP.PchPseDmaSbInterruptEnable[0],
+      prompt   = STRING_TOKEN(STR_PSE_SB_INTERRUPT_DMA0_PROMPT),
+      help     = STRING_TOKEN(STR_PSE_INTERRUPT_ASSIGN_HELP),
+      flags    = 0 | RESET_REQUIRED,
+      key      = 0,
+      default  = FALSE,
+    endcheckbox;
+
+    checkbox varid  = PCH_SETUP.PchPseDmaSbInterruptEnable[1],
+      prompt   = STRING_TOKEN(STR_PSE_SB_INTERRUPT_DMA1_PROMPT),
+      help     = STRING_TOKEN(STR_PSE_INTERRUPT_ASSIGN_HELP),
+      flags    = 0 | RESET_REQUIRED,
+      key      = 0,
+      default  = TRUE,
+    endcheckbox;
+
+    checkbox varid  = PCH_SETUP.PchPseDmaSbInterruptEnable[2],
+      prompt   = STRING_TOKEN(STR_PSE_SB_INTERRUPT_DMA2_PROMPT),
+      help     = STRING_TOKEN(STR_PSE_INTERRUPT_ASSIGN_HELP),
+      flags    = 0 | RESET_REQUIRED,
+      key      = 0,
+      default  = TRUE,
+    endcheckbox;
+
+    checkbox varid  = PCH_SETUP.PchPseAdcSbInterruptEnable,
+      prompt   = STRING_TOKEN(STR_PSE_SB_INTERRUPT_ADC_PROMPT),
+      help     = STRING_TOKEN(STR_PSE_INTERRUPT_ASSIGN_HELP),
+      flags    = 0 | RESET_REQUIRED,
+      key      = 0,
+      default  = FALSE,
+    endcheckbox;
+
+    checkbox varid  = PCH_SETUP.PchPseLh2PseSbInterruptEnable,
+      prompt   = STRING_TOKEN(STR_PSE_SB_INTERRUPT_LH2PSE_PROMPT),
+      help     = STRING_TOKEN(STR_PSE_INTERRUPT_ASSIGN_HELP),
+      flags    = 0 | RESET_REQUIRED,
+      key      = 0,
+      default  = FALSE,
+    endcheckbox;
+
+    checkbox varid  = PCH_SETUP.PchPseCanSbInterruptEnable[0],
+      prompt   = STRING_TOKEN(STR_PSE_SB_INTERRUPT_CAN0_PROMPT),
+      help     = STRING_TOKEN(STR_PSE_INTERRUPT_ASSIGN_HELP),
+      flags    = 0 | RESET_REQUIRED,
+      key      = 0,
+      default  = FALSE,
+    endcheckbox;
+
+    checkbox varid  = PCH_SETUP.PchPseCanSbInterruptEnable[1],
+      prompt   = STRING_TOKEN(STR_PSE_SB_INTERRUPT_CAN1_PROMPT),
+      help     = STRING_TOKEN(STR_PSE_INTERRUPT_ASSIGN_HELP),
+      flags    = 0 | RESET_REQUIRED,
+      key      = 0,
+      default  = FALSE,
+    endcheckbox;
+
+    SEPARATOR
+
+    oneof varid  = PCH_SETUP.PchPseDmaTestEnable,
+      prompt   = STRING_TOKEN(STR_PSE_DMA_TEST),
+      help     = STRING_TOKEN(STR_PSE_DMA_TEST_HELP),
+      option text = STRING_TOKEN(STR_DISABLED), value = 0, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_ENABLED), value = 1, flags = RESET_REQUIRED;
+    endoneof;
+
+  endif; // suppressif PchPseEnable == 0;
+endform; // End of PSE_OPTIONS_FORM_ID
+
+  #include "PchSetupPseTgpio0.hfr"
+  #include "PchSetupPseTgpio1.hfr"
+  #include "PchSetupPsePwm.hfr"

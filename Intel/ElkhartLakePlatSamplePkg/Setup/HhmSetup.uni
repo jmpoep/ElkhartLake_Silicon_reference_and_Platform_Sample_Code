@@ -1,0 +1,102 @@
+/**@file
+
+ @copyright
+  INTEL CONFIDENTIAL
+  Copyright 2012 - 2016 Intel Corporation.
+
+  The source code contained or described herein and all documents related to the
+  source code ("Material") are owned by Intel Corporation or its suppliers or
+  licensors. Title to the Material remains with Intel Corporation or its suppliers
+  and licensors. The Material may contain trade secrets and proprietary and
+  confidential information of Intel Corporation and its suppliers and licensors,
+  and is protected by worldwide copyright and trade secret laws and treaty
+  provisions. No part of the Material may be used, copied, reproduced, modified,
+  published, uploaded, posted, transmitted, distributed, or disclosed in any way
+  without Intel's prior express written permission.
+
+  No license under any patent, copyright, trade secret or other intellectual
+  property right is granted to or conferred upon you by disclosure or delivery
+  of the Materials, either expressly, by implication, inducement, estoppel or
+  otherwise. Any license under such intellectual property rights must be
+  express and approved by Intel in writing.
+
+  Unless otherwise agreed by Intel in writing, you may not remove or alter
+  this notice or any other notice embedded in Materials by Intel or
+  Intel's suppliers or licensors in any way.
+
+  This file contains a 'Sample Driver' and is licensed as such under the terms
+  of your license agreement with Intel or your vendor. This file may be modified
+  by the user, subject to the additional terms of the license agreement.
+
+@par Specification
+**/
+
+//
+//Module Name:
+//
+//  HhmSetup.uni
+//
+//Abstract:
+//
+// Hhm Form String Definitions
+//--*/
+/=#
+//#include "itk\Dpsdsetup\DpsdVFR.uni"
+#include "VFR.uni"
+
+#string STR_HHM_FORM                      #language en-US "Hardware Health Monitor"
+#string STR_HHM_FORM_HELP                 #language en-US "Monitor the Hardware Health."
+
+#string STR_THERMAL_SENSOR_1_HELP         #language en-US "Help on Thermal Sensor 1 Temp"
+#string STR_THERMAL_SENSOR_1_TEXT         #language en-US "Thermal Sensor 1 Temp"
+#string STR_THERMAL_SENSOR_1_VALUE        #language en-US " "
+
+#string STR_THERMAL_SENSOR_2_HELP         #language en-US "Help on Thermal Sensor 2 Temp"
+#string STR_THERMAL_SENSOR_2_TEXT         #language en-US "Thermal Sensor 2 Temp"
+#string STR_THERMAL_SENSOR_2_VALUE        #language en-US " "
+
+#string STR_THERMAL_SENSOR_3_HELP         #language en-US "Help on Thermal Sensor 3 Temp"
+#string STR_THERMAL_SENSOR_3_TEXT         #language en-US "Thermal Sensor 3 Temp"
+#string STR_THERMAL_SENSOR_3_VALUE        #language en-US " "
+
+#string STR_THERMAL_SENSOR_4_HELP         #language en-US "Help on Thermal Sensor 4 Temp"
+#string STR_THERMAL_SENSOR_4_TEXT         #language en-US "Thermal Sensor 4 Temp"
+#string STR_THERMAL_SENSOR_4_VALUE        #language en-US " "
+
+#string STR_THERMAL_SENSOR_5_HELP         #language en-US "Help on Thermal Sensor 5 Temp"
+#string STR_THERMAL_SENSOR_5_TEXT         #language en-US "Thermal Sensor 5 Temp"
+#string STR_THERMAL_SENSOR_5_VALUE        #language en-US " "
+
+#string STR_CPU_FAN_HELP                  #language en-US "Help on CPU Fan"
+#string STR_CPU_FAN_TEXT                  #language en-US "CPU Fan Speed"
+#string STR_CPU_FAN_VALUE                 #language en-US " "
+
+#string STR_PCH_DTS_TEMP_HELP             #language en-US "Help on PCH DTS Temp"
+#string STR_PCH_DTS_TEMP_TEXT             #language en-US "PCH DTS Temp from PCH"
+#string STR_PCH_DTS_TEMP_VALUE            #language en-US " "
+
+#string STR_TS_ON_DIMM0_TEMP_HELP         #language en-US "Help on TS-on-DIMM0 Temp"
+#string STR_TS_ON_DIMM0_TEMP_TEXT	        #language en-US "TS-on-DIMM0 Temp"
+#string STR_TS_ON_DIMM0_TEMP_VALUE        #language en-US " "
+
+#string STR_TS_ON_DIMM1_TEMP_HELP         #language en-US "Help on TS-on-DIMM1 Temp"
+#string STR_TS_ON_DIMM1_TEMP_TEXT	        #language en-US "TS-on-DIMM1 Temp"
+#string STR_TS_ON_DIMM1_TEMP_VALUE        #language en-US " "
+
+#string STR_V1_5P_HELP                    #language en-US "Help on V1_5P"
+#string STR_V1_5P_SENSOR1                 #language en-US "+1.05 Vin"
+#string STR_V1_5P_VALUE                   #language en-US " %d.%d Volts"     //dynamically updated
+
+#string STR_V3_3P_HELP                    #language en-US "Help on V3_3P"
+#string STR_V3_3P_SENSOR1                 #language en-US "+3.3 Vin"
+#string STR_V3_3P_VALUE                   #language en-US " %d.%d Volts"     //dynamically updated
+
+#string STR_V5P_HELP                      #language en-US "Help on V5P"
+#string STR_V5P_SENSOR1                   #language en-US "+5   Vin"
+#string STR_V5P_VALUE                     #language en-US " %d.%d Volts" 		//dynamically updated
+
+#string STR_V12P_HELP                     #language en-US "Help on V12P"
+#string STR_V12P_SENSOR1                  #language en-US "+12  Vin"
+#string STR_V12P_VALUE                    #language en-US " %d.%d Volts" 		//dynamically updated
+
+#string STR_DEMO                          #language en-US "All Informations are only for Demo!!"

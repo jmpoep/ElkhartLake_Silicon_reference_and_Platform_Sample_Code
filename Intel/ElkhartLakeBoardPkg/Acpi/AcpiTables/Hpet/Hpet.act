@@ -1,0 +1,103 @@
+/** @file
+  This file contains a structure definition for the ACPI 1.0 High Precision Event Timer
+  Description Table (HPET).  The contents of this file should only be modified
+  for bug fixes, no porting is required.
+
+@copyright
+  INTEL CONFIDENTIAL
+  Copyright 2004 - 2016 Intel Corporation.
+
+  The source code contained or described herein and all documents related to the
+  source code ("Material") are owned by Intel Corporation or its suppliers or
+  licensors. Title to the Material remains with Intel Corporation or its suppliers
+  and licensors. The Material may contain trade secrets and proprietary and
+  confidential information of Intel Corporation and its suppliers and licensors,
+  and is protected by worldwide copyright and trade secret laws and treaty
+  provisions. No part of the Material may be used, copied, reproduced, modified,
+  published, uploaded, posted, transmitted, distributed, or disclosed in any way
+  without Intel's prior express written permission.
+
+  No license under any patent, copyright, trade secret or other intellectual
+  property right is granted to or conferred upon you by disclosure or delivery
+  of the Materials, either expressly, by implication, inducement, estoppel or
+  otherwise. Any license under such intellectual property rights must be
+  express and approved by Intel in writing.
+
+  Unless otherwise agreed by Intel in writing, you may not remove or alter
+  this notice or any other notice embedded in Materials by Intel or
+  Intel's suppliers or licensors in any way.
+
+  This file contains a 'Sample Driver' and is licensed as such under the terms
+  of your license agreement with Intel or your vendor. This file may be modified
+  by the user, subject to the additional terms of the license agreement.
+
+@par Specification Reference:
+**/
+
+//
+// Statements that include other files
+//
+
+#include "Hpet.h"
+
+//
+// High Precision Event Timer Table
+// Please modify all values in Hpet.h only.
+//
+
+EFI_ACPI_HIGH_PRECISION_EVENT_TIMER_TABLE_HEADER Fadt = {
+  {
+    EFI_ACPI_3_0_HIGH_PRECISION_EVENT_TIMER_TABLE_SIGNATURE,
+    sizeof (EFI_ACPI_HIGH_PRECISION_EVENT_TIMER_TABLE_HEADER),
+    EFI_ACPI_HIGH_PRECISION_EVENT_TIMER_TABLE_REVISION,
+
+    //
+    // Checksum will be updated at runtime
+    //
+    0x00,
+
+    //
+    // It is expected that these values will be updated at runtime
+    //
+    { ' ', ' ', ' ', ' ', ' ', ' ' },
+
+    0,
+    EFI_ACPI_OEM_HPET_REVISION,
+    0,
+    0
+  },
+
+  EFI_ACPI_EVENT_TIMER_BLOCK_ID,
+  {
+    EFI_ACPI_EVENT_TIMER_BLOCK_ADDRESS_SPACE_ID,
+    EFI_ACPI_EVENT_TIMER_BLOCK_BIT_WIDTH,
+    EFI_ACPI_EVENT_TIMER_BLOCK_BIT_OFFSET,
+    EFI_ACPI_EVENT_TIMER_ACCESS_SIZE,
+    EFI_ACPI_EVENT_TIMER_BLOCK_ADDRESS
+  },
+  EFI_ACPI_HPET_NUMBER,
+  EFI_ACPI_MIN_CLOCK_TICK,
+  EFI_ACPI_HPET_ATTRIBUTES
+};
+
+#ifdef __GNUC__
+VOID*
+ReferenceAcpiTable (
+ VOID
+ )
+
+{
+ //
+ // Reference the table being generated to prevent the optimizer from removing the
+ // data structure from the exeutable
+ //
+ return (VOID*)&Fadt;
+}
+#else
+VOID
+main (
+  VOID
+  )
+{
+}
+#endif

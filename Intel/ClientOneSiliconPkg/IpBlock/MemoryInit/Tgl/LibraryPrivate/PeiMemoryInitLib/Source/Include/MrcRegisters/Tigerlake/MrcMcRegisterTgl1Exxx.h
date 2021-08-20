@@ -1,0 +1,1552 @@
+#ifndef __MrcMcRegisterTgl1Exxx_h__
+#define __MrcMcRegisterTgl1Exxx_h__
+/** @file
+  This file was automatically generated. Modify at your own risk.
+  Note that no error checking is done in these functions so ensure that the correct values are passed.
+
+@copyright
+  Copyright (c) 2010 - 2019 Intel Corporation. All rights reserved
+  This software and associated documentation (if any) is furnished
+  under a license and may only be used or copied in accordance
+  with the terms of the license. Except as permitted by the
+  license, no part of this software or documentation may be
+  reproduced, stored in a retrieval system, or transmitted in any
+  form or by any means without the express written consent of
+  Intel Corporation.
+  This file contains an 'Intel Peripheral Driver' and is uniquely
+  identified as "Intel Reference Module" and is licensed for Intel
+  CPUs and chipsets under the terms of your license agreement with
+  Intel or your vendor. This file may be modified by the user, subject
+  to additional terms of the license agreement.
+
+@par Specification Reference:
+**/
+
+#pragma pack(push, 1)
+
+
+#define MC1_CH0_CR_TC_PRE_P0_REG                                       (0x0001E000)
+//Duplicate of MC0_CH0_CR_TC_PRE_P0_REG
+
+#define MC1_CH0_CR_TC_ACT_P0_REG                                       (0x0001E008)
+//Duplicate of MC0_CH0_CR_TC_ACT_P0_REG
+
+#define MC1_CH0_CR_TC_RDRD_P0_REG                                      (0x0001E00C)
+//Duplicate of MC0_CH0_CR_TC_RDRD_P0_REG
+
+#define MC1_CH0_CR_TC_RDWR_P0_REG                                      (0x0001E010)
+//Duplicate of MC0_CH0_CR_TC_RDWR_P0_REG
+
+#define MC1_CH0_CR_TC_WRRD_P0_REG                                      (0x0001E014)
+//Duplicate of MC0_CH0_CR_TC_WRRD_P0_REG
+
+#define MC1_CH0_CR_TC_WRWR_P0_REG                                      (0x0001E018)
+//Duplicate of MC0_CH0_CR_TC_WRWR_P0_REG
+
+#define MC1_CH0_CR_SC_ROUNDTRIP_LATENCY_P0_REG                         (0x0001E020)
+//Duplicate of MC0_CH0_CR_SC_ROUNDTRIP_LATENCY_P0_REG
+
+#define MC1_CH0_CR_SCHED_CBIT_P0_REG                                   (0x0001E028)
+//Duplicate of MC0_CH0_CR_SCHED_CBIT_P0_REG
+
+#define MC1_CH0_CR_SCHED_SECOND_CBIT_P0_REG                            (0x0001E02C)
+//Duplicate of MC0_CH0_CR_SCHED_SECOND_CBIT_P0_REG
+
+#define MC1_CH0_CR_DFT_MISC_P0_REG                                     (0x0001E030)
+//Duplicate of MC0_CH0_CR_DFT_MISC_P0_REG
+
+#define MC1_CH0_CR_SC_PCIT_P0_REG                                      (0x0001E034)
+//Duplicate of MC0_CH0_CR_SC_PCIT_P0_REG
+
+#define MC1_CH0_CR_ECC_DFT_P0_REG                                      (0x0001E038)
+//Duplicate of MC0_CH0_CR_ECC_DFT_P0_REG
+
+#define MC1_CH0_CR_PM_PDWN_CONFIG_P0_REG                               (0x0001E040)
+//Duplicate of MC0_CH0_CR_PM_PDWN_CONFIG_P0_REG
+
+#define MC1_CH0_CR_WMM_READ_CONFIG_P0_REG                              (0x0001E044)
+//Duplicate of MC0_CH0_CR_WMM_READ_CONFIG_P0_REG
+
+#define MC1_CH0_CR_ECCERRLOG0_P0_REG                                   (0x0001E048)
+//Duplicate of MC0_CH0_CR_ECCERRLOG0_P0_REG
+
+#define MC1_CH0_CR_ECCERRLOG1_P0_REG                                   (0x0001E04C)
+//Duplicate of MC0_CH0_CR_ECCERRLOG1_P0_REG
+
+#define MC1_CH0_CR_TC_PWRDN_P0_REG                                     (0x0001E050)
+//Duplicate of MC0_CH0_CR_TC_PWRDN_P0_REG
+
+#define MC1_CH0_CR_QUEUE_ENTRY_DISABLE_RPQ_P0_REG                      (0x0001E058)
+//Duplicate of MC0_CH0_CR_QUEUE_ENTRY_DISABLE_RPQ_P0_REG
+
+#define MC1_CH0_CR_QUEUE_ENTRY_DISABLE_IPQ_P0_REG                      (0x0001E05C)
+//Duplicate of MC0_CH0_CR_QUEUE_ENTRY_DISABLE_IPQ_P0_REG
+
+#define MC1_CH0_CR_QUEUE_ENTRY_DISABLE_WPQ_P0_REG                      (0x0001E060)
+//Duplicate of MC0_CH0_CR_QUEUE_ENTRY_DISABLE_WPQ_P0_REG
+
+#define MC1_CH0_CR_SC_WDBWM_P0_REG                                     (0x0001E068)
+//Duplicate of MC0_CH0_CR_SC_WDBWM_P0_REG
+
+#define MC1_CH0_CR_TC_ODT_P0_REG                                       (0x0001E070)
+//Duplicate of MC0_CH0_CR_TC_ODT_P0_REG
+
+#define MC1_CH0_CR_MCSCHEDS_SPARE_P0_REG                               (0x0001E078)
+//Duplicate of MC0_CH0_CR_MCSCHEDS_SPARE_P0_REG
+
+#define MC1_CH0_CR_TC_MPC_P0_REG                                       (0x0001E07C)
+//Duplicate of MC0_CH0_CR_TC_MPC_P0_REG
+
+#define MC1_CH0_CR_SC_ODT_MATRIX_P0_REG                                (0x0001E080)
+//Duplicate of MC0_CH0_CR_SC_ODT_MATRIX_P0_REG
+
+#define MC1_CH0_CR_DFT_BLOCK_P0_REG                                    (0x0001E084)
+//Duplicate of MC0_CH0_CR_DFT_BLOCK_P0_REG
+
+#define MC1_CH0_CR_SC_GS_CFG_P0_REG                                    (0x0001E088)
+//Duplicate of MC0_CH0_CR_SC_GS_CFG_P0_REG
+
+#define MC1_CH0_CR_SC_PH_THROTTLING_0_P0_REG                           (0x0001E090)
+//Duplicate of MC0_CH0_CR_SC_PH_THROTTLING_0_P0_REG
+
+#define MC1_CH0_CR_SC_PH_THROTTLING_1_P0_REG                           (0x0001E094)
+//Duplicate of MC0_CH0_CR_SC_PH_THROTTLING_1_P0_REG
+
+#define MC1_CH0_CR_SC_PH_THROTTLING_2_P0_REG                           (0x0001E098)
+//Duplicate of MC0_CH0_CR_SC_PH_THROTTLING_2_P0_REG
+
+#define MC1_CH0_CR_SC_PH_THROTTLING_3_P0_REG                           (0x0001E09C)
+//Duplicate of MC0_CH0_CR_SC_PH_THROTTLING_3_P0_REG
+
+#define MC1_CH0_CR_SC_WPQ_THRESHOLD_P0_REG                             (0x0001E0A0)
+//Duplicate of MC0_CH0_CR_SC_WPQ_THRESHOLD_P0_REG
+
+#define MC1_CH0_CR_SC_PR_CNT_CONFIG_P0_REG                             (0x0001E0A8)
+//Duplicate of MC0_CH0_CR_SC_PR_CNT_CONFIG_P0_REG
+
+#define MC1_CH0_CR_REUT_CH_MISC_CKE_CS_CTRL_P0_REG                     (0x0001E0B0)
+//Duplicate of MC0_CH0_CR_REUT_CH_MISC_CKE_CS_CTRL_P0_REG
+
+#define MC1_CH0_CR_REUT_CH_MISC_ODT_CTRL_P0_REG                        (0x0001E0B4)
+//Duplicate of MC0_CH0_CR_REUT_CH_MISC_ODT_CTRL_P0_REG
+
+#define MC1_CH0_CR_SPID_LOW_POWER_CTL_P0_REG                           (0x0001E0B8)
+//Duplicate of MC0_CH0_CR_SPID_LOW_POWER_CTL_P0_REG
+
+#define MC1_CH0_CR_SC_GS_CFG_TRAINING_P0_REG                           (0x0001E0BC)
+//Duplicate of MC0_CH0_CR_SC_GS_CFG_TRAINING_P0_REG
+
+#define MC1_CH0_CR_SCHED_THIRD_CBIT_P0_REG                             (0x0001E0C0)
+//Duplicate of MC0_CH0_CR_SCHED_THIRD_CBIT_P0_REG
+
+#define MC1_CH0_CR_DEADLOCK_BREAKER_P0_REG                             (0x0001E0C4)
+//Duplicate of MC0_CH0_CR_DEADLOCK_BREAKER_P0_REG
+
+#define MC1_CH0_CR_XARB_TC_BUBBLE_INJ_P0_REG                           (0x0001E0C8)
+//Duplicate of MC0_CH0_CR_XARB_TC_BUBBLE_INJ_P0_REG
+
+#define MC1_CH0_CR_XARB_CFG_BUBBLE_INJ_P0_REG                          (0x0001E0CC)
+//Duplicate of MC0_CH0_CR_XARB_CFG_BUBBLE_INJ_P0_REG
+
+#define MC1_CH0_CR_MCSCHEDS_GLOBAL_DRIVER_GATE_CFG_P0_REG              (0x0001E0D0)
+//Duplicate of MC0_MCMAINS_GLOBAL_DRIVER_GATE_CFG_P0_REG
+
+#define MC1_CH0_CR_SC_BLOCKING_RULES_CFG_P0_REG                        (0x0001E0D4)
+//Duplicate of MC0_CH0_CR_SC_BLOCKING_RULES_CFG_P0_REG
+
+#define MC1_CH0_CR_PWM_DDR_SUBCH0_ACT_COUNTER_P0_REG                   (0x0001E0D8)
+//Duplicate of MC0_CH0_CR_PWM_DDR_SUBCH0_ACT_COUNTER_P0_REG
+
+#define MC1_CH0_CR_PWM_DDR_SUBCH1_ACT_COUNTER_P0_REG                   (0x0001E0E0)
+//Duplicate of MC0_CH0_CR_PWM_DDR_SUBCH0_ACT_COUNTER_P0_REG
+
+#define MC1_CH0_CR_PWM_DDR_SUBCH0_REQ_OCCUPANCY_COUNTER_P0_REG         (0x0001E0E8)
+//Duplicate of MC0_CH0_CR_PWM_DDR_SUBCH0_REQ_OCCUPANCY_COUNTER_P0_REG
+
+#define MC1_CH0_CR_PWM_DDR_SUBCH1_REQ_OCCUPANCY_COUNTER_P0_REG         (0x0001E0F0)
+//Duplicate of MC0_CH0_CR_PWM_DDR_SUBCH0_REQ_OCCUPANCY_COUNTER_P0_REG
+
+#define MC1_CH0_CR_WCK_CONFIG_P0_REG                                   (0x0001E0F8)
+//Duplicate of MC0_CH0_CR_WCK_CONFIG_P0_REG
+
+#define MC1_CH0_CR_REUT_CH_MISC_REFRESH_CTRL_P0_REG                    (0x0001E404)
+//Duplicate of MC0_CH0_CR_REUT_CH_MISC_REFRESH_CTRL_P0_REG
+
+#define MC1_CH0_CR_REUT_CH_MISC_ZQ_CTRL_P0_REG                         (0x0001E408)
+//Duplicate of MC0_CH0_CR_REUT_CH_MISC_ZQ_CTRL_P0_REG
+
+#define MC1_CH0_CR_DDR_MR_PARAMS_P0_REG                                (0x0001E410)
+//Duplicate of MC0_CH0_CR_DDR_MR_PARAMS_P0_REG
+
+#define MC1_CH0_CR_DDR_MR_COMMAND_P0_REG                               (0x0001E414)
+//Duplicate of MC0_CH0_CR_DDR_MR_COMMAND_P0_REG
+
+#define MC1_CH0_CR_DDR_MR_RESULT_0_P0_REG                              (0x0001E418)
+//Duplicate of MC0_CH0_CR_DDR_MR_RESULT_0_P0_REG
+
+#define MC1_CH0_CR_DDR_MR_RESULT_1_P0_REG                              (0x0001E41C)
+//Duplicate of MC0_CH0_CR_DDR_MR_RESULT_1_P0_REG
+
+#define MC1_CH0_CR_DDR_MR_RESULT_2_P0_REG                              (0x0001E420)
+//Duplicate of MC0_CH0_CR_DDR_MR_RESULT_2_P0_REG
+
+#define MC1_CH0_CR_MR4_RANK_TEMPERATURE_P0_REG                         (0x0001E424)
+//Duplicate of MC0_CH0_CR_MR4_RANK_TEMPERATURE_P0_REG
+
+#define MC1_CH0_CR_DDR4_MPR_RANK_TEMPERATURE_P0_REG                    (0x0001E428)
+//Duplicate of MC0_CH0_CR_DDR4_MPR_RANK_TEMPERATURE_P0_REG
+
+#define MC1_CH0_CR_DESWIZZLE_LOW_ERM_P0_REG                            (0x0001E430)
+//Duplicate of MC0_CH0_CR_DESWIZZLE_LOW_ERM_P0_REG
+
+#define MC1_CH0_CR_TC_RFP_P0_REG                                       (0x0001E438)
+//Duplicate of MC0_CH0_CR_TC_RFP_P0_REG
+
+#define MC1_CH0_CR_TC_RFTP_P0_REG                                      (0x0001E43C)
+//Duplicate of MC0_CH0_CR_TC_RFTP_P0_REG
+
+#define MC1_CH0_CR_TC_SRFTP_P0_REG                                     (0x0001E440)
+//Duplicate of MC0_CH0_CR_TC_SRFTP_P0_REG
+
+#define MC1_CH0_CR_MC_REFRESH_STAGGER_P0_REG                           (0x0001E444)
+//Duplicate of MC0_CH0_CR_MC_REFRESH_STAGGER_P0_REG
+
+#define MC1_CH0_CR_TC_ZQCAL_P0_REG                                     (0x0001E448)
+//Duplicate of MC0_CH0_CR_TC_ZQCAL_P0_REG
+
+#define MC1_CH0_CR_MRH_CONFIG_P0_REG                                   (0x0001E44C)
+//Duplicate of MC0_CH0_CR_MRH_CONFIG_P0_REG
+
+#define MC1_CH0_CR_TC_MR4_SHADDOW_P0_REG                               (0x0001E450)
+//Duplicate of MC0_CH0_CR_TC_MR4_SHADDOW_P0_REG
+
+#define MC1_CH0_CR_MC_INIT_STATE_P0_REG                                (0x0001E454)
+//Duplicate of MC0_CH0_CR_MC_INIT_STATE_P0_REG
+
+#define MC1_CH0_CR_WDB_VISA_SEL_P0_REG                                 (0x0001E458)
+//Duplicate of MC0_CH0_CR_WDB_VISA_SEL_P0_REG
+
+#define MC1_CH0_CR_PM_DIMM_IDLE_ENERGY_P0_REG                          (0x0001E460)
+//Duplicate of MC0_CH0_CR_PM_DIMM_IDLE_ENERGY_P0_REG
+
+#define MC1_CH0_CR_PM_DIMM_PD_ENERGY_P0_REG                            (0x0001E464)
+//Duplicate of MC0_CH0_CR_PM_DIMM_PD_ENERGY_P0_REG
+
+#define MC1_CH0_CR_PM_DIMM_ACT_ENERGY_P0_REG                           (0x0001E468)
+//Duplicate of MC0_CH0_CR_PM_DIMM_ACT_ENERGY_P0_REG
+
+#define MC1_CH0_CR_PM_DIMM_RD_ENERGY_P0_REG                            (0x0001E46C)
+//Duplicate of MC0_CH0_CR_PM_DIMM_RD_ENERGY_P0_REG
+
+#define MC1_CH0_CR_PM_DIMM_WR_ENERGY_P0_REG                            (0x0001E470)
+//Duplicate of MC0_CH0_CR_PM_DIMM_WR_ENERGY_P0_REG
+
+#define MC1_CH0_CR_SC_WR_DELAY_P0_REG                                  (0x0001E478)
+//Duplicate of MC0_CH0_CR_SC_WR_DELAY_P0_REG
+
+#define MC1_CH0_CR_READ_RETURN_DFT_P0_REG                              (0x0001E47C)
+//Duplicate of MC0_CH0_CR_READ_RETURN_DFT_P0_REG
+
+#define MC1_CH0_CR_DESWIZZLE_LOW_P0_REG                                (0x0001E480)
+//Duplicate of MC0_CH0_CR_DESWIZZLE_LOW_ERM_P0_REG
+
+#define MC1_CH0_CR_SC_PBR_P0_REG                                       (0x0001E488)
+//Duplicate of MC0_CH0_CR_SC_PBR_P0_REG
+
+#define MC1_CH0_CR_TC_LPDDR4_MISC_P0_REG                               (0x0001E494)
+//Duplicate of MC0_CH0_CR_TC_LPDDR4_MISC_P0_REG
+
+#define MC1_CH0_CR_DESWIZZLE_HIGH_ERM_P0_REG                           (0x0001E498)
+//Duplicate of MC0_CH0_CR_DESWIZZLE_HIGH_ERM_P0_REG
+
+#define MC1_CH0_CR_PM_ALL_RANKS_CKE_LOW_COUNT_P0_REG                   (0x0001E4B0)
+//Duplicate of MC0_PWM_COUNTERS_DURATION_P0_REG
+
+#define MC1_CH0_CR_DESWIZZLE_HIGH_P0_REG                               (0x0001E4B8)
+//Duplicate of MC0_CH0_CR_DESWIZZLE_HIGH_ERM_P0_REG
+
+#define MC1_CH0_CR_TC_SREXITTP_P0_REG                                  (0x0001E4C0)
+//Duplicate of MC0_CH0_CR_TC_SREXITTP_P0_REG
+
+#define MC1_CH0_CR_DQS_OSCILLATOR_PARAMS_P0_REG                        (0x0001E4C8)
+//Duplicate of MC0_CH0_CR_DQS_OSCILLATOR_PARAMS_P0_REG
+
+#define MC1_CH0_CR_LPDDR_PASR_P0_REG                                   (0x0001E4CC)
+//Duplicate of MC0_CH0_CR_LPDDR_PASR_P0_REG
+
+#define MC1_CH0_CR_WDB_RD_WR_DFX_DATA_P0_REG                           (0x0001E4D8)
+//Duplicate of MC0_CH0_CR_WDB_RD_WR_DFX_DATA_P0_REG
+
+#define MC1_CH0_CR_WDB_RD_WR_DFX_CTL_P0_REG                            (0x0001E4E0)
+//Duplicate of MC0_CH0_CR_WDB_RD_WR_DFX_CTL_P0_REG
+
+#define MC1_CH0_CR_REF_FSM_STATUS_P0_REG                               (0x0001E4E4)
+//Duplicate of MC0_CH0_CR_REF_FSM_STATUS_P0_REG
+
+#define MC1_CH0_CR_WDB_MBIST_0_P0_REG                                  (0x0001E4E8)
+//Duplicate of MC0_CH0_CR_WDB_MBIST_0_P0_REG
+
+#define MC1_CH0_CR_WDB_MBIST_1_P0_REG                                  (0x0001E4EC)
+//Duplicate of MC0_CH0_CR_WDB_MBIST_0_P0_REG
+
+#define MC1_CH0_CR_RDB_MBIST_P0_REG                                    (0x0001E4F8)
+//Duplicate of MC0_CH0_CR_WDB_MBIST_0_P0_REG
+
+#define MC1_CH0_CR_ECC_INJECT_COUNT_P0_REG                             (0x0001E4FC)
+//Duplicate of MC0_CH0_CR_ECC_INJECT_COUNT_P0_REG
+
+#define MC1_CH0_CR_PWM_DDR_SUBCH0_RDDATA_COUNTER_P0_REG                (0x0001E500)
+//Duplicate of MC0_CH0_CR_PWM_DDR_SUBCH0_RDDATA_COUNTER_P0_REG
+
+#define MC1_CH0_CR_PWM_DDR_SUBCH1_RDDATA_COUNTER_P0_REG                (0x0001E508)
+//Duplicate of MC0_CH0_CR_PWM_DDR_SUBCH0_RDDATA_COUNTER_P0_REG
+
+#define MC1_CH0_CR_PWM_DDR_SUBCH0_WRDATA_COUNTER_P0_REG                (0x0001E510)
+//Duplicate of MC0_CH0_CR_PWM_DDR_SUBCH0_WRDATA_COUNTER_P0_REG
+
+#define MC1_CH0_CR_PWM_DDR_SUBCH1_WRDATA_COUNTER_P0_REG                (0x0001E518)
+//Duplicate of MC0_CH0_CR_PWM_DDR_SUBCH0_WRDATA_COUNTER_P0_REG
+
+#define MC1_CH0_CR_DDR4_MR1_RTT_NOM_DIMM1_VALUES_P0_REG                (0x0001E520)
+//Duplicate of MC0_CH0_CR_DDR4_MR1_RTT_NOM_DIMM1_VALUES_P0_REG
+
+#define MC1_CH0_CR_DDR4_MR2_RTT_WR_DIMM1_VALUES_P0_REG                 (0x0001E528)
+//Duplicate of MC0_CH0_CR_DDR4_MR1_RTT_NOM_DIMM1_VALUES_P0_REG
+
+#define MC1_CH0_CR_DDR4_MR6_VREF_DIMM1_VALUES_0_P0_REG                 (0x0001E530)
+//Duplicate of MC0_CH0_CR_DDR4_MR6_VREF_DIMM1_VALUES_0_P0_REG
+
+#define MC1_CH0_CR_DDR4_MR6_VREF_DIMM1_VALUES_1_P0_REG                 (0x0001E538)
+//Duplicate of MC0_CH0_CR_DDR4_MR6_VREF_DIMM1_VALUES_0_P0_REG
+
+#define MC1_CH0_CR_DDR4_MR1_ODIC_DIMM1_VALUES_P0_REG                   (0x0001E544)
+//Duplicate of MC0_CH0_CR_DDR4_MR1_ODIC_DIMM1_VALUES_P0_REG
+
+#define MC1_CH0_CR_DDR4_MR5_RTT_PARK_VALUES_P0_REG                     (0x0001E548)
+//Duplicate of MC0_CH0_CR_DDR4_MR1_RTT_NOM_DIMM1_VALUES_P0_REG
+
+#define MC1_CH0_CR_DDR4_MR5_RTT_PARK_DIMM1_VALUES_P0_REG               (0x0001E550)
+//Duplicate of MC0_CH0_CR_DDR4_MR1_RTT_NOM_DIMM1_VALUES_P0_REG
+
+#define MC1_CH0_CR_DDR4_MR1_RTT_NOM_VALUES_P0_REG                      (0x0001E558)
+//Duplicate of MC0_CH0_CR_DDR4_MR1_RTT_NOM_DIMM1_VALUES_P0_REG
+
+#define MC1_CH0_CR_LPDDR4_DISCRETE_MR_VALUES_0_P0_REG                  (0x0001E560)
+//Duplicate of MC0_CH0_CR_LPDDR4_DISCRETE_MR_VALUES_0_P0_REG
+
+#define MC1_CH0_CR_LPDDR4_DISCRETE_MR_VALUES_1_P0_REG                  (0x0001E568)
+//Duplicate of MC0_CH0_CR_LPDDR4_DISCRETE_MR_VALUES_0_P0_REG
+
+#define MC1_CH0_CR_LPDDR4_DISCRETE_MR_VALUES_2_P0_REG                  (0x0001E570)
+//Duplicate of MC0_CH0_CR_LPDDR4_DISCRETE_MR_VALUES_0_P0_REG
+
+#define MC1_CH0_CR_LPDDR4_DISCRETE_MR_VALUES_3_P0_REG                  (0x0001E578)
+//Duplicate of MC0_CH0_CR_LPDDR4_DISCRETE_MR_VALUES_0_P0_REG
+
+#define MC1_CH0_CR_LPDDR4_DISCRETE_MR_VALUES_4_P0_REG                  (0x0001E580)
+//Duplicate of MC0_CH0_CR_LPDDR4_DISCRETE_MR_VALUES_0_P0_REG
+
+#define MC1_CH0_CR_LPDDR4_DISCRETE_MR_VALUES_5_P0_REG                  (0x0001E588)
+//Duplicate of MC0_CH0_CR_LPDDR4_DISCRETE_MR_VALUES_0_P0_REG
+
+#define MC1_CH0_CR_LPDDR4_DISCRETE_MR_VALUES_6_P0_REG                  (0x0001E590)
+//Duplicate of MC0_CH0_CR_LPDDR4_DISCRETE_MR_VALUES_0_P0_REG
+
+#define MC1_CH0_CR_LPDDR4_DISCRETE_MR_VALUES_7_P0_REG                  (0x0001E598)
+//Duplicate of MC0_CH0_CR_LPDDR4_DISCRETE_MR_VALUES_0_P0_REG
+
+#define MC1_CH0_CR_DDR4_MR0_MR1_CONTENT_P0_REG                         (0x0001E5A0)
+//Duplicate of MC0_CH0_CR_DDR4_MR0_MR1_CONTENT_P0_REG
+
+#define MC1_CH0_CR_DDR4_MR2_MR3_CONTENT_P0_REG                         (0x0001E5A4)
+//Duplicate of MC0_CH0_CR_DDR4_MR2_MR3_CONTENT_P0_REG
+
+#define MC1_CH0_CR_DDR4_MR4_MR5_CONTENT_P0_REG                         (0x0001E5A8)
+//Duplicate of MC0_CH0_CR_DDR4_MR4_MR5_CONTENT_P0_REG
+
+#define MC1_CH0_CR_DDR4_MR6_MR7_CONTENT_P0_REG                         (0x0001E5AC)
+//Duplicate of MC0_CH0_CR_DDR4_MR6_MR7_CONTENT_P0_REG
+
+#define MC1_CH0_CR_DDR4_MR2_RTT_WR_VALUES_P0_REG                       (0x0001E5B0)
+//Duplicate of MC0_CH0_CR_DDR4_MR1_RTT_NOM_DIMM1_VALUES_P0_REG
+
+#define MC1_CH0_CR_DDR4_MR6_VREF_VALUES_0_P0_REG                       (0x0001E5B8)
+//Duplicate of MC0_CH0_CR_DDR4_MR6_VREF_DIMM1_VALUES_0_P0_REG
+
+#define MC1_CH0_CR_DDR4_MR6_VREF_VALUES_1_P0_REG                       (0x0001E5C0)
+//Duplicate of MC0_CH0_CR_DDR4_MR6_VREF_DIMM1_VALUES_0_P0_REG
+
+#define MC1_CH0_CR_LPDDR_MR_CONTENT_P0_REG                             (0x0001E5C8)
+//Duplicate of MC0_CH0_CR_LPDDR_MR_CONTENT_P0_REG
+
+#define MC1_CH0_CR_MRS_FSM_CONTROL_P0_REG                              (0x0001E5D0)
+//Duplicate of MC0_CH0_CR_MRS_FSM_CONTROL_P0_REG
+
+#define MC1_CH0_CR_MRS_FSM_RUN_P0_REG                                  (0x0001E5D8)
+//Duplicate of MC0_CH0_CR_MRS_FSM_RUN_P0_REG
+
+#define MC1_CH0_CR_DDR4_MR1_ODIC_VALUES_P0_REG                         (0x0001E5DC)
+//Duplicate of MC0_CH0_CR_DDR4_MR1_ODIC_DIMM1_VALUES_P0_REG
+
+#define MC1_CH0_CR_PL_AGENT_CFG_DTF_P0_REG                             (0x0001E5E0)
+//Duplicate of MC0_CH0_CR_PL_AGENT_CFG_DTF_P0_REG
+
+#define MC1_CH0_CR_MCMNTS_GLOBAL_DRIVER_GATE_CFG_P0_REG                (0x0001E5E4)
+//Duplicate of MC0_MCMAINS_GLOBAL_DRIVER_GATE_CFG_P0_REG
+
+#define MC1_CH0_CR_DDR4_ECC_DEVICE_VALUES_P0_REG                       (0x0001E5E8)
+//Duplicate of MC0_CH0_CR_DDR4_ECC_DEVICE_VALUES_P0_REG
+
+#define MC1_CH0_CR_DDR4_ECC_DEVICE_DIMM1_VALUES_P0_REG                 (0x0001E5F0)
+//Duplicate of MC0_CH0_CR_DDR4_ECC_DEVICE_VALUES_P0_REG
+
+#define MC1_CH0_CR_MCMNTS_SPARE2_P0_REG                                (0x0001E5F8)
+//Duplicate of MC0_CH0_CR_MCMNTS_SPARE2_P0_REG
+
+#define MC1_CH0_CR_MCMNTS_SPARE_P0_REG                                 (0x0001E5FC)
+//Duplicate of MC0_CH0_CR_MCMNTS_SPARE_P0_REG
+
+#define MC1_CH0_CR_MCMNTS_RDDATA_CTL_P0_REG                            (0x0001E600)
+//Duplicate of MC0_CH0_CR_MCMNTS_RDDATA_CTL_P0_REG
+
+#define MC1_CH0_CR_GENERIC_MRS_FSM_TIMING_STORAGE_0_P0_REG             (0x0001E608)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_TIMING_STORAGE_0_P0_REG
+
+#define MC1_CH0_CR_GENERIC_MRS_FSM_TIMING_STORAGE_1_P0_REG             (0x0001E60C)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_TIMING_STORAGE_0_P0_REG
+
+#define MC1_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG                    (0x0001E610)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH0_CR_GENERIC_MRS_FSM_CONTROL_1_P0_REG                    (0x0001E614)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH0_CR_GENERIC_MRS_FSM_CONTROL_2_P0_REG                    (0x0001E618)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH0_CR_GENERIC_MRS_FSM_CONTROL_3_P0_REG                    (0x0001E61C)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH0_CR_GENERIC_MRS_FSM_CONTROL_4_P0_REG                    (0x0001E620)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH0_CR_GENERIC_MRS_FSM_CONTROL_5_P0_REG                    (0x0001E624)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH0_CR_GENERIC_MRS_FSM_CONTROL_6_P0_REG                    (0x0001E628)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH0_CR_GENERIC_MRS_FSM_CONTROL_7_P0_REG                    (0x0001E62C)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH0_CR_GENERIC_MRS_FSM_CONTROL_8_P0_REG                    (0x0001E630)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH0_CR_GENERIC_MRS_FSM_CONTROL_9_P0_REG                    (0x0001E634)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH0_CR_GENERIC_MRS_FSM_CONTROL_10_P0_REG                   (0x0001E638)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH0_CR_GENERIC_MRS_FSM_CONTROL_11_P0_REG                   (0x0001E63C)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH0_CR_GENERIC_MRS_FSM_CONTROL_12_P0_REG                   (0x0001E640)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH0_CR_GENERIC_MRS_FSM_CONTROL_13_P0_REG                   (0x0001E644)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH0_CR_GENERIC_MRS_FSM_CONTROL_14_P0_REG                   (0x0001E648)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH0_CR_GENERIC_MRS_FSM_CONTROL_15_P0_REG                   (0x0001E64C)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH0_CR_GENERIC_MRS_FSM_CONTROL_16_P0_REG                   (0x0001E650)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH0_CR_GENERIC_MRS_FSM_CONTROL_17_P0_REG                   (0x0001E654)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH0_CR_GENERIC_MRS_FSM_CONTROL_18_P0_REG                   (0x0001E658)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH0_CR_GENERIC_MRS_FSM_CONTROL_19_P0_REG                   (0x0001E65C)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH0_CR_GENERIC_MRS_FSM_CONTROL_20_P0_REG                   (0x0001E660)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH0_CR_GENERIC_MRS_FSM_CONTROL_21_P0_REG                   (0x0001E664)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH0_CR_GENERIC_MRS_FSM_CONTROL_22_P0_REG                   (0x0001E668)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH0_CR_GENERIC_MRS_FSM_CONTROL_23_P0_REG                   (0x0001E66C)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH0_CR_GENERIC_MRS_FSM_CONTROL_24_P0_REG                   (0x0001E670)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH0_CR_GENERIC_MRS_FSM_CONTROL_25_P0_REG                   (0x0001E674)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH0_CR_GENERIC_MRS_FSM_CONTROL_26_P0_REG                   (0x0001E678)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH0_CR_GENERIC_MRS_FSM_CONTROL_27_P0_REG                   (0x0001E67C)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH0_CR_GENERIC_MRS_FSM_CONTROL_28_P0_REG                   (0x0001E680)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH0_CR_GENERIC_MRS_FSM_CONTROL_29_P0_REG                   (0x0001E684)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH0_CR_GENERIC_MRS_FSM_CONTROL_30_P0_REG                   (0x0001E688)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH0_CR_GENERIC_MRS_FSM_CONTROL_31_P0_REG                   (0x0001E68C)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH0_CR_GENERIC_MRS_FSM_CONTROL_32_P0_REG                   (0x0001E690)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH0_CR_GENERIC_MRS_FSM_CONTROL_33_P0_REG                   (0x0001E694)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH0_CR_GENERIC_MRS_FSM_CONTROL_34_P0_REG                   (0x0001E698)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH0_CR_GENERIC_MRS_FSM_CONTROL_35_P0_REG                   (0x0001E69C)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH0_CR_GENERIC_MRS_FSM_CONTROL_36_P0_REG                   (0x0001E6A0)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH0_CR_GENERIC_MRS_FSM_CONTROL_37_P0_REG                   (0x0001E6A4)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH0_CR_GENERIC_MRS_FSM_CONTROL_38_P0_REG                   (0x0001E6A8)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH0_CR_GENERIC_MRS_FSM_CONTROL_39_P0_REG                   (0x0001E6AC)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH0_CR_GENERIC_MRS_FSM_CONTROL_40_P0_REG                   (0x0001E6B0)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH0_CR_GENERIC_MRS_FSM_CONTROL_41_P0_REG                   (0x0001E6B4)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH0_CR_GENERIC_MRS_FSM_CONTROL_42_P0_REG                   (0x0001E6B8)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH0_CR_GENERIC_MRS_FSM_CONTROL_43_P0_REG                   (0x0001E6BC)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH0_CR_GENERIC_MRS_FSM_CONTROL_44_P0_REG                   (0x0001E6C0)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH0_CR_GENERIC_MRS_FSM_CONTROL_45_P0_REG                   (0x0001E6C4)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH0_CR_GENERIC_MRS_FSM_CONTROL_46_P0_REG                   (0x0001E6C8)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH0_CR_GENERIC_MRS_FSM_CONTROL_47_P0_REG                   (0x0001E6CC)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH0_CR_GENERIC_MRS_FSM_CONTROL_48_P0_REG                   (0x0001E6D0)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH0_CR_GENERIC_MRS_FSM_CONTROL_49_P0_REG                   (0x0001E6D4)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH0_CR_GENERIC_MRS_FSM_CONTROL_50_P0_REG                   (0x0001E6D8)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH0_CR_GENERIC_MRS_FSM_CONTROL_51_P0_REG                   (0x0001E6DC)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH0_CR_GENERIC_MRS_FSM_CONTROL_52_P0_REG                   (0x0001E6E0)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH0_CR_GENERIC_MRS_FSM_CONTROL_53_P0_REG                   (0x0001E6E4)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH0_CR_GENERIC_MRS_FSM_CONTROL_54_P0_REG                   (0x0001E6E8)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH0_CR_GENERIC_MRS_FSM_CONTROL_55_P0_REG                   (0x0001E6EC)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH0_CR_GENERIC_MRS_FSM_CONTROL_56_P0_REG                   (0x0001E6F0)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH0_CR_GENERIC_MRS_FSM_CONTROL_57_P0_REG                   (0x0001E6F4)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH0_CR_GENERIC_MRS_FSM_CONTROL_58_P0_REG                   (0x0001E6F8)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH0_CR_GENERIC_MRS_FSM_CONTROL_59_P0_REG                   (0x0001E6FC)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH0_CR_GENERIC_MRS_FSM_CONTROL_60_P0_REG                   (0x0001E700)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH0_CR_GENERIC_MRS_FSM_CONTROL_61_P0_REG                   (0x0001E704)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH0_CR_GENERIC_MRS_FSM_CONTROL_62_P0_REG                   (0x0001E708)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH0_CR_GENERIC_MRS_FSM_CONTROL_63_P0_REG                   (0x0001E70C)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH0_CR_GENERIC_MRS_FSM_CONTROL_64_P0_REG                   (0x0001E710)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH0_CR_GENERIC_MRS_FSM_CONTROL_65_P0_REG                   (0x0001E714)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH0_CR_GENERIC_MRS_FSM_CONTROL_66_P0_REG                   (0x0001E718)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH0_CR_GENERIC_MRS_FSM_CONTROL_67_P0_REG                   (0x0001E71C)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH0_CR_GENERIC_MRS_FSM_CONTROL_68_P0_REG                   (0x0001E720)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH0_CR_GENERIC_MRS_FSM_CONTROL_69_P0_REG                   (0x0001E724)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH0_CR_GENERIC_MRS_FSM_CONTROL_70_P0_REG                   (0x0001E728)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH0_CR_GENERIC_MRS_FSM_CONTROL_71_P0_REG                   (0x0001E72C)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH0_CR_GENERIC_MRS_FSM_CONTROL_72_P0_REG                   (0x0001E730)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH0_CR_GENERIC_MRS_FSM_CONTROL_73_P0_REG                   (0x0001E734)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH0_CR_GENERIC_MRS_FSM_CONTROL_74_P0_REG                   (0x0001E738)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH0_CR_GENERIC_MRS_FSM_CONTROL_75_P0_REG                   (0x0001E73C)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_0_P0_REG             (0x0001E740)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_0_P0_REG
+
+#define MC1_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_1_P0_REG             (0x0001E744)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_0_P0_REG
+
+#define MC1_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_2_P0_REG             (0x0001E748)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_0_P0_REG
+
+#define MC1_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_3_P0_REG             (0x0001E74C)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_0_P0_REG
+
+#define MC1_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_4_P0_REG             (0x0001E750)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_0_P0_REG
+
+#define MC1_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_5_P0_REG             (0x0001E754)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_0_P0_REG
+
+#define MC1_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_6_P0_REG             (0x0001E758)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_0_P0_REG
+
+#define MC1_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_7_P0_REG             (0x0001E75C)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_0_P0_REG
+
+#define MC1_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_8_P0_REG             (0x0001E760)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_0_P0_REG
+
+#define MC1_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_9_P0_REG             (0x0001E764)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_0_P0_REG
+
+#define MC1_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_10_P0_REG            (0x0001E768)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_0_P0_REG
+
+#define MC1_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_11_P0_REG            (0x0001E76C)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_0_P0_REG
+
+#define MC1_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_12_P0_REG            (0x0001E770)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_0_P0_REG
+
+#define MC1_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_13_P0_REG            (0x0001E774)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_0_P0_REG
+
+#define MC1_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_14_P0_REG            (0x0001E778)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_0_P0_REG
+
+#define MC1_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_15_P0_REG            (0x0001E77C)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_0_P0_REG
+
+#define MC1_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_16_P0_REG            (0x0001E780)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_0_P0_REG
+
+#define MC1_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_17_P0_REG            (0x0001E784)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_0_P0_REG
+
+#define MC1_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_18_P0_REG            (0x0001E788)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_0_P0_REG
+
+#define MC1_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_19_P0_REG            (0x0001E78C)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_0_P0_REG
+
+#define MC1_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_20_P0_REG            (0x0001E790)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_0_P0_REG
+
+#define MC1_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_21_P0_REG            (0x0001E794)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_0_P0_REG
+
+#define MC1_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_22_P0_REG            (0x0001E798)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_0_P0_REG
+
+#define MC1_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_23_P0_REG            (0x0001E79C)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_0_P0_REG
+
+#define MC1_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_24_P0_REG            (0x0001E7A0)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_0_P0_REG
+
+#define MC1_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_25_P0_REG            (0x0001E7A4)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_0_P0_REG
+
+#define MC1_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_26_P0_REG            (0x0001E7A8)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_0_P0_REG
+
+#define MC1_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_27_P0_REG            (0x0001E7AC)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_0_P0_REG
+
+#define MC1_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_28_P0_REG            (0x0001E7B0)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_0_P0_REG
+
+#define MC1_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_29_P0_REG            (0x0001E7B4)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_0_P0_REG
+
+#define MC1_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_30_P0_REG            (0x0001E7B8)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_0_P0_REG
+
+#define MC1_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_31_P0_REG            (0x0001E7BC)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_0_P0_REG
+
+#define MC1_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_32_P0_REG            (0x0001E7C0)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_0_P0_REG
+
+#define MC1_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_33_P0_REG            (0x0001E7C4)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_0_P0_REG
+
+#define MC1_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_34_P0_REG            (0x0001E7C8)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_0_P0_REG
+
+#define MC1_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_35_P0_REG            (0x0001E7CC)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_0_P0_REG
+
+#define MC1_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_36_P0_REG            (0x0001E7D0)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_0_P0_REG
+
+#define MC1_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_37_P0_REG            (0x0001E7D4)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_0_P0_REG
+
+#define MC1_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_38_P0_REG            (0x0001E7D8)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_0_P0_REG
+
+#define MC1_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_39_P0_REG            (0x0001E7DC)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_0_P0_REG
+
+#define MC1_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_40_P0_REG            (0x0001E7E0)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_0_P0_REG
+
+#define MC1_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_41_P0_REG            (0x0001E7E4)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_0_P0_REG
+
+#define MC1_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_42_P0_REG            (0x0001E7E8)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_0_P0_REG
+
+#define MC1_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_43_P0_REG            (0x0001E7EC)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_0_P0_REG
+
+#define MC1_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_44_P0_REG            (0x0001E7F0)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_0_P0_REG
+
+#define MC1_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_45_P0_REG            (0x0001E7F4)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_0_P0_REG
+
+#define MC1_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_46_P0_REG            (0x0001E7F8)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_0_P0_REG
+
+#define MC1_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_47_P0_REG            (0x0001E7FC)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_0_P0_REG
+
+#define MC1_CH1_CR_TC_PRE_P0_REG                                       (0x0001E800)
+//Duplicate of MC0_CH0_CR_TC_PRE_P0_REG
+
+#define MC1_CH1_CR_TC_ACT_P0_REG                                       (0x0001E808)
+//Duplicate of MC0_CH0_CR_TC_ACT_P0_REG
+
+#define MC1_CH1_CR_TC_RDRD_P0_REG                                      (0x0001E80C)
+//Duplicate of MC0_CH0_CR_TC_RDRD_P0_REG
+
+#define MC1_CH1_CR_TC_RDWR_P0_REG                                      (0x0001E810)
+//Duplicate of MC0_CH0_CR_TC_RDWR_P0_REG
+
+#define MC1_CH1_CR_TC_WRRD_P0_REG                                      (0x0001E814)
+//Duplicate of MC0_CH0_CR_TC_WRRD_P0_REG
+
+#define MC1_CH1_CR_TC_WRWR_P0_REG                                      (0x0001E818)
+//Duplicate of MC0_CH0_CR_TC_WRWR_P0_REG
+
+#define MC1_CH1_CR_SC_ROUNDTRIP_LATENCY_P0_REG                         (0x0001E820)
+//Duplicate of MC0_CH0_CR_SC_ROUNDTRIP_LATENCY_P0_REG
+
+#define MC1_CH1_CR_SCHED_CBIT_P0_REG                                   (0x0001E828)
+//Duplicate of MC0_CH0_CR_SCHED_CBIT_P0_REG
+
+#define MC1_CH1_CR_SCHED_SECOND_CBIT_P0_REG                            (0x0001E82C)
+//Duplicate of MC0_CH0_CR_SCHED_SECOND_CBIT_P0_REG
+
+#define MC1_CH1_CR_DFT_MISC_P0_REG                                     (0x0001E830)
+//Duplicate of MC0_CH0_CR_DFT_MISC_P0_REG
+
+#define MC1_CH1_CR_SC_PCIT_P0_REG                                      (0x0001E834)
+//Duplicate of MC0_CH0_CR_SC_PCIT_P0_REG
+
+#define MC1_CH1_CR_ECC_DFT_P0_REG                                      (0x0001E838)
+//Duplicate of MC0_CH0_CR_ECC_DFT_P0_REG
+
+#define MC1_CH1_CR_PM_PDWN_CONFIG_P0_REG                               (0x0001E840)
+//Duplicate of MC0_CH0_CR_PM_PDWN_CONFIG_P0_REG
+
+#define MC1_CH1_CR_WMM_READ_CONFIG_P0_REG                              (0x0001E844)
+//Duplicate of MC0_CH0_CR_WMM_READ_CONFIG_P0_REG
+
+#define MC1_CH1_CR_ECCERRLOG0_P0_REG                                   (0x0001E848)
+//Duplicate of MC0_CH0_CR_ECCERRLOG0_P0_REG
+
+#define MC1_CH1_CR_ECCERRLOG1_P0_REG                                   (0x0001E84C)
+//Duplicate of MC0_CH0_CR_ECCERRLOG1_P0_REG
+
+#define MC1_CH1_CR_TC_PWRDN_P0_REG                                     (0x0001E850)
+//Duplicate of MC0_CH0_CR_TC_PWRDN_P0_REG
+
+#define MC1_CH1_CR_QUEUE_ENTRY_DISABLE_RPQ_P0_REG                      (0x0001E858)
+//Duplicate of MC0_CH0_CR_QUEUE_ENTRY_DISABLE_RPQ_P0_REG
+
+#define MC1_CH1_CR_QUEUE_ENTRY_DISABLE_IPQ_P0_REG                      (0x0001E85C)
+//Duplicate of MC0_CH0_CR_QUEUE_ENTRY_DISABLE_IPQ_P0_REG
+
+#define MC1_CH1_CR_QUEUE_ENTRY_DISABLE_WPQ_P0_REG                      (0x0001E860)
+//Duplicate of MC0_CH0_CR_QUEUE_ENTRY_DISABLE_WPQ_P0_REG
+
+#define MC1_CH1_CR_SC_WDBWM_P0_REG                                     (0x0001E868)
+//Duplicate of MC0_CH0_CR_SC_WDBWM_P0_REG
+
+#define MC1_CH1_CR_TC_ODT_P0_REG                                       (0x0001E870)
+//Duplicate of MC0_CH0_CR_TC_ODT_P0_REG
+
+#define MC1_CH1_CR_MCSCHEDS_SPARE_P0_REG                               (0x0001E878)
+//Duplicate of MC0_CH0_CR_MCSCHEDS_SPARE_P0_REG
+
+#define MC1_CH1_CR_TC_MPC_P0_REG                                       (0x0001E87C)
+//Duplicate of MC0_CH0_CR_TC_MPC_P0_REG
+
+#define MC1_CH1_CR_SC_ODT_MATRIX_P0_REG                                (0x0001E880)
+//Duplicate of MC0_CH0_CR_SC_ODT_MATRIX_P0_REG
+
+#define MC1_CH1_CR_DFT_BLOCK_P0_REG                                    (0x0001E884)
+//Duplicate of MC0_CH0_CR_DFT_BLOCK_P0_REG
+
+#define MC1_CH1_CR_SC_GS_CFG_P0_REG                                    (0x0001E888)
+//Duplicate of MC0_CH0_CR_SC_GS_CFG_P0_REG
+
+#define MC1_CH1_CR_SC_PH_THROTTLING_0_P0_REG                           (0x0001E890)
+//Duplicate of MC0_CH0_CR_SC_PH_THROTTLING_0_P0_REG
+
+#define MC1_CH1_CR_SC_PH_THROTTLING_1_P0_REG                           (0x0001E894)
+//Duplicate of MC0_CH0_CR_SC_PH_THROTTLING_1_P0_REG
+
+#define MC1_CH1_CR_SC_PH_THROTTLING_2_P0_REG                           (0x0001E898)
+//Duplicate of MC0_CH0_CR_SC_PH_THROTTLING_2_P0_REG
+
+#define MC1_CH1_CR_SC_PH_THROTTLING_3_P0_REG                           (0x0001E89C)
+//Duplicate of MC0_CH0_CR_SC_PH_THROTTLING_3_P0_REG
+
+#define MC1_CH1_CR_SC_WPQ_THRESHOLD_P0_REG                             (0x0001E8A0)
+//Duplicate of MC0_CH0_CR_SC_WPQ_THRESHOLD_P0_REG
+
+#define MC1_CH1_CR_SC_PR_CNT_CONFIG_P0_REG                             (0x0001E8A8)
+//Duplicate of MC0_CH0_CR_SC_PR_CNT_CONFIG_P0_REG
+
+#define MC1_CH1_CR_REUT_CH_MISC_CKE_CS_CTRL_P0_REG                     (0x0001E8B0)
+//Duplicate of MC0_CH0_CR_REUT_CH_MISC_CKE_CS_CTRL_P0_REG
+
+#define MC1_CH1_CR_REUT_CH_MISC_ODT_CTRL_P0_REG                        (0x0001E8B4)
+//Duplicate of MC0_CH0_CR_REUT_CH_MISC_ODT_CTRL_P0_REG
+
+#define MC1_CH1_CR_SPID_LOW_POWER_CTL_P0_REG                           (0x0001E8B8)
+//Duplicate of MC0_CH0_CR_SPID_LOW_POWER_CTL_P0_REG
+
+#define MC1_CH1_CR_SC_GS_CFG_TRAINING_P0_REG                           (0x0001E8BC)
+//Duplicate of MC0_CH0_CR_SC_GS_CFG_TRAINING_P0_REG
+
+#define MC1_CH1_CR_SCHED_THIRD_CBIT_P0_REG                             (0x0001E8C0)
+//Duplicate of MC0_CH0_CR_SCHED_THIRD_CBIT_P0_REG
+
+#define MC1_CH1_CR_DEADLOCK_BREAKER_P0_REG                             (0x0001E8C4)
+//Duplicate of MC0_CH0_CR_DEADLOCK_BREAKER_P0_REG
+
+#define MC1_CH1_CR_XARB_TC_BUBBLE_INJ_P0_REG                           (0x0001E8C8)
+//Duplicate of MC0_CH0_CR_XARB_TC_BUBBLE_INJ_P0_REG
+
+#define MC1_CH1_CR_XARB_CFG_BUBBLE_INJ_P0_REG                          (0x0001E8CC)
+//Duplicate of MC0_CH0_CR_XARB_CFG_BUBBLE_INJ_P0_REG
+
+#define MC1_CH1_CR_MCSCHEDS_GLOBAL_DRIVER_GATE_CFG_P0_REG              (0x0001E8D0)
+//Duplicate of MC0_MCMAINS_GLOBAL_DRIVER_GATE_CFG_P0_REG
+
+#define MC1_CH1_CR_SC_BLOCKING_RULES_CFG_P0_REG                        (0x0001E8D4)
+//Duplicate of MC0_CH0_CR_SC_BLOCKING_RULES_CFG_P0_REG
+
+#define MC1_CH1_CR_PWM_DDR_SUBCH0_ACT_COUNTER_P0_REG                   (0x0001E8D8)
+//Duplicate of MC0_CH0_CR_PWM_DDR_SUBCH0_ACT_COUNTER_P0_REG
+
+#define MC1_CH1_CR_PWM_DDR_SUBCH1_ACT_COUNTER_P0_REG                   (0x0001E8E0)
+//Duplicate of MC0_CH0_CR_PWM_DDR_SUBCH0_ACT_COUNTER_P0_REG
+
+#define MC1_CH1_CR_PWM_DDR_SUBCH0_REQ_OCCUPANCY_COUNTER_P0_REG         (0x0001E8E8)
+//Duplicate of MC0_CH0_CR_PWM_DDR_SUBCH0_REQ_OCCUPANCY_COUNTER_P0_REG
+
+#define MC1_CH1_CR_PWM_DDR_SUBCH1_REQ_OCCUPANCY_COUNTER_P0_REG         (0x0001E8F0)
+//Duplicate of MC0_CH0_CR_PWM_DDR_SUBCH0_REQ_OCCUPANCY_COUNTER_P0_REG
+
+#define MC1_CH1_CR_WCK_CONFIG_P0_REG                                   (0x0001E8F8)
+//Duplicate of MC0_CH0_CR_WCK_CONFIG_P0_REG
+
+#define MC1_CH1_CR_REUT_CH_MISC_REFRESH_CTRL_P0_REG                    (0x0001EC04)
+//Duplicate of MC0_CH0_CR_REUT_CH_MISC_REFRESH_CTRL_P0_REG
+
+#define MC1_CH1_CR_REUT_CH_MISC_ZQ_CTRL_P0_REG                         (0x0001EC08)
+//Duplicate of MC0_CH0_CR_REUT_CH_MISC_ZQ_CTRL_P0_REG
+
+#define MC1_CH1_CR_DDR_MR_PARAMS_P0_REG                                (0x0001EC10)
+//Duplicate of MC0_CH0_CR_DDR_MR_PARAMS_P0_REG
+
+#define MC1_CH1_CR_DDR_MR_COMMAND_P0_REG                               (0x0001EC14)
+//Duplicate of MC0_CH0_CR_DDR_MR_COMMAND_P0_REG
+
+#define MC1_CH1_CR_DDR_MR_RESULT_0_P0_REG                              (0x0001EC18)
+//Duplicate of MC0_CH0_CR_DDR_MR_RESULT_0_P0_REG
+
+#define MC1_CH1_CR_DDR_MR_RESULT_1_P0_REG                              (0x0001EC1C)
+//Duplicate of MC0_CH0_CR_DDR_MR_RESULT_1_P0_REG
+
+#define MC1_CH1_CR_DDR_MR_RESULT_2_P0_REG                              (0x0001EC20)
+//Duplicate of MC0_CH0_CR_DDR_MR_RESULT_2_P0_REG
+
+#define MC1_CH1_CR_MR4_RANK_TEMPERATURE_P0_REG                         (0x0001EC24)
+//Duplicate of MC0_CH0_CR_MR4_RANK_TEMPERATURE_P0_REG
+
+#define MC1_CH1_CR_DDR4_MPR_RANK_TEMPERATURE_P0_REG                    (0x0001EC28)
+//Duplicate of MC0_CH0_CR_DDR4_MPR_RANK_TEMPERATURE_P0_REG
+
+#define MC1_CH1_CR_DESWIZZLE_LOW_ERM_P0_REG                            (0x0001EC30)
+//Duplicate of MC0_CH0_CR_DESWIZZLE_LOW_ERM_P0_REG
+
+#define MC1_CH1_CR_TC_RFP_P0_REG                                       (0x0001EC38)
+//Duplicate of MC0_CH0_CR_TC_RFP_P0_REG
+
+#define MC1_CH1_CR_TC_RFTP_P0_REG                                      (0x0001EC3C)
+//Duplicate of MC0_CH0_CR_TC_RFTP_P0_REG
+
+#define MC1_CH1_CR_TC_SRFTP_P0_REG                                     (0x0001EC40)
+//Duplicate of MC0_CH0_CR_TC_SRFTP_P0_REG
+
+#define MC1_CH1_CR_MC_REFRESH_STAGGER_P0_REG                           (0x0001EC44)
+//Duplicate of MC0_CH0_CR_MC_REFRESH_STAGGER_P0_REG
+
+#define MC1_CH1_CR_TC_ZQCAL_P0_REG                                     (0x0001EC48)
+//Duplicate of MC0_CH0_CR_TC_ZQCAL_P0_REG
+
+#define MC1_CH1_CR_MRH_CONFIG_P0_REG                                   (0x0001EC4C)
+//Duplicate of MC0_CH0_CR_MRH_CONFIG_P0_REG
+
+#define MC1_CH1_CR_TC_MR4_SHADDOW_P0_REG                               (0x0001EC50)
+//Duplicate of MC0_CH0_CR_TC_MR4_SHADDOW_P0_REG
+
+#define MC1_CH1_CR_MC_INIT_STATE_P0_REG                                (0x0001EC54)
+//Duplicate of MC0_CH0_CR_MC_INIT_STATE_P0_REG
+
+#define MC1_CH1_CR_WDB_VISA_SEL_P0_REG                                 (0x0001EC58)
+//Duplicate of MC0_CH0_CR_WDB_VISA_SEL_P0_REG
+
+#define MC1_CH1_CR_PM_DIMM_IDLE_ENERGY_P0_REG                          (0x0001EC60)
+//Duplicate of MC0_CH0_CR_PM_DIMM_IDLE_ENERGY_P0_REG
+
+#define MC1_CH1_CR_PM_DIMM_PD_ENERGY_P0_REG                            (0x0001EC64)
+//Duplicate of MC0_CH0_CR_PM_DIMM_PD_ENERGY_P0_REG
+
+#define MC1_CH1_CR_PM_DIMM_ACT_ENERGY_P0_REG                           (0x0001EC68)
+//Duplicate of MC0_CH0_CR_PM_DIMM_ACT_ENERGY_P0_REG
+
+#define MC1_CH1_CR_PM_DIMM_RD_ENERGY_P0_REG                            (0x0001EC6C)
+//Duplicate of MC0_CH0_CR_PM_DIMM_RD_ENERGY_P0_REG
+
+#define MC1_CH1_CR_PM_DIMM_WR_ENERGY_P0_REG                            (0x0001EC70)
+//Duplicate of MC0_CH0_CR_PM_DIMM_WR_ENERGY_P0_REG
+
+#define MC1_CH1_CR_SC_WR_DELAY_P0_REG                                  (0x0001EC78)
+//Duplicate of MC0_CH0_CR_SC_WR_DELAY_P0_REG
+
+#define MC1_CH1_CR_READ_RETURN_DFT_P0_REG                              (0x0001EC7C)
+//Duplicate of MC0_CH0_CR_READ_RETURN_DFT_P0_REG
+
+#define MC1_CH1_CR_DESWIZZLE_LOW_P0_REG                                (0x0001EC80)
+//Duplicate of MC0_CH0_CR_DESWIZZLE_LOW_ERM_P0_REG
+
+#define MC1_CH1_CR_SC_PBR_P0_REG                                       (0x0001EC88)
+//Duplicate of MC0_CH0_CR_SC_PBR_P0_REG
+
+#define MC1_CH1_CR_TC_LPDDR4_MISC_P0_REG                               (0x0001EC94)
+//Duplicate of MC0_CH0_CR_TC_LPDDR4_MISC_P0_REG
+
+#define MC1_CH1_CR_DESWIZZLE_HIGH_ERM_P0_REG                           (0x0001EC98)
+//Duplicate of MC0_CH0_CR_DESWIZZLE_HIGH_ERM_P0_REG
+
+#define MC1_CH1_CR_PM_ALL_RANKS_CKE_LOW_COUNT_P0_REG                   (0x0001ECB0)
+//Duplicate of MC0_PWM_COUNTERS_DURATION_P0_REG
+
+#define MC1_CH1_CR_DESWIZZLE_HIGH_P0_REG                               (0x0001ECB8)
+//Duplicate of MC0_CH0_CR_DESWIZZLE_HIGH_ERM_P0_REG
+
+#define MC1_CH1_CR_TC_SREXITTP_P0_REG                                  (0x0001ECC0)
+//Duplicate of MC0_CH0_CR_TC_SREXITTP_P0_REG
+
+#define MC1_CH1_CR_DQS_OSCILLATOR_PARAMS_P0_REG                        (0x0001ECC8)
+//Duplicate of MC0_CH0_CR_DQS_OSCILLATOR_PARAMS_P0_REG
+
+#define MC1_CH1_CR_LPDDR_PASR_P0_REG                                   (0x0001ECCC)
+//Duplicate of MC0_CH0_CR_LPDDR_PASR_P0_REG
+
+#define MC1_CH1_CR_WDB_RD_WR_DFX_DATA_P0_REG                           (0x0001ECD8)
+//Duplicate of MC0_CH0_CR_WDB_RD_WR_DFX_DATA_P0_REG
+
+#define MC1_CH1_CR_WDB_RD_WR_DFX_CTL_P0_REG                            (0x0001ECE0)
+//Duplicate of MC0_CH0_CR_WDB_RD_WR_DFX_CTL_P0_REG
+
+#define MC1_CH1_CR_REF_FSM_STATUS_P0_REG                               (0x0001ECE4)
+//Duplicate of MC0_CH0_CR_REF_FSM_STATUS_P0_REG
+
+#define MC1_CH1_CR_WDB_MBIST_0_P0_REG                                  (0x0001ECE8)
+//Duplicate of MC0_CH0_CR_WDB_MBIST_0_P0_REG
+
+#define MC1_CH1_CR_WDB_MBIST_1_P0_REG                                  (0x0001ECEC)
+//Duplicate of MC0_CH0_CR_WDB_MBIST_0_P0_REG
+
+#define MC1_CH1_CR_RDB_MBIST_P0_REG                                    (0x0001ECF8)
+//Duplicate of MC0_CH0_CR_WDB_MBIST_0_P0_REG
+
+#define MC1_CH1_CR_ECC_INJECT_COUNT_P0_REG                             (0x0001ECFC)
+//Duplicate of MC0_CH0_CR_ECC_INJECT_COUNT_P0_REG
+
+#define MC1_CH1_CR_PWM_DDR_SUBCH0_RDDATA_COUNTER_P0_REG                (0x0001ED00)
+//Duplicate of MC0_CH0_CR_PWM_DDR_SUBCH0_RDDATA_COUNTER_P0_REG
+
+#define MC1_CH1_CR_PWM_DDR_SUBCH1_RDDATA_COUNTER_P0_REG                (0x0001ED08)
+//Duplicate of MC0_CH0_CR_PWM_DDR_SUBCH0_RDDATA_COUNTER_P0_REG
+
+#define MC1_CH1_CR_PWM_DDR_SUBCH0_WRDATA_COUNTER_P0_REG                (0x0001ED10)
+//Duplicate of MC0_CH0_CR_PWM_DDR_SUBCH0_WRDATA_COUNTER_P0_REG
+
+#define MC1_CH1_CR_PWM_DDR_SUBCH1_WRDATA_COUNTER_P0_REG                (0x0001ED18)
+//Duplicate of MC0_CH0_CR_PWM_DDR_SUBCH0_WRDATA_COUNTER_P0_REG
+
+#define MC1_CH1_CR_DDR4_MR1_RTT_NOM_DIMM1_VALUES_P0_REG                (0x0001ED20)
+//Duplicate of MC0_CH0_CR_DDR4_MR1_RTT_NOM_DIMM1_VALUES_P0_REG
+
+#define MC1_CH1_CR_DDR4_MR2_RTT_WR_DIMM1_VALUES_P0_REG                 (0x0001ED28)
+//Duplicate of MC0_CH0_CR_DDR4_MR1_RTT_NOM_DIMM1_VALUES_P0_REG
+
+#define MC1_CH1_CR_DDR4_MR6_VREF_DIMM1_VALUES_0_P0_REG                 (0x0001ED30)
+//Duplicate of MC0_CH0_CR_DDR4_MR6_VREF_DIMM1_VALUES_0_P0_REG
+
+#define MC1_CH1_CR_DDR4_MR6_VREF_DIMM1_VALUES_1_P0_REG                 (0x0001ED38)
+//Duplicate of MC0_CH0_CR_DDR4_MR6_VREF_DIMM1_VALUES_0_P0_REG
+
+#define MC1_CH1_CR_DDR4_MR1_ODIC_DIMM1_VALUES_P0_REG                   (0x0001ED44)
+//Duplicate of MC0_CH0_CR_DDR4_MR1_ODIC_DIMM1_VALUES_P0_REG
+
+#define MC1_CH1_CR_DDR4_MR5_RTT_PARK_VALUES_P0_REG                     (0x0001ED48)
+//Duplicate of MC0_CH0_CR_DDR4_MR1_RTT_NOM_DIMM1_VALUES_P0_REG
+
+#define MC1_CH1_CR_DDR4_MR5_RTT_PARK_DIMM1_VALUES_P0_REG               (0x0001ED50)
+//Duplicate of MC0_CH0_CR_DDR4_MR1_RTT_NOM_DIMM1_VALUES_P0_REG
+
+#define MC1_CH1_CR_DDR4_MR1_RTT_NOM_VALUES_P0_REG                      (0x0001ED58)
+//Duplicate of MC0_CH0_CR_DDR4_MR1_RTT_NOM_DIMM1_VALUES_P0_REG
+
+#define MC1_CH1_CR_LPDDR4_DISCRETE_MR_VALUES_0_P0_REG                  (0x0001ED60)
+//Duplicate of MC0_CH0_CR_LPDDR4_DISCRETE_MR_VALUES_0_P0_REG
+
+#define MC1_CH1_CR_LPDDR4_DISCRETE_MR_VALUES_1_P0_REG                  (0x0001ED68)
+//Duplicate of MC0_CH0_CR_LPDDR4_DISCRETE_MR_VALUES_0_P0_REG
+
+#define MC1_CH1_CR_LPDDR4_DISCRETE_MR_VALUES_2_P0_REG                  (0x0001ED70)
+//Duplicate of MC0_CH0_CR_LPDDR4_DISCRETE_MR_VALUES_0_P0_REG
+
+#define MC1_CH1_CR_LPDDR4_DISCRETE_MR_VALUES_3_P0_REG                  (0x0001ED78)
+//Duplicate of MC0_CH0_CR_LPDDR4_DISCRETE_MR_VALUES_0_P0_REG
+
+#define MC1_CH1_CR_LPDDR4_DISCRETE_MR_VALUES_4_P0_REG                  (0x0001ED80)
+//Duplicate of MC0_CH0_CR_LPDDR4_DISCRETE_MR_VALUES_0_P0_REG
+
+#define MC1_CH1_CR_LPDDR4_DISCRETE_MR_VALUES_5_P0_REG                  (0x0001ED88)
+//Duplicate of MC0_CH0_CR_LPDDR4_DISCRETE_MR_VALUES_0_P0_REG
+
+#define MC1_CH1_CR_LPDDR4_DISCRETE_MR_VALUES_6_P0_REG                  (0x0001ED90)
+//Duplicate of MC0_CH0_CR_LPDDR4_DISCRETE_MR_VALUES_0_P0_REG
+
+#define MC1_CH1_CR_LPDDR4_DISCRETE_MR_VALUES_7_P0_REG                  (0x0001ED98)
+//Duplicate of MC0_CH0_CR_LPDDR4_DISCRETE_MR_VALUES_0_P0_REG
+
+#define MC1_CH1_CR_DDR4_MR0_MR1_CONTENT_P0_REG                         (0x0001EDA0)
+//Duplicate of MC0_CH0_CR_DDR4_MR0_MR1_CONTENT_P0_REG
+
+#define MC1_CH1_CR_DDR4_MR2_MR3_CONTENT_P0_REG                         (0x0001EDA4)
+//Duplicate of MC0_CH0_CR_DDR4_MR2_MR3_CONTENT_P0_REG
+
+#define MC1_CH1_CR_DDR4_MR4_MR5_CONTENT_P0_REG                         (0x0001EDA8)
+//Duplicate of MC0_CH0_CR_DDR4_MR4_MR5_CONTENT_P0_REG
+
+#define MC1_CH1_CR_DDR4_MR6_MR7_CONTENT_P0_REG                         (0x0001EDAC)
+//Duplicate of MC0_CH0_CR_DDR4_MR6_MR7_CONTENT_P0_REG
+
+#define MC1_CH1_CR_DDR4_MR2_RTT_WR_VALUES_P0_REG                       (0x0001EDB0)
+//Duplicate of MC0_CH0_CR_DDR4_MR1_RTT_NOM_DIMM1_VALUES_P0_REG
+
+#define MC1_CH1_CR_DDR4_MR6_VREF_VALUES_0_P0_REG                       (0x0001EDB8)
+//Duplicate of MC0_CH0_CR_DDR4_MR6_VREF_DIMM1_VALUES_0_P0_REG
+
+#define MC1_CH1_CR_DDR4_MR6_VREF_VALUES_1_P0_REG                       (0x0001EDC0)
+//Duplicate of MC0_CH0_CR_DDR4_MR6_VREF_DIMM1_VALUES_0_P0_REG
+
+#define MC1_CH1_CR_LPDDR_MR_CONTENT_P0_REG                             (0x0001EDC8)
+//Duplicate of MC0_CH0_CR_LPDDR_MR_CONTENT_P0_REG
+
+#define MC1_CH1_CR_MRS_FSM_CONTROL_P0_REG                              (0x0001EDD0)
+//Duplicate of MC0_CH0_CR_MRS_FSM_CONTROL_P0_REG
+
+#define MC1_CH1_CR_MRS_FSM_RUN_P0_REG                                  (0x0001EDD8)
+//Duplicate of MC0_CH0_CR_MRS_FSM_RUN_P0_REG
+
+#define MC1_CH1_CR_DDR4_MR1_ODIC_VALUES_P0_REG                         (0x0001EDDC)
+//Duplicate of MC0_CH0_CR_DDR4_MR1_ODIC_DIMM1_VALUES_P0_REG
+
+#define MC1_CH1_CR_PL_AGENT_CFG_DTF_P0_REG                             (0x0001EDE0)
+//Duplicate of MC0_CH0_CR_PL_AGENT_CFG_DTF_P0_REG
+
+#define MC1_CH1_CR_MCMNTS_GLOBAL_DRIVER_GATE_CFG_P0_REG                (0x0001EDE4)
+//Duplicate of MC0_MCMAINS_GLOBAL_DRIVER_GATE_CFG_P0_REG
+
+#define MC1_CH1_CR_DDR4_ECC_DEVICE_VALUES_P0_REG                       (0x0001EDE8)
+//Duplicate of MC0_CH0_CR_DDR4_ECC_DEVICE_VALUES_P0_REG
+
+#define MC1_CH1_CR_DDR4_ECC_DEVICE_DIMM1_VALUES_P0_REG                 (0x0001EDF0)
+//Duplicate of MC0_CH0_CR_DDR4_ECC_DEVICE_VALUES_P0_REG
+
+#define MC1_CH1_CR_MCMNTS_SPARE2_P0_REG                                (0x0001EDF8)
+//Duplicate of MC0_CH0_CR_MCMNTS_SPARE2_P0_REG
+
+#define MC1_CH1_CR_MCMNTS_SPARE_P0_REG                                 (0x0001EDFC)
+//Duplicate of MC0_CH0_CR_MCMNTS_SPARE_P0_REG
+
+#define MC1_CH1_CR_MCMNTS_RDDATA_CTL_P0_REG                            (0x0001EE00)
+//Duplicate of MC0_CH0_CR_MCMNTS_RDDATA_CTL_P0_REG
+
+#define MC1_CH1_CR_GENERIC_MRS_FSM_TIMING_STORAGE_0_P0_REG             (0x0001EE08)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_TIMING_STORAGE_0_P0_REG
+
+#define MC1_CH1_CR_GENERIC_MRS_FSM_TIMING_STORAGE_1_P0_REG             (0x0001EE0C)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_TIMING_STORAGE_0_P0_REG
+
+#define MC1_CH1_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG                    (0x0001EE10)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH1_CR_GENERIC_MRS_FSM_CONTROL_1_P0_REG                    (0x0001EE14)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH1_CR_GENERIC_MRS_FSM_CONTROL_2_P0_REG                    (0x0001EE18)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH1_CR_GENERIC_MRS_FSM_CONTROL_3_P0_REG                    (0x0001EE1C)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH1_CR_GENERIC_MRS_FSM_CONTROL_4_P0_REG                    (0x0001EE20)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH1_CR_GENERIC_MRS_FSM_CONTROL_5_P0_REG                    (0x0001EE24)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH1_CR_GENERIC_MRS_FSM_CONTROL_6_P0_REG                    (0x0001EE28)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH1_CR_GENERIC_MRS_FSM_CONTROL_7_P0_REG                    (0x0001EE2C)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH1_CR_GENERIC_MRS_FSM_CONTROL_8_P0_REG                    (0x0001EE30)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH1_CR_GENERIC_MRS_FSM_CONTROL_9_P0_REG                    (0x0001EE34)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH1_CR_GENERIC_MRS_FSM_CONTROL_10_P0_REG                   (0x0001EE38)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH1_CR_GENERIC_MRS_FSM_CONTROL_11_P0_REG                   (0x0001EE3C)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH1_CR_GENERIC_MRS_FSM_CONTROL_12_P0_REG                   (0x0001EE40)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH1_CR_GENERIC_MRS_FSM_CONTROL_13_P0_REG                   (0x0001EE44)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH1_CR_GENERIC_MRS_FSM_CONTROL_14_P0_REG                   (0x0001EE48)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH1_CR_GENERIC_MRS_FSM_CONTROL_15_P0_REG                   (0x0001EE4C)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH1_CR_GENERIC_MRS_FSM_CONTROL_16_P0_REG                   (0x0001EE50)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH1_CR_GENERIC_MRS_FSM_CONTROL_17_P0_REG                   (0x0001EE54)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH1_CR_GENERIC_MRS_FSM_CONTROL_18_P0_REG                   (0x0001EE58)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH1_CR_GENERIC_MRS_FSM_CONTROL_19_P0_REG                   (0x0001EE5C)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH1_CR_GENERIC_MRS_FSM_CONTROL_20_P0_REG                   (0x0001EE60)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH1_CR_GENERIC_MRS_FSM_CONTROL_21_P0_REG                   (0x0001EE64)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH1_CR_GENERIC_MRS_FSM_CONTROL_22_P0_REG                   (0x0001EE68)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH1_CR_GENERIC_MRS_FSM_CONTROL_23_P0_REG                   (0x0001EE6C)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH1_CR_GENERIC_MRS_FSM_CONTROL_24_P0_REG                   (0x0001EE70)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH1_CR_GENERIC_MRS_FSM_CONTROL_25_P0_REG                   (0x0001EE74)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH1_CR_GENERIC_MRS_FSM_CONTROL_26_P0_REG                   (0x0001EE78)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH1_CR_GENERIC_MRS_FSM_CONTROL_27_P0_REG                   (0x0001EE7C)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH1_CR_GENERIC_MRS_FSM_CONTROL_28_P0_REG                   (0x0001EE80)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH1_CR_GENERIC_MRS_FSM_CONTROL_29_P0_REG                   (0x0001EE84)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH1_CR_GENERIC_MRS_FSM_CONTROL_30_P0_REG                   (0x0001EE88)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH1_CR_GENERIC_MRS_FSM_CONTROL_31_P0_REG                   (0x0001EE8C)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH1_CR_GENERIC_MRS_FSM_CONTROL_32_P0_REG                   (0x0001EE90)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH1_CR_GENERIC_MRS_FSM_CONTROL_33_P0_REG                   (0x0001EE94)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH1_CR_GENERIC_MRS_FSM_CONTROL_34_P0_REG                   (0x0001EE98)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH1_CR_GENERIC_MRS_FSM_CONTROL_35_P0_REG                   (0x0001EE9C)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH1_CR_GENERIC_MRS_FSM_CONTROL_36_P0_REG                   (0x0001EEA0)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH1_CR_GENERIC_MRS_FSM_CONTROL_37_P0_REG                   (0x0001EEA4)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH1_CR_GENERIC_MRS_FSM_CONTROL_38_P0_REG                   (0x0001EEA8)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH1_CR_GENERIC_MRS_FSM_CONTROL_39_P0_REG                   (0x0001EEAC)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH1_CR_GENERIC_MRS_FSM_CONTROL_40_P0_REG                   (0x0001EEB0)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH1_CR_GENERIC_MRS_FSM_CONTROL_41_P0_REG                   (0x0001EEB4)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH1_CR_GENERIC_MRS_FSM_CONTROL_42_P0_REG                   (0x0001EEB8)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH1_CR_GENERIC_MRS_FSM_CONTROL_43_P0_REG                   (0x0001EEBC)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH1_CR_GENERIC_MRS_FSM_CONTROL_44_P0_REG                   (0x0001EEC0)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH1_CR_GENERIC_MRS_FSM_CONTROL_45_P0_REG                   (0x0001EEC4)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH1_CR_GENERIC_MRS_FSM_CONTROL_46_P0_REG                   (0x0001EEC8)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH1_CR_GENERIC_MRS_FSM_CONTROL_47_P0_REG                   (0x0001EECC)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH1_CR_GENERIC_MRS_FSM_CONTROL_48_P0_REG                   (0x0001EED0)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH1_CR_GENERIC_MRS_FSM_CONTROL_49_P0_REG                   (0x0001EED4)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH1_CR_GENERIC_MRS_FSM_CONTROL_50_P0_REG                   (0x0001EED8)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH1_CR_GENERIC_MRS_FSM_CONTROL_51_P0_REG                   (0x0001EEDC)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH1_CR_GENERIC_MRS_FSM_CONTROL_52_P0_REG                   (0x0001EEE0)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH1_CR_GENERIC_MRS_FSM_CONTROL_53_P0_REG                   (0x0001EEE4)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH1_CR_GENERIC_MRS_FSM_CONTROL_54_P0_REG                   (0x0001EEE8)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH1_CR_GENERIC_MRS_FSM_CONTROL_55_P0_REG                   (0x0001EEEC)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH1_CR_GENERIC_MRS_FSM_CONTROL_56_P0_REG                   (0x0001EEF0)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH1_CR_GENERIC_MRS_FSM_CONTROL_57_P0_REG                   (0x0001EEF4)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH1_CR_GENERIC_MRS_FSM_CONTROL_58_P0_REG                   (0x0001EEF8)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH1_CR_GENERIC_MRS_FSM_CONTROL_59_P0_REG                   (0x0001EEFC)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH1_CR_GENERIC_MRS_FSM_CONTROL_60_P0_REG                   (0x0001EF00)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH1_CR_GENERIC_MRS_FSM_CONTROL_61_P0_REG                   (0x0001EF04)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH1_CR_GENERIC_MRS_FSM_CONTROL_62_P0_REG                   (0x0001EF08)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH1_CR_GENERIC_MRS_FSM_CONTROL_63_P0_REG                   (0x0001EF0C)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH1_CR_GENERIC_MRS_FSM_CONTROL_64_P0_REG                   (0x0001EF10)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH1_CR_GENERIC_MRS_FSM_CONTROL_65_P0_REG                   (0x0001EF14)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH1_CR_GENERIC_MRS_FSM_CONTROL_66_P0_REG                   (0x0001EF18)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH1_CR_GENERIC_MRS_FSM_CONTROL_67_P0_REG                   (0x0001EF1C)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH1_CR_GENERIC_MRS_FSM_CONTROL_68_P0_REG                   (0x0001EF20)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH1_CR_GENERIC_MRS_FSM_CONTROL_69_P0_REG                   (0x0001EF24)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH1_CR_GENERIC_MRS_FSM_CONTROL_70_P0_REG                   (0x0001EF28)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH1_CR_GENERIC_MRS_FSM_CONTROL_71_P0_REG                   (0x0001EF2C)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH1_CR_GENERIC_MRS_FSM_CONTROL_72_P0_REG                   (0x0001EF30)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH1_CR_GENERIC_MRS_FSM_CONTROL_73_P0_REG                   (0x0001EF34)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH1_CR_GENERIC_MRS_FSM_CONTROL_74_P0_REG                   (0x0001EF38)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH1_CR_GENERIC_MRS_FSM_CONTROL_75_P0_REG                   (0x0001EF3C)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_CONTROL_0_P0_REG
+
+#define MC1_CH1_CR_GENERIC_MRS_FSM_STORAGE_VALUES_0_P0_REG             (0x0001EF40)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_0_P0_REG
+
+#define MC1_CH1_CR_GENERIC_MRS_FSM_STORAGE_VALUES_1_P0_REG             (0x0001EF44)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_0_P0_REG
+
+#define MC1_CH1_CR_GENERIC_MRS_FSM_STORAGE_VALUES_2_P0_REG             (0x0001EF48)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_0_P0_REG
+
+#define MC1_CH1_CR_GENERIC_MRS_FSM_STORAGE_VALUES_3_P0_REG             (0x0001EF4C)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_0_P0_REG
+
+#define MC1_CH1_CR_GENERIC_MRS_FSM_STORAGE_VALUES_4_P0_REG             (0x0001EF50)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_0_P0_REG
+
+#define MC1_CH1_CR_GENERIC_MRS_FSM_STORAGE_VALUES_5_P0_REG             (0x0001EF54)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_0_P0_REG
+
+#define MC1_CH1_CR_GENERIC_MRS_FSM_STORAGE_VALUES_6_P0_REG             (0x0001EF58)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_0_P0_REG
+
+#define MC1_CH1_CR_GENERIC_MRS_FSM_STORAGE_VALUES_7_P0_REG             (0x0001EF5C)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_0_P0_REG
+
+#define MC1_CH1_CR_GENERIC_MRS_FSM_STORAGE_VALUES_8_P0_REG             (0x0001EF60)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_0_P0_REG
+
+#define MC1_CH1_CR_GENERIC_MRS_FSM_STORAGE_VALUES_9_P0_REG             (0x0001EF64)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_0_P0_REG
+
+#define MC1_CH1_CR_GENERIC_MRS_FSM_STORAGE_VALUES_10_P0_REG            (0x0001EF68)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_0_P0_REG
+
+#define MC1_CH1_CR_GENERIC_MRS_FSM_STORAGE_VALUES_11_P0_REG            (0x0001EF6C)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_0_P0_REG
+
+#define MC1_CH1_CR_GENERIC_MRS_FSM_STORAGE_VALUES_12_P0_REG            (0x0001EF70)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_0_P0_REG
+
+#define MC1_CH1_CR_GENERIC_MRS_FSM_STORAGE_VALUES_13_P0_REG            (0x0001EF74)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_0_P0_REG
+
+#define MC1_CH1_CR_GENERIC_MRS_FSM_STORAGE_VALUES_14_P0_REG            (0x0001EF78)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_0_P0_REG
+
+#define MC1_CH1_CR_GENERIC_MRS_FSM_STORAGE_VALUES_15_P0_REG            (0x0001EF7C)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_0_P0_REG
+
+#define MC1_CH1_CR_GENERIC_MRS_FSM_STORAGE_VALUES_16_P0_REG            (0x0001EF80)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_0_P0_REG
+
+#define MC1_CH1_CR_GENERIC_MRS_FSM_STORAGE_VALUES_17_P0_REG            (0x0001EF84)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_0_P0_REG
+
+#define MC1_CH1_CR_GENERIC_MRS_FSM_STORAGE_VALUES_18_P0_REG            (0x0001EF88)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_0_P0_REG
+
+#define MC1_CH1_CR_GENERIC_MRS_FSM_STORAGE_VALUES_19_P0_REG            (0x0001EF8C)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_0_P0_REG
+
+#define MC1_CH1_CR_GENERIC_MRS_FSM_STORAGE_VALUES_20_P0_REG            (0x0001EF90)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_0_P0_REG
+
+#define MC1_CH1_CR_GENERIC_MRS_FSM_STORAGE_VALUES_21_P0_REG            (0x0001EF94)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_0_P0_REG
+
+#define MC1_CH1_CR_GENERIC_MRS_FSM_STORAGE_VALUES_22_P0_REG            (0x0001EF98)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_0_P0_REG
+
+#define MC1_CH1_CR_GENERIC_MRS_FSM_STORAGE_VALUES_23_P0_REG            (0x0001EF9C)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_0_P0_REG
+
+#define MC1_CH1_CR_GENERIC_MRS_FSM_STORAGE_VALUES_24_P0_REG            (0x0001EFA0)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_0_P0_REG
+
+#define MC1_CH1_CR_GENERIC_MRS_FSM_STORAGE_VALUES_25_P0_REG            (0x0001EFA4)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_0_P0_REG
+
+#define MC1_CH1_CR_GENERIC_MRS_FSM_STORAGE_VALUES_26_P0_REG            (0x0001EFA8)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_0_P0_REG
+
+#define MC1_CH1_CR_GENERIC_MRS_FSM_STORAGE_VALUES_27_P0_REG            (0x0001EFAC)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_0_P0_REG
+
+#define MC1_CH1_CR_GENERIC_MRS_FSM_STORAGE_VALUES_28_P0_REG            (0x0001EFB0)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_0_P0_REG
+
+#define MC1_CH1_CR_GENERIC_MRS_FSM_STORAGE_VALUES_29_P0_REG            (0x0001EFB4)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_0_P0_REG
+
+#define MC1_CH1_CR_GENERIC_MRS_FSM_STORAGE_VALUES_30_P0_REG            (0x0001EFB8)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_0_P0_REG
+
+#define MC1_CH1_CR_GENERIC_MRS_FSM_STORAGE_VALUES_31_P0_REG            (0x0001EFBC)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_0_P0_REG
+
+#define MC1_CH1_CR_GENERIC_MRS_FSM_STORAGE_VALUES_32_P0_REG            (0x0001EFC0)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_0_P0_REG
+
+#define MC1_CH1_CR_GENERIC_MRS_FSM_STORAGE_VALUES_33_P0_REG            (0x0001EFC4)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_0_P0_REG
+
+#define MC1_CH1_CR_GENERIC_MRS_FSM_STORAGE_VALUES_34_P0_REG            (0x0001EFC8)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_0_P0_REG
+
+#define MC1_CH1_CR_GENERIC_MRS_FSM_STORAGE_VALUES_35_P0_REG            (0x0001EFCC)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_0_P0_REG
+
+#define MC1_CH1_CR_GENERIC_MRS_FSM_STORAGE_VALUES_36_P0_REG            (0x0001EFD0)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_0_P0_REG
+
+#define MC1_CH1_CR_GENERIC_MRS_FSM_STORAGE_VALUES_37_P0_REG            (0x0001EFD4)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_0_P0_REG
+
+#define MC1_CH1_CR_GENERIC_MRS_FSM_STORAGE_VALUES_38_P0_REG            (0x0001EFD8)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_0_P0_REG
+
+#define MC1_CH1_CR_GENERIC_MRS_FSM_STORAGE_VALUES_39_P0_REG            (0x0001EFDC)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_0_P0_REG
+
+#define MC1_CH1_CR_GENERIC_MRS_FSM_STORAGE_VALUES_40_P0_REG            (0x0001EFE0)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_0_P0_REG
+
+#define MC1_CH1_CR_GENERIC_MRS_FSM_STORAGE_VALUES_41_P0_REG            (0x0001EFE4)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_0_P0_REG
+
+#define MC1_CH1_CR_GENERIC_MRS_FSM_STORAGE_VALUES_42_P0_REG            (0x0001EFE8)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_0_P0_REG
+
+#define MC1_CH1_CR_GENERIC_MRS_FSM_STORAGE_VALUES_43_P0_REG            (0x0001EFEC)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_0_P0_REG
+
+#define MC1_CH1_CR_GENERIC_MRS_FSM_STORAGE_VALUES_44_P0_REG            (0x0001EFF0)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_0_P0_REG
+
+#define MC1_CH1_CR_GENERIC_MRS_FSM_STORAGE_VALUES_45_P0_REG            (0x0001EFF4)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_0_P0_REG
+
+#define MC1_CH1_CR_GENERIC_MRS_FSM_STORAGE_VALUES_46_P0_REG            (0x0001EFF8)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_0_P0_REG
+
+#define MC1_CH1_CR_GENERIC_MRS_FSM_STORAGE_VALUES_47_P0_REG            (0x0001EFFC)
+//Duplicate of MC0_CH0_CR_GENERIC_MRS_FSM_STORAGE_VALUES_0_P0_REG
+#pragma pack(pop)
+#endif

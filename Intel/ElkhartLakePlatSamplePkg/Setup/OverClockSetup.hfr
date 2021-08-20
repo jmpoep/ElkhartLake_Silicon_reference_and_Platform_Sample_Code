@@ -1,0 +1,902 @@
+/** @file
+
+@copyright
+  INTEL CONFIDENTIAL
+  Copyright 2014 - 2017 Intel Corporation.
+
+  The source code contained or described herein and all documents related to the
+  source code ("Material") are owned by Intel Corporation or its suppliers or
+  licensors. Title to the Material remains with Intel Corporation or its suppliers
+  and licensors. The Material may contain trade secrets and proprietary and
+  confidential information of Intel Corporation and its suppliers and licensors,
+  and is protected by worldwide copyright and trade secret laws and treaty
+  provisions. No part of the Material may be used, copied, reproduced, modified,
+  published, uploaded, posted, transmitted, distributed, or disclosed in any way
+  without Intel's prior express written permission.
+
+  No license under any patent, copyright, trade secret or other intellectual
+  property right is granted to or conferred upon you by disclosure or delivery
+  of the Materials, either expressly, by implication, inducement, estoppel or
+  otherwise. Any license under such intellectual property rights must be
+  express and approved by Intel in writing.
+
+  Unless otherwise agreed by Intel in writing, you may not remove or alter
+  this notice or any other notice embedded in Materials by Intel or
+  Intel's suppliers or licensors in any way.
+
+  This file contains a 'Sample Driver' and is licensed as such under the terms
+  of your license agreement with Intel or your vendor. This file may be modified
+  by the user, subject to the additional terms of the license agreement.
+
+@par Specification
+**/
+
+  form formid = AUTO_ID(PERFORMANCE_MENU_CONFIG_FORM_ID),
+  title     = STRING_TOKEN(STR_PERFORMANCE_MENU_CONFIGURATION);
+
+  SUBTITLE(STRING_TOKEN(STR_PERFORMANCE_MENU_CONFIGURATION))
+  SEPARATOR
+
+  oneof varid   = CPU_SETUP.OverclockingSupport,
+    prompt      = STRING_TOKEN(STR_OVERCLOCKING_MENU_CONFIGURATION),
+    help        = STRING_TOKEN(STR_OVERCLOCKING_CONFIGURATION_HELP),
+    option text = STRING_TOKEN(STR_DISABLED), value = 0, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+    option text = STRING_TOKEN(STR_ENABLED), value = 1, flags =  RESET_REQUIRED;
+  endoneof;
+  
+  oneof varid   = PCH_SETUP.WdtEnable,
+    prompt      = STRING_TOKEN(STR_WDT_ENABLE),
+    help        = STRING_TOKEN(STR_WDT_ENABLE_HELP),
+    option text = STRING_TOKEN(STR_DISABLED), value = 0, flags = RESET_REQUIRED;
+    option text = STRING_TOKEN(STR_ENABLED), value = 1, flags =  DEFAULT | MANUFACTURING | RESET_REQUIRED;
+  endoneof;
+
+  suppressif ideqval CPU_SETUP.OverclockingSupport == 0;  
+    suppressif NOT ideqval SETUP_VOLATILE_DATA.PlatformType == TypeTrad;
+      text
+        help  = STRING_TOKEN(STR_EMPTY_STRING),
+        text  = STRING_TOKEN(STR_PCODE_BCLK_FREQUENCY_NAME),
+        text  = STRING_TOKEN(STR_PCODE_BCLK_FREQUENCY_VALUE),
+        flags = 0,
+        key   = 0;
+    endif;
+
+    oneof varid   = CPU_SETUP.XtuInterfaceEnable,
+      prompt      = STRING_TOKEN(STR_XTU_INTERFACE_ENABLE),
+      help        = STRING_TOKEN(STR_XTU_INTERFACE_ENABLE_HELP),
+      option text = STRING_TOKEN(STR_DISABLED), value = 0, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_ENABLED), value = 1, flags =  RESET_REQUIRED;
+    endoneof;
+
+    oneof varid   = CPU_SETUP.BclkAdaptiveVoltageEnable,
+      prompt      = STRING_TOKEN(STR_BCLK_ADAPTIVE_VOLTAGE_ENABLE),
+      help        = STRING_TOKEN(STR_BCLK_ADAPTIVE_VOLTAGE_ENABLE_HELP),
+      option text = STRING_TOKEN(STR_DISABLED), value = 0, flags = RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_ENABLED), value = 1, flags =  DEFAULT | MANUFACTURING | RESET_REQUIRED;
+    endoneof;
+
+    oneof varid   = CPU_SETUP.FivrFaults,
+      prompt      = STRING_TOKEN(STR_FIVR_FAULTS_ENABLE),
+      help        = STRING_TOKEN(STR_FIVR_FAULTS_ENABLE_HELP),
+      option text = STRING_TOKEN(STR_DISABLED), value = 0, flags = RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_ENABLED), value = 1, flags =  DEFAULT | MANUFACTURING | RESET_REQUIRED;
+    endoneof;
+
+    oneof varid   = CPU_SETUP.FivrEfficiency,
+      prompt      = STRING_TOKEN(STR_FIVR_EFFICIENCY_ENABLE),
+      help        = STRING_TOKEN(STR_FIVR_EFFICIENCY_ENABLE_HELP),
+      option text = STRING_TOKEN(STR_DISABLED), value = 0, flags = RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_ENABLED), value = 1, flags =  DEFAULT | MANUFACTURING | RESET_REQUIRED;
+    endoneof;
+  endif;
+
+suppressif ideqval CPU_SETUP.OverclockingSupport == 0;
+
+  goto PROCESSOR_CONFIG_FORM_ID,
+  prompt  = STRING_TOKEN(STR_PROCESSOR_CONFIGURATION),
+  help    = STRING_TOKEN(STR_PROCESSOR_CONFIGURATION_HELP);
+
+  goto RING_CONFIG_FORM_ID,
+  prompt  = STRING_TOKEN(STR_RING_CONFIGURATION),
+  help    = STRING_TOKEN(STR_RING_CONFIGURATION_HELP);
+
+  goto MEMORY_CONFIG_FORM_ID,
+  prompt  = STRING_TOKEN(STR_MEMORY_CONFIGURATION),
+  help    = STRING_TOKEN(STR_MEMORY_CONFIGURATION_HELP);
+
+  goto GT_CONFIG_FORM_ID,
+  prompt  = STRING_TOKEN(STR_GT_CONFIGURATION),
+  help    = STRING_TOKEN(STR_GT_CONFIGURATION_HELP);
+
+  goto UNCORE_CONFIG_FORM_ID,
+  prompt  = STRING_TOKEN(STR_UNCORE_CONFIGURATION),
+  help    = STRING_TOKEN(STR_UNCORE_CONFIGURATION_HELP);
+
+  goto PLL_TRIM_CONFIG_FORM_ID,
+  prompt  = STRING_TOKEN(STR_PLL_TRIM_CONFIGURATION),
+  help    = STRING_TOKEN(STR_PLL_TRIM_CONFIGURATION_HELP);
+
+endif;
+
+endform;
+
+   form formid = AUTO_ID(PROCESSOR_CONFIG_FORM_ID),
+   title = STRING_TOKEN(STR_PROCESSOR_CONFIGURATION);
+
+   SUBTITLE(STRING_TOKEN(STR_PROCESSOR_CONFIGURATION))
+   SEPARATOR
+
+     numeric varid = CPU_SETUP.CoreMaxOcRatio,
+       prompt  = STRING_TOKEN (STR_CORE_MAX_OC_RATIO),
+       help    = STRING_TOKEN (STR_CORE_MAX_OC_RATIO_HELP),
+       flags   = RESET_REQUIRED | INTERACTIVE,
+       key     = AUTO_ID(KEY_CORE_MAX_OC_RATIO_LIMIT),
+       minimum = 0,
+       maximum = 85,
+       step    = 1,
+       default = 0,
+     endnumeric;
+
+     oneof varid   = CPU_SETUP.CoreVoltageMode,
+       prompt      = STRING_TOKEN(STR_CORE_VOLTAGE_MODE),
+       help        = STRING_TOKEN(STR_CORE_VOLTAGE_MODE_HELP),
+       option text = STRING_TOKEN(STR_VOLTAGE_ADAPTIVE), value = 0, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+       option text = STRING_TOKEN(STR_VOLTAGE_OVERRIDE), value = 1, flags = RESET_REQUIRED;
+     endoneof;
+
+     suppressif ideqval CPU_SETUP.CoreVoltageMode == 0x0;
+       numeric varid = CPU_SETUP.CoreVoltageOverride,
+         prompt  = STRING_TOKEN (STR_CORE_VOLTAGE_OVERRIDE),
+         help    = STRING_TOKEN (STR_CORE_VOLTAGE_OVERRIDE_HELP),
+         flags   = RESET_REQUIRED,
+         minimum = 0,
+         maximum = 2000,
+         step    = 1,
+         default = 0,
+       endnumeric;
+     endif;
+
+     suppressif ideqval CPU_SETUP.CoreVoltageMode == 0x1;
+       numeric varid = CPU_SETUP.CoreExtraTurboVoltage,
+         prompt  = STRING_TOKEN (STR_CORE_EXTRA_TURBO_VOLTAGE),
+         help    = STRING_TOKEN (STR_CORE_EXTRA_TURBO_VOLTAGE_HELP),
+         flags   = RESET_REQUIRED,
+         minimum = 0,
+         maximum = 2000,
+         step    = 1,
+         default = 0,
+       endnumeric;
+     endif;
+
+     numeric varid = CPU_SETUP.CoreVoltageOffset,
+       prompt  = STRING_TOKEN (STR_CORE_VOLTAGE_OFFSET),
+       help    = STRING_TOKEN (STR_CORE_VOLTAGE_OFFSET_HELP),
+       flags   = RESET_REQUIRED,
+       minimum = 0,
+       maximum = 1000,
+       step    = 1,
+       default = 0,
+     endnumeric;
+
+     oneof varid   = CPU_SETUP.CoreVoltageOffsetPrefix,
+       prompt      = STRING_TOKEN(STR_CORE_VOLTAGE_OFFSET_PREFIX),
+       help        = STRING_TOKEN(STR_VOLTAGE_OFFSET_PREFIX_HELP),
+       option text = STRING_TOKEN(STR_POSITIVE_SIGN),  value = 0, flags =  DEFAULT | MANUFACTURING | RESET_REQUIRED;
+       option text = STRING_TOKEN(STR_NEGATIVE_SIGN),  value = 1, flags = RESET_REQUIRED;
+     endoneof;
+
+      SEPARATOR
+        numeric varid = CPU_SETUP.Avx2RatioOffset,
+          prompt  = STRING_TOKEN (STR_CORE_AVX2_RATIO_OFFSET),
+          help    = STRING_TOKEN (STR_CORE_AVX2_RATIO_OFFSET_HELP),
+          flags   = RESET_REQUIRED,
+          minimum = 0,
+          maximum = 31,
+          step    = 1,
+          default = 0,
+        endnumeric;
+
+        numeric varid = CPU_SETUP.Avx3RatioOffset,
+          prompt  = STRING_TOKEN (STR_CORE_AVX3_RATIO_OFFSET),
+          help    = STRING_TOKEN (STR_CORE_AVX3_RATIO_OFFSET_HELP),
+          flags   = RESET_REQUIRED,
+          minimum = 0,
+          maximum = 31,
+          step    = 1,
+          default = 0,
+        endnumeric;
+
+      SEPARATOR
+        numeric varid = CPU_SETUP.TjMaxOffset,
+          prompt  = STRING_TOKEN (STR_CORE_TJMAX_OFFSET),
+          help    = STRING_TOKEN (STR_CORE_TJMAX_OFFSET_HELP),
+          flags   = RESET_REQUIRED,
+          key     = AUTO_ID (KEY_TjMaxOffset), // 0 indicates no offset (Hardware defaults). Acceptable values 10 to 63. Rest all set to 0.
+          minimum = 0,
+          maximum = 63,
+          step    = 1,
+          default = 0,
+        endnumeric;
+
+     suppressif ideqval CPU_SETUP.FlexOverrideEnable == 0x0 OR ideqval CPU_SETUP.BusSpeedEnable == 0x0;
+         INTERACTIVE_TEXT(STRING_TOKEN(STR_OVERCLOCK_EXPFREQ_HELP),STRING_TOKEN(STR_OVERCLOCK_EXPFREQ_PROMPT),STRING_TOKEN(STR_OVERCLOCK_EXPFREQ_VAL),AUTO_ID(OVERCLOCK_KEY))   
+     endif;
+   endform;
+
+   form formid = AUTO_ID(RING_CONFIG_FORM_ID),
+   title = STRING_TOKEN(STR_RING_CONFIGURATION);
+   //
+   // Ring Domain
+   //
+
+   SUBTITLE(STRING_TOKEN(STR_RING_CONFIGURATION))
+   SEPARATOR
+
+     numeric varid = CPU_SETUP.RingMaxOcRatio,
+       prompt  = STRING_TOKEN (STR_RING_MAX_OC_RATIO),
+       help    = STRING_TOKEN (STR_RING_MAX_OC_RATIO_HELP),
+       flags   = RESET_REQUIRED | INTERACTIVE,
+       key     = AUTO_ID(KEY_RING_MAX_OC_RATIO_LIMIT),
+       minimum = 0,
+       maximum = 85,
+       step    = 1,
+       default = 0,
+     endnumeric;
+
+     oneof varid   = CPU_SETUP.RingVoltageMode,
+       prompt      = STRING_TOKEN(STR_RING_VOLTAGE_MODE),
+       help        = STRING_TOKEN(STR_RING_VOLTAGE_MODE_HELP),
+       option text = STRING_TOKEN(STR_VOLTAGE_ADAPTIVE), value = 0, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+       option text = STRING_TOKEN(STR_VOLTAGE_OVERRIDE), value = 1, flags = RESET_REQUIRED;
+     endoneof;
+
+     suppressif ideqval CPU_SETUP.RingVoltageMode == 0x0;
+       numeric varid = CPU_SETUP.RingVoltageOverride,
+         prompt  = STRING_TOKEN (STR_RING_VOLTAGE_OVERRIDE),
+         help    = STRING_TOKEN (STR_RING_VOLTAGE_OVERRIDE_HELP),
+         flags   = RESET_REQUIRED,
+         minimum = 0,
+         maximum = 2000,
+         step    = 1,
+         default = 0,
+       endnumeric;
+     endif;
+
+     suppressif ideqval CPU_SETUP.RingVoltageMode == 0x1;
+       numeric varid = CPU_SETUP.RingExtraTurboVoltage,
+         prompt  = STRING_TOKEN (STR_RING_EXTRA_TURBO_VOLTAGE),
+         help    = STRING_TOKEN (STR_RING_EXTRA_TURBO_VOLTAGE_HELP),
+         flags   = RESET_REQUIRED,
+         minimum = 0,
+         maximum = 2000,
+         step    = 1,
+         default = 0,
+       endnumeric;
+     endif;
+
+     numeric varid = CPU_SETUP.RingVoltageOffset,
+       prompt  = STRING_TOKEN (STR_RING_VOLTAGE_OFFSET),
+       help    = STRING_TOKEN (STR_RING_VOLTAGE_OFFSET_HELP),
+       flags   = RESET_REQUIRED,
+       minimum = 0,
+       maximum = 1000,
+       step    = 1,
+       default = 0,
+     endnumeric;
+
+     oneof varid   = CPU_SETUP.RingVoltageOffsetPrefix,
+       prompt      = STRING_TOKEN(STR_RING_VOLTAGE_OFFSET_PREFIX),
+       help        = STRING_TOKEN(STR_VOLTAGE_OFFSET_PREFIX_HELP),
+       option text = STRING_TOKEN(STR_POSITIVE_SIGN),  value = 0, flags =  DEFAULT | MANUFACTURING | RESET_REQUIRED;
+       option text = STRING_TOKEN(STR_NEGATIVE_SIGN),  value = 1, flags = RESET_REQUIRED;
+     endoneof;
+
+      SEPARATOR
+      oneof varid   = CPU_SETUP.RingDownBin,
+        prompt      = STRING_TOKEN(STR_RING_DOWN_BIN_PROMPT),
+        help        = STRING_TOKEN(STR_RING_DOWN_BIN_HELP),
+        option text = STRING_TOKEN(STR_DISABLED), value = 0, flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_ENABLED), value = 1, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+      endoneof;
+
+      numeric varid = CPU_SETUP.MinRingRatioLimit,
+        prompt  = STRING_TOKEN (STR_MIN_RING_RATIO_LIMIT),
+        help    = STRING_TOKEN (STR_MIN_RING_RATIO_LIMIT_HELP),
+        flags   = RESET_REQUIRED | INTERACTIVE,
+        key     = AUTO_ID(KEY_RING_MIN_RATIO_LIMIT),
+        minimum = 0,
+        maximum = 85,
+        step    = 1,
+        default = 0,
+      endnumeric;
+
+      numeric varid = CPU_SETUP.MaxRingRatioLimit,
+        prompt  = STRING_TOKEN (STR_MAX_RING_RATIO_LIMIT),
+        help    = STRING_TOKEN (STR_MAX_RING_RATIO_LIMIT_HELP),
+        flags   = RESET_REQUIRED | INTERACTIVE,
+        key     = AUTO_ID(KEY_RING_MAX_RATIO_LIMIT),
+        minimum = 0,
+        maximum = 85,
+        step    = 1,
+        default = 0,
+      endnumeric;
+   endform;
+
+
+   form formid = AUTO_ID(GT_CONFIG_FORM_ID),
+    title = STRING_TOKEN(STR_GT_CONFIGURATION);
+   //
+   //  GT Domain
+   //
+   SUBTITLE(STRING_TOKEN(STR_GT_TITLE))
+        numeric varid = SA_SETUP.GtMaxOcRatio,
+          prompt   = STRING_TOKEN(STR_GT_OC_FREQUENCY_PROMPT),
+          help     = STRING_TOKEN(STR_GT_OC_FREQUENCY_HELP),
+          flags   = RESET_REQUIRED,
+          minimum     = 0,
+          maximum     = 60,
+          step        = 1,    // Increment/Decrement with a +/- keys
+          default     = 0,
+        endnumeric;
+    
+        oneof varid   = SA_SETUP.GtVoltageMode,
+          prompt      = STRING_TOKEN(STR_GT_VOLTAGE_MODE),
+          help        = STRING_TOKEN(STR_GT_VOLTAGE_MODE_HELP),
+          option text = STRING_TOKEN(STR_VOLTAGE_ADAPTIVE), value = 0, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+          option text = STRING_TOKEN(STR_VOLTAGE_OVERRIDE), value = 1, flags = RESET_REQUIRED;
+        endoneof;
+
+        suppressif ideqval SA_SETUP.GtVoltageMode == 0;
+          numeric varid = SA_SETUP.GtVoltageOverride,
+            prompt  = STRING_TOKEN (STR_GT_VOLTAGE_OVERRIDE),
+            help    = STRING_TOKEN (STR_GT_VOLTAGE_OVERRIDE_HELP),
+            flags   = RESET_REQUIRED,
+            minimum = 0,
+            maximum = 2000,
+           step    = 1,
+           default = 0,
+         endnumeric;
+        endif;
+
+        suppressif ideqval SA_SETUP.GtVoltageMode == 1;
+          numeric varid = SA_SETUP.GtExtraTurboVoltage,
+            prompt  = STRING_TOKEN (STR_GT_EXTRA_TURBO_VOLTAGE),
+            help    = STRING_TOKEN (STR_GT_EXTRA_TURBO_VOLTAGE_HELP),
+            flags   = RESET_REQUIRED,
+            minimum = 0,
+            maximum = 2000,
+            step    = 1,
+            default = 0,
+          endnumeric;
+        endif;
+    
+         numeric varid = SA_SETUP.GtVoltageOffset,
+           prompt  = STRING_TOKEN (STR_GT_VOLTAGE_OFFSET),
+           help    = STRING_TOKEN (STR_GT_VOLTAGE_OFFSET_HELP),
+           flags   = RESET_REQUIRED,
+           minimum = 0,
+           maximum = 1000,
+           step    = 1,
+           default = 0,
+         endnumeric;
+
+         oneof varid   = SA_SETUP.GtVoltageOffsetPrefix,
+           prompt      = STRING_TOKEN(STR_GT_VOLTAGE_OFFSET_PREFIX),
+           help        = STRING_TOKEN(STR_VOLTAGE_OFFSET_PREFIX_HELP),
+           option text = STRING_TOKEN(STR_POSITIVE_SIGN),  value = 0, flags =  DEFAULT | MANUFACTURING | RESET_REQUIRED;
+           option text = STRING_TOKEN(STR_NEGATIVE_SIGN),  value = 1, flags = RESET_REQUIRED;
+         endoneof;
+
+   //
+   //  Gtus Domain
+   //
+   SUBTITLE(STRING_TOKEN(STR_GT_UNSLICE_TITLE))
+        numeric varid = SA_SETUP.GtusMaxOcRatio,
+          prompt   = STRING_TOKEN(STR_GTUS_OC_FREQUENCY_PROMPT),
+          help     = STRING_TOKEN(STR_GT_OC_FREQUENCY_HELP),
+          flags    = RESET_REQUIRED,
+          minimum     = 0,
+          maximum     = 60,
+          step        = 1,    // Increment/Decrement with a +/- keys
+          default     = 0,
+        endnumeric;
+
+        oneof varid   = SA_SETUP.GtusVoltageMode,
+          prompt      = STRING_TOKEN(STR_GTUS_VOLTAGE_MODE),
+          help        = STRING_TOKEN(STR_GT_VOLTAGE_MODE_HELP),
+          option text = STRING_TOKEN(STR_VOLTAGE_ADAPTIVE), value = 0, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+          option text = STRING_TOKEN(STR_VOLTAGE_OVERRIDE), value = 1, flags = RESET_REQUIRED;
+        endoneof;
+
+        suppressif ideqval SA_SETUP.GtusVoltageMode == 0;
+          numeric varid = SA_SETUP.GtusVoltageOverride,
+            prompt  = STRING_TOKEN (STR_GTUS_VOLTAGE_OVERRIDE),
+            help    = STRING_TOKEN (STR_GT_VOLTAGE_OVERRIDE_HELP),
+            flags   = RESET_REQUIRED,
+            minimum = 0,
+            maximum = 2000,
+            step    = 1,
+            default = 0,
+          endnumeric;
+       endif;
+
+        suppressif ideqval SA_SETUP.GtusVoltageMode == 1;
+          numeric varid = SA_SETUP.GtusExtraTurboVoltage,
+            prompt  = STRING_TOKEN (STR_GTUS_EXTRA_TURBO_VOLTAGE),
+            help    = STRING_TOKEN (STR_GT_EXTRA_TURBO_VOLTAGE_HELP),
+            flags   = RESET_REQUIRED,
+            minimum = 0,
+            maximum = 2000,
+            step    = 1,
+            default = 0,
+          endnumeric;
+        endif;
+
+         numeric varid = SA_SETUP.GtusVoltageOffset,
+           prompt  = STRING_TOKEN (STR_GTUS_VOLTAGE_OFFSET),
+           help    = STRING_TOKEN (STR_GT_VOLTAGE_OFFSET_HELP),
+           flags   = RESET_REQUIRED,
+           minimum = 0,
+           maximum = 1000,
+           step    = 1,
+           default = 0,
+         endnumeric;
+
+         oneof varid   = SA_SETUP.GtusVoltageOffsetPrefix,
+           prompt      = STRING_TOKEN(STR_GTUS_VOLTAGE_OFFSET_PREFIX),
+           help        = STRING_TOKEN(STR_VOLTAGE_OFFSET_PREFIX_HELP),
+           option text = STRING_TOKEN(STR_POSITIVE_SIGN),  value = 0, flags =  DEFAULT | MANUFACTURING | RESET_REQUIRED;
+           option text = STRING_TOKEN(STR_NEGATIVE_SIGN),  value = 1, flags = RESET_REQUIRED;
+         endoneof;
+    endform;
+
+   form formid = AUTO_ID(UNCORE_CONFIG_FORM_ID),
+     title = STRING_TOKEN(STR_UNCORE_CONFIGURATION);
+   
+     SUBTITLE(STRING_TOKEN(STR_UNCORE_CONFIGURATION))
+     SEPARATOR
+   
+      numeric varid = SA_SETUP.UncoreVoltageOffset,
+        prompt  = STRING_TOKEN (STR_UNCORE_VOLTAGE_OFFSET),
+        help    = STRING_TOKEN (STR_UNCORE_VOLTAGE_OFFSET_HELP),
+        flags   = RESET_REQUIRED,
+        minimum = 0,
+        maximum = 1000,
+        step    = 1,
+        default = 0,
+      endnumeric;
+
+     oneof varid   = SA_SETUP.UncoreVoltageOffsetPrefix,
+       prompt      = STRING_TOKEN(STR_UNCORE_VOLTAGE_OFFSET_PREFIX),
+       help        = STRING_TOKEN(STR_VOLTAGE_OFFSET_PREFIX_HELP),
+       option text = STRING_TOKEN(STR_POSITIVE_SIGN),  value = 0, flags =  DEFAULT | MANUFACTURING | RESET_REQUIRED;
+       option text = STRING_TOKEN(STR_NEGATIVE_SIGN),  value = 1, flags = RESET_REQUIRED;
+     endoneof;
+     
+   endform;
+
+
+   form formid = AUTO_ID(MEMORY_CONFIG_FORM_ID),
+   title = STRING_TOKEN(STR_MEMORY_CONFIGURATION_HELP);
+
+   suppressif ideqval SETUP_VOLATILE_DATA.PlatformFlavor == FlavorUpServer;
+     text
+       help   = STRING_TOKEN(STR_EMPTY_STRING),
+       text   = STRING_TOKEN(STR_MEMORY_TIMING_HEADER_NAME),
+       text   = STRING_TOKEN(STR_MEMORY_TIMING_HEADER_VALUE),
+       flags  = 0,
+       key    = 0;
+
+     text
+       help   = STRING_TOKEN(STR_EMPTY_STRING),
+       text   = STRING_TOKEN(STR_MEMORY_TIMING_TCK_NAME),
+       text   = STRING_TOKEN(STR_MEMORY_TIMING_TCK_VALUE),
+       flags  = 0,
+       key    = 0;
+
+     text
+       help   = STRING_TOKEN(STR_EMPTY_STRING),
+       text   = STRING_TOKEN(STR_MEMORY_TIMING_TCL_NAME),
+       text   = STRING_TOKEN(STR_MEMORY_TIMING_TCL_VALUE),
+       flags  = 0,
+       key    = 0;
+
+     text
+       help   = STRING_TOKEN(STR_EMPTY_STRING),
+       text   = STRING_TOKEN(STR_MEMORY_TIMING_TRCD_TRP_NAME),
+       text   = STRING_TOKEN(STR_MEMORY_TIMING_TRCD_TRP_VALUE),
+       flags  = 0,
+       key    = 0;
+
+     text
+       help   = STRING_TOKEN(STR_EMPTY_STRING),
+       text   = STRING_TOKEN(STR_MEMORY_TIMING_TRAS_NAME),
+       text   = STRING_TOKEN(STR_MEMORY_TIMING_TRAS_VALUE),
+       flags  = 0,
+       key    = 0;
+
+     text
+       help   = STRING_TOKEN(STR_EMPTY_STRING),
+       text   = STRING_TOKEN(STR_MEMORY_TIMING_TCWL_NAME),
+       text   = STRING_TOKEN(STR_MEMORY_TIMING_TCWL_VALUE),
+       flags  = 0,
+       key    = 0;
+
+     text
+       help   = STRING_TOKEN(STR_EMPTY_STRING),
+       text   = STRING_TOKEN(STR_MEMORY_TIMING_TFAW_NAME),
+       text   = STRING_TOKEN(STR_MEMORY_TIMING_TFAW_VALUE),
+       flags  = 0,
+       key    = 0;
+
+     text
+       help   = STRING_TOKEN(STR_EMPTY_STRING),
+       text   = STRING_TOKEN(STR_MEMORY_TIMING_TREFI_NAME),
+       text   = STRING_TOKEN(STR_MEMORY_TIMING_TREFI_VALUE),
+       flags  = 0,
+       key    = 0;
+
+     text
+       help   = STRING_TOKEN(STR_EMPTY_STRING),
+       text   = STRING_TOKEN(STR_MEMORY_TIMING_TRFC_NAME),
+       text   = STRING_TOKEN(STR_MEMORY_TIMING_TRFC_VALUE),
+       flags  = 0,
+       key    = 0;
+
+     text
+       help   = STRING_TOKEN(STR_EMPTY_STRING),
+       text   = STRING_TOKEN(STR_MEMORY_TIMING_TRRD_NAME),
+       text   = STRING_TOKEN(STR_MEMORY_TIMING_TRRD_VALUE),
+       flags  = 0,
+       key    = 0;
+
+     text
+       help   = STRING_TOKEN(STR_EMPTY_STRING),
+       text   = STRING_TOKEN(STR_MEMORY_TIMING_TRTP_NAME),
+       text   = STRING_TOKEN(STR_MEMORY_TIMING_TRTP_VALUE),
+       flags  = 0,
+       key    = 0;
+
+     text
+       help   = STRING_TOKEN(STR_EMPTY_STRING),
+       text   = STRING_TOKEN(STR_MEMORY_TIMING_TWR_NAME),
+       text   = STRING_TOKEN(STR_MEMORY_TIMING_TWR_VALUE),
+       flags  = 0,
+       key    = 0;
+
+     text
+       help   = STRING_TOKEN(STR_EMPTY_STRING),
+       text   = STRING_TOKEN(STR_MEMORY_TIMING_TWTR_NAME),
+       text   = STRING_TOKEN(STR_MEMORY_TIMING_TWTR_VALUE),
+       flags  = 0,
+       key    = 0;
+
+     text
+       help   = STRING_TOKEN(STR_EMPTY_STRING),
+       text   = STRING_TOKEN(STR_MEMORY_TIMING_NMODE_NAME),
+       text   = STRING_TOKEN(STR_MEMORY_TIMING_NMODE_VALUE),
+       flags  = 0,
+       key    = 0;
+
+     text
+       help   = STRING_TOKEN(STR_EMPTY_STRING),
+       text   = STRING_TOKEN(STR_MEMORY_VOLTAGE_VDD_NAME),
+       text   = STRING_TOKEN(STR_MEMORY_VOLTAGE_VDD_VALUE),
+       flags  = 0,
+       key    = 0;
+
+     SEPARATOR
+
+     oneof varid = SA_SETUP.RealtimeMemoryTiming,
+       prompt  = STRING_TOKEN(STR_REALTIME_MEMORY_TIMING_PROMPT),
+       help    = STRING_TOKEN(STR_REALTIME_MEMORY_TIMING_HELP),
+       option text = STRING_TOKEN(STR_DISABLED), value = 0,  flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+       option text = STRING_TOKEN(STR_ENABLED),  value = 1,  flags = RESET_REQUIRED;
+     endoneof;
+
+     oneof varid = SA_SETUP.SpdProfileSelected,
+       questionid  = AUTO_ID(KEY_MEMINFO_PROFILE),
+       prompt      = STRING_TOKEN(STR_XMP_PROFILE_PROMPT),
+       help        = STRING_TOKEN(STR_XMP_PROFILE_PROMPT_HELP),
+       flags       = INTERACTIVE,
+         option text = STRING_TOKEN (STR_DEFAULT_SPD_PROFILE), value = 0, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+         option text = STRING_TOKEN (STR_CUSTOM_PROFILE),      value = 1, flags = RESET_REQUIRED;
+         suppressif ideqval SA_SETUP.XmpProfileEnable == 0x0;
+           option text = STRING_TOKEN (STR_XMP_PROFILE_1),     value = 2, flags = RESET_REQUIRED;
+           option text = STRING_TOKEN (STR_XMP_PROFILE_2),     value = 3, flags = RESET_REQUIRED;
+         endif
+     endoneof;
+   endif;
+
+   // Gray out if not USER profile (Default/XMP1/XMP2)
+   grayoutif NOT ideqval SA_SETUP.SpdProfileSelected == 0x1;
+     oneof varid = SA_SETUP.DdrRefClk,
+       prompt  = STRING_TOKEN(STR_DDR_REFCLK_PROMPT),
+       help    = STRING_TOKEN(STR_DDR_REFCLK_PROMPT_HELP),
+       option text = STRING_TOKEN(STR_DDR_REFCLK_133_STRING), value = 0, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+       option text = STRING_TOKEN(STR_DDR_REFCLK_100_STRING), value = 1, flags = RESET_REQUIRED;
+     endoneof;
+
+     // DDR Speed = DdrRatio * RefClk
+     // RefClk is 100 or 133.333 MHz
+     numeric varid = SA_SETUP.DdrRatio,
+       prompt  = STRING_TOKEN(STR_DDR_RATIO_PROMPT),
+       help    = STRING_TOKEN(STR_DDR_RATIO_PROMPT_HELP),
+       flags   = RESET_REQUIRED,
+       minimum = 0,  // Minimum is  8 * 133 = 1067 (have to use 0 to include the default value)
+       maximum = 84, // Maximum is 84 * 100 = 8400
+       step    = 1,
+       default = 0,  // Auto
+     endnumeric;
+
+     oneof varid = SA_SETUP.DdrOddRatioMode,
+       prompt  = STRING_TOKEN(STR_DDR_ODD_RATIO_MODE_PROMPT),
+       help    = STRING_TOKEN(STR_DDR_ODD_RATIO_MODE_HELP),
+       option text = STRING_TOKEN(STR_DISABLED), value = 0,  flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+       option text = STRING_TOKEN(STR_ENABLED),  value = 1,  flags = RESET_REQUIRED;
+     endoneof;
+
+     numeric varid = SA_SETUP.tCL,
+       prompt  = STRING_TOKEN (STR_TCL_VALUE),
+       help    = STRING_TOKEN (STR_TCL_VALUE_HELP),
+       flags   = 0 | RESET_REQUIRED | INTERACTIVE,
+       key     = AUTO_ID(KEY_MEMINFO),
+       minimum = 0,
+       maximum = 36,
+       step    = 1,
+       default = 0,
+     endnumeric;
+
+     numeric varid = SA_SETUP.tRCDtRP,
+       prompt  = STRING_TOKEN (STR_TRCD_TRP_VALUE),
+       help    = STRING_TOKEN (STR_TRCD_TRP_VALUE_HELP),
+       flags   = 0 | RESET_REQUIRED | INTERACTIVE,
+       key     = AUTO_ID(KEY_MEMINFO1),
+       minimum = 0,
+       maximum = 63,
+       step    = 1,
+       default = 0,
+     endnumeric;
+
+     numeric varid = SA_SETUP.tRAS,
+       prompt  = STRING_TOKEN (STR_TRAS_VALUE),
+       help    = STRING_TOKEN (STR_TRAS_VALUE_HELP),
+       flags   = 0 | RESET_REQUIRED | INTERACTIVE,
+       key     = AUTO_ID(KEY_MEMINFO3),
+       minimum = 0,
+       maximum = 90,
+       step    = 1,
+       default = 0,
+     endnumeric;
+
+     numeric varid = SA_SETUP.tCWL,
+       prompt  = STRING_TOKEN (STR_TCWL_VALUE),
+       help    = STRING_TOKEN (STR_TCWL_VALUE_HELP),
+       flags   = 0 | RESET_REQUIRED | INTERACTIVE,
+       key     = AUTO_ID(KEY_MEMINFO11),
+       minimum = 0,
+       maximum = 34,
+       step    = 1,
+       default = 0,
+     endnumeric;
+
+     numeric varid = SA_SETUP.tFAW,
+       prompt  = STRING_TOKEN (STR_TFAW_VALUE),
+       help    = STRING_TOKEN (STR_TFAW_VALUE_HELP),
+       flags   = 0 | RESET_REQUIRED | INTERACTIVE,
+       key     = AUTO_ID(KEY_MEMINFO10),
+       minimum = 0,
+       maximum = 127,
+       step    = 1,
+       default = 0,
+     endnumeric;
+
+     numeric varid = SA_SETUP.tREFI,
+       prompt  = STRING_TOKEN (STR_TREFI_VALUE),
+       help    = STRING_TOKEN (STR_TREFI_VALUE_HELP),
+       flags   = 0 | RESET_REQUIRED | INTERACTIVE,
+       key     = AUTO_ID(KEY_MEMINFO13),
+       minimum = 0,
+       maximum = 65535,
+       step    = 1,
+       default = 0,
+     endnumeric;
+
+     numeric varid = SA_SETUP.tRFC,
+       prompt  = STRING_TOKEN (STR_TRFC_VALUE),
+       help    = STRING_TOKEN (STR_TRFC_VALUE_HELP),
+       flags   = 0 | RESET_REQUIRED | INTERACTIVE,
+       key     = AUTO_ID(KEY_MEMINFO5),
+       minimum = 0,
+       maximum = 1023,
+       step    = 1,
+       default = 0,
+     endnumeric;
+
+     numeric varid = SA_SETUP.tRRD,
+       prompt  = STRING_TOKEN (STR_TRRD_VALUE),
+       help    = STRING_TOKEN (STR_TRRD_VALUE_HELP),
+       flags   = 0 | RESET_REQUIRED | INTERACTIVE,
+       key     = AUTO_ID(KEY_MEMINFO6),
+       minimum = 0,
+       maximum = 31,
+       step    = 1,
+       default = 0,
+     endnumeric;
+
+     numeric varid = SA_SETUP.tRTP,
+       prompt  = STRING_TOKEN (STR_TRTP_VALUE),
+       help    = STRING_TOKEN (STR_TRTP_VALUE_HELP),
+       flags   = 0 | RESET_REQUIRED | INTERACTIVE,
+       key     = AUTO_ID(KEY_MEMINFO8),
+       minimum = 0,
+       maximum = 16,
+       step    = 1,
+       default = 0,
+     endnumeric;
+
+     oneof varid = SA_SETUP.tWR,
+       prompt      = STRING_TOKEN (STR_TWR_VALUE),
+       help        = STRING_TOKEN (STR_TWR_VALUE_HELP),
+       option text = STRING_TOKEN(STR_AUTO_STRING), value = 0,  flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+       option text = STRING_TOKEN(STR_5),           value = 5,  flags = RESET_REQUIRED;
+       option text = STRING_TOKEN(STR_6),           value = 6,  flags = RESET_REQUIRED;
+       option text = STRING_TOKEN(STR_7),           value = 7,  flags = RESET_REQUIRED;
+       option text = STRING_TOKEN(STR_8),           value = 8,  flags = RESET_REQUIRED;
+       option text = STRING_TOKEN(STR_10),          value = 10, flags = RESET_REQUIRED;
+       option text = STRING_TOKEN(STR_12),          value = 12, flags = RESET_REQUIRED;
+       option text = STRING_TOKEN(STR_14),          value = 14, flags = RESET_REQUIRED;
+       option text = STRING_TOKEN(STR_16),          value = 16, flags = RESET_REQUIRED;
+       option text = STRING_TOKEN(STR_18),          value = 18, flags = RESET_REQUIRED;
+       option text = STRING_TOKEN(STR_20),          value = 20, flags = RESET_REQUIRED;
+       option text = STRING_TOKEN(STR_24),          value = 24, flags = RESET_REQUIRED;
+       option text = STRING_TOKEN(STR_30),          value = 30, flags = RESET_REQUIRED;
+       option text = STRING_TOKEN(STR_34),          value = 34, flags = RESET_REQUIRED;
+       option text = STRING_TOKEN(STR_40),          value = 40, flags = RESET_REQUIRED;
+     endoneof;
+
+     numeric varid = SA_SETUP.tWTR,
+       prompt  = STRING_TOKEN (STR_TWTR_VALUE),
+       help    = STRING_TOKEN (STR_TWTR_VALUE_HELP),
+       flags   = 0 | RESET_REQUIRED | INTERACTIVE,
+       key     = AUTO_ID(KEY_MEMINFO7),
+       minimum = 0,
+       maximum = 28,
+       step    = 1,
+       default = 0,
+     endnumeric;
+
+     numeric varid = SA_SETUP.NModeSupport,
+       prompt      = STRING_TOKEN (STR_NMODE_SUPPORT_PROMPT),
+       help        = STRING_TOKEN (STR_NMODE_SUPPORT_HELP),
+       flags       = 0 | RESET_REQUIRED | INTERACTIVE,
+       key         = AUTO_ID(KEY_MEMINFO4),
+       minimum     = 0,
+       maximum     = 2,
+       step        = 1,
+       default     = 0,
+     endnumeric;
+
+     oneof varid = SA_SETUP.MemoryVoltage,
+       prompt  = STRING_TOKEN (STR_MEMORY_VOLTAGE_VALUE),
+       help    = STRING_TOKEN (STR_MEMORY_VOLTAGE_VALUE_HELP),
+       option text = STRING_TOKEN (STR_DEFAULT_STRING), value = 0,    flags = DEFAULT | MANUFACTURING | RESET_REQUIRED; 
+       option text = STRING_TOKEN (STR_VOLTAGE_600),    value = 600,  flags = RESET_REQUIRED;
+       option text = STRING_TOKEN (STR_VOLTAGE_1100),   value = 1100, flags = RESET_REQUIRED; 
+       option text = STRING_TOKEN (STR_VOLTAGE_1200),   value = 1200, flags = RESET_REQUIRED; 
+       option text = STRING_TOKEN (STR_VOLTAGE_1250),   value = 1250, flags = RESET_REQUIRED; 
+       option text = STRING_TOKEN (STR_VOLTAGE_1300),   value = 1300, flags = RESET_REQUIRED; 
+       option text = STRING_TOKEN (STR_VOLTAGE_1350),   value = 1350, flags = RESET_REQUIRED; 
+       option text = STRING_TOKEN (STR_VOLTAGE_1400),   value = 1400, flags = RESET_REQUIRED; 
+       option text = STRING_TOKEN (STR_VOLTAGE_1450),   value = 1450, flags = RESET_REQUIRED; 
+       option text = STRING_TOKEN (STR_VOLTAGE_1500),   value = 1500, flags = RESET_REQUIRED; 
+       option text = STRING_TOKEN (STR_VOLTAGE_1550),   value = 1550, flags = RESET_REQUIRED; 
+       option text = STRING_TOKEN (STR_VOLTAGE_1600),   value = 1600, flags = RESET_REQUIRED; 
+       option text = STRING_TOKEN (STR_VOLTAGE_1650),   value = 1650, flags = RESET_REQUIRED; 
+     endoneof;
+   endif; // grayout if NOT User profile
+
+   numeric varid = SA_SETUP.DllBwEn0,
+     prompt      = STRING_TOKEN (STR_DLLBWEN0_PROMPT),
+     help        = STRING_TOKEN (STR_DLLBWEN0_HELP),
+     minimum     = 0,
+     maximum     = 7,
+     step        = 1,
+     default     = 0,
+   endnumeric;
+
+   numeric varid = SA_SETUP.DllBwEn1,
+     prompt      = STRING_TOKEN (STR_DLLBWEN1_PROMPT),
+     help        = STRING_TOKEN (STR_DLLBWEN1_HELP),
+     minimum     = 0,
+     maximum     = 7,
+     step        = 1,
+     default     = 1,
+   endnumeric;
+
+   numeric varid = SA_SETUP.DllBwEn2,
+     prompt      = STRING_TOKEN (STR_DLLBWEN2_PROMPT),
+     help        = STRING_TOKEN (STR_DLLBWEN2_HELP),
+     minimum     = 0,
+     maximum     = 7,
+     step        = 1,
+     default     = 2,
+   endnumeric;
+
+   numeric varid = SA_SETUP.DllBwEn3,
+     prompt      = STRING_TOKEN (STR_DLLBWEN3_PROMPT),
+     help        = STRING_TOKEN (STR_DLLBWEN3_HELP),
+     minimum     = 0,
+     maximum     = 7,
+     step        = 1,
+     default     = 2,
+   endnumeric;
+
+   text
+     help   = STRING_TOKEN(STR_EMPTY_STRING),
+     text   = STRING_TOKEN(STR_MEMORY_VDD_NAME),
+     text   = STRING_TOKEN(STR_MEMORY_VDD_VALUE),
+     flags  = 0,
+     key    = 0;
+
+ endform;
+
+   //
+   // Voltage PLL Trim Controls
+   //
+   form formid = AUTO_ID(PLL_TRIM_CONFIG_FORM_ID),
+   title = STRING_TOKEN(STR_PLL_TRIM_CONFIGURATION);
+
+   SUBTITLE(STRING_TOKEN(STR_PLL_TRIM_CONFIGURATION))
+   SEPARATOR
+     numeric varid = CPU_SETUP.CorePllVoltageOffset,
+       prompt  = STRING_TOKEN (STR_CORE_PLL_VOLTAGE_OFFSET),
+       help    = STRING_TOKEN (STR_PLL_VOLTAGE_OFFSET_HELP),
+       flags   = RESET_REQUIRED,
+       minimum = 0,
+       maximum = 63,
+       step    = 1,
+       default = 0,
+     endnumeric;
+
+     numeric varid = CPU_SETUP.GtPllVoltageOffset,
+       prompt  = STRING_TOKEN (STR_GT_PLL_VOLTAGE_OFFSET),
+       help    = STRING_TOKEN (STR_PLL_VOLTAGE_OFFSET_HELP),
+       flags   = RESET_REQUIRED,
+       minimum = 0,
+       maximum = 63,
+       step    = 1,
+       default = 0,
+     endnumeric;
+
+     numeric varid = CPU_SETUP.RingPllVoltageOffset,
+       prompt  = STRING_TOKEN (STR_RING_PLL_VOLTAGE_OFFSET),
+       help    = STRING_TOKEN (STR_PLL_VOLTAGE_OFFSET_HELP),
+       flags   = RESET_REQUIRED,
+       minimum = 0,
+       maximum = 63,
+       step    = 1,
+       default = 0,
+     endnumeric;
+
+     numeric varid = CPU_SETUP.SaPllVoltageOffset,
+       prompt  = STRING_TOKEN (STR_SA_PLL_VOLTAGE_OFFSET),
+       help    = STRING_TOKEN (STR_PLL_VOLTAGE_OFFSET_HELP),
+       flags   = RESET_REQUIRED,
+       minimum = 0,
+       maximum = 63,
+       step    = 1,
+       default = 0,
+     endnumeric;
+
+     numeric varid = CPU_SETUP.McPllVoltageOffset,
+       prompt  = STRING_TOKEN (STR_MC_PLL_VOLTAGE_OFFSET),
+       help    = STRING_TOKEN (STR_PLL_VOLTAGE_OFFSET_HELP),
+       flags   = RESET_REQUIRED,
+       minimum = 0,
+       maximum = 63,
+       step    = 1,
+       default = 0,
+     endnumeric;
+
+   endform;

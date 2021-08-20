@@ -1,0 +1,133 @@
+/** @file
+Setup menu for Individual Itbt Root ports
+@copyright
+  INTEL CONFIDENTIAL
+  Copyright  2018 Intel Corporation.
+
+  The source code contained or described herein and all documents related to the
+  source code ("Material") are owned by Intel Corporation or its suppliers or
+  licensors. Title to the Material remains with Intel Corporation or its suppliers
+  and licensors. The Material may contain trade secrets and proprietary and
+  confidential information of Intel Corporation and its suppliers and licensors,
+  and is protected by worldwide copyright and trade secret laws and treaty
+  provisions. No part of the Material may be used, copied, reproduced, modified,
+  published, uploaded, posted, transmitted, distributed, or disclosed in any way
+  without Intel's prior express written permission.
+
+  No license under any patent, copyright, trade secret or other intellectual
+  property right is granted to or conferred upon you by disclosure or delivery
+  of the Materials, either expressly, by implication, inducement, estoppel or
+  otherwise. Any license under such intellectual property rights must be
+  express and approved by Intel in writing.
+
+  Unless otherwise agreed by Intel in writing, you may not remove or alter
+  this notice or any other notice embedded in Materials by Intel or
+  Intel's suppliers or licensors in any way.
+
+  This file contains a 'Sample Driver' and is licensed as such under the terms
+  of your license agreement with Intel or your vendor. This file may be modified
+  by the user, subject to the additional terms of the license agreement.
+
+@par Specification
+**/
+
+  form formid = CONCATENATE3(ITBT_PCIERP,PORT_INDEX,_OPTIONS_FORM_ID),
+    title     = STRING_TOKEN(CONCATENATE3(STR_ITBT_PCIERP,PORT_INDEX,_OPTIONS_FORM_TITLE));
+
+    oneof varid   = SA_SETUP.PtmEnabled[PORT_INDEX],
+      prompt      = STRING_TOKEN (CONCATENATE2(STR_SA_ITBT_PCIE_PTM_PROMPT,PORT_INDEX)),
+      help        = STRING_TOKEN(STR_SA_ITBT_PCIE_PTM_HELP),
+      option text = STRING_TOKEN(STR_ENABLED), value = 1, flags = RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_DISABLED), value = 0, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+    endoneof;
+
+      SEPARATOR
+
+      subtitle text = STRING_TOKEN(STR_SA_ITBT_PCIE_LTR_CONFIG);
+      oneof varid   = SA_SETUP.SaPcieItbtLtrEnable[PORT_INDEX],
+        prompt   = STRING_TOKEN (CONCATENATE2(STR_SA_ITBT_PCIE_LTR_PROMPT,PORT_INDEX)),
+        help     = STRING_TOKEN (STR_SA_ITBT_PCIE_LTR_HELP),
+        option text = STRING_TOKEN(STR_DISABLED),  value = 0, flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_ENABLED),  value = 1, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+      endoneof;
+
+      suppressif ideqval SA_SETUP.SaPcieItbtLtrEnable[PORT_INDEX] == 0;
+        oneof varid   = SA_SETUP.SaPcieItbtSnoopLatencyOverrideMode[PORT_INDEX],
+          prompt      = STRING_TOKEN(CONCATENATE2(STR_SA_ITBT_PCIE_SL_OVRD_PROMPT,PORT_INDEX)),
+          help        = STRING_TOKEN(STR_SA_ITBT_PCIE_SL_OVRD_HELP),
+          option text = STRING_TOKEN(STR_DISABLED), value = 0, flags = RESET_REQUIRED;
+          option text = STRING_TOKEN(STR_ENABLED), value = 1, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+        endoneof;
+
+        suppressif NOT ideqval SA_SETUP.SaPcieItbtSnoopLatencyOverrideMode[PORT_INDEX] == 1;
+          numeric varid = SA_SETUP.SaPcieItbtSnoopLatencyOverrideValue[PORT_INDEX],
+            prompt      = STRING_TOKEN(CONCATENATE2(STR_SA_ITBT_PCIE_SL_VAL_PROMPT,PORT_INDEX)),
+            help        = STRING_TOKEN(STR_SA_ITBT_PCIE_SL_VAL_HELP),
+            flags       = RESET_REQUIRED,
+            minimum     = 0,
+            maximum     = 1023,
+            step        = 1,
+            default     = 200,
+          endnumeric;
+
+          oneof varid   = SA_SETUP.SaPcieItbtSnoopLatencyOverrideMultiplier[PORT_INDEX],
+            prompt      = STRING_TOKEN(CONCATENATE2(STR_SA_ITBT_PCIE_SL_SCALE_PROMPT,PORT_INDEX)),
+            help        = STRING_TOKEN(STR_SA_ITBT_PCIE_SL_SCALE_HELP),
+            option text = STRING_TOKEN(STR_LTR_SCALE_0), value = 0, flags = RESET_REQUIRED;
+            option text = STRING_TOKEN(STR_LTR_SCALE_1), value = 1, flags = RESET_REQUIRED;
+            option text = STRING_TOKEN(STR_LTR_SCALE_2), value = 2, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+            option text = STRING_TOKEN(STR_LTR_SCALE_3), value = 3, flags = RESET_REQUIRED;
+            option text = STRING_TOKEN(STR_LTR_SCALE_4), value = 4, flags = RESET_REQUIRED;
+            option text = STRING_TOKEN(STR_LTR_SCALE_5), value = 5, flags = RESET_REQUIRED;
+          endoneof;
+        endif;
+
+        oneof varid   = SA_SETUP.SaPcieItbtNonSnoopLatencyOverrideMode[PORT_INDEX],
+          prompt      = STRING_TOKEN (CONCATENATE2(STR_SA_ITBT_PCIE_NSL_OVRD_PROMPT,PORT_INDEX)),
+          help        = STRING_TOKEN (STR_SA_ITBT_PCIE_NSL_OVRD_HELP),
+          option text = STRING_TOKEN(STR_DISABLED), value = 0, flags = RESET_REQUIRED;
+          option text = STRING_TOKEN(STR_ENABLED), value = 1, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+        endoneof;
+
+        suppressif NOT ideqval SA_SETUP.SaPcieItbtNonSnoopLatencyOverrideMode[PORT_INDEX] == 1;
+          numeric varid = SA_SETUP.SaPcieItbtNonSnoopLatencyOverrideValue[PORT_INDEX],
+            prompt      = STRING_TOKEN(CONCATENATE2(STR_SA_ITBT_PCIE_NSL_VAL_PROMPT,PORT_INDEX)),
+            help        = STRING_TOKEN(STR_SA_ITBT_PCIE_NSL_VAL_HELP),
+            flags       = RESET_REQUIRED,
+            minimum     = 0,
+            maximum     = 1023,
+            step        = 1,
+            default     = 200,
+          endnumeric;
+
+          oneof varid   = SA_SETUP.SaPcieItbtNonSnoopLatencyOverrideMultiplier[PORT_INDEX],
+            prompt      = STRING_TOKEN(CONCATENATE2(STR_SA_ITBT_PCIE_NSL_SCALE_PROMPT,PORT_INDEX)),
+            help        = STRING_TOKEN(STR_SA_ITBT_PCIE_NSL_SCALE_HELP),
+            option text = STRING_TOKEN(STR_LTR_SCALE_0), value = 0, flags = RESET_REQUIRED;
+            option text = STRING_TOKEN(STR_LTR_SCALE_1), value = 1, flags = RESET_REQUIRED;
+            option text = STRING_TOKEN(STR_LTR_SCALE_2), value = 2, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+            option text = STRING_TOKEN(STR_LTR_SCALE_3), value = 3, flags = RESET_REQUIRED;
+            option text = STRING_TOKEN(STR_LTR_SCALE_4), value = 4, flags = RESET_REQUIRED;
+            option text = STRING_TOKEN(STR_LTR_SCALE_5), value = 5, flags = RESET_REQUIRED;
+          endoneof;
+        endif;
+
+      oneof varid  = SA_SETUP.SaPcieItbtForceLtrOverride[PORT_INDEX],
+        prompt      = STRING_TOKEN(CONCATENATE2(STR_SA_ITBT_PCIE_LTR_OVRD_FORCE_PROMPT,PORT_INDEX)),
+        help        = STRING_TOKEN(STR_SA_ITBT_PCIE_LTR_OVRD_FORCE_HELP),
+        option text = STRING_TOKEN(STR_DISABLED), value = 0, flags = DEFAULT | RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_ENABLED), value = 1, flags = RESET_REQUIRED;
+      endoneof;
+
+      oneof varid   = SA_SETUP.SaPcieItbtLtrConfigLock[PORT_INDEX],
+        prompt   = STRING_TOKEN(CONCATENATE2(STR_SA_ITBT_PCIE_LTRLOCK_PROMPT,PORT_INDEX)),
+        help     = STRING_TOKEN(STR_SA_ITBT_PCIE_LTRLOCK_HELP),
+        option text = STRING_TOKEN(STR_DISABLED), value = 0, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_ENABLED), value = 1, flags = RESET_REQUIRED;
+      endoneof;
+
+      endif;
+
+      SEPARATOR
+
+  endform; //ITBT_PCIERP0_OPTIONS_FORM_ID

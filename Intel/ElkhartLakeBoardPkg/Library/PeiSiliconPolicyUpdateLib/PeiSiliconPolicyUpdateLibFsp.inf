@@ -1,0 +1,226 @@
+## @file
+#  Provide FSP wrapper Silicon policy update functionality.
+#
+#@copyright
+#  INTEL CONFIDENTIAL
+#  Copyright 2017 - 2019 Intel Corporation.
+#
+#  The source code contained or described herein and all documents related to the
+#  source code ("Material") are owned by Intel Corporation or its suppliers or
+#  licensors. Title to the Material remains with Intel Corporation or its suppliers
+#  and licensors. The Material may contain trade secrets and proprietary and
+#  confidential information of Intel Corporation and its suppliers and licensors,
+#  and is protected by worldwide copyright and trade secret laws and treaty
+#  provisions. No part of the Material may be used, copied, reproduced, modified,
+#  published, uploaded, posted, transmitted, distributed, or disclosed in any way
+#  without Intel's prior express written permission.
+#
+#  No license under any patent, copyright, trade secret or other intellectual
+#  property right is granted to or conferred upon you by disclosure or delivery
+#  of the Materials, either expressly, by implication, inducement, estoppel or
+#  otherwise. Any license under such intellectual property rights must be
+#  express and approved by Intel in writing.
+#
+#  Unless otherwise agreed by Intel in writing, you may not remove or alter
+#  this notice or any other notice embedded in Materials by Intel or
+#  Intel's suppliers or licensors in any way.
+#
+#  This file contains a 'Sample Driver' and is licensed as such under the terms
+#  of your license agreement with Intel or your vendor. This file may be modified
+#  by the user, subject to the additional terms of the license agreement.
+#
+# @par Specification Reference:
+#
+# @par Glossary:
+###
+
+################################################################################
+#
+# Defines Section - statements that will be processed to create a Makefile.
+#
+################################################################################
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = SiliconPolicyUpdateLib
+  FILE_GUID                      = 4E83003B-49A9-459E-AAA6-1CA3C6D04FB2
+  MODULE_TYPE                    = PEIM
+  VERSION_STRING                 = 1.0
+  LIBRARY_CLASS                  = SiliconPolicyUpdateLib
+
+
+#
+# The following information is for reference only and not required by the build tools.
+#
+#  VALID_ARCHITECTURES           = IA32 X64
+#
+
+################################################################################
+#
+# Sources Section - list of files that are required for the build to succeed.
+#
+################################################################################
+
+[Sources]
+  PeiSiliconPolicyUpdatePreMem.c
+  PeiSiliconPolicyUpdatePostMem.c
+  PeiSiliconPolicyUpdateLate.c
+
+################################################################################
+#
+# Package Dependency Section - list of Package files that are required for
+#                              this module.
+#
+################################################################################
+
+[Packages]
+  MdePkg/MdePkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+  UefiCpuPkg/UefiCpuPkg.dec
+  ClientSiliconPkg/ClientSiliconPkg.dec
+  ElkhartLakePlatSamplePkg/PlatformPkg.dec
+  ClientCommonPkg/ClientCommonPkg.dec
+  IntelFsp2Pkg/IntelFsp2Pkg.dec
+  ClientOneSiliconPkg/SiPkg.dec
+  SecurityPkg/SecurityPkg.dec
+  MinPlatformPkg/MinPlatformPkg.dec
+  ElkhartLakeFspBinPkg/ElkhartLakeFspBinPkg.dec
+  ElkhartLakeBoardPkg/BoardPkg.dec
+  IntelFsp2WrapperPkg/IntelFsp2WrapperPkg.dec
+
+[LibraryClasses.IA32]
+  DebugLib
+  DebugPrintErrorLevelLib
+  HobLib
+  CpuPlatformLib
+  IoLib
+  EcMiscLib
+  PeiSaPolicyLib
+  GbeLib
+  PchInfoLib
+  IshInfoLib
+  PchFiaLib
+  PchPcieRpLib
+  MemoryAllocationLib
+  PeiServicesTablePointerLib
+  SerialPortParameterLib
+  PcdLib
+  PmcLib
+  SataLib
+  PciSegmentLib
+  CnviLib
+  SiPolicyLib
+  PeiServicesLib
+  RngLib
+  MeFwStsLib
+  FspCommonLib
+  PeiDTbtPolicyLib
+  IpuLib
+  P2sbLib
+  PreSiliconEnvDetectLib
+  SmbusInfoLib
+  SataLib
+  SpiLib
+
+[Pcd]
+  gSiPkgTokenSpaceGuid.PcdPciExpressRegionLength               ## PRODUCES
+  gSiPkgTokenSpaceGuid.PcdSmbusBaseAddress                     ## CONSUMES
+  gPlatformModuleTokenSpaceGuid.PcdGttMmAddress                ## CONSUMES
+  gPlatformModuleTokenSpaceGuid.PcdGmAdrAddress                ## CONSUMES
+  gIntelFsp2WrapperTokenSpaceGuid.PcdFspmUpdDataAddress        ## CONSUMES
+  gBoardModuleTokenSpaceGuid.PcdSaDdrFreqLimit                 ## CONSUMES
+  gClientCommonModuleTokenSpaceGuid.PcdCsmEnable
+  gIntelFsp2PkgTokenSpaceGuid.PcdTemporaryRamBase              ## CONSUMES
+  gIntelFsp2PkgTokenSpaceGuid.PcdTemporaryRamSize              ## CONSUMES
+  gIntelFsp2PkgTokenSpaceGuid.PcdFspTemporaryRamSize           ## CONSUMES
+  gIntelFsp2PkgTokenSpaceGuid.PcdFspReservedBufferSize         ## CONSUMES
+
+  gBoardModuleTokenSpaceGuid.PcdStackBase            ## CONSUMES
+  gBoardModuleTokenSpaceGuid.PcdStackSize            ## CONSUMES
+  # HSIO
+  # SA Misc Config
+  gBoardModuleTokenSpaceGuid.PcdSaMiscUserBd                   ## CONSUMES
+  gBoardModuleTokenSpaceGuid.PcdSaMiscMmioSizeAdjustment       ## CONSUMES
+  gBoardModuleTokenSpaceGuid.PcdMrcRcompResistor               ## CONSUMES
+  gBoardModuleTokenSpaceGuid.PcdMrcRcompTarget                 ## CONSUMES
+  gBoardModuleTokenSpaceGuid.PcdMrcDqByteMap                   ## CONSUMES
+  gBoardModuleTokenSpaceGuid.PcdMrcDqsMapCpu2Dram              ## CONSUMES
+  gBoardModuleTokenSpaceGuid.PcdMrcDqPinsInterleavedControl    ## CONSUMES
+  gBoardModuleTokenSpaceGuid.PcdMrcDqPinsInterleaved           ## CONSUMES
+  gBoardModuleTokenSpaceGuid.PcdMrcSpdData                     ## CONSUMES
+  gBoardModuleTokenSpaceGuid.PcdMrcSpdDataSize                 ## CONSUMES # @todo This PCD should be used to initialized FspmConfig.MemorySpdDataLen, but not found in C file
+  gBoardModuleTokenSpaceGuid.PcdNvsBufferPtr                   ## CONSUMES
+  gBoardModuleTokenSpaceGuid.PcdCleanMemory                    ## CONSUMES
+
+  # SPD Address Table
+  gBoardModuleTokenSpaceGuid.PcdMrcSpdAddressTable0            ## CONSUMES
+  gBoardModuleTokenSpaceGuid.PcdMrcSpdAddressTable1            ## CONSUMES
+  gBoardModuleTokenSpaceGuid.PcdMrcSpdAddressTable2            ## CONSUMES
+  gBoardModuleTokenSpaceGuid.PcdMrcSpdAddressTable3            ## CONSUMES
+  gBoardModuleTokenSpaceGuid.PcdMrcSpdAddressTable4            ## CONSUMES
+  gBoardModuleTokenSpaceGuid.PcdMrcSpdAddressTable5            ## CONSUMES
+  gBoardModuleTokenSpaceGuid.PcdMrcSpdAddressTable6            ## CONSUMES
+  gBoardModuleTokenSpaceGuid.PcdMrcSpdAddressTable7            ## CONSUMES
+  gBoardModuleTokenSpaceGuid.PcdMrcSpdAddressTable8            ## CONSUMES
+  gBoardModuleTokenSpaceGuid.PcdMrcSpdAddressTable9            ## CONSUMES
+  gBoardModuleTokenSpaceGuid.PcdMrcSpdAddressTable10           ## CONSUMES
+  gBoardModuleTokenSpaceGuid.PcdMrcSpdAddressTable11           ## CONSUMES
+  gBoardModuleTokenSpaceGuid.PcdMrcSpdAddressTable12           ## CONSUMES
+  gBoardModuleTokenSpaceGuid.PcdMrcSpdAddressTable13           ## CONSUMES
+  gBoardModuleTokenSpaceGuid.PcdMrcSpdAddressTable14           ## CONSUMES
+  gBoardModuleTokenSpaceGuid.PcdMrcSpdAddressTable15           ## CONSUMES
+
+  # CA Vref Configuration
+  gBoardModuleTokenSpaceGuid.PcdMrcCaVrefConfig                ## CONSUMES
+  gBoardModuleTokenSpaceGuid.PcdCpuRatio
+  gBoardModuleTokenSpaceGuid.PcdBiosGuard
+  gBoardModuleTokenSpaceGuid.PcdStackBase
+  gBoardModuleTokenSpaceGuid.PcdStackSize
+  # USB 2.0 Port Over Current Pin
+  gBoardModuleTokenSpaceGuid.PcdUsb20OverCurrentPinPort0       ## CONSUMES
+  gBoardModuleTokenSpaceGuid.PcdUsb20OverCurrentPinPort1       ## CONSUMES
+  gBoardModuleTokenSpaceGuid.PcdUsb20OverCurrentPinPort2       ## CONSUMES
+  gBoardModuleTokenSpaceGuid.PcdUsb20OverCurrentPinPort3       ## CONSUMES
+  gBoardModuleTokenSpaceGuid.PcdUsb20OverCurrentPinPort4       ## CONSUMES
+  gBoardModuleTokenSpaceGuid.PcdUsb20OverCurrentPinPort5       ## CONSUMES
+  gBoardModuleTokenSpaceGuid.PcdUsb20OverCurrentPinPort6       ## CONSUMES
+  gBoardModuleTokenSpaceGuid.PcdUsb20OverCurrentPinPort7       ## CONSUMES
+  gBoardModuleTokenSpaceGuid.PcdUsb20OverCurrentPinPort8       ## CONSUMES
+  gBoardModuleTokenSpaceGuid.PcdUsb20OverCurrentPinPort9       ## CONSUMES
+  gBoardModuleTokenSpaceGuid.PcdUsb20OverCurrentPinPort10      ## CONSUMES
+  gBoardModuleTokenSpaceGuid.PcdUsb20OverCurrentPinPort11      ## CONSUMES
+  gBoardModuleTokenSpaceGuid.PcdUsb20OverCurrentPinPort12      ## CONSUMES
+  gBoardModuleTokenSpaceGuid.PcdUsb20OverCurrentPinPort13      ## CONSUMES
+  gBoardModuleTokenSpaceGuid.PcdUsb20OverCurrentPinPort14      ## CONSUMES
+  gBoardModuleTokenSpaceGuid.PcdUsb20OverCurrentPinPort15      ## CONSUMES
+  gClientCommonModuleTokenSpaceGuid.PcdIsvtIoPort              ## CONSUMES
+  gBoardModuleTokenSpaceGuid.PcdSmbusAlertEnable               ## CONSUMES
+  gBoardModuleTokenSpaceGuid.PcdSataPortsEnable0
+  gBoardModuleTokenSpaceGuid.PcdNvsBufferPtr
+  gBoardModuleTokenSpaceGuid.PcdCleanMemory
+  gSiPkgTokenSpaceGuid.PcdTsegSize
+  gSiPkgTokenSpaceGuid.PcdFspWrapperEnable                     ## CONSUMES
+  gSiPkgTokenSpaceGuid.PcdIpuEnable                            ## CONSUMES
+
+[FixedPcd]
+  gMinPlatformPkgTokenSpaceGuid.PcdPlatformEfiAcpiReclaimMemorySize  ## CONSUMES
+  gMinPlatformPkgTokenSpaceGuid.PcdPlatformEfiAcpiNvsMemorySize      ## CONSUMES
+  gMinPlatformPkgTokenSpaceGuid.PcdPlatformEfiReservedMemorySize     ## CONSUMES
+  gMinPlatformPkgTokenSpaceGuid.PcdPlatformEfiRtDataMemorySize       ## CONSUMES
+  gMinPlatformPkgTokenSpaceGuid.PcdPlatformEfiRtCodeMemorySize       ## CONSUMES
+
+[Ppis]
+  gWdtPpiGuid                                   ## CONSUMES
+[Guids]
+  gEpcOsDataGuid                                ## CONSUMES
+  gSetupVariableGuid                            ## CONSUMES
+  gMemoryConfigVariableGuid                     ## CONSUMES
+  gS3MemoryVariableGuid                         ## CONSUMES
+  gSiSetupVariableGuid                          ## CONSUMES
+  gSaSetupVariableGuid                          ## CONSUMES
+  gMeSetupVariableGuid                          ## CONSUMES
+  gCpuSetupVariableGuid                         ## CONSUMES
+  gPchSetupVariableGuid                         ## CONSUMES
+  gEfiMemoryTypeInformationGuid                 ## CONSUMES
+  gEfiMemoryOverwriteControlDataGuid            ## CONSUMES
+  gDebugConfigHobGuid                           ## CONSUMES
+  gMinPlatformPkgTokenSpaceGuid

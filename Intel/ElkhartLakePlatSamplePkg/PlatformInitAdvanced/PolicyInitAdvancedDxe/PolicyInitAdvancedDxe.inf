@@ -1,0 +1,131 @@
+### @file
+# Module Information file for the PolicyInit Advanced DXE driver.
+#
+#@copyright
+#  INTEL CONFIDENTIAL
+#  Copyright 2013 - 2018 Intel Corporation.
+#
+#  The source code contained or described herein and all documents related to the
+#  source code ("Material") are owned by Intel Corporation or its suppliers or
+#  licensors. Title to the Material remains with Intel Corporation or its suppliers
+#  and licensors. The Material may contain trade secrets and proprietary and
+#  confidential information of Intel Corporation and its suppliers and licensors,
+#  and is protected by worldwide copyright and trade secret laws and treaty
+#  provisions. No part of the Material may be used, copied, reproduced, modified,
+#  published, uploaded, posted, transmitted, distributed, or disclosed in any way
+#  without Intel's prior express written permission.
+#
+#  No license under any patent, copyright, trade secret or other intellectual
+#  property right is granted to or conferred upon you by disclosure or delivery
+#  of the Materials, either expressly, by implication, inducement, estoppel or
+#  otherwise. Any license under such intellectual property rights must be
+#  express and approved by Intel in writing.
+#
+#  Unless otherwise agreed by Intel in writing, you may not remove or alter
+#  this notice or any other notice embedded in Materials by Intel or
+#  Intel's suppliers or licensors in any way.
+#
+#  This file contains a 'Sample Driver' and is licensed as such under the terms
+#  of your license agreement with Intel or your vendor. This file may be modified
+#  by the user, subject to the additional terms of the license agreement.
+#
+# @par Specification Reference:
+#
+# @par Glossary:
+###
+
+[Defines]
+  INF_VERSION                    = 0x00010017
+  BASE_NAME                      = PolicyInitAdvancedDxe
+  FILE_GUID                      = 490D0119-4448-440D-8F5C-F58FB53EE057
+  VERSION_STRING                 = 1.0
+  MODULE_TYPE                    = DXE_DRIVER
+  ENTRY_POINT                    = PolicyInitAdvancedDxeEntryPoint
+
+[LibraryClasses]
+  BaseLib
+  BaseMemoryLib
+  CpuPlatformLib
+  DebugLib
+  DxeServicesTableLib
+  IoLib
+  MemoryAllocationLib
+  DxeMePolicyLib
+  DxeSaPolicyLib
+  DxeAmtPolicyLib
+  DxePchPolicyLib
+  DxeITbtPolicyLib
+  DxeDTbtPolicyLib
+  PcdLib
+  DxePolicyBoardConfigLib
+  DxePolicyUpdateLib
+  PostCodeLib
+  UefiBootServicesTableLib
+  UefiDriverEntryPoint
+  UefiLib
+  UefiRuntimeServicesTableLib
+  ConfigBlockLib
+  DevicePathLib
+  EcMiscLib
+  PreSiliconEnvDetectLib
+
+[Packages]
+  MdePkg/MdePkg.dec
+  ClientOneSiliconPkg/SiPkg.dec
+  ClientCommonPkg/ClientCommonPkg.dec
+  ElkhartLakePlatSamplePkg/PlatformPkg.dec
+  ClientSiliconPkg/ClientSiliconPkg.dec
+  IntelSiliconPkg/IntelSiliconPkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+  ElkhartLakeBoardPkg/BoardPkg.dec
+
+[Pcd]
+  gEfiMdePkgTokenSpaceGuid.PcdPciExpressBaseAddress                     ## CONSUMES
+  gClientCommonModuleTokenSpaceGuid.PcdSmbiosOemTypeFirmwareVersionInfo ## CONSUMES
+  gSiPkgTokenSpaceGuid.PcdFlashMicrocodeFvBase                          ## CONSUMES
+  gSiPkgTokenSpaceGuid.PcdFlashMicrocodeFvSize                          ## CONSUMES
+  gBoardModuleTokenSpaceGuid.PcdIntelGopEnable
+  gBoardModuleTokenSpaceGuid.PcdPlatformFlavor
+  gBoardModuleTokenSpaceGuid.PcdPlatformType
+  gBoardModuleTokenSpaceGuid.PcdEcPresent
+  gIntelSiliconPkgTokenSpaceGuid.PcdIntelGraphicsVbtFileGuid
+  gBoardModuleTokenSpaceGuid.PcdVbtMipiGuid
+  gPlatformModuleTokenSpaceGuid.PcdDTbtEnable
+  gSiPkgTokenSpaceGuid.PcdCpuSmmMsrSaveStateEnable                      ## CONSUMES
+  gSiPkgTokenSpaceGuid.PcdCpuSmmUseDelayIndication                      ## CONSUMES
+  gSiPkgTokenSpaceGuid.PcdCpuSmmUseBlockIndication                      ## CONSUMES
+  gSiPkgTokenSpaceGuid.PcdCpuSmmUseSmmEnableIndication                  ## CONSUMES
+  gSiPkgTokenSpaceGuid.PcdAmtEnable                                     ## CONSUMES
+  gEfiMdeModulePkgTokenSpaceGuid.PcdResetOnMemoryTypeInformationChange
+
+[Sources]
+  AmtPolicyInitDxe.c
+  MePolicyInitDxe.c
+  PolicyInitAdvancedDxe.c
+  SaPolicyInitDxe.c
+  SiliconPolicyInitDxe.c
+  GopPolicyInitDxe.c
+  PchPolicyInitDxe.c
+  CpuPolicyInitDxe.c
+  TbtPolicyInitDxe.c
+  TbtPolicyInitDxe.h
+
+[Protocols]
+  gEfiFirmwareVolume2ProtocolGuid               ## CONSUMES
+  gDxeMePolicyGuid                              ## PRODUCES
+  gDxeAmtPolicyGuid                             ## PRODUCES
+  gSaPolicyProtocolGuid                         ## CONSUMES
+  gPchPolicyProtocolGuid                        ## CONSUMES
+  gDxeSiPolicyProtocolGuid                      ## PRODUCES
+  gGopPolicyProtocolGuid                        ## PRODUCES
+  gDxeCpuPolicyProtocolGuid                     ## PRODUCES
+
+[Guids]
+  gSetupVariableGuid                            ## CONSUMES
+  gSaSetupVariableGuid                          ## CONSUMES
+  gPchSetupVariableGuid                         ## CONSUMES
+  gCpuSmmGuid                                   ## CONSUMES
+
+[Depex]
+  gEfiVariableArchProtocolGuid
+

@@ -1,0 +1,121 @@
+/**@file
+
+ @copyright
+  INTEL CONFIDENTIAL
+  Copyright 2010 - 2019 Intel Corporation.
+
+  The source code contained or described herein and all documents related to the
+  source code ("Material") are owned by Intel Corporation or its suppliers or
+  licensors. Title to the Material remains with Intel Corporation or its suppliers
+  and licensors. The Material may contain trade secrets and proprietary and
+  confidential information of Intel Corporation and its suppliers and licensors,
+  and is protected by worldwide copyright and trade secret laws and treaty
+  provisions. No part of the Material may be used, copied, reproduced, modified,
+  published, uploaded, posted, transmitted, distributed, or disclosed in any way
+  without Intel's prior express written permission.
+
+  No license under any patent, copyright, trade secret or other intellectual
+  property right is granted to or conferred upon you by disclosure or delivery
+  of the Materials, either expressly, by implication, inducement, estoppel or
+  otherwise. Any license under such intellectual property rights must be
+  express and approved by Intel in writing.
+
+  Unless otherwise agreed by Intel in writing, you may not remove or alter
+  this notice or any other notice embedded in Materials by Intel or
+  Intel's suppliers or licensors in any way.
+
+  This file contains a 'Sample Driver' and is licensed as such under the terms
+  of your license agreement with Intel or your vendor. This file may be modified
+  by the user, subject to the additional terms of the license agreement.
+
+@par Specification
+**/
+
+//
+//Module Name:
+//
+//  StatusCodeSetup.uni
+//
+//Abstract:
+//
+// StatusCode  Setup strings.
+//--*/
+/=#
+#include "VFR.uni"
+
+
+//---------------------------------------------------------------------------
+// Serial Debug Message Setup Options
+//---------------------------------------------------------------------------
+
+#string STR_DEBUG_INTERFACE_FORM            #language en-US "Debug Configuration"
+#string STR_DEBUG_INTERFACE_FORM_HELP       #language en-US "Debug Message Settings"
+#string STR_DEBUG_INTERFACE_PROMPT          #language en-US "Debug Messages"
+#string STR_DEBUG_INTERFACE_PROMPT_HELP     #language en-US "Debug Messages Interface"
+#string STR_USB                             #language en-US "USB Port"
+#string STR_SERIAL                          #language en-US "Serial Port"
+#string STR_BOTH                            #language en-US "Both"
+#string STR_SERIAL_DEBUG_PROMPT             #language en-US "Serial Debug Messages"
+#string STR_SERIAL_DEBUG_PROMPT_HELP        #language en-US "Enable/Disable Serial Debug Messages"
+#string STR_SERIAL_DEBUG_BAUD_RATE          #language en-US "Serial Debug Message Baud Rate"
+#string STR_SERIAL_DEBUG_BAUR_RATE_HELP     #language en-US "Baud Rate for Serial Debug Messages"
+#string STR_9600                            #language en-US  "9600"
+#string STR_19200                           #language en-US  "19200"
+#string STR_57600                           #language en-US  "57600"
+#string STR_115200                          #language en-US  "115200"
+
+#string STR_ERROR_ONLY                      #language en-US  "Error Only"
+#string STR_ERROR_WARNINGS                  #language en-US  "Error & Warnings"
+#string STR_ERROR_WARNINGS_INFO             #language en-US  "Load, Error, Warnings & Info"
+#string STR_ERROR_WARNINGS_INFO_EVENT       #language en-US  "Load, Error, Warnings, Info & Event"
+#string STR_ERROR_WARNINGS_INFO_VERBOSE     #language en-US  "Load, Error, Warnings, Info & Verbose"
+
+#string STR_RAM_DEBUG_INTERFACE_PROMPT       #language en-US  "RAM"
+#string STR_UART_DEBUG_INTERFACE_PROMPT      #language en-US  "Legacy UART"
+#string STR_USB3_DEBUG_INTERFACE_PROMPT      #language en-US  "USB3"
+#string STR_SERIAL_IO_DEBUG_INTERFACE_PROMPT #language en-US  "Serial IO UART"
+#string STR_TRACE_HUB_DEBUG_INTERFACE_PROMPT #language en-US  "Trace Hub"
+
+#string STR_SERIAL_IO_DEBUG_SUB              #language en-US "Serial IO Debug Controller Configuration"
+#string STR_SERIAL_IO_DEBUG_DISABLED         #language en-US "Serial IO Debug Interface Disabled"
+
+#string STR_SERIAL_IO_DEBUG_BAUD_RATE        #language en-US "Baud Rate"
+#string STR_SERIAL_IO_DEBUG_BAUD_RATE_HRLP   #language en-US "Serial IO transmission speed in baud [Bd] per second"
+#string STR_460800                           #language en-US "460800"
+#string STR_921600                           #language en-US "921600"
+#string STR_1500000                          #language en-US "1500000"
+#string STR_1843200                          #language en-US "1843200"
+#string STR_3000000                          #language en-US "3000000"
+#string STR_3686400                          #language en-US "3686400"
+#string STR_6000000                          #language en-US "6000000"
+
+#string STR_SERIAL_IO_DEBUG_STOP_BITS        #language en-US "Stop Bits"
+#string STR_SERIAL_IO_DEBUG_STOP_BITS_HELP   #language en-US "Number of stop bits. This is used to select the number of stop bits per character that the peripheral transmits and receives."
+#string STR_STOP_BITS_DEFAULT                #language en-US "Default"
+#string STR_STOP_BITS_1                      #language en-US "1"
+#string STR_STOP_BITS_1_5                    #language en-US "1.5"
+#string STR_STOP_BITS_2                      #language en-US "2"
+
+#string STR_SERIAL_IO_DEBUG_PARITY           #language en-US "Parity Bits"
+#string STR_SERIAL_IO_DEBUG_PARITY_HELP      #language en-US "Enable and disable parity generation and detection in transmitted and received serial character"
+
+#string STR_PARITY_DEFAULT                   #language en-US "Default"
+#string STR_PARITY_NONE                      #language en-US "None"
+#string STR_PARITY_EVEN                      #language en-US "Even"
+#string STR_PARITY_ODD                       #language en-US "Odd"
+
+#string STR_SERIAL_IO_FLOW_CONTROL           #language en-US "Flow Control"
+#string STR_SERIAL_IO_FLOW_CONTROL_HELP      #language en-US "Auto or None. Used to help for flow control using external IO pins with the pairing device."
+
+#string STR_SERIAL_IO_DATA_BITS              #language en-US "Word Length"
+#string STR_SERIAL_IO_DATA_BITS_HELP         #language en-US "Select the number of data bits per character that the peripheral transmits and receives"
+#string STR_DATA_BITS_5_BITS                 #language en-US "5 BITS"
+#string STR_DATA_BITS_6_BITS                 #language en-US "6 BITS"
+#string STR_DATA_BITS_7_BITS                 #language en-US "7 BITS"
+#string STR_DATA_BITS_8_BITS                 #language en-US "8 BITS"
+
+#string STR_SERIAL_IO_CONTROLLER_NUMBER      #language en-US "Controller Number"
+#string STR_SERIAL_IO_CONTROLLER_NUMBER_HELP #language en-US "Pch Integrated UART controller number"
+#string STR_SERIAL_IO_CONTROLLER_NUMBER_0    #language en-US "Serial IO UART 0"
+#string STR_SERIAL_IO_CONTROLLER_NUMBER_1    #language en-US "Serial IO UART 1"
+#string STR_SERIAL_IO_CONTROLLER_NUMBER_2    #language en-US "Serial IO UART 2"

@@ -1,0 +1,64 @@
+form formid = CONCATENATE3(ITBT_ROOTPORT,ROOTPORT_INDEX,_FORM_ID),
+  title = STRING_TOKEN(CONCATENATE3(STR_ITBT_ROOTPORT,ROOTPORT_INDEX,_FORM));
+    oneof varid  = SETUP_DATA.ITbtRootPort[ROOTPORT_INDEX],
+      questionid = AUTO_ID(CONCATENATE2(KEY_ITBT_ROOTPORT,ROOTPORT_INDEX)),
+      prompt = STRING_TOKEN(CONCATENATE2(STR_PCI_ITBT_ROOTPORT,ROOTPORT_INDEX)),
+      help = STRING_TOKEN(CONCATENATE3(STR_PCI_ITBT_ROOTPORT,ROOTPORT_INDEX,_HELP)),
+      option text = STRING_TOKEN(STR_DISABLED),  value = 0, flags = RESET_REQUIRED | INTERACTIVE;
+      option text = STRING_TOKEN(STR_ENABLED),   value = 1, flags = RESET_REQUIRED | INTERACTIVE;
+      default     = CONCATENATE3(ITBT_ROOTPORT,ROOTPORT_INDEX,_DEFAULT_VALUE), defaultstore = MyStandardDefault,    // default ITBT RP Enable/Disable Value
+    endoneof;
+
+    SUBTITLE(STRING_TOKEN(CONCATENATE3(STR_ITBT_RP,ROOTPORT_INDEX,_PCIE_ALLOCATION)))
+    numeric varid = SETUP_DATA.ITbtPcieExtraBusRsvd[ROOTPORT_INDEX],
+      prompt      = STRING_TOKEN (CONCATENATE3(STR_ITBT_RP,ROOTPORT_INDEX,_PCIE_RBUS_PROMPT)),
+      help        = STRING_TOKEN (STR_ITBT_PCIE_RBUS_HELP),
+      flags       = RESET_REQUIRED | INTERACTIVE,
+      minimum     = 0,
+      maximum     = 255,
+      step        = 1,    // Stepping of 0 equates to a manual entering of a value, otherwise it will auto-increment with a left/right arrow
+      default     = 42,    // default no extra bus reserved
+    endnumeric;
+
+    numeric varid = SETUP_DATA.ITbtPcieMemRsvd[ROOTPORT_INDEX],
+      prompt      = STRING_TOKEN (CONCATENATE3(STR_ITBT_RP,ROOTPORT_INDEX,_PCIE_RMEM_PROMPT)),
+      help        = STRING_TOKEN (STR_ITBT_PCIE_RMEM_HELP),
+      flags       = RESET_REQUIRED | INTERACTIVE,
+      minimum     = 1,
+      maximum     = 4096,
+      step        = 1,    // Stepping of 0 equates to a manual entering of a value, otherwise it will auto-increment with a left/right arrow
+      default     = 194,   // 194 MB Default 
+    endnumeric;
+
+    numeric varid = SETUP_DATA.ITbtPcieMemAddrRngMax[ROOTPORT_INDEX],
+      prompt      = STRING_TOKEN (CONCATENATE3(STR_ITBT_RP,ROOTPORT_INDEX,_PCIE_RMEM_ADDRRNGMAX)),
+      help        = STRING_TOKEN (STR_ITBT_PCIE_RMEM_RNG_HELP),
+      flags       = RESET_REQUIRED | INTERACTIVE,
+      minimum     = 0,
+      maximum     = 31,
+      step        = 1,
+      default     = 25,   // 32 MB Allignment 
+    endnumeric;
+
+    numeric varid = SETUP_DATA.ITbtPciePMemRsvd[ROOTPORT_INDEX],
+      prompt      = STRING_TOKEN (CONCATENATE3(STR_ITBT_RP,ROOTPORT_INDEX,_PCIE_RPMEM_PROMPT)),
+      help        = STRING_TOKEN (STR_ITBT_PCIE_RPMEM_HELP),
+      flags     = RESET_REQUIRED | INTERACTIVE,
+      minimum     = 1,
+      maximum     = 4096,
+      step        = 1,    // Stepping of 0 equates to a manual entering of a value, otherwise it will auto-increment with a left/right arrow
+      default     = 448,   // 448 MB Default 
+    endnumeric;
+
+    numeric varid = SETUP_DATA.ITbtPciePMemAddrRngMax[ROOTPORT_INDEX],
+      prompt      = STRING_TOKEN (CONCATENATE3(STR_ITBT_RP,ROOTPORT_INDEX,_PCIE_RPMEM_ADDRRNGMAX)),
+      help        = STRING_TOKEN (STR_ITBT_PCIE_RPMEM_RNG_HELP),
+      flags     = RESET_REQUIRED | INTERACTIVE,
+      minimum     = 0,
+      maximum     = 31,
+      step        = 1,
+      default     = 28, // 256 MB Allignment
+    endnumeric;
+
+  endform;  // ITBT_FORM_ID
+    

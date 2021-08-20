@@ -1,0 +1,700 @@
+/** @file
+  Header file for PchPsfPrivateLib.
+
+@copyright
+  INTEL CONFIDENTIAL
+  Copyright 2016 - 2020 Intel Corporation.
+
+  The source code contained or described herein and all documents related to the
+  source code ("Material") are owned by Intel Corporation or its suppliers or
+  licensors. Title to the Material remains with Intel Corporation or its suppliers
+  and licensors. The Material may contain trade secrets and proprietary and
+  confidential information of Intel Corporation and its suppliers and licensors,
+  and is protected by worldwide copyright and trade secret laws and treaty
+  provisions. No part of the Material may be used, copied, reproduced, modified,
+  published, uploaded, posted, transmitted, distributed, or disclosed in any way
+  without Intel's prior express written permission.
+
+  No license under any patent, copyright, trade secret or other intellectual
+  property right is granted to or conferred upon you by disclosure or delivery
+  of the Materials, either expressly, by implication, inducement, estoppel or
+  otherwise. Any license under such intellectual property rights must be
+  express and approved by Intel in writing.
+
+  Unless otherwise agreed by Intel in writing, you may not remove or alter
+  this notice or any other notice embedded in Materials by Intel or
+  Intel's suppliers or licensors in any way.
+
+  This file contains an 'Intel Peripheral Driver' and is uniquely identified as
+  "Intel Reference Module" and is licensed for Intel CPUs and chipsets under
+  the terms of your license agreement with Intel or your vendor. This file may
+  be modified by the user, subject to additional terms of the license agreement.
+
+@par Specification Reference:
+**/
+#ifndef _PCH_PSF_PRIVATE_LIB_H_
+#define _PCH_PSF_PRIVATE_LIB_H_
+
+#include <Library/PchPcrLib.h>
+#include <Register/PchPcrRegs.h>
+
+typedef struct {
+  UINT32       Id;
+  PCH_SBI_PID  SbPid;
+} PSF_SEGMENT;
+
+/**
+  Get list of supported PSF segments.
+
+  @param[out] PsfTable        Array of supported PSF segments
+  @param[out] PsfTableLength  Length of PsfTable
+**/
+VOID
+PsfSegments (
+  OUT PSF_SEGMENT  **PsfTable,
+  OUT UINT32       *PsfTableLength
+  );
+
+//
+// Structure for storing data on both PSF SideBand Port ID and
+// PSF port register offset for specific device
+//
+typedef struct {
+  PCH_SBI_PID  PsfPid;
+  UINT16       RegBase;
+} PSF_PORT;
+
+/**
+  Disable device at PSF level
+  Method not for bridges (e.g. PCIe Root Port)
+
+  @param[in] PsfPort  PSF PORT data structure
+**/
+VOID
+PsfDisableDevice (
+  IN PSF_PORT  PsfPort
+  );
+
+/**
+  Enable device at PSF level
+  Method not for bridges (e.g. PCIe Root Port)
+
+  @param[in] PsfPort  PSF PORT data structure
+**/
+VOID
+PsfEnableDevice (
+  IN PSF_PORT  PsfPort
+  );
+
+/**
+  Hide PciCfgSpace of device at PSF level
+  Method not for bridges (e.g. PCIe Root Port)
+
+  @param[in] PsfPort  PSF PORT data structure
+**/
+VOID
+PsfHideDevice (
+  IN PSF_PORT  PsfPort
+  );
+
+/**
+  Unhide PciCfgSpace of device at PSF level
+  Method not for bridges (e.g. PCIe Root Port)
+
+  @param[in] PsfPort  PSF PORT data structure
+**/
+VOID
+PsfUnhideDevice (
+  IN PSF_PORT  PsfPort
+  );
+
+/**
+  Disable device BARs at PSF level
+  Method not for bridges (e.g. PCIe Root Port)
+
+  @param[in] PsfPort     PSF PORT data structure
+  @param[in] BarDisMask  BIT0-BAR0, BIT1-BAR1,...
+                         Mask corresponds to 32bit wide BARs
+**/
+VOID
+PsfDisableDeviceBar (
+  IN PSF_PORT  PsfPort,
+  IN UINT32    BarDisMask
+  );
+
+/**
+  Enable device BARs at PSF level
+  Method not for bridges (e.g. PCIe Root Port)
+
+  @param[in] PsfPort     PSF PORT data structure
+  @param[in] BarEnMask   BIT0-BAR0, BIT1-BAR1,...
+                         Mask corresponds to 32bit wide BARs
+**/
+VOID
+PsfEnableDeviceBar (
+  IN PSF_PORT  PsfPort,
+  IN UINT32    BarEnMask
+  );
+
+/**
+  Return PSF_PORT for SerialIO I2C device
+
+  @param[in] I2cNum  Serial IO I2C device (I2C0, I2C1, ....)
+
+  @retval  PsfPort   PSF PORT structure for SerialIO I2C device
+**/
+PSF_PORT
+PsfSerialIoI2cPort (
+  IN UINT32  I2cNum
+  );
+
+/**
+  Return PSF_PORT for SerialIO SPI device
+
+  @param[in] SpiNum  Serial IO SPI device (SPI0, SPI1, ....)
+
+  @retval  PsfPort   PSF PORT structure for SerialIO SPI device
+**/
+PSF_PORT
+PsfSerialIoSpiPort (
+  IN UINT32  SpiNum
+  );
+
+/**
+  Return PSF_PORT for SerialIO UART device
+
+  @param[in] UartNum  Serial IO UART device (UART0, UART1, ....)
+
+  @retval  PsfPort    PSF PORT structure for SerialIO UART device
+**/
+PSF_PORT
+PsfSerialIoUartPort (
+  IN UINT32  UartNum
+  );
+
+/**
+  This procedure will set BARx value for TraceHub ACPI device at PSF level
+
+  @param[in] BarNum          BAR Number (0:BAR0, 1:BAR1)
+  @param[in] BarValue        32bit BAR value
+**/
+VOID
+PsfSetTraceHubAcpiDeviceBarValue (
+  IN UINT8   BarNum,
+  IN UINT32  BarValue
+  );
+
+/**
+  This procedure will enable MSE for TraceHub ACPI device at PSF level
+**/
+VOID
+PsfEnableTraceHubAcpiDeviceMemorySpace (
+  VOID
+  );
+
+/**
+  Enable HECI device at PSF level
+
+  @param[in] HeciDevice       HECIx Device (HECI1-4)
+**/
+VOID
+PsfEnableHeciDevice (
+  IN UINT8      HeciDevice
+  );
+
+/**
+  Disable HECI device at PSF level
+
+  @param[in] HeciDevice       HECIx Device (HECI1-4)
+**/
+VOID
+PsfDisableHeciDevice (
+  IN UINT8      HeciDevice
+  );
+
+/**
+  Hide HECI device at PSF level
+
+  @param[in] HeciDevice       HECIx Device (HECI1-4)
+**/
+VOID
+PsfHideHeciDevice (
+  IN UINT8      HeciDevice
+  );
+
+/**
+  Disable IDER device at PSF level
+**/
+VOID
+PsfDisableIderDevice (
+  VOID
+  );
+
+/**
+  Enable SOL device at PSF level
+**/
+VOID
+PsfEnableSolDevice (
+  VOID
+  );
+
+/**
+  Disable SOL device at PSF level
+**/
+VOID
+PsfDisableSolDevice (
+  VOID
+  );
+
+/**
+  Set PMC ABASE value in PSF
+
+  @param[in] Address     Address for ACPI base.
+**/
+VOID
+PsfSetPmcAbase (
+  IN  UINT16       Address
+  );
+
+/**
+  Get PMC ABASE value from PSF
+
+  @retval Address     Address for ACPI base.
+**/
+UINT16
+PsfGetPmcAbase (
+  VOID
+  );
+
+/**
+  Get PMC PWRMBASE value from PSF
+
+  @retval Address     Address for PWRM base.
+**/
+UINT32
+PsfGetPmcPwrmBase (
+  VOID
+  );
+
+/**
+  Hide Cnvi WiFi device's PciCfgSpace at PSF level
+**/
+VOID
+PsfHideCnviWifiDevice (
+  VOID
+  );
+
+/**
+  Disable Cnvi Wifi device at PSF level
+**/
+VOID
+PsfDisableCnviWifiDevice (
+  VOID
+  );
+
+/**
+  Disable HDAudio device at PSF level
+**/
+VOID
+PsfDisableHdaDevice (
+  VOID
+  );
+
+/**
+  Disable Dsp bar at PSF level
+**/
+VOID
+PsfDisableDspBar (
+  VOID
+  );
+
+/**
+  Disable THC device at PSF level
+
+  @param[in]  ThcNumber                Touch Host Controller Number THC0 or THC1
+**/
+VOID
+PsfDisableThcDevice (
+  IN  UINT32        ThcNumber
+  );
+
+/**
+  Disable xDCI device at PSF level
+**/
+VOID
+PsfDisableXdciDevice (
+  VOID
+  );
+
+/**
+  Disable xHCI device at PSF level
+**/
+VOID
+PsfDisableXhciDevice (
+  VOID
+  );
+
+/**
+  Disable xHCI VTIO Phantom device at PSF level
+**/
+VOID
+PsfDisableXhciVtioDevice (
+  VOID
+  );
+
+/**
+  Disable SATA device at PSF level
+
+  @param[in]  SataCtrlIndex     SATA controller index
+**/
+VOID
+PsfDisableSataDevice (
+  IN UINT32     SataCtrlIndex
+  );
+
+/**
+  Return PSF_PORT for SCS eMMC device
+
+  @retval    PsfPort      PSF PORT structure for SCS eMMC device
+**/
+PSF_PORT
+PsfScsEmmcPort (
+  VOID
+  );
+
+/**
+  Return PSF_PORT for SCS SD Card device
+
+  @retval    PsfPort      PSF PORT structure for SCS SD Card device
+**/
+PSF_PORT
+PsfScsSdCardPort (
+  VOID
+  );
+
+/**
+  Return PSF_PORT for SCS UFS device
+
+  @param[in] UfsNum       UFS Device
+
+  @retval    PsfPort      PSF PORT structure for SCS UFS device
+**/
+PSF_PORT
+PsfScsUfsPort (
+  IN UINT32  UfsNum
+  );
+
+/**
+  Return PSF_PORT for SCI device
+
+  @retval    PsfPort      PSF PORT structure for SCI device
+**/
+PSF_PORT
+PsfSciPort (
+  VOID
+  );
+
+/**
+  Disable ISH device at PSF level
+**/
+VOID
+PsfDisableIshDevice (
+  VOID
+  );
+
+/**
+  Disable FPAK device at PSF level
+**/
+VOID
+PsfDisableFpakDevice (
+  VOID
+  );
+
+/**
+  Disable ISH BAR1 at PSF level
+**/
+VOID
+PsfDisableIshBar1 (
+  VOID
+  );
+
+/**
+  Disable TSN device at PSF level
+**/
+VOID
+PsfDisableTsnDevice (
+  VOID
+  );
+
+/**
+  Hide PSE DMA devices at PSF level
+**/
+VOID
+PsfHidePseDmaDevices (
+  VOID
+  );
+
+/**
+  Disable PSE device at PSF level
+**/
+VOID
+PsfDisablePseDevice (
+  IN UINT32  PseCtrlIndex
+  );
+
+/**
+  Hide PSE device at PSF level
+**/
+VOID
+PsfHidePseDevice (
+  IN UINT32  PseCtrlIndex
+  );
+
+/**
+  Disable PSE BAR1 at PSF level
+**/
+VOID
+PsfDisablePseBar1 (
+  IN UINT32  PseCtrlIndex
+  );
+
+/**
+  Disable GbE device at PSF level
+**/
+VOID
+PsfDisableGbeDevice (
+  VOID
+  );
+
+/**
+  Disable SMBUS device at PSF level
+**/
+VOID
+PsfDisableSmbusDevice (
+  VOID
+  );
+
+/**
+  Disable TraceHub ACPI devices at PSF level
+**/
+VOID
+PsfDisableTraceHubAcpiDevice (
+  VOID
+  );
+
+/**
+  Hide TraceHub ACPI devices PciCfgSpace at PSF level
+**/
+VOID
+PsfHideTraceHubAcpiDevice (
+  VOID
+  );
+
+/**
+  This procedure will hide TraceHub PciCfgSpace at PSF level
+**/
+VOID
+PsfHideTraceHubDevice (
+  VOID
+  );
+
+/**
+  This procedure will unhide TraceHub PciCfgSpace at PSF level
+**/
+VOID
+PsfUnhideTraceHubDevice (
+  VOID
+  );
+
+/**
+  This procedure will disable TraceHub device at PSF level
+**/
+VOID
+PsfDisableTraceHubDevice (
+  VOID
+  );
+
+/**
+  Configures rootspace 3 bus number for PCIe IMR use
+
+  @param[in] Rs3Bus        bus number
+**/
+VOID
+PsfSetRs3Bus (
+  UINT8 Rs3Bus
+  );
+
+/**
+  Disable PCIe Root Port at PSF level
+
+  @param[in] RpIndex        PCIe Root Port Index (0 based)
+**/
+VOID
+PsfDisablePcieRootPort (
+  IN UINT32  RpIndex
+  );
+
+/**
+  Program PSF grant counts for SATA
+  Call this before SATA ports are accessed for enumeration
+**/
+VOID
+PsfConfigureSataGrantCounts (
+  VOID
+  );
+
+typedef enum {
+  PsfPcieCtrl4x1,
+  PsfPcieCtrl1x2_2x1,
+  PsfPcieCtrl2x2,
+  PsfPcieCtrl1x4,
+  PsfPcieCtrl1x1
+} PSF_PCIE_CTRL_CONFIG;
+
+/**
+  Program PSF grant counts for PCI express depending on controllers configuration
+
+  @param[in] PsfPcieCtrlConfigTable   Table with PCIe controllers configuration
+  @param[in] NumberOfPcieControllers  Number of PCIe controllers. This is also the size of PsfPcieCtrlConfig table
+**/
+VOID
+PsfConfigurePcieGrantCounts (
+  IN PSF_PCIE_CTRL_CONFIG  *PsfPcieCtrlConfigTable,
+  IN UINT32                NumberOfPcieControllers
+  );
+
+/**
+  Program PSF EOI Multicast configuration for ITSS
+**/
+VOID
+PsfConfigurEoiForItss (
+  VOID
+  );
+
+/**
+  This function enables EOI message forwarding in PSF for PCIe ports
+  for cases where IOAPIC is present behind this root port.
+
+  @param[in] RpIndex        Root port index (0 based)
+
+  @retval Status
+**/
+EFI_STATUS
+PsfConfigurEoiForPciePort (
+  IN  UINT32   RpIndex
+  );
+
+//
+// Structure for PSF Port Destination ID
+//
+typedef union {
+  UINT32 RegVal;
+  struct {
+    UINT32  ChannelId   : 8;  // Channel ID
+    UINT32  PortId      : 7;  // Port ID
+    UINT32  PortGroupId : 1;  // Port Group ID
+    UINT32  PsfId       : 8;  // PSF ID
+    UINT32  Rsvd        : 7;  // Reserved
+    UINT32  ChanMap     : 1;  // Channel map
+  } Fields;
+} PSF_PORT_DEST_ID;
+
+/**
+  PCIe PSF port destination ID (psf_id:port_group_id:port_id:channel_id)
+
+  @param[in] RpIndex        PCIe Root Port Index (0 based)
+
+  @retval Destination ID
+**/
+PSF_PORT_DEST_ID
+PsfPcieDestinationId (
+  IN UINT32 RpIndex
+  );
+
+/**
+  PSF early initialization.
+**/
+VOID
+PsfEarlyInit (
+  VOID
+  );
+
+/**
+  Assign new function number for PCIe Port Number.
+
+  @param[in] RpIndex        PCIe Root Port Index (0 based)
+  @param[in] NewFunction    New Function number
+**/
+VOID
+PsfSetPcieFunction (
+  IN UINT32  RpIndex,
+  IN UINT32  NewFunction
+  );
+
+/**
+  This function enables PCIe Relaxed Order in PSF
+**/
+VOID
+PsfEnablePcieRelaxedOrder (
+  VOID
+  );
+
+
+/**
+  Enable VTd support in PSF.
+**/
+VOID
+PchPsfEnableVtd (
+  VOID
+  );
+
+/**
+  Disable PSF address-based peer-to-peer decoding.
+**/
+VOID
+PchPsfDisableP2pDecoding (
+  VOID
+  );
+
+/**
+  Perform registers programming required for
+  Management Component Transport Protocol Broadcast Cycle.
+
+  Agent Destination Addresses are being programmed only when adequate
+  PCIe root port controllers are function enabled.
+
+  Function sets CSME PMT as a message broadcaster and programs the targets
+  of the message in registers only if adequate PCIe root port controllers
+  are function enabled. Conditionally, if the CPU PEG exist and is function
+  enabled, DMI is also a target.
+**/
+VOID
+PsfConfigureMctpCycle (
+  VOID
+  );
+
+/**
+  This procedure will hide PMC device at PSF level
+**/
+VOID
+PsfHidePmcDevice (
+  VOID
+  );
+
+/**
+  This procedure will disable D3:F0 device at PSF level for PCH-LP
+**/
+VOID
+PsfDisableD3F0 (
+  VOID
+  );
+
+/**
+  This procedure will disable PSF upstream completion tracking for HDAudio on PCH-LP
+**/
+VOID
+PsfDisableUpstreamCompletionTrackingForHda (
+  VOID
+  );
+
+#endif // _PCH_PSF_PRIVATE_LIB_H_

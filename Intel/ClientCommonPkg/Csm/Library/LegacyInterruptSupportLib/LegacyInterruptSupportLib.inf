@@ -1,0 +1,58 @@
+#/*++
+# This file contains a 'Sample Driver' and is licensed as such
+# under the terms of your license agreement with Intel or your
+# vendor.  This file may be modified by the user, subject to
+# the additional terms of the license agreement
+#--*/
+## @file
+# Provide legacy interrupt reverse thunk support.
+#
+# Copyright (c) 2016, Intel Corporation. All rights reserved.<BR>
+#
+#  This software and associated documentation (if any) is furnished
+#  under a license and may only be used or copied in accordance
+#  with the terms of the license. Except as permitted by such
+#  license, no part of this software or documentation may be
+#  reproduced, stored in a retrieval system, or transmitted in any
+#  form or by any means without the express written consent of
+#  Intel Corporation.
+#
+##
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = LegacyInterruptSupportLib
+  FILE_GUID                      = 7E36DCCC-6E06-4FF3-9255-AE694392B327
+  MODULE_TYPE                    = BASE
+  VERSION_STRING                 = 1.0
+  LIBRARY_CLASS                  = LegacyInterruptSupportLib
+
+#
+#  VALID_ARCHITECTURES           = IA32 X64 IPF EBC
+#
+
+[Sources]
+  LegacyInterruptSupportLib.c
+
+[Sources.Ia32]
+  Ia32/SwSmi.nasm
+  Ia32/SwSmi.s
+
+[Sources.X64]
+  X64/SwSmi.nasm
+  X64/SwSmi.s
+
+[Packages]
+  MdePkg/MdePkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+  ClientCommonPkg/ClientCommonPkg.dec
+
+[LibraryClasses]
+  UefiBootServicesTableLib
+  BaseLib
+  BaseMemoryLib
+  MemoryAllocationLib
+
+[Protocols]
+  gEfiLegacyInterruptHandlerProtocolGuid                    ## PRODUCES
+  gLegacyBiosReverseThunkProtocolGuid                       ## CONSUMES

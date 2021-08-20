@@ -1,0 +1,276 @@
+## @file
+# Component information file for ElkhartLake Multi-Board Initialization in PEI post memory phase.
+#
+#@copyright
+#  INTEL CONFIDENTIAL
+#  Copyright 2017 - 2020 Intel Corporation.
+#
+#  The source code contained or described herein and all documents related to the
+#  source code ("Material") are owned by Intel Corporation or its suppliers or
+#  licensors. Title to the Material remains with Intel Corporation or its suppliers
+#  and licensors. The Material may contain trade secrets and proprietary and
+#  confidential information of Intel Corporation and its suppliers and licensors,
+#  and is protected by worldwide copyright and trade secret laws and treaty
+#  provisions. No part of the Material may be used, copied, reproduced, modified,
+#  published, uploaded, posted, transmitted, distributed, or disclosed in any way
+#  without Intel's prior express written permission.
+#
+#  No license under any patent, copyright, trade secret or other intellectual
+#  property right is granted to or conferred upon you by disclosure or delivery
+#  of the Materials, either expressly, by implication, inducement, estoppel or
+#  otherwise. Any license under such intellectual property rights must be
+#  express and approved by Intel in writing.
+#
+#  Unless otherwise agreed by Intel in writing, you may not remove or alter
+#  this notice or any other notice embedded in Materials by Intel or
+#  Intel's suppliers or licensors in any way.
+#
+#  This file contains a 'Sample Driver' and is licensed as such under the terms
+#  of your license agreement with Intel or your vendor. This file may be modified
+#  by the user, subject to the additional terms of the license agreement.
+#
+# @par Specification Reference:
+#
+# @par Glossary:
+###
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = PeiEhlMultiBoardInitLib
+  FILE_GUID                      = C7D39F17-E5BA-41D9-8DFE-FF9017499280
+  MODULE_TYPE                    = BASE
+  VERSION_STRING                 = 1.0
+  LIBRARY_CLASS                  = NULL
+  CONSTRUCTOR                    = PeiEhlMultiBoardInitLibConstructor
+
+[LibraryClasses]
+  BaseLib
+  DebugLib
+  BaseMemoryLib
+  MemoryAllocationLib
+  PcdLib
+  SiliconInitLib
+  MultiBoardInitSupportLib
+  PciSegmentLib
+  PreSiliconEnvDetectLib
+  GpioLib
+  HobLib
+  BoardConfigLib
+
+[Packages]
+  MinPlatformPkg/MinPlatformPkg.dec
+  ElkhartLakeBoardPkg/BoardPkg.dec
+  MdePkg/MdePkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+  ClientOneSiliconPkg/SiPkg.dec
+  ClientSiliconPkg/ClientSiliconPkg.dec
+  ElkhartLakePlatSamplePkg/PlatformPkg.dec
+  ClientCommonPkg/ClientCommonPkg.dec
+
+[Sources]
+  PeiInitPostMemLib.c
+  PeiMultiBoardInitPostMemLib.c
+  PchUsbOcMappingTable.c
+  BoardSaInitPostMemLib.c
+
+[FixedPcd]
+
+[Pcd]
+  # Board GPIO Table
+  gBoardModuleTokenSpaceGuid.PcdBoardGpioTable
+  gBoardModuleTokenSpaceGuid.PcdSataPortsEnable0
+
+  gBoardModuleTokenSpaceGuid.PcdBoardPmcPdEnable
+
+  #Tbt config
+  gBoardModuleTokenSpaceGuid.PcdCpuUsb30OverCurrentPinPort0
+  gBoardModuleTokenSpaceGuid.PcdCpuUsb30OverCurrentPinPort1
+  gBoardModuleTokenSpaceGuid.PcdCpuUsb30OverCurrentPinPort2
+  gBoardModuleTokenSpaceGuid.PcdCpuUsb30OverCurrentPinPort3
+  gBoardModuleTokenSpaceGuid.PcdCpuUsb30OverCurrentPinPort4
+  gBoardModuleTokenSpaceGuid.PcdCpuUsb30OverCurrentPinPort5
+  gBoardModuleTokenSpaceGuid.PcdCpuUsb30PortEnable
+  gBoardModuleTokenSpaceGuid.PcdDTbtControllerNumber
+  gBoardModuleTokenSpaceGuid.PcdITbtRootPortNumber
+
+  #Misc Config
+  gBoardModuleTokenSpaceGuid.PcdSataLedEnable
+  gBoardModuleTokenSpaceGuid.PcdVrAlertEnable
+  gBoardModuleTokenSpaceGuid.PcdPchThermalHotEnable
+  gBoardModuleTokenSpaceGuid.PcdMemoryThermalSensorGpioCPmsyncEnable
+  gBoardModuleTokenSpaceGuid.PcdMemoryThermalSensorGpioDPmsyncEnable
+
+  #HDA config
+  gBoardModuleTokenSpaceGuid.PcdHdaVerbTable
+  gBoardModuleTokenSpaceGuid.PcdHdaVerbTable2
+  gBoardModuleTokenSpaceGuid.PcdDisplayAudioHdaVerbTable
+  gBoardModuleTokenSpaceGuid.PcdCommonHdaVerbTable1
+  gBoardModuleTokenSpaceGuid.PcdCommonHdaVerbTable2
+  gBoardModuleTokenSpaceGuid.PcdCommonHdaVerbTable3
+
+  #TouchPanel Config
+  gBoardModuleTokenSpaceGuid.PcdBoardGpioTableTouchPanel1
+  gBoardModuleTokenSpaceGuid.PcdBoardGpioTableTouchPanel1Size
+  gBoardModuleTokenSpaceGuid.PcdBoardGpioTableTouchPanel2
+  gBoardModuleTokenSpaceGuid.PcdBoardGpioTableTouchPanel2Size
+
+  #Tsn Config
+  gBoardModuleTokenSpaceGuid.PcdBoardGpioTablePchTsnDevice
+  gBoardModuleTokenSpaceGuid.PcdBoardGpioTablePchTsnDeviceSize
+  gBoardModuleTokenSpaceGuid.PcdBoardGpioTablePseTsn0Device
+  gBoardModuleTokenSpaceGuid.PcdBoardGpioTablePseTsn0DeviceSize
+  gBoardModuleTokenSpaceGuid.PcdBoardGpioTablePseTsn1Device
+  gBoardModuleTokenSpaceGuid.PcdBoardGpioTablePseTsn1DeviceSize
+
+  #SCI config
+  gBoardModuleTokenSpaceGuid.PcdGpioTableSci
+  gBoardModuleTokenSpaceGuid.PcdGpioTableSciSize
+
+  # Pcd Hook Function
+  gBoardModuleTokenSpaceGuid.PcdFuncPeiBoardSpecificInitPostMem
+
+  # PCIE SLOT 1 - X4 CONNECTOR
+  gBoardModuleTokenSpaceGuid.PcdPcieSlot1WakeGpioPin
+  gBoardModuleTokenSpaceGuid.PcdPcieSlot1RootPort
+
+  # PCIE SLOT 2 - X1 CONNECTOR
+  gBoardModuleTokenSpaceGuid.PcdPchPCIeSlot2PwrEnableGpioNo
+  gBoardModuleTokenSpaceGuid.PcdPchPCIeSlot2PwrEnableGpioPolarity
+  gBoardModuleTokenSpaceGuid.PcdPchPCIeSlot2RstGpioNo
+  gBoardModuleTokenSpaceGuid.PcdPchPCIeSlot2RstGpioPolarity
+  gBoardModuleTokenSpaceGuid.PcdPcieSlot2WakeGpioPin
+  gBoardModuleTokenSpaceGuid.PcdPcieSlot2RootPort
+
+  # PCH M.2 SSD RTD3
+  gBoardModuleTokenSpaceGuid.PcdPchSsdPwrEnableGpioNo
+  gBoardModuleTokenSpaceGuid.PcdPchSsdPwrEnableGpioPolarity
+  gBoardModuleTokenSpaceGuid.PcdPchSsdRstGpioNo
+  gBoardModuleTokenSpaceGuid.PcdPchSsdRstGpioPolarity
+
+  # PCH SATA port RTD3
+  gBoardModuleTokenSpaceGuid.PcdPchSataPortPwrEnableGpioNo
+  gBoardModuleTokenSpaceGuid.PcdPchSataPortPwrEnableGpioPolarity
+
+  # PCIe x4 M.2 SSD RTD3
+  gBoardModuleTokenSpaceGuid.PcdPcieSsd2PwrEnableGpioNo
+  gBoardModuleTokenSpaceGuid.PcdPcieSsd2RstGpioNo
+  gBoardModuleTokenSpaceGuid.PcdPcieSsd2PwrEnableGpioPolarity
+  gBoardModuleTokenSpaceGuid.PcdPcieSsd2RstGpioPolarity
+
+  # WLAN
+  gBoardModuleTokenSpaceGuid.PcdWlanWakeGpio
+
+  # I2C Touch Panel 0 & 1 RTD3
+  gBoardModuleTokenSpaceGuid.PcdTouchpanelPwrEnableGpio
+  gBoardModuleTokenSpaceGuid.PcdTouchpanelRstGpio
+  gBoardModuleTokenSpaceGuid.PcdTouchpanelPwrEnableGpioPolarity
+  gBoardModuleTokenSpaceGuid.PcdTouchpanelRstGpioPolarity
+  gBoardModuleTokenSpaceGuid.PcdTouchpadIrqGpioPolarity
+  gBoardModuleTokenSpaceGuid.PcdTouchpanelIrqGpioPolarity
+  gBoardModuleTokenSpaceGuid.PcdTouchpadIrqGpio
+  gBoardModuleTokenSpaceGuid.PcdTouchpanelIrqGpio
+  gBoardModuleTokenSpaceGuid.PcdTouchpanel1PwrEnableGpio
+  gBoardModuleTokenSpaceGuid.PcdTouchpanel1RstGpio
+  gBoardModuleTokenSpaceGuid.PcdTouchpanel1IrqGpio
+  gBoardModuleTokenSpaceGuid.PcdTouchpanel1PwrEnableGpioPolarity
+  gBoardModuleTokenSpaceGuid.PcdTouchpanel1RstGpioPolarity
+  gBoardModuleTokenSpaceGuid.PcdTouchpanel1IrqGpioPolarity
+
+  gBoardModuleTokenSpaceGuid.PcdBoardId
+  gBoardModuleTokenSpaceGuid.PcdPlatformFlavor         ## CONSUMES
+
+  gBoardModuleTokenSpaceGuid.PcdXhciAcpiTableSignature ## PRODUCE
+  gBoardModuleTokenSpaceGuid.PcdPreferredPmProfile     ## PRODUCE
+
+  gBoardModuleTokenSpaceGuid.PcdFingerPrintIrqGpio     ## PRODUCE
+  gBoardModuleTokenSpaceGuid.PcdFingerPrintSleepGpio   ## PRODUCE
+  gBoardModuleTokenSpaceGuid.PcdTouchpanelIrqGpio      ## PRODUCE
+  gBoardModuleTokenSpaceGuid.PcdTouchpadIrqGpio        ## PRODUCE
+  gBoardModuleTokenSpaceGuid.PcdHdaI2sCodecIrqGpio     ## PRODUCE
+  gBoardModuleTokenSpaceGuid.PcdHdaI2sCodecI2cBusNumber ## PRODUCE
+
+  gBoardModuleTokenSpaceGuid.PcdWwanModemBaseBandResetGpio ## PRODUCE
+  gBoardModuleTokenSpaceGuid.PcdBleUsbPortNumber    ## PRODUCE
+  gBoardModuleTokenSpaceGuid.PcdDiscreteBtModule    ## CONSUMES
+  gBoardModuleTokenSpaceGuid.PcdBtRfKillGpio        ## PRODUCE
+  gBoardModuleTokenSpaceGuid.PcdBtIrqGpio           ## PRODUCE
+
+  gBoardModuleTokenSpaceGuid.PcdEhlRvpRtd3TableEnable ## PRODUCE
+  gBoardModuleTokenSpaceGuid.PcdEhlCrbRtd3TableEnable ## PRODUCE
+
+  gBoardModuleTokenSpaceGuid.PcdEcSmiGpio             ## PRODUCE
+  gBoardModuleTokenSpaceGuid.PcdEcLowPowerExitGpio    ## PRODUCE
+  gBoardModuleTokenSpaceGuid.PcdSpdAddressOverride    ## PRODUCE
+
+  gBoardModuleTokenSpaceGuid.PcdUsbTypeCSupport       ## PRODUCE
+  gBoardModuleTokenSpaceGuid.PcdTypeCPortsSupported   ## PRODUCE
+  gBoardModuleTokenSpaceGuid.PcdUsbTypeCPort1         ## PRODUCE
+  gBoardModuleTokenSpaceGuid.PcdUsbTypeCPort1Pch      ## PRODUCE
+  gBoardModuleTokenSpaceGuid.PcdUsbCPort1Properties   ## PRODUCE
+  gBoardModuleTokenSpaceGuid.PcdUsbTypeCPort2         ## PRODUCE
+  gBoardModuleTokenSpaceGuid.PcdUsbTypeCPort2Pch      ## PRODUCE
+  gBoardModuleTokenSpaceGuid.PcdUsbCPort2Properties   ## PRODUCE
+  gBoardModuleTokenSpaceGuid.PcdUsbTypeCPort3         ## PRODUCE
+  gBoardModuleTokenSpaceGuid.PcdUsbTypeCPort3Pch      ## PRODUCE
+  gBoardModuleTokenSpaceGuid.PcdUsbCPort3Properties   ## PRODUCE
+  gBoardModuleTokenSpaceGuid.PcdUsbTypeCPort4         ## PRODUCE
+  gBoardModuleTokenSpaceGuid.PcdUsbTypeCPort4Pch      ## PRODUCE
+  gBoardModuleTokenSpaceGuid.PcdUsbCPort4Properties   ## PRODUCE
+
+  gBoardModuleTokenSpaceGuid.PcdBatteryPresent        ## PRODUCE
+  gBoardModuleTokenSpaceGuid.PcdRealBattery1Control   ## PRODUCE
+  gBoardModuleTokenSpaceGuid.PcdRealBattery2Control   ## PRODUCE
+
+  gBoardModuleTokenSpaceGuid.PcdMipiCamSensor         ## PRODUCE
+  gBoardModuleTokenSpaceGuid.PcdH8S2113SIO            ## PRODUCE
+  gBoardModuleTokenSpaceGuid.PcdNCT6776FCOM           ## PRODUCE
+  gBoardModuleTokenSpaceGuid.PcdNCT6776FSIO           ## PRODUCE
+  gBoardModuleTokenSpaceGuid.PcdNCT6776FHWMON         ## PRODUCE
+  gBoardModuleTokenSpaceGuid.PcdZPoddConfig           ## PRODUCE
+
+  gBoardModuleTokenSpaceGuid.PcdSmcRuntimeSciPin      ## PRODUCE
+  gBoardModuleTokenSpaceGuid.PcdConvertableDockSupport ## PRODUCE
+
+  gBoardModuleTokenSpaceGuid.PcdEcHotKeyF3Support     ## PRODUCE
+  gBoardModuleTokenSpaceGuid.PcdEcHotKeyF4Support     ## PRODUCE
+  gBoardModuleTokenSpaceGuid.PcdEcHotKeyF5Support     ## PRODUCE
+  gBoardModuleTokenSpaceGuid.PcdEcHotKeyF6Support     ## PRODUCE
+  gBoardModuleTokenSpaceGuid.PcdEcHotKeyF7Support     ## PRODUCE
+  gBoardModuleTokenSpaceGuid.PcdEcHotKeyF8Support     ## PRODUCE
+
+  gBoardModuleTokenSpaceGuid.PcdVirtualButtonVolumeUpSupport   ## PRODUCE
+  gBoardModuleTokenSpaceGuid.PcdVirtualButtonVolumeDownSupport ## PRODUCE
+  gBoardModuleTokenSpaceGuid.PcdVirtualButtonHomeButtonSupport ## PRODUCE
+  gBoardModuleTokenSpaceGuid.PcdVirtualButtonRotationLockSupport ## PRODUCE
+
+  gBoardModuleTokenSpaceGuid.PcdSlateModeSwitchSupport    ## PRODUCE
+  gBoardModuleTokenSpaceGuid.PcdVirtualGpioButtonSupport  ## PRODUCE
+  gBoardModuleTokenSpaceGuid.PcdAcDcAutoSwitchSupport     ## PRODUCE
+  gBoardModuleTokenSpaceGuid.PcdPmPowerButtonGpioPin      ## PRODUCE
+  gBoardModuleTokenSpaceGuid.PcdAcpiEnableAllButtonSupport ## PRODUCE
+  gBoardModuleTokenSpaceGuid.PcdAcpiHidDriverButtonSupport ## PRODUCE
+
+  gBoardModuleTokenSpaceGuid.PcdPssReadSN           ## PRODUCE
+  gBoardModuleTokenSpaceGuid.PcdPssI2cBusNumber     ## PRODUCE
+  gBoardModuleTokenSpaceGuid.PcdPssI2cSlaveAddress  ## PRODUCE
+
+  # USB 2.0 Port Over Current Pin
+  gBoardModuleTokenSpaceGuid.PcdUsb2OverCurrentPinTable
+
+  # USB 3.0 Port Over Current Pin
+  gBoardModuleTokenSpaceGuid.PcdUsb3OverCurrentPinTable
+
+  # USB 2.0 PHY Port parameters
+  gBoardModuleTokenSpaceGuid.PcdUsb2PhyTuningTable
+
+  # Display DDI
+  gBoardModuleTokenSpaceGuid.PcdSaDisplayConfigTable           ## PRODUCES
+  gBoardModuleTokenSpaceGuid.PcdSaDisplayConfigTableSize       ## PRODUCES
+
+  gBoardModuleTokenSpaceGuid.PcdHomeButtonInterrupt            ## PRODUCES
+  gBoardModuleTokenSpaceGuid.PcdVolumeUpButtonInterrupt        ## PRODUCES
+  gBoardModuleTokenSpaceGuid.PcdVolumeDownButtonInterrupt      ## PRODUCES
+
+  gBoardModuleTokenSpaceGuid.PcdEcEnable
+
+  # SV Board

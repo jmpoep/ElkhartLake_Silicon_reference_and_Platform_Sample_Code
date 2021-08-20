@@ -1,0 +1,164 @@
+### @file
+# Component information file for the Platform Init PEI module.
+#
+#@copyright
+#  INTEL CONFIDENTIAL
+#  Copyright 2017 - 2020 Intel Corporation.
+#
+#  The source code contained or described herein and all documents related to the
+#  source code ("Material") are owned by Intel Corporation or its suppliers or
+#  licensors. Title to the Material remains with Intel Corporation or its suppliers
+#  and licensors. The Material may contain trade secrets and proprietary and
+#  confidential information of Intel Corporation and its suppliers and licensors,
+#  and is protected by worldwide copyright and trade secret laws and treaty
+#  provisions. No part of the Material may be used, copied, reproduced, modified,
+#  published, uploaded, posted, transmitted, distributed, or disclosed in any way
+#  without Intel's prior express written permission.
+#
+#  No license under any patent, copyright, trade secret or other intellectual
+#  property right is granted to or conferred upon you by disclosure or delivery
+#  of the Materials, either expressly, by implication, inducement, estoppel or
+#  otherwise. Any license under such intellectual property rights must be
+#  express and approved by Intel in writing.
+#
+#  Unless otherwise agreed by Intel in writing, you may not remove or alter
+#  this notice or any other notice embedded in Materials by Intel or
+#  Intel's suppliers or licensors in any way.
+#
+#  This file contains a 'Sample Driver' and is licensed as such under the terms
+#  of your license agreement with Intel or your vendor. This file may be modified
+#  by the user, subject to the additional terms of the license agreement.
+#
+# @par Specification Reference:
+#
+# @par Glossary:
+###
+
+[Defines]
+  INF_VERSION                    = 0x00010017
+  BASE_NAME                      = PlatformInitAdvancedPostMem
+  FILE_GUID                      = 314EE04C-1106-4DC6-ACBC-CF19C0DBC5CC
+  VERSION_STRING                 = 1.0
+  MODULE_TYPE                    = PEIM
+  ENTRY_POINT                    = PlatformInitAdvancedPostMemEntryPoint
+
+[LibraryClasses]
+  PeimEntryPoint
+  DebugLib
+  IoLib
+  MemoryAllocationLib
+  BaseMemoryLib
+  HobLib
+  PeiServicesLib
+  PciSegmentLib
+  PchCycleDecodingLib
+  PeiPolicyInitLib
+  PeiPolicyUpdateLib
+  MtrrLib
+  PchInfoLib
+  PostCodeLib
+  SiPolicyLib
+  EcTcssLib
+  HobLib
+  ItbtPcieRpLib
+  FspCommonLib
+  PeiTbtTaskDispatchLib
+  PeiDTbtInitLib
+  BootMediaLib
+  TelemetryLib
+  PcdLib
+  HdaLib
+  PeiSubRegionLib
+
+[Packages]
+  ElkhartLakePlatSamplePkg/PlatformPkg.dec
+  ClientOneSiliconPkg/SiPkg.dec
+  ClientSiliconPkg/ClientSiliconPkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+  MdePkg/MdePkg.dec
+  UefiCpuPkg/UefiCpuPkg.dec
+  ClientCommonPkg/ClientCommonPkg.dec
+  IntelFsp2Pkg/IntelFsp2Pkg.dec
+  IntelFsp2WrapperPkg/IntelFsp2WrapperPkg.dec
+  ElkhartLakeFspBinPkg/ElkhartLakeFspBinPkg.dec
+  SecurityPkg/SecurityPkg.dec
+  ElkhartLakeBoardPkg/BoardPkg.dec
+  MinPlatformPkg/MinPlatformPkg.dec
+
+[Sources]
+  PlatformInitAdvancedPostMem.c
+
+[Ppis]
+  gEfiEndOfPeiSignalPpiGuid                     ## CONSUMES
+  gPchSpiPpiGuid                                ## CONSUMES
+  gEfiPeiReadOnlyVariable2PpiGuid               ## CONSUMES
+  gSiDefaultPolicyInitPpiGuid                   ## SOMETIMES_CONSUMES
+
+[Protocols]
+  gEfiFirmwareVolumeBlock2ProtocolGuid          ## CONSUMES
+
+[Guids]
+  gEfiSmmPeiSmramMemoryReserveGuid              ## CONSUMES
+  gAttemptUsbFirstHotkeyInfoHobGuid             ## CONSUMES
+  gEfiSystemNvDataHobGuid                       ## CONSUMES
+  gCpuSecurityPreMemConfigGuid                  ## CONSUMES
+  gBiosGuardHobGuid                             ## CONSUMES
+  gBiosGuardModuleGuid                          ## CONSUMES
+  gTcssHobGuid                                  ## CONSUMES
+  gPmcCrashLogDataBufferHobGuid                 ## PRODUCES
+  gCpuCrashLogDataBufferHobGuid                 ## PRODUCES
+  gPlatformInitFvLocationGuid                   ## PRODUCES
+  gPchSetupVariableGuid
+  gSetupVariableGuid
+
+[Depex]
+  gEfiPeiMemoryDiscoveredPpiGuid
+
+[Pcd]
+  gEfiMdeModulePkgTokenSpaceGuid.PcdFlashNvStorageVariableSize    ## CONSUMES
+  gEfiMdeModulePkgTokenSpaceGuid.PcdFlashNvStorageVariableBase    ## CONSUMES
+  gEfiMdeModulePkgTokenSpaceGuid.PcdFlashNvStorageFtwWorkingSize  ## CONSUMES
+  gEfiMdeModulePkgTokenSpaceGuid.PcdFlashNvStorageFtwWorkingBase  ## CONSUMES
+  gEfiMdeModulePkgTokenSpaceGuid.PcdFlashNvStorageFtwSpareBase    ## CONSUMES
+  gEfiMdeModulePkgTokenSpaceGuid.PcdFlashNvStorageFtwSpareSize    ## CONSUMES
+  gSiPkgTokenSpaceGuid.PcdBiosAreaBaseAddress                     ## CONSUMES
+  gSiPkgTokenSpaceGuid.PcdFlashMicrocodeFvBase                    ## CONSUMES
+  gSiPkgTokenSpaceGuid.PcdFlashMicrocodeFvSize                    ## CONSUMES
+  gSiPkgTokenSpaceGuid.PcdPciExpressRegionLength                  ## CONSUMES
+  gSiPkgTokenSpaceGuid.PcdBiosSize                                ## CONSUMES
+  gSiPkgTokenSpaceGuid.PcdSiliconInitTempMemBaseAddr              ## CONSUMES
+  gBoardModuleTokenSpaceGuid.PcdEcPresent                         ## CONSUMES
+  gPlatformModuleTokenSpaceGuid.PcdPeiWriteVariableEnable         ## CONSUMES
+  gIntelFsp2WrapperTokenSpaceGuid.PcdFspmUpdDataAddress           ## CONSUMES
+  gIntelFsp2WrapperTokenSpaceGuid.PcdFspsUpdDataAddress           ## CONSUMES
+
+  gBoardModuleTokenSpaceGuid.PcdBoardPmcPdEnable                  ## CONSUMES
+  gSiPkgTokenSpaceGuid.PcdFspWrapperEnable
+  gEfiSecurityPkgTokenSpaceGuid.PcdFirmwareDebuggerInitialized    ## CONSUMES
+  gBoardModuleTokenSpaceGuid.PcdBoardGpioTableTouchPanel1
+  gBoardModuleTokenSpaceGuid.PcdBoardGpioTableTouchPanel1Size
+  gBoardModuleTokenSpaceGuid.PcdBoardGpioTableTouchPanel2
+  gBoardModuleTokenSpaceGuid.PcdBoardGpioTableTouchPanel2Size
+  gBoardModuleTokenSpaceGuid.PcdBoardGpioTablePchTsnDevice
+  gBoardModuleTokenSpaceGuid.PcdBoardGpioTablePchTsnDeviceSize
+  gBoardModuleTokenSpaceGuid.PcdBoardGpioTablePseTsn0Device
+  gBoardModuleTokenSpaceGuid.PcdBoardGpioTablePseTsn0DeviceSize
+  gBoardModuleTokenSpaceGuid.PcdBoardGpioTablePseTsn1Device
+  gBoardModuleTokenSpaceGuid.PcdBoardGpioTablePseTsn1DeviceSize
+  gBoardModuleTokenSpaceGuid.PcdBoardId
+  gBoardModuleTokenSpaceGuid.PcdDiscreteBtModule
+  gBoardModuleTokenSpaceGuid.PcdMipiCamGpioEnable
+
+  gEfiMdePkgTokenSpaceGuid.PcdPciExpressBaseAddress               ## CONSUMES
+  gMinPlatformPkgTokenSpaceGuid.PcdPciReservedIobase              ## CONSUMES
+  gMinPlatformPkgTokenSpaceGuid.PcdPciReservedIoLimit             ## CONSUMES
+  gMinPlatformPkgTokenSpaceGuid.PcdPciReservedMemBase             ## CONSUMES
+  gMinPlatformPkgTokenSpaceGuid.PcdPciReservedMemLimit            ## CONSUMES
+  gMinPlatformPkgTokenSpaceGuid.PcdPciReservedMemAbove4GBBase     ## CONSUMES
+  gMinPlatformPkgTokenSpaceGuid.PcdPciReservedMemAbove4GBLimit    ## CONSUMES
+  gMinPlatformPkgTokenSpaceGuid.PcdPciSegmentCount                ## CONSUMES
+
+[FixedPcd]
+  gSiPkgTokenSpaceGuid.PcdFspModeSelection                        ## CONSUMES
+  gSiPkgTokenSpaceGuid.PcdITbtEnable                              ## CONSUMES
+

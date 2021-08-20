@@ -1,0 +1,80 @@
+## @file
+# RAS Reference Code Package
+# Cross Platform Modules for Tiano
+#
+# @copyright
+# INTEL CONFIDENTIAL
+# Copyright 2016 - 2018 Intel Corporation. <BR>
+#
+# The source code contained or described herein and all documents related to the
+# source code ("Material") are owned by Intel Corporation or its suppliers or
+# licensors. Title to the Material remains with Intel Corporation or its suppliers
+# and licensors. The Material may contain trade secrets and proprietary    and
+# confidential information of Intel Corporation and its suppliers and licensors,
+# and is protected by worldwide copyright and trade secret laws and treaty
+# provisions. No part of the Material may be used, copied, reproduced, modified,
+# published, uploaded, posted, transmitted, distributed, or disclosed in any way
+# without Intel's prior express written permission.
+#
+# No license under any patent, copyright, trade secret or other intellectual
+# property right is granted to or conferred upon you by disclosure or delivery
+# of the Materials, either expressly, by implication, inducement, estoppel or
+# otherwise. Any license under such intellectual property rights must be
+# express and approved by Intel in writing.
+#
+# Unless otherwise agreed by Intel in writing, you may not remove or alter
+# this notice or any other notice embedded in Materials by Intel or
+# Intel's suppliers or licensors in any way.
+##
+
+[Defines]
+  DEC_SPECIFICATION              = 0x00010005
+  PACKAGE_NAME                   = EmbeddedRasPkg
+  PACKAGE_GUID                   = C64785F4-8281-4B76-9C30-532B78906549
+  PACKAGE_VERSION                = 0.1
+
+[Includes]
+  Include
+
+[Guids]
+  gRasGlobalDataVariableGuid = { 0xcb4afa36, 0x42bf, 0x400b, { 0x8b, 0x8f, 0x57, 0x39, 0x41, 0xa2, 0x9f, 0x4e } }
+  gMemRasS3DataVariableGuid =  { 0xe626f9ca, 0xfd71, 0x458c, { 0xb9, 0x26, 0xbf, 0x40, 0x80, 0x62, 0x42, 0xa9 } }
+  gAddressBasedMirrorGuid    = { 0x7b9be2e0, 0xe28a, 0x4197, { 0xad, 0x3e, 0x32, 0xf0, 0x62, 0xf9, 0x46, 0x2c } }
+  gEfiWheaElogFvGuid         = { 0xd6a1cd70, 0x4b33, 0x4994, { 0xa6, 0xea, 0x37, 0x5f, 0x2c, 0xcc, 0x54, 0x37 } }
+  gRasPkgTokenSpaceGuid      = { 0xc1f0f3ca, 0x9042, 0x4928, { 0x8b, 0x1b, 0x56, 0xa7, 0x17, 0xca, 0x5d, 0xe0 } }
+  gRasNonStandardErrorSectionGuid = {0xcab360f5, 0x5e8e, 0x4bf0, {0x9e, 0xb2, 0xd4, 0x69, 0x1d, 0xc0, 0xdb, 0x29}}
+
+  #
+  # Crash Log Support
+  #
+  gCrashLogDataBufferHobGuid  = {0xf3c1138e, 0xcd89, 0x4e20, {0x9e, 0x68, 0x25, 0xa6, 0x76, 0x95, 0xa5, 0x6b}}
+
+[Ppis]
+
+[Protocols]
+  gRasPolicyProtocolGuid = { 0xfc2e9160, 0xa5f2, 0x482b, { 0x80, 0x8a, 0x35, 0xb8, 0xc1, 0xf3, 0x6e, 0xe7 } }
+  gMemoryAddressTranslationProtocolGuid = {0xb1615e56, 0x2e7d, 0x4f23, {0x89, 0x7e, 0xbf, 0xd7, 0x85, 0x31, 0xac, 0xeb}}
+  gEfiSvSmmProtocolGuid = { 0xf139bd77, 0x7ff7, 0x49d6, { 0x90, 0x86, 0xd5, 0x0a, 0xb2, 0x6f, 0x6d, 0xd7 } }
+
+[PcdsFeatureFlag]
+  gRasPkgTokenSpaceGuid.PcdWheaEnable|TRUE|BOOLEAN|0x000000000
+
+[PcdsFixedAtBuild,PcdsPatchableInModule,PcdsDynamic, PcdsDynamicEx]
+  #
+  # this pcd is to enable/disable memory RAS feature to save SPI rom space.
+  # Bit0 -- Patrol Scrub
+  # Bit1 -- Rank sparing
+  # Bit2 -- ADDDC
+  # Bit3 -- SDDC PLUS1
+  # Bit4 -- Mirror Failover
+  # Bit5 -- FNV
+  # Bit6 -- PCLS
+  # Bit7 -- ADDDC Error Injection
+  # Bit8 -- Bank sparing
+  #
+  gRasPkgTokenSpaceGuid.PcdImcFeatureList|0xffffffff|UINT32|0x000010
+
+[PcdsDynamic, PcdsDynamicEx]
+  gRasPkgTokenSpaceGuid.PcdCsrRegTableAddress|0xFFFFFFFFFFFFFFFF|UINT64|0x20000000
+  gRasPkgTokenSpaceGuid.PcdRasGlobaldataTableAddress|0x0|UINT64|0x20000001
+

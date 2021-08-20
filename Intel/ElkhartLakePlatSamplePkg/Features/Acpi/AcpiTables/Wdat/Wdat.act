@@ -1,0 +1,554 @@
+/** @file
+  This file contains a structure definition for the ACPI Watchdog Timer
+  Action Table (WDAT).  Any changes to the WDAT table require updating the
+  respective structure count in wdat.h and then adding the structure to the
+  WDAT defined in this file.
+
+@copyright
+  INTEL CONFIDENTIAL
+  Copyright 2012 - 2019 Intel Corporation.
+
+  The source code contained or described herein and all documents related to the
+  source code ("Material") are owned by Intel Corporation or its suppliers or
+  licensors. Title to the Material remains with Intel Corporation or its suppliers
+  and licensors. The Material may contain trade secrets and proprietary and
+  confidential information of Intel Corporation and its suppliers and licensors,
+  and is protected by worldwide copyright and trade secret laws and treaty
+  provisions. No part of the Material may be used, copied, reproduced, modified,
+  published, uploaded, posted, transmitted, distributed, or disclosed in any way
+  without Intel's prior express written permission.
+
+  No license under any patent, copyright, trade secret or other intellectual
+  property right is granted to or conferred upon you by disclosure or delivery
+  of the Materials, either expressly, by implication, inducement, estoppel or
+  otherwise. Any license under such intellectual property rights must be
+  express and approved by Intel in writing.
+
+  Unless otherwise agreed by Intel in writing, you may not remove or alter
+  this notice or any other notice embedded in Materials by Intel or
+  Intel's suppliers or licensors in any way.
+
+  This file contains a 'Sample Driver' and is licensed as such under the terms
+  of your license agreement with Intel or your vendor. This file may be modified
+  by the user, subject to the additional terms of the license agreement.
+
+@par Specification Reference:
+**/
+
+//
+// Statements that include other files
+//
+#include <IndustryStandard/WatchdogActionTable.h>
+#include <Register/PmcRegs.h>
+
+//
+// TCO timer period, approximately 0.6 second. (0x258 milliseconds)
+//
+#define TCO_TIMER_PERIOD 0x258
+
+//
+// Max count value the TCO timer supports.
+//
+#define TCO_MAX_TIMER_COUNT 0x3ff
+
+//
+// Min count value the TCO timer supports.
+//
+#define TCO_MIN_TIMER_COUNT 0x2
+
+//
+// Instruction Entry number
+//
+#define WATCHDOG_ACTION_INSTRUCTION_ENTRY_NUMBER 12
+
+//
+// Layout definition of entire Watchdog Action Table
+//
+#pragma pack(1)
+typedef struct {
+  EFI_ACPI_WATCHDOG_ACTION_1_0_TABLE ActionTable;
+  EFI_ACPI_WATCHDOG_ACTION_1_0_WATCHDOG_ACTION_INSTRUCTION_ENTRY InstructionEntries[WATCHDOG_ACTION_INSTRUCTION_ENTRY_NUMBER];
+} EFI_ACPI_WATCHDOG_ACTION_1_0_ENTIRE_TABLE;
+#pragma pack()
+
+//
+// Watchdog Action Table
+//
+EFI_ACPI_WATCHDOG_ACTION_1_0_ENTIRE_TABLE  Wdat = {
+  //
+  // EFI_ACPI_WATCHDOG_ACTION_1_0_TABLE
+  //
+  {
+    //
+    // EFI_ACPI_DESCRIPTION_HEADER
+    //
+    {
+      EFI_ACPI_3_0_WATCHDOG_ACTION_TABLE_SIGNATURE,
+      sizeof (EFI_ACPI_WATCHDOG_ACTION_1_0_ENTIRE_TABLE),
+      EFI_ACPI_WATCHDOG_ACTION_1_0_TABLE_REVISION,
+      //
+      // Checksum will be updated during POST
+      //
+      0x00,
+      //
+      // It is expected that these values will be programmed during POST
+      //
+      { ' ', ' ', ' ', ' ', ' ', ' ' },
+      0,
+      0,
+      0,
+      0
+    },
+    //
+    // WDAT specific fields
+    //
+    //
+    // WatchdogHeaderLength
+    //
+    sizeof (EFI_ACPI_WATCHDOG_ACTION_1_0_TABLE) - sizeof (EFI_ACPI_DESCRIPTION_HEADER),
+    //
+    // PCISegment
+    //
+    0x00ff,
+    //
+    // PCIBusNumber
+    //
+    0xff,
+    //
+    // PCIDeviceNumber
+    //
+    0xff,
+    //
+    // PCIFunctionNumber
+    //
+    0xff,
+    //
+    // Reserved_45[3]
+    //
+    { 0x00, 0x00, 0x00 },
+    //
+    // TimerPeriod
+    //
+    TCO_TIMER_PERIOD,
+    //
+    // MaxCount
+    //
+    TCO_MAX_TIMER_COUNT,
+    //
+    // MinCount
+    //
+    TCO_MIN_TIMER_COUNT,
+    //
+    // WatchdogFlags
+    //
+    EFI_ACPI_WDAT_1_0_WATCHDOG_ENABLED | EFI_ACPI_WDAT_1_0_WATCHDOG_STOPPED_IN_SLEEP_STATE,
+    //
+    // Reserved_61[3]
+    //
+    { 0x00, 0x00, 0x00 },
+    //
+    // NumberWatchdogInstructionEntries
+    //
+    WATCHDOG_ACTION_INSTRUCTION_ENTRY_NUMBER
+  },
+  //
+  // EFI_ACPI_WATCHDOG_ACTION_1_0_WATCHDOG_ACTION_INSTRUCTION_ENTRY
+  //
+  {
+    {
+      //
+      // WatchdogAction
+      //
+      EFI_ACPI_WDAT_1_0_WATCHDOG_ACTION_RESET,
+      //
+      // InstructionFlags
+      //
+      EFI_ACPI_WDAT_1_0_WATCHDOG_INSTRUCTION_WRITE_VALUE,
+      //
+      // Reserved_2[2]
+      //
+      { 0x00, 0x00 },
+      //
+      // RegisterRegion
+      //
+      {
+        EFI_ACPI_2_0_SYSTEM_IO,
+        0x0a,
+        0x00,
+        0x02,
+        FixedPcdGet16 (PcdTcoBaseAddress) + R_TCO_IO_RLD
+      },
+      //
+      // Value
+      //
+      0x04,
+      //
+      // Mask
+      //
+      0x3ff
+    },
+    {
+      //
+      // WatchdogAction
+      //
+      EFI_ACPI_WDAT_1_0_WATCHDOG_ACTION_QUERY_COUNTDOWN_PERIOD,
+      //
+      // InstructionFlags
+      //
+      EFI_ACPI_WDAT_1_0_WATCHDOG_INSTRUCTION_READ_COUNTDOWN,
+      //
+      // Reserved_2[2]
+      //
+      { 0x00, 0x00 },
+      //
+      // RegisterRegion
+      //
+      {
+        EFI_ACPI_2_0_SYSTEM_IO,
+        0x0a,
+        0x00,
+        0x02,
+        FixedPcdGet16 (PcdTcoBaseAddress) + R_TCO_IO_TMR
+      },
+      //
+      // Value
+      //
+      0x0,
+      //
+      // Mask
+      //
+      0x3ff
+    },
+    {
+      //
+      // WatchdogAction
+      //
+      EFI_ACPI_WDAT_1_0_WATCHDOG_ACTION_QUERY_CURRENT_COUNTDOWN_PERIOD,
+      //
+      // InstructionFlags
+      //
+      EFI_ACPI_WDAT_1_0_WATCHDOG_INSTRUCTION_READ_COUNTDOWN,
+      //
+      // Reserved_2[2]
+      //
+      { 0x00, 0x00 },
+      //
+      // RegisterRegion
+      //
+      {
+        EFI_ACPI_2_0_SYSTEM_IO,
+        0x0a,
+        0x00,
+        0x02,
+        FixedPcdGet16 (PcdTcoBaseAddress) + R_TCO_IO_RLD
+      },
+      //
+      // Value
+      //
+      0x0,
+      //
+      // Mask
+      //
+      0x3ff
+    },
+    {
+      //
+      // WatchdogAction
+      //
+      EFI_ACPI_WDAT_1_0_WATCHDOG_ACTION_SET_COUNTDOWN_PERIOD,
+      //
+      // InstructionFlags
+      //
+      EFI_ACPI_WDAT_1_0_WATCHDOG_INSTRUCTION_WRITE_COUNTDOWN,
+      //
+      // Reserved_2[2]
+      //
+      { 0x00, 0x00 },
+      //
+      // RegisterRegion
+      //
+      {
+        EFI_ACPI_2_0_SYSTEM_IO,
+        0x0a,
+        0x00,
+        0x02,
+        FixedPcdGet16 (PcdTcoBaseAddress) + R_TCO_IO_TMR
+      },
+      //
+      // Value
+      //
+      0x3ff,
+      //
+      // Mask
+      //
+      0x3ff
+    },
+    {
+      //
+      // WatchdogAction
+      //
+      EFI_ACPI_WDAT_1_0_WATCHDOG_ACTION_QUERY_RUNNING_STATE,
+      //
+      // InstructionFlags
+      //
+      EFI_ACPI_WDAT_1_0_WATCHDOG_INSTRUCTION_READ_VALUE,
+      //
+      // Reserved_2[2]
+      //
+      { 0x00, 0x00 },
+      //
+      // RegisterRegion
+      //
+      {
+        EFI_ACPI_2_0_SYSTEM_IO,
+        0x01,
+        0x0b,
+        0x02,
+        FixedPcdGet16 (PcdTcoBaseAddress) + R_TCO_IO_TCO1_CNT
+      },
+      //
+      // Value
+      //
+      0,
+      //
+      // Mask
+      //
+      0x01
+    },
+    {
+      //
+      // WatchdogAction
+      //
+      EFI_ACPI_WDAT_1_0_WATCHDOG_ACTION_SET_RUNNING_STATE,
+      //
+      // InstructionFlags
+      //
+      EFI_ACPI_WDAT_1_0_WATCHDOG_INSTRUCTION_WRITE_VALUE | EFI_ACPI_WDAT_1_0_WATCHDOG_INSTRUCTION_PRESERVE_REGISTER,
+      //
+      // Reserved_2[2]
+      //
+      { 0x00, 0x00 },
+      //
+      // RegisterRegion
+      //
+      {
+        EFI_ACPI_2_0_SYSTEM_IO,
+        0x01,
+        0x0b,
+        0x02,
+        FixedPcdGet16 (PcdTcoBaseAddress) + R_TCO_IO_TCO1_CNT
+      },
+      //
+      // Value
+      //
+      0x00,
+      //
+      // Mask
+      //
+      0x01
+    },
+    {
+      //
+      // WatchdogAction
+      //
+      EFI_ACPI_WDAT_1_0_WATCHDOG_ACTION_QUERY_STOPPED_STATE,
+      //
+      // InstructionFlags
+      //
+      EFI_ACPI_WDAT_1_0_WATCHDOG_INSTRUCTION_READ_VALUE,
+      //
+      // Reserved_2[2]
+      //
+      { 0x00, 0x00 },
+      //
+      // RegisterRegion
+      //
+      {
+        EFI_ACPI_2_0_SYSTEM_IO,
+        0x01,
+        0x0b,
+        0x02,
+        FixedPcdGet16 (PcdTcoBaseAddress) + R_TCO_IO_TCO1_CNT
+      },
+      //
+      // Value
+      //
+      0x01,
+      //
+      // Mask
+      //
+      0x01
+    },
+    {
+      //
+      // WatchdogAction
+      //
+      EFI_ACPI_WDAT_1_0_WATCHDOG_ACTION_SET_STOPPED_STATE,
+      //
+      // InstructionFlags
+      //
+      EFI_ACPI_WDAT_1_0_WATCHDOG_INSTRUCTION_WRITE_VALUE | EFI_ACPI_WDAT_1_0_WATCHDOG_INSTRUCTION_PRESERVE_REGISTER,
+      //
+      // Reserved_2[2]
+      //
+      { 0x00, 0x00 },
+      //
+      // RegisterRegion
+      //
+      {
+        EFI_ACPI_2_0_SYSTEM_IO,
+        0x01,
+        0x0b,
+        0x02,
+        FixedPcdGet16 (PcdTcoBaseAddress) + R_TCO_IO_TCO1_CNT
+      },
+      //
+      // Value
+      //
+      0x01,
+      //
+      // Mask
+      //
+      0x01
+    },
+    {
+      //
+      // WatchdogAction
+      //
+      EFI_ACPI_WDAT_1_0_WATCHDOG_ACTION_QUERY_WATCHDOG_STATUS,
+      //
+      // InstructionFlags
+      //
+      EFI_ACPI_WDAT_1_0_WATCHDOG_INSTRUCTION_READ_VALUE,
+      //
+      // Reserved_2[2]
+      //
+      { 0x00, 0x00 },
+      //
+      // RegisterRegion
+      //
+      {
+        EFI_ACPI_2_0_SYSTEM_IO,
+        0x01,
+        0x01,
+        0x02,
+        FixedPcdGet16 (PcdTcoBaseAddress) + R_TCO_IO_TCO2_STS
+      },
+      //
+      // Value
+      //
+      0x01,
+      //
+      // Mask
+      //
+      0x01
+    },
+    {
+      //
+      // WatchdogAction
+      //
+      EFI_ACPI_WDAT_1_0_WATCHDOG_ACTION_SET_WATCHDOG_STATUS,
+      //
+      // InstructionFlags
+      //
+      EFI_ACPI_WDAT_1_0_WATCHDOG_INSTRUCTION_WRITE_VALUE | EFI_ACPI_WDAT_1_0_WATCHDOG_INSTRUCTION_PRESERVE_REGISTER,
+      //
+      // Reserved_2[2]
+      //
+      { 0x00, 0x00 },
+      //
+      // RegisterRegion
+      //
+      {
+        EFI_ACPI_2_0_SYSTEM_IO,
+        0x01,
+        0x01,
+        0x02,
+        FixedPcdGet16 (PcdTcoBaseAddress) + R_TCO_IO_TCO2_STS
+      },
+      //
+      // Value
+      //
+      0x01,
+      //
+      // Mask
+      //
+      0x01
+    },
+//
+// Optional Action Entries
+//
+    {
+      //
+      // WatchdogAction
+      //
+      EFI_ACPI_WDAT_1_0_WATCHDOG_ACTION_QUERY_REBOOT,
+      //
+      // InstructionFlags
+      //
+      EFI_ACPI_WDAT_1_0_WATCHDOG_INSTRUCTION_READ_VALUE,
+      //
+      // Reserved_2[2]
+      //
+      { 0x00, 0x00 },
+      //
+      // RegisterRegion
+      //
+      {
+        EFI_ACPI_2_0_SYSTEM_IO,
+        0x01,
+        0x00,
+        0x02,
+        FixedPcdGet16 (PcdTcoBaseAddress) + R_TCO_IO_TCO1_CNT
+      },
+      //
+      // Value
+      //
+      0x00,
+      //
+      // Mask
+      //
+      0x01
+    },
+    {
+      //
+      // WatchdogAction
+      //
+      EFI_ACPI_WDAT_1_0_WATCHDOG_ACTION_SET_REBOOT,
+      //
+      // InstructionFlags
+      //
+      EFI_ACPI_WDAT_1_0_WATCHDOG_INSTRUCTION_WRITE_VALUE | EFI_ACPI_WDAT_1_0_WATCHDOG_INSTRUCTION_PRESERVE_REGISTER,
+      //
+      // Reserved_2[2]
+      //
+      { 0x00, 0x00 },
+      //
+      // RegisterRegion
+      //
+      {
+        EFI_ACPI_2_0_SYSTEM_IO,
+        0x01,
+        0x00,
+        0x02,
+        FixedPcdGet16 (PcdTcoBaseAddress) + R_TCO_IO_TCO1_CNT
+      },
+      //
+      // Value
+      //
+      0x00,
+      //
+      // Mask
+      //
+      0x01
+    }
+  }
+};
+
+VOID*
+ReferenceAcpiTable (
+  VOID
+  )
+{
+  return (VOID*)&Wdat;
+}

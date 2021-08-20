@@ -1,0 +1,732 @@
+/** @file
+
+@copyright
+  INTEL CONFIDENTIAL
+  Copyright 2014 - 2019 Intel Corporation.
+
+  The source code contained or described herein and all documents related to the
+  source code ("Material") are owned by Intel Corporation or its suppliers or
+  licensors. Title to the Material remains with Intel Corporation or its suppliers
+  and licensors. The Material may contain trade secrets and proprietary and
+  confidential information of Intel Corporation and its suppliers and licensors,
+  and is protected by worldwide copyright and trade secret laws and treaty
+  provisions. No part of the Material may be used, copied, reproduced, modified,
+  published, uploaded, posted, transmitted, distributed, or disclosed in any way
+  without Intel's prior express written permission.
+
+  No license under any patent, copyright, trade secret or other intellectual
+  property right is granted to or conferred upon you by disclosure or delivery
+  of the Materials, either expressly, by implication, inducement, estoppel or
+  otherwise. Any license under such intellectual property rights must be
+  express and approved by Intel in writing.
+
+  Unless otherwise agreed by Intel in writing, you may not remove or alter
+  this notice or any other notice embedded in Materials by Intel or
+  Intel's suppliers or licensors in any way.
+
+  This file contains a 'Sample Driver' and is licensed as such under the terms
+  of your license agreement with Intel or your vendor. This file may be modified
+  by the user, subject to the additional terms of the license agreement.
+
+@par Specification
+**/
+
+  form formid = CONCATENATE3(CPU_PCIERP,PORT_INDEX,_OPTIONS_FORM_ID),
+    title     = STRING_TOKEN(CONCATENATE3(STR_CPU_PCIERP,PORT_INDEX,_OPTIONS_FORM_TITLE));
+
+    oneof varid   = SA_SETUP.PcieRootPortEn[PORT_INDEX],
+      prompt      = STRING_TOKEN(CONCATENATE2(STR_CPU_PCIE_PROMPT,PORT_INDEX)),
+      help        = STRING_TOKEN(STR_CPU_PCIERP_HELP),
+      option text = STRING_TOKEN(STR_DISABLED), value = 0, flags = RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_ENABLED), value = 1, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+    endoneof;
+
+    suppressif ideqval SA_SETUP.PcieRootPortEn[PORT_INDEX] == 0x0;
+      grayoutif ideqval SA_SETUP.PcieRootPortHPE[PORT_INDEX] == 1;
+        oneof varid   = SA_SETUP.PcieRootPortSI[PORT_INDEX],
+          prompt      = STRING_TOKEN(CONCATENATE2(STR_CPU_PCIE_SI_PROMPT,PORT_INDEX)),
+          help        = STRING_TOKEN(STR_PCIE_SLOT_IMPLEMENTED_HELP),
+          option text = STRING_TOKEN(STR_PCIE_BUILT_IN), value = 0, flags = RESET_REQUIRED;
+          option text = STRING_TOKEN(STR_PCIE_SLOT), value = 1, flags = DEFAULT | RESET_REQUIRED;
+        endoneof;
+      endif;
+
+      oneof varid   = SA_SETUP.PcieRootPortAspm[PORT_INDEX],
+        prompt      = STRING_TOKEN(CONCATENATE2(STR_CPU_PCIE_ASPM_PROMPT,PORT_INDEX)),
+        help        = STRING_TOKEN(STR_PCIE_ASPM_HELP),
+        option text = STRING_TOKEN(STR_DISABLED), value = 0, flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_PCIE_ASPM_L0S_STRING), value = 1, flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_PCIE_ASPM_L1_STRING), value = 2, flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_PCIE_ASPM_L0SL1_STRING), value = 3, flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_AUTO_STRING), value = 4, flags = DEFAULT | RESET_REQUIRED;
+      endoneof;
+
+      grayoutif ideqval SA_SETUP.PcieRootPortClockReqMsgEnable == 0;
+        oneof varid   = SA_SETUP.PcieRootPortL1SubStates[PORT_INDEX],
+          prompt      = STRING_TOKEN(CONCATENATE2(STR_CPU_PCIE_L1SUB_PROMPT,PORT_INDEX)),
+          help        = STRING_TOKEN(STR_CPU_PCIE_L1SUB_HELP),
+          option text = STRING_TOKEN(STR_DISABLED), value = 0, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+          option text = STRING_TOKEN(STR_CPU_PCIE_L1SUB_1_STRING), value = 1, flags = RESET_REQUIRED;
+          option text = STRING_TOKEN(STR_CPU_PCIE_L1SUB_1_2_STRING), value = 2, flags = RESET_REQUIRED;
+        endoneof;
+      endif;
+
+      oneof varid   = SA_SETUP.PcieRootPortGen3EqPh3Enable[PORT_INDEX],
+        prompt      = STRING_TOKEN(STR_PCIE_ROOTPORT_GEN3_EQ_PHASE3_PROMPT),
+        help        = STRING_TOKEN(STR_GEN3_EQ_PHASE3_HELP),
+        option text = STRING_TOKEN(STR_DISABLED_STRING),       value = 0, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_ENABLED_STRING),        value = 1, flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_AUTO_STRING),           value = 2, flags = RESET_REQUIRED;
+      endoneof;
+
+      oneof varid   = SA_SETUP.PcieRootPortGen3EqPh23Enable[PORT_INDEX],
+        prompt      = STRING_TOKEN(STR_PCIE_ROOTPORT_GEN3_EQ_PHASE23_PROMPT),
+        help        = STRING_TOKEN(STR_GEN3_EQ_PHASE23_HELP),
+        option text = STRING_TOKEN(STR_DISABLED_STRING),       value = 0, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_ENABLED_STRING),        value = 1, flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_AUTO_STRING),           value = 2, flags = RESET_REQUIRED;
+      endoneof;
+
+      oneof varid   = SA_SETUP.PcieRootPortEqPh3Method[PORT_INDEX],
+        prompt      = STRING_TOKEN(CONCATENATE2(STR_CPU_PCIE_ROOTPORT_EQPH3_PROMPT,PORT_INDEX)),
+        help        = STRING_TOKEN(STR_PCIE_ROOTPORT_EQPH3_HELP),
+        option text = STRING_TOKEN(STR_PCIE_ROOTPORT_EQPH3_HW),           value = 1, flags = RESET_REQUIRED | DEFAULT;
+        option text = STRING_TOKEN(STR_PCIE_ROOTPORT_EQPH3_STATIC_COEFF), value = 4, flags = RESET_REQUIRED;
+      endoneof;
+
+      oneof varid   = SA_SETUP.PcieRootPortGen4EqPh3Enable[PORT_INDEX],
+        prompt      = STRING_TOKEN(STR_PCIE_ROOTPORT_GEN4_EQ_PHASE3_PROMPT),
+        help        = STRING_TOKEN(STR_GEN4_EQ_PHASE3_HELP),
+        option text = STRING_TOKEN(STR_DISABLED_STRING),       value = 0, flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_ENABLED_STRING),        value = 1, flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_AUTO_STRING),           value = 2, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+      endoneof;
+
+      oneof varid   = SA_SETUP.PcieRootPortGen4EqPh23Enable[PORT_INDEX],
+        prompt      = STRING_TOKEN(STR_PCIE_ROOTPORT_GEN4_EQ_PHASE23_PROMPT),
+        help        = STRING_TOKEN(STR_GEN4_EQ_PHASE23_HELP),
+        option text = STRING_TOKEN(STR_DISABLED_STRING),       value = 0, flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_ENABLED_STRING),        value = 1, flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_AUTO_STRING),           value = 2, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+      endoneof;
+
+      oneof varid   = SA_SETUP.PcieRootPortGen4EqPh3Method[PORT_INDEX],
+        prompt      = STRING_TOKEN(CONCATENATE2(STR_CPU_PCIE_GEN4_ROOTPORT_EQPH3_PROMPT,PORT_INDEX)),
+        help        = STRING_TOKEN(STR_PCIE_ROOTPORT_EQPH3_HELP),
+        option text = STRING_TOKEN(STR_PCIE_ROOTPORT_EQPH3_HW),           value = 1, flags = RESET_REQUIRED | DEFAULT;
+        option text = STRING_TOKEN(STR_PCIE_ROOTPORT_EQPH3_STATIC_COEFF), value = 4, flags = RESET_REQUIRED;
+      endoneof;
+
+      numeric varid = SA_SETUP.PcieRootPortGen3Uptp[PORT_INDEX],
+        prompt      = STRING_TOKEN (CONCATENATE2(STR_CPU_PCIE_GEN3_UPTP_PROMPT,PORT_INDEX)),
+        help        = STRING_TOKEN (STR_CPU_PCIE_GEN3_UPTP_HELP),
+        minimum     = 0,
+        maximum     = 10,
+        step        = 1,
+        default     = 7,
+      endnumeric;
+
+      numeric varid = SA_SETUP.PcieRootPortGen3Dptp[PORT_INDEX],
+        prompt      = STRING_TOKEN (CONCATENATE2(STR_CPU_PCIE_GEN3_DPTP_PROMPT,PORT_INDEX)),
+        help        = STRING_TOKEN (STR_CPU_PCIE_GEN3_DPTP_HELP),
+        minimum     = 0,
+        maximum     = 10,
+        step        = 1,
+        default     = 7,
+      endnumeric;
+
+      numeric varid = SA_SETUP.PcieRootPortGen4Uptp[PORT_INDEX],
+        prompt      = STRING_TOKEN (CONCATENATE2(STR_CPU_PCIE_GEN4_UPTP_PROMPT,PORT_INDEX)),
+        help        = STRING_TOKEN (STR_CPU_PCIE_GEN4_UPTP_HELP),
+        minimum     = 0,
+        maximum     = 10,
+        step        = 1,
+        default     = 8,
+      endnumeric;
+
+      numeric varid = SA_SETUP.PcieRootPortGen4Dptp[PORT_INDEX],
+        prompt      = STRING_TOKEN (CONCATENATE2(STR_CPU_PCIE_GEN4_DPTP_PROMPT,PORT_INDEX)),
+        help        = STRING_TOKEN (STR_CPU_PCIE_GEN4_DPTP_HELP),
+        minimum     = 0,
+        maximum     = 10,
+        step        = 1,
+        default     = 9,
+      endnumeric;
+
+      oneof varid   = SA_SETUP.PcieRootPortACS[PORT_INDEX],
+        prompt      = STRING_TOKEN(CONCATENATE2(STR_CPU_PCIE_ACS_PROMPT,PORT_INDEX)),
+        help        = STRING_TOKEN(STR_PCIE_ACS_HELP),
+        option text = STRING_TOKEN(STR_DISABLED), value = 0, flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_ENABLED), value = 1, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+      endoneof;
+
+      oneof varid   = SA_SETUP.PcieRootPortPTM[PORT_INDEX],
+        prompt      = STRING_TOKEN(CONCATENATE2(STR_CPU_PCIE_PTM_PROMPT,PORT_INDEX)),
+        help        = STRING_TOKEN(STR_CPU_PCIE_PTM_HELP),
+        option text = STRING_TOKEN(STR_DISABLED), value = 0, flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_ENABLED), value = 1, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+      endoneof;
+
+      oneof varid   = SA_SETUP.PcieRootPortDPC[PORT_INDEX],
+        prompt      = STRING_TOKEN(CONCATENATE2(STR_CPU_PCIE_DPC_PROMPT,PORT_INDEX)),
+        help        = STRING_TOKEN(STR_CPU_PCIE_DPC_HELP),
+        option text = STRING_TOKEN(STR_DISABLED), value = 0, flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_ENABLED), value = 1, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+      endoneof;
+
+      oneof varid   = SA_SETUP.PcieRootPortVC[PORT_INDEX],
+        prompt      = STRING_TOKEN(CONCATENATE2(STR_CPU_PCIE_VC_PROMPT,PORT_INDEX)),
+        help        = STRING_TOKEN(STR_CPU_PCIE_VC_HELP),
+        option text = STRING_TOKEN(STR_DISABLED), value = 0, flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_ENABLED), value = 1, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+      endoneof;
+
+      oneof varid   = SA_SETUP.PcieRootPortEDPC[PORT_INDEX],
+        prompt      = STRING_TOKEN(CONCATENATE2(STR_CPU_PCIE_EDPC_PROMPT,PORT_INDEX)),
+        help        = STRING_TOKEN(STR_CPU_PCIE_EDPC_HELP),
+        option text = STRING_TOKEN(STR_DISABLED), value = 0, flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_ENABLED), value = 1, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+      endoneof;
+
+      oneof varid   = SA_SETUP.PcieRootPortURE[PORT_INDEX],
+        prompt      = STRING_TOKEN(CONCATENATE2(STR_CPU_PCIE_URE_PROMPT,PORT_INDEX)),
+        help        = STRING_TOKEN(STR_CPU_PCIE_URE_HELP),
+        option text = STRING_TOKEN(STR_DISABLED), value = 0, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_ENABLED), value = 1, flags = RESET_REQUIRED;
+      endoneof;
+
+      oneof varid   = SA_SETUP.PcieRootPortFEE[PORT_INDEX],
+        prompt      = STRING_TOKEN(CONCATENATE2(STR_CPU_PCIE_FEE_PROMPT,PORT_INDEX)),
+        help        = STRING_TOKEN(STR_CPU_PCIE_FEE_HELP),
+        option text = STRING_TOKEN(STR_DISABLED), value = 0, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_ENABLED), value = 1, flags = RESET_REQUIRED;
+      endoneof;
+
+      oneof varid   = SA_SETUP.PcieRootPortNFE[PORT_INDEX],
+        prompt      = STRING_TOKEN(CONCATENATE2(STR_CPU_PCIE_NFE_PROMPT,PORT_INDEX)),
+        help        = STRING_TOKEN(STR_CPU_PCIE_NFE_HELP),
+        option text = STRING_TOKEN(STR_DISABLED), value = 0, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_ENABLED), value = 1, flags = RESET_REQUIRED;
+      endoneof;
+
+      oneof varid   = SA_SETUP.PcieRootPortCEE[PORT_INDEX],
+        prompt      = STRING_TOKEN(CONCATENATE2(STR_CPU_PCIE_CEE_PROMPT,PORT_INDEX)),
+        help        = STRING_TOKEN(STR_CPU_PCIE_CEE_HELP),
+        option text = STRING_TOKEN(STR_DISABLED), value = 0, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_ENABLED), value = 1, flags = RESET_REQUIRED;
+      endoneof;
+
+      oneof varid   = PCH_SETUP.PcieRootPortCTD[PORT_INDEX],
+        prompt      = STRING_TOKEN(CONCATENATE2(STR_PCH_PCIE_CTD_PROMPT,PORT_INDEX)),
+        help        = STRING_TOKEN(STR_PCH_PCIE_CTD_HELP),
+        option text = STRING_TOKEN(STR_DISABLED), value = 0, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_ENABLED), value = 1, flags = RESET_REQUIRED;
+      endoneof;
+
+      oneof varid   = SA_SETUP.PcieRootPortSFE[PORT_INDEX],
+        prompt      = STRING_TOKEN(CONCATENATE2(STR_CPU_PCIE_SFE_PROMPT,PORT_INDEX)),
+        help        = STRING_TOKEN(STR_CPU_PCIE_SFE_HELP),
+        option text = STRING_TOKEN(STR_DISABLED), value = 0, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_ENABLED), value = 1, flags = RESET_REQUIRED;
+      endoneof;
+
+      oneof varid   = SA_SETUP.PcieRootPortSNE[PORT_INDEX],
+        prompt      = STRING_TOKEN(CONCATENATE2(STR_CPU_PCIE_SNE_PROMPT,PORT_INDEX)),
+        help        = STRING_TOKEN(STR_CPU_PCIE_SNE_HELP),
+        option text = STRING_TOKEN(STR_DISABLED), value = 0, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_ENABLED), value = 1, flags = RESET_REQUIRED;
+      endoneof;
+
+      oneof varid   = SA_SETUP.PcieRootPortSCE[PORT_INDEX],
+        prompt      = STRING_TOKEN(CONCATENATE2(STR_CPU_PCIE_SCE_PROMPT,PORT_INDEX)),
+        help        = STRING_TOKEN(STR_CPU_PCIE_SCE_HELP),
+        option text = STRING_TOKEN(STR_DISABLED), value = 0, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_ENABLED), value = 1, flags = RESET_REQUIRED;
+      endoneof;
+
+      oneof varid   = SA_SETUP.PcieRootPortPMCE[PORT_INDEX],
+        prompt      = STRING_TOKEN(CONCATENATE2(STR_CPU_PCIE_PMCE_PROMPT,PORT_INDEX)),
+        help        = STRING_TOKEN(STR_CPU_PCIE_PMCE_HELP),
+        option text = STRING_TOKEN(STR_DISABLED), value = 0, flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_ENABLED), value = 1, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+      endoneof;
+
+      grayoutif ideqval SA_SETUP.PcieRootPortSI[PORT_INDEX] == 0;
+        oneof varid   = SA_SETUP.PcieRootPortHPE[PORT_INDEX],
+          prompt      = STRING_TOKEN(CONCATENATE2(STR_CPU_PCIE_HPE_PROMPT,PORT_INDEX)),
+          help        = STRING_TOKEN(STR_CPU_PCIE_HPE_HELP),
+          option text = STRING_TOKEN(STR_DISABLED), value = 0, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+          option text = STRING_TOKEN(STR_ENABLED), value = 1, flags = RESET_REQUIRED;
+        endoneof;
+      endif;
+
+      oneof varid   = SA_SETUP.PcieRootPortAER[PORT_INDEX],
+        prompt      = STRING_TOKEN(CONCATENATE2(STR_CPU_PCIE_AER_PROMPT,PORT_INDEX)),
+        help        = STRING_TOKEN(STR_CPU_PCIE_AER_HELP),
+        option text = STRING_TOKEN(STR_DISABLED), value = 0, flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_ENABLED), value = 1, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+      endoneof;
+
+      oneof varid   = SA_SETUP.PcieRootPortSpeed[PORT_INDEX],
+        prompt   = STRING_TOKEN (CONCATENATE2(STR_CPU_PCIE_SPEED_PROMPT,PORT_INDEX)),
+        help     = STRING_TOKEN (STR_CPU_PCIE_SPEED_HELP),
+        option text = STRING_TOKEN (STR_AUTO), value = 0, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+        option text = STRING_TOKEN (STR_GEN1), value = 1, flags = RESET_REQUIRED;
+        option text = STRING_TOKEN (STR_GEN2), value = 2, flags = RESET_REQUIRED;
+        option text = STRING_TOKEN (STR_GEN3), value = 3, flags = RESET_REQUIRED;
+        option text = STRING_TOKEN (STR_GEN4), value = 4, flags = RESET_REQUIRED;
+      endoneof;
+
+      oneof varid   = SA_SETUP.PcieRootPortTHS[PORT_INDEX],
+        prompt      = STRING_TOKEN(CONCATENATE2(STR_CPU_PCIE_THS_PROMPT,PORT_INDEX)),
+        help        = STRING_TOKEN(STR_CPU_PCIE_THS_HELP),
+        option text = STRING_TOKEN(STR_DISABLED), value = 0, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_ENABLED), value = 1, flags = RESET_REQUIRED;
+      endoneof;
+
+      numeric varid = SA_SETUP.PcieDetectTimeoutMs[PORT_INDEX],
+        prompt      = STRING_TOKEN (CONCATENATE2(STR_CPU_PCIE_DETECT_TIMEOUT_PROMPT,PORT_INDEX)),
+        help        = STRING_TOKEN (STR_CPU_PCIE_DETECT_TIMEOUT_HELP),
+        minimum     = 0,
+        maximum     = 65535,
+        step        = 1,
+        default     = 0,
+      endnumeric;
+
+      SEPARATOR
+
+      subtitle text = STRING_TOKEN(STR_CPU_PCIE_LTR_CONFIG);
+      oneof varid   = SA_SETUP.CpuPcieLtrEnable[PORT_INDEX],
+        prompt   = STRING_TOKEN (CONCATENATE2(STR_CPU_PCIE_LTR_PROMPT,PORT_INDEX)),
+        help     = STRING_TOKEN (STR_CPU_PCIE_LTR_HELP),
+        option text = STRING_TOKEN(STR_DISABLED),  value = 0, flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_ENABLED),  value = 1, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+      endoneof;
+
+      suppressif ideqval SA_SETUP.CpuPcieLtrEnable[PORT_INDEX] == 0;
+        oneof varid   = SA_SETUP.CpuPcieSnoopLatencyOverrideMode[PORT_INDEX],
+          prompt      = STRING_TOKEN (CONCATENATE2(STR_CPU_PCIE_SL_OVRD_PROMPT,PORT_INDEX)),
+          help        = STRING_TOKEN (STR_CPU_PCIE_SL_OVRD_HELP),
+          option text = STRING_TOKEN(STR_DISABLED), value = 0, flags = RESET_REQUIRED;
+          option text = STRING_TOKEN(STR_MANUAL_STRING),   value = 1, flags = RESET_REQUIRED;
+          option text = STRING_TOKEN(STR_AUTO_STRING),     value = 2, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+        endoneof;
+
+        suppressif NOT ideqval SA_SETUP.CpuPcieSnoopLatencyOverrideMode[PORT_INDEX] == 1;
+          numeric varid = SA_SETUP.CpuPcieSnoopLatencyOverrideValue[PORT_INDEX],
+            prompt      = STRING_TOKEN(CONCATENATE2(STR_CPU_PCIE_SL_VAL_PROMPT,PORT_INDEX)),
+            help        = STRING_TOKEN(STR_CPU_PCIE_SL_VAL_HELP),
+            flags       = RESET_REQUIRED,
+            minimum     = 0,
+            maximum     = 1023,
+            step        = 1,
+            default     = 60,
+          endnumeric;
+
+          oneof varid   = SA_SETUP.CpuPcieSnoopLatencyOverrideMultiplier[PORT_INDEX],
+            prompt      = STRING_TOKEN(CONCATENATE2(STR_CPU_PCIE_SL_SCALE_PROMPT,PORT_INDEX)),
+            help        = STRING_TOKEN(STR_CPU_PCIE_SL_SCALE_HELP),
+            option text = STRING_TOKEN(STR_LTR_SCALE_0), value = 0, flags = RESET_REQUIRED;
+            option text = STRING_TOKEN(STR_LTR_SCALE_1), value = 1, flags = RESET_REQUIRED;
+            option text = STRING_TOKEN(STR_LTR_SCALE_2), value = 2, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+            option text = STRING_TOKEN(STR_LTR_SCALE_3), value = 3, flags = RESET_REQUIRED;
+            option text = STRING_TOKEN(STR_LTR_SCALE_4), value = 4, flags = RESET_REQUIRED;
+            option text = STRING_TOKEN(STR_LTR_SCALE_5), value = 5, flags = RESET_REQUIRED;
+          endoneof;
+        endif;
+
+        oneof varid   = SA_SETUP.CpuPcieNonSnoopLatencyOverrideMode[PORT_INDEX],
+          prompt      = STRING_TOKEN (CONCATENATE2(STR_CPU_PCIE_NSL_OVRD_PROMPT,PORT_INDEX)),
+          help        = STRING_TOKEN (STR_CPU_PCIE_NSL_OVRD_HELP),
+          option text = STRING_TOKEN(STR_DISABLED), value = 0, flags = RESET_REQUIRED;
+          option text = STRING_TOKEN(STR_MANUAL_STRING),   value = 1, flags = RESET_REQUIRED;
+          option text = STRING_TOKEN(STR_AUTO_STRING),     value = 2, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+        endoneof;
+
+        suppressif NOT ideqval SA_SETUP.CpuPcieNonSnoopLatencyOverrideMode[PORT_INDEX] == 1;
+          numeric varid = SA_SETUP.CpuPcieNonSnoopLatencyOverrideValue[PORT_INDEX],
+            prompt      = STRING_TOKEN(CONCATENATE2(STR_CPU_PCIE_NSL_VAL_PROMPT,PORT_INDEX)),
+            help        = STRING_TOKEN(STR_CPU_PCIE_NSL_VAL_HELP),
+            flags       = RESET_REQUIRED,
+            minimum     = 0,
+            maximum     = 1023,
+            step        = 1,
+            default     = 60,
+          endnumeric;
+
+          oneof varid   = SA_SETUP.CpuPcieNonSnoopLatencyOverrideMultiplier[PORT_INDEX],
+            prompt      = STRING_TOKEN(CONCATENATE2(STR_CPU_PCIE_NSL_SCALE_PROMPT,PORT_INDEX)),
+            help        = STRING_TOKEN(STR_CPU_PCIE_NSL_SCALE_HELP),
+            option text = STRING_TOKEN(STR_LTR_SCALE_0), value = 0, flags = RESET_REQUIRED;
+            option text = STRING_TOKEN(STR_LTR_SCALE_1), value = 1, flags = RESET_REQUIRED;
+            option text = STRING_TOKEN(STR_LTR_SCALE_2), value = 2, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+            option text = STRING_TOKEN(STR_LTR_SCALE_3), value = 3, flags = RESET_REQUIRED;
+            option text = STRING_TOKEN(STR_LTR_SCALE_4), value = 4, flags = RESET_REQUIRED;
+            option text = STRING_TOKEN(STR_LTR_SCALE_5), value = 5, flags = RESET_REQUIRED;
+          endoneof;
+        endif;
+
+        oneof varid  = SA_SETUP.CpuPcieForceLtrOverride[PORT_INDEX],
+          prompt      = STRING_TOKEN(CONCATENATE2(STR_CPU_PCIE_LTR_OVRD_FORCE_PROMPT,PORT_INDEX)),
+          help        = STRING_TOKEN(STR_CPU_PCIE_LTR_OVRD_FORCE_HELP),
+          option text = STRING_TOKEN(STR_DISABLED), value = 0, flags = DEFAULT | RESET_REQUIRED;
+          option text = STRING_TOKEN(STR_ENABLED), value = 1, flags = RESET_REQUIRED;
+        endoneof;
+
+      endif;
+
+      SEPARATOR
+
+      oneof varid   = SA_SETUP.CpuPcieLtrConfigLock[PORT_INDEX],
+        prompt   = STRING_TOKEN (CONCATENATE2(STR_CPU_PCIE_LTRLOCK_PROMPT,PORT_INDEX)),
+        help     = STRING_TOKEN (STR_CPU_PCIE_LTRLOCK_HELP),
+        option text = STRING_TOKEN(STR_DISABLED),  value = 0, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_ENABLED),  value = 1, flags = RESET_REQUIRED;
+      endoneof;
+
+    endif;
+
+    oneof varid   = SA_SETUP.PcieHwEqOverride,
+      prompt      = STRING_TOKEN(STR_CPU_PCIE_HW_EQ_OVERRIDE_PROMPT),
+      help        = STRING_TOKEN(STR_EMPTY_STRING),
+      option text = STRING_TOKEN(STR_DISABLED), value = 0, flags = RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_ENABLED), value = 1, flags =  DEFAULT | MANUFACTURING | RESET_REQUIRED;
+    endoneof;
+
+    suppressif ideqval SA_SETUP.PcieHwEqOverride == 0;
+      numeric varid = SA_SETUP.PcieHwEqGen3CoeffCm[0],
+        prompt      = STRING_TOKEN(STR_CPU_PCIE_HW_EQ_GEN3_COEFF0_CM_PROMPT),
+        help        = STRING_TOKEN(STR_EMPTY_STRING),
+        flags       = RESET_REQUIRED,
+        minimum     = 0,
+        maximum     = 63,
+        step        = 1,
+        default     = 0,
+      endnumeric;
+      numeric varid = SA_SETUP.PcieHwEqGen3CoeffCp[0],
+        prompt      = STRING_TOKEN(STR_CPU_PCIE_HW_EQ_GEN3_COEFF0_CP_PROMPT),
+        help        = STRING_TOKEN(STR_EMPTY_STRING),
+        flags       = RESET_REQUIRED,
+        minimum     = 0,
+        maximum     = 63,
+        step        = 1,
+        default     = 1,
+      endnumeric;
+      numeric varid = SA_SETUP.PcieHwEqGen3CoeffCm[1],
+        prompt      = STRING_TOKEN(STR_CPU_PCIE_HW_EQ_GEN3_COEFF1_CM_PROMPT),
+        help        = STRING_TOKEN(STR_EMPTY_STRING),
+        flags       = RESET_REQUIRED,
+        minimum     = 0,
+        maximum     = 63,
+        step        = 1,
+        default     = 2,
+      endnumeric;
+      numeric varid = SA_SETUP.PcieHwEqGen3CoeffCp[1],
+        prompt      = STRING_TOKEN(STR_CPU_PCIE_HW_EQ_GEN3_COEFF1_CP_PROMPT),
+        help        = STRING_TOKEN(STR_EMPTY_STRING),
+        flags       = RESET_REQUIRED,
+        minimum     = 0,
+        maximum     = 63,
+        step        = 1,
+        default     = 3,
+      endnumeric;
+      numeric varid = SA_SETUP.PcieHwEqGen3CoeffCm[2],
+        prompt      = STRING_TOKEN(STR_CPU_PCIE_HW_EQ_GEN3_COEFF2_CM_PROMPT),
+        help        = STRING_TOKEN(STR_EMPTY_STRING),
+        flags       = RESET_REQUIRED,
+        minimum     = 0,
+        maximum     = 63,
+        step        = 1,
+        default     = 4,
+      endnumeric;
+      numeric varid = SA_SETUP.PcieHwEqGen3CoeffCp[2],
+        prompt      = STRING_TOKEN(STR_CPU_PCIE_HW_EQ_GEN3_COEFF2_CP_PROMPT),
+        help        = STRING_TOKEN(STR_EMPTY_STRING),
+        flags       = RESET_REQUIRED,
+        minimum     = 0,
+        maximum     = 63,
+        step        = 1,
+        default     = 0,
+      endnumeric;
+      numeric varid = SA_SETUP.PcieHwEqGen3CoeffCm[3],
+        prompt      = STRING_TOKEN(STR_CPU_PCIE_HW_EQ_GEN3_COEFF3_CM_PROMPT),
+        help        = STRING_TOKEN(STR_EMPTY_STRING),
+        flags       = RESET_REQUIRED,
+        minimum     = 0,
+        maximum     = 63,
+        step        = 1,
+        default     = 0,
+      endnumeric;
+      numeric varid = SA_SETUP.PcieHwEqGen3CoeffCp[3],
+        prompt      = STRING_TOKEN(STR_CPU_PCIE_HW_EQ_GEN3_COEFF3_CP_PROMPT),
+        help        = STRING_TOKEN(STR_EMPTY_STRING),
+        flags       = RESET_REQUIRED,
+        minimum     = 0,
+        maximum     = 63,
+        step        = 1,
+        default     = 0,
+      endnumeric;
+      numeric varid = SA_SETUP.PcieHwEqGen3CoeffCm[4],
+        prompt      = STRING_TOKEN(STR_CPU_PCIE_HW_EQ_GEN3_COEFF4_CM_PROMPT),
+        help        = STRING_TOKEN(STR_EMPTY_STRING),
+        flags       = RESET_REQUIRED,
+        minimum     = 0,
+        maximum     = 63,
+        step        = 1,
+        default     = 0,
+      endnumeric;
+      numeric varid = SA_SETUP.PcieHwEqGen3CoeffCp[4],
+        prompt      = STRING_TOKEN(STR_CPU_PCIE_HW_EQ_GEN3_COEFF4_CP_PROMPT),
+        help        = STRING_TOKEN(STR_EMPTY_STRING),
+        flags       = RESET_REQUIRED,
+        minimum     = 0,
+        maximum     = 63,
+        step        = 1,
+        default     = 0,
+      endnumeric;
+
+      numeric varid = SA_SETUP.PcieHwEqGen4CoeffCm[0],
+        prompt      = STRING_TOKEN(STR_CPU_PCIE_HW_EQ_GEN4_COEFF0_CM_PROMPT),
+        help        = STRING_TOKEN(STR_EMPTY_STRING),
+        flags       = RESET_REQUIRED,
+        minimum     = 0,
+        maximum     = 63,
+        step        = 1,
+        default     = 0,
+      endnumeric;
+      numeric varid = SA_SETUP.PcieHwEqGen4CoeffCp[0],
+        prompt      = STRING_TOKEN(STR_CPU_PCIE_HW_EQ_GEN4_COEFF0_CP_PROMPT),
+        help        = STRING_TOKEN(STR_EMPTY_STRING),
+        flags       = RESET_REQUIRED,
+        minimum     = 0,
+        maximum     = 63,
+        step        = 1,
+        default     = 7,
+      endnumeric;
+      numeric varid = SA_SETUP.PcieHwEqGen4CoeffCm[1],
+        prompt      = STRING_TOKEN(STR_CPU_PCIE_HW_EQ_GEN4_COEFF1_CM_PROMPT),
+        help        = STRING_TOKEN(STR_EMPTY_STRING),
+        flags       = RESET_REQUIRED,
+        minimum     = 0,
+        maximum     = 63,
+        step        = 1,
+        default     = 8,
+      endnumeric;
+      numeric varid = SA_SETUP.PcieHwEqGen4CoeffCp[1],
+        prompt      = STRING_TOKEN(STR_CPU_PCIE_HW_EQ_GEN4_COEFF1_CP_PROMPT),
+        help        = STRING_TOKEN(STR_EMPTY_STRING),
+        flags       = RESET_REQUIRED,
+        minimum     = 0,
+        maximum     = 63,
+        step        = 1,
+        default     = 9,
+      endnumeric;
+      numeric varid = SA_SETUP.PcieHwEqGen4CoeffCm[2],
+        prompt      = STRING_TOKEN(STR_CPU_PCIE_HW_EQ_GEN4_COEFF2_CM_PROMPT),
+        help        = STRING_TOKEN(STR_EMPTY_STRING),
+        flags       = RESET_REQUIRED,
+        minimum     = 0,
+        maximum     = 63,
+        step        = 1,
+        default     = 0,
+      endnumeric;
+      numeric varid = SA_SETUP.PcieHwEqGen4CoeffCp[2],
+        prompt      = STRING_TOKEN(STR_CPU_PCIE_HW_EQ_GEN4_COEFF2_CP_PROMPT),
+        help        = STRING_TOKEN(STR_EMPTY_STRING),
+        flags       = RESET_REQUIRED,
+        minimum     = 0,
+        maximum     = 63,
+        step        = 1,
+        default     = 0,
+      endnumeric;
+      numeric varid = SA_SETUP.PcieHwEqGen4CoeffCm[3],
+        prompt      = STRING_TOKEN(STR_CPU_PCIE_HW_EQ_GEN4_COEFF3_CM_PROMPT),
+        help        = STRING_TOKEN(STR_EMPTY_STRING),
+        flags       = RESET_REQUIRED,
+        minimum     = 0,
+        maximum     = 63,
+        step        = 1,
+        default     = 0,
+      endnumeric;
+      numeric varid = SA_SETUP.PcieHwEqGen4CoeffCp[3],
+        prompt      = STRING_TOKEN(STR_CPU_PCIE_HW_EQ_GEN4_COEFF3_CP_PROMPT),
+        help        = STRING_TOKEN(STR_EMPTY_STRING),
+        flags       = RESET_REQUIRED,
+        minimum     = 0,
+        maximum     = 63,
+        step        = 1,
+        default     = 0,
+      endnumeric;
+      numeric varid = SA_SETUP.PcieHwEqGen4CoeffCm[4],
+        prompt      = STRING_TOKEN(STR_CPU_PCIE_HW_EQ_GEN4_COEFF4_CM_PROMPT),
+        help        = STRING_TOKEN(STR_EMPTY_STRING),
+        flags       = RESET_REQUIRED,
+        minimum     = 0,
+        maximum     = 63,
+        step        = 1,
+        default     = 0,
+      endnumeric;
+      numeric varid = SA_SETUP.PcieHwEqGen4CoeffCp[4],
+        prompt      = STRING_TOKEN(STR_CPU_PCIE_HW_EQ_GEN4_COEFF4_CP_PROMPT),
+        help        = STRING_TOKEN(STR_EMPTY_STRING),
+        flags       = RESET_REQUIRED,
+        minimum     = 0,
+        maximum     = 63,
+        step        = 1,
+        default     = 0,
+      endnumeric;
+    endif;
+    oneof varid   = SA_SETUP.CpuPciePcetTimer[PORT_INDEX],
+      prompt      = STRING_TOKEN(CONCATENATE2(STR_CPU_PCIE_PCET_PROMPT,PORT_INDEX)),
+      help        = STRING_TOKEN(STR_CPU_PCIE_PCET_HELP),
+      option text = STRING_TOKEN(STR_PCET_2), value = 0, flags = RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_PCET_3), value = 1, flags =  RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_PCET_4), value = 2, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_PCET_5), value = 3, flags = RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_PCET_6), value = 4, flags = RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_PCET_7), value = 5, flags = RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_PCET_8), value = 6, flags = RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_PCET_9), value = 7, flags = RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_PCET_10), value = 8, flags = RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_PCET_11), value = 9, flags = RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_PCET_21), value = 10, flags = RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_PCET_22), value = 11, flags = RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_PCET_23), value = 12, flags = RESET_REQUIRED;
+    endoneof;
+
+    oneof varid   = SA_SETUP.Gen3CpuPciePresetCoeffList[PORT_INDEX],
+      prompt      = STRING_TOKEN(CONCATENATE2(STR_GEN3_CPU_PCIE_PRESETCOEFF_LIST_PROMPT,PORT_INDEX)),
+      help        = STRING_TOKEN(STR_GEN3_CPU_PCIE_PRESETCOEFF_LIST_HELP),
+      option text = STRING_TOKEN(STR_PRESETCOEFF_LIST_0), value = 0, flags = RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_PRESETCOEFF_LIST_1), value = 1, flags = RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_PRESETCOEFF_LIST_2), value = 2, flags = RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_PRESETCOEFF_LIST_3), value = 3, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_PRESETCOEFF_LIST_4), value = 4, flags = RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_PRESETCOEFF_LIST_5), value = 5, flags = RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_PRESETCOEFF_LIST_6), value = 6, flags = RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_PRESETCOEFF_LIST_7), value = 7, flags = RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_PRESETCOEFF_LIST_8), value = 8, flags = RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_PRESETCOEFF_LIST_9), value = 9, flags = RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_PRESETCOEFF_LIST_10), value = 10, flags = RESET_REQUIRED;
+    endoneof;
+
+    oneof varid   = SA_SETUP.Gen4CpuPciePresetCoeffList[PORT_INDEX],
+      prompt      = STRING_TOKEN(CONCATENATE2(STR_GEN4_CPU_PCIE_PRESETCOEFF_LIST_PROMPT,PORT_INDEX)),
+      help        = STRING_TOKEN(STR_GEN4_CPU_PCIE_PRESETCOEFF_LIST_HELP),
+      option text = STRING_TOKEN(STR_PRESETCOEFF_LIST_0), value = 0, flags = RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_PRESETCOEFF_LIST_1), value = 1, flags = RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_PRESETCOEFF_LIST_2), value = 2, flags = RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_PRESETCOEFF_LIST_3), value = 3, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_PRESETCOEFF_LIST_4), value = 4, flags = RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_PRESETCOEFF_LIST_5), value = 5, flags = RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_PRESETCOEFF_LIST_6), value = 6, flags = RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_PRESETCOEFF_LIST_7), value = 7, flags = RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_PRESETCOEFF_LIST_8), value = 8, flags = RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_PRESETCOEFF_LIST_9), value = 9, flags = RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_PRESETCOEFF_LIST_10), value = 10, flags = RESET_REQUIRED;
+    endoneof;
+
+    oneof varid   = SA_SETUP.CpuPciePx8gtswlpce[PORT_INDEX],
+      prompt      = STRING_TOKEN(CONCATENATE2(STR_CPU_PCIE_PRESETCOEFF_GEN3_EVALUATION_PROMPT,PORT_INDEX)),
+      help        = STRING_TOKEN(STR_CPU_PCIE_PRESETCOEFF_GEN3_EVALUATION_HELP),
+      option text = STRING_TOKEN(STR_PRESETCOEFF_GEN3_EVALUATION_1US), value = 0, flags = RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_PRESETCOEFF_GEN3_EVALUATION_2US), value = 1, flags = RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_PRESETCOEFF_GEN3_EVALUATION_3US), value = 2, flags = RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_PRESETCOEFF_GEN3_EVALUATION_4US), value = 3, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_PRESETCOEFF_GEN3_EVALUATION_10US), value = 4, flags = RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_PRESETCOEFF_GEN3_EVALUATION_12US), value = 5, flags = RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_PRESETCOEFF_GEN3_EVALUATION_14US), value = 6, flags = RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_PRESETCOEFF_GEN3_EVALUATION_16US), value = 7, flags = RESET_REQUIRED;
+    endoneof;
+
+    oneof varid   = SA_SETUP.CpuPciePx16gtswlpce[PORT_INDEX],
+      prompt      = STRING_TOKEN(CONCATENATE2(STR_CPU_PCIE_PRESETCOEFF_GEN4_EVALUATION_PROMPT,PORT_INDEX)),
+      help        = STRING_TOKEN(STR_CPU_PCIE_PRESETCOEFF_GEN4_EVALUATION_HELP),
+      option text = STRING_TOKEN(STR_PRESETCOEFF_GEN4_EVALUATION_500NS), value = 0, flags = RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_PRESETCOEFF_GEN4_EVALUATION_1US), value = 1, flags = RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_PRESETCOEFF_GEN4_EVALUATION_1_5US), value = 2, flags = RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_PRESETCOEFF_GEN4_EVALUATION_2US), value = 3, flags = RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_PRESETCOEFF_GEN4_EVALUATION_5US), value = 4, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_PRESETCOEFF_GEN4_EVALUATION_6US), value = 5, flags = RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_PRESETCOEFF_GEN4_EVALUATION_7US), value = 6, flags = RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_PRESETCOEFF_GEN4_EVALUATION_8US), value = 7, flags = RESET_REQUIRED;
+    endoneof;
+
+    goto CONCATENATE2(CPU_PCIE_LANE_EQ_FORM_ID,PORT_INDEX),
+      prompt = STRING_TOKEN(STR_PCIE_LANE_EQ_FORM_TITLE),
+      help   = STRING_TOKEN(STR_PCIE_LANE_EQ_FORM_HELP);
+  endform; //End of CPU_PCIERP1_OPTIONS_FORM_ID
+
+  form formid = CONCATENATE2(CPU_PCIE_LANE_EQ_FORM_ID,PORT_INDEX),
+    title     = STRING_TOKEN(STR_PCIE_LANE_EQ_FORM_TITLE);
+
+    suppressif NOT ideqval SA_SETUP.PcieRootPortEn[PORT_INDEX] == 0x0;
+      numeric varid = SA_SETUP.PcieLaneCm[0],
+        prompt      = STRING_TOKEN (STR_CPU_PCIE_LANE_CM_PROMPT0),
+        help        = STRING_TOKEN (STR_EMPTY_STRING),
+        minimum     = 0,
+        maximum     = 63,
+        step        = 1,
+        default     = 6,
+      endnumeric;
+      numeric varid = SA_SETUP.PcieLaneCp[0],
+        prompt      = STRING_TOKEN (STR_CPU_PCIE_LANE_CP_PROMPT0),
+        help        = STRING_TOKEN (STR_EMPTY_STRING),
+        minimum     = 0,
+        maximum     = 63,
+        step        = 1,
+        default     = 2,
+      endnumeric;
+
+      numeric varid = SA_SETUP.PcieLaneCm[1],
+        prompt      = STRING_TOKEN (STR_CPU_PCIE_LANE_CM_PROMPT1),
+        help        = STRING_TOKEN (STR_EMPTY_STRING),
+        minimum     = 0,
+        maximum     = 63,
+        step        = 1,
+        default     = 6,
+      endnumeric;
+      numeric varid = SA_SETUP.PcieLaneCp[1],
+        prompt      = STRING_TOKEN (STR_CPU_PCIE_LANE_CP_PROMPT1),
+        help        = STRING_TOKEN (STR_EMPTY_STRING),
+        minimum     = 0,
+        maximum     = 63,
+        step        = 1,
+        default     = 2,
+      endnumeric;
+
+      numeric varid = SA_SETUP.PcieLaneCm[2],
+        prompt      = STRING_TOKEN (STR_CPU_PCIE_LANE_CM_PROMPT2),
+        help        = STRING_TOKEN (STR_EMPTY_STRING),
+        minimum     = 0,
+        maximum     = 63,
+        step        = 1,
+        default     = 6,
+      endnumeric;
+      numeric varid = SA_SETUP.PcieLaneCp[2],
+        prompt      = STRING_TOKEN (STR_CPU_PCIE_LANE_CP_PROMPT2),
+        help        = STRING_TOKEN (STR_EMPTY_STRING),
+        minimum     = 0,
+        maximum     = 63,
+        step        = 1,
+        default     = 2,
+      endnumeric;
+
+      numeric varid = SA_SETUP.PcieLaneCm[3],
+        prompt      = STRING_TOKEN (STR_CPU_PCIE_LANE_CM_PROMPT3),
+        help        = STRING_TOKEN (STR_EMPTY_STRING),
+        minimum     = 0,
+        maximum     = 63,
+        step        = 1,
+        default     = 6,
+      endnumeric;
+      numeric varid = SA_SETUP.PcieLaneCp[3],
+        prompt      = STRING_TOKEN (STR_CPU_PCIE_LANE_CP_PROMPT3),
+        help        = STRING_TOKEN (STR_EMPTY_STRING),
+        minimum     = 0,
+        maximum     = 63,
+        step        = 1,
+        default     = 2,
+      endnumeric;
+    endif;
+  endform;

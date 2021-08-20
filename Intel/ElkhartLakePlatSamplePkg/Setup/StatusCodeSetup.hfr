@@ -1,0 +1,164 @@
+/** @file
+
+@copyright
+  INTEL CONFIDENTIAL
+  Copyright 2014 - 2019 Intel Corporation.
+
+  The source code contained or described herein and all documents related to the
+  source code ("Material") are owned by Intel Corporation or its suppliers or
+  licensors. Title to the Material remains with Intel Corporation or its suppliers
+  and licensors. The Material may contain trade secrets and proprietary and
+  confidential information of Intel Corporation and its suppliers and licensors,
+  and is protected by worldwide copyright and trade secret laws and treaty
+  provisions. No part of the Material may be used, copied, reproduced, modified,
+  published, uploaded, posted, transmitted, distributed, or disclosed in any way
+  without Intel's prior express written permission.
+
+  No license under any patent, copyright, trade secret or other intellectual
+  property right is granted to or conferred upon you by disclosure or delivery
+  of the Materials, either expressly, by implication, inducement, estoppel or
+  otherwise. Any license under such intellectual property rights must be
+  express and approved by Intel in writing.
+
+  Unless otherwise agreed by Intel in writing, you may not remove or alter
+  this notice or any other notice embedded in Materials by Intel or
+  Intel's suppliers or licensors in any way.
+
+  This file contains a 'Sample Driver' and is licensed as such under the terms
+  of your license agreement with Intel or your vendor. This file may be modified
+  by the user, subject to the additional terms of the license agreement.
+
+@par Specification
+**/
+
+form formid = AUTO_ID(DEBUG_INTERFACE_FORM_ID),
+  title     = STRING_TOKEN(STR_DEBUG_INTERFACE_FORM);
+
+  SUBTITLE(STRING_TOKEN(STR_DEBUG_INTERFACE_FORM))
+  SEPARATOR
+
+  checkbox varid = DEBUG_CONFIG_DATA.RamDebugInterface,
+    prompt       = STRING_TOKEN(STR_RAM_DEBUG_INTERFACE_PROMPT),
+    help         = STRING_TOKEN(STR_DEBUG_INTERFACE_PROMPT_HELP),
+    flags        = RESET_REQUIRED,
+    key          = 0,
+  endcheckbox;
+  checkbox varid = DEBUG_CONFIG_DATA.UartDebugInterface,
+    prompt       = STRING_TOKEN(STR_UART_DEBUG_INTERFACE_PROMPT),
+    help         = STRING_TOKEN(STR_DEBUG_INTERFACE_PROMPT_HELP),
+#ifndef RELEASE_CATALOG
+    flags        = CHECKBOX_DEFAULT | RESET_REQUIRED,
+#else
+    flags        = RESET_REQUIRED,
+#endif
+    key          = 1,
+  endcheckbox;
+  checkbox varid = DEBUG_CONFIG_DATA.Usb3DebugInterface,
+    prompt       = STRING_TOKEN(STR_USB3_DEBUG_INTERFACE_PROMPT),
+    help         = STRING_TOKEN(STR_DEBUG_INTERFACE_PROMPT_HELP),
+    flags        = RESET_REQUIRED,
+    key          = 0,
+  endcheckbox;
+  checkbox varid = DEBUG_CONFIG_DATA.SerialIoDebugInterface,
+    prompt       = STRING_TOKEN(STR_SERIAL_IO_DEBUG_INTERFACE_PROMPT),
+    help         = STRING_TOKEN(STR_DEBUG_INTERFACE_PROMPT_HELP),
+#ifndef RELEASE_CATALOG
+    flags        = CHECKBOX_DEFAULT | RESET_REQUIRED,
+#else
+    flags        = RESET_REQUIRED,
+#endif
+    key          = 1,
+  endcheckbox;
+  checkbox varid = DEBUG_CONFIG_DATA.TraceHubDebugInterface,
+    prompt       = STRING_TOKEN(STR_TRACE_HUB_DEBUG_INTERFACE_PROMPT),
+    help         = STRING_TOKEN(STR_DEBUG_INTERFACE_PROMPT_HELP),
+    flags        = CHECKBOX_DEFAULT | RESET_REQUIRED,
+    key          = 0,
+  endcheckbox;
+
+#if SERIAL_SETUP_OPTION
+    oneof varid   = DEBUG_CONFIG_DATA.SerialDebug,
+      prompt      = STRING_TOKEN(STR_SERIAL_DEBUG_PROMPT),
+      help        = STRING_TOKEN(STR_SERIAL_DEBUG_PROMPT_HELP),
+      default     = 3, defaultstore = MyStandardDefault,
+      option text = STRING_TOKEN(STR_DISABLED), value = 0, flags = RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_ERROR_ONLY), value = 1, flags = RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_ERROR_WARNINGS), value = 2, flags = RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_ERROR_WARNINGS_INFO), value = 3, flags = RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_ERROR_WARNINGS_INFO_EVENT), value = 4, flags = RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_ERROR_WARNINGS_INFO_VERBOSE), value = 5, flags = RESET_REQUIRED;
+    endoneof;
+
+      oneof varid   = DEBUG_CONFIG_DATA.SerialDebugBaudRate,
+        prompt      = STRING_TOKEN (STR_SERIAL_DEBUG_BAUD_RATE),
+        help        = STRING_TOKEN (STR_SERIAL_DEBUG_BAUR_RATE_HELP),
+        option text = STRING_TOKEN (STR_9600), value = 3, flags = 0;
+        option text = STRING_TOKEN (STR_19200), value = 4, flags = 0;
+        option text = STRING_TOKEN (STR_57600), value = 6, flags = 0;
+        option text = STRING_TOKEN (STR_115200), value = 7, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+      endoneof;
+#endif // SERIAL_SETUP_OPTION
+
+  SEPARATOR
+
+  suppressif ideqval DEBUG_CONFIG_DATA.SerialIoDebugInterface == 0;
+    SUBTITLE(STRING_TOKEN (STR_SERIAL_IO_DEBUG_SUB))
+    oneof varid   = DEBUG_CONFIG_DATA.SerialIoUartDebugControllerNumber,
+      prompt      = STRING_TOKEN (STR_SERIAL_IO_CONTROLLER_NUMBER),
+      help        = STRING_TOKEN (STR_SERIAL_IO_CONTROLLER_NUMBER_HELP),
+      option text = STRING_TOKEN (STR_SERIAL_IO_CONTROLLER_NUMBER_0), value = 0, flags = RESET_REQUIRED;
+      option text = STRING_TOKEN (STR_SERIAL_IO_CONTROLLER_NUMBER_1), value = 1, flags = RESET_REQUIRED;
+      option text = STRING_TOKEN (STR_SERIAL_IO_CONTROLLER_NUMBER_2), value = 2, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+    endoneof;
+    oneof varid   = DEBUG_CONFIG_DATA.SerialIoUartDebugBaudRate,
+      prompt      = STRING_TOKEN (STR_SERIAL_IO_DEBUG_BAUD_RATE),
+      help        = STRING_TOKEN (STR_SERIAL_IO_DEBUG_BAUD_RATE_HRLP),
+      option text = STRING_TOKEN (STR_9600), value = 9600, flags = RESET_REQUIRED;
+      option text = STRING_TOKEN (STR_19200), value = 19200, flags = RESET_REQUIRED;
+      option text = STRING_TOKEN (STR_57600), value = 57600, flags = RESET_REQUIRED;
+      option text = STRING_TOKEN (STR_115200), value = 115200, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+      option text = STRING_TOKEN (STR_460800), value = 460800, flags = RESET_REQUIRED;
+      option text = STRING_TOKEN (STR_921600), value = 921600, flags = RESET_REQUIRED;
+      option text = STRING_TOKEN (STR_1500000), value = 1500000, flags = RESET_REQUIRED;
+      option text = STRING_TOKEN (STR_1843200), value = 1843200, flags = RESET_REQUIRED;
+      option text = STRING_TOKEN (STR_3000000), value = 3000000, flags = RESET_REQUIRED;
+      option text = STRING_TOKEN (STR_3686400), value = 3686400, flags = RESET_REQUIRED;
+      option text = STRING_TOKEN (STR_6000000), value = 6000000, flags = RESET_REQUIRED;
+    endoneof;
+    oneof varid   = DEBUG_CONFIG_DATA.SerialIoUartDebugStopBits,
+      prompt      = STRING_TOKEN (STR_SERIAL_IO_DEBUG_STOP_BITS),
+      help        = STRING_TOKEN (STR_SERIAL_IO_DEBUG_STOP_BITS_HELP),
+      option text = STRING_TOKEN (STR_STOP_BITS_DEFAULT), value = 0, flags = RESET_REQUIRED;
+      option text = STRING_TOKEN (STR_STOP_BITS_1), value = 1, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+      option text = STRING_TOKEN (STR_STOP_BITS_1_5), value = 2, flags = RESET_REQUIRED;
+      option text = STRING_TOKEN (STR_STOP_BITS_2), value = 3, flags = RESET_REQUIRED;
+    endoneof;
+    oneof varid   = DEBUG_CONFIG_DATA.SerialIoUartDebugParity,
+      prompt      = STRING_TOKEN (STR_SERIAL_IO_DEBUG_PARITY),
+      help        = STRING_TOKEN (STR_SERIAL_IO_DEBUG_PARITY_HELP),
+      option text = STRING_TOKEN (STR_PARITY_DEFAULT), value = 0, flags = RESET_REQUIRED;
+      option text = STRING_TOKEN (STR_PARITY_NONE), value = 1, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+      option text = STRING_TOKEN (STR_PARITY_EVEN), value = 2, flags = RESET_REQUIRED;
+      option text = STRING_TOKEN (STR_PARITY_ODD), value = 3, flags = RESET_REQUIRED;
+    endoneof;
+    checkbox varid = DEBUG_CONFIG_DATA.SerialIoUartDebugFlowControl,
+      prompt       = STRING_TOKEN(STR_SERIAL_IO_FLOW_CONTROL),
+      help         = STRING_TOKEN(STR_SERIAL_IO_FLOW_CONTROL_HELP),
+      flags        = RESET_REQUIRED,
+      key          = 0,
+    endcheckbox;
+    oneof varid   = DEBUG_CONFIG_DATA.SerialIoUartDebugDataBits,
+      prompt      = STRING_TOKEN (STR_SERIAL_IO_DATA_BITS),
+      help        = STRING_TOKEN (STR_SERIAL_IO_DATA_BITS_HELP),
+      option text = STRING_TOKEN (STR_DATA_BITS_5_BITS), value = 5, flags = RESET_REQUIRED;
+      option text = STRING_TOKEN (STR_DATA_BITS_6_BITS), value = 6, flags = RESET_REQUIRED;
+      option text = STRING_TOKEN (STR_DATA_BITS_7_BITS), value = 7, flags = RESET_REQUIRED;
+      option text = STRING_TOKEN (STR_DATA_BITS_8_BITS), value = 8, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+    endoneof;
+  endif;
+
+  suppressif ideqval DEBUG_CONFIG_DATA.SerialIoDebugInterface == 1;
+    SUBTITLE(STRING_TOKEN(STR_SERIAL_IO_DEBUG_DISABLED))
+  endif;
+
+endform;

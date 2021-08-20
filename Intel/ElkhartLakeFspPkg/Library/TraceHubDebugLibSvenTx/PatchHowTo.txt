@@ -1,0 +1,91 @@
+
+================================================================================
+                                 Introduction
+================================================================================
+  SvenTX is a source delivery API for TraceHub support.
+
+
+================================================================================
+                                SvenTX-Version
+================================================================================
+  1.9
+
+
+================================================================================
+                      HOW to Install SvenTx for UEFI Building
+================================================================================
+1.  Download Intel System Studio 2016 NDA Release from website:
+    https://wiki.ith.intel.com/display/npksdk/Download+NPK+SW+Tools+Releases
+
+2.  Install Intel System Studio 2016 NDA Release to C:\Program Files,
+    sventx is C:\Program Files\Intel\System Studio 2016 NDA\system_trace\device\sventx
+
+3.  Copy SvenTx files into UEFI source tree
+    3.a sventx/include/sventx/* ->
+        BpCommonPkg/Library/TraceHubDebugLibSvenTx/sventx/
+
+    3.b sventx/include/sventx.h ->
+        BpCommonPkg/Library/TraceHubDebugLibSvenTx/sventx/sventx.h
+
+    3.c sventx/platform/example/include/* ->
+        BpCommonPkg/Library/TraceHubDebugLibSvenTx/sventx/
+
+    3.d sventx/platform/example/src/sventx_platform.c ->
+        BpCommonPkg/Library/TraceHubDebugLibSvenTx/sventx/platform/UEFI/src/sventx_platform.c
+
+    3.e sventx/src/* ->
+        BpCommonPkg/Library/TraceHubDebugLibSvenTx/sventx/src/*
+
+4.  Apply following modification to SvenTX core
+    4.a BpCommonPkg/Library/TraceHubDebugLibSvenTx/sventx/compiler.h Ln93
+        #undef SVEN_EXPORT                                  <- Add
+        #define SVEN_EXPORT                                 <- Add
+        #define SVEN_CALLCONV __stdcall
+
+    4.b BpCommonPkg/Library/TraceHubDebugLibSvenTx/sventx/src/sventx_api.c Ln64
+        #include "sventx/event.h"
+        #include <Library/BaseMemoryLib.h>                  <- Add
+
+    4.c BpCommonPkg/Library/TraceHubDebugLibSvenTx/sventx/src/sventx_api.c Ln416
+        while( len < SVEN_EVENT_PAYLOADSIZE)                <- Remove
+        {                                                   <- Remove
+            desc.ed_pld.data_u8[len++] = 0;                 <- Remove
+        }                                                   <- Remove
+        if (len < SVEN_EVENT_PAYLOADSIZE) {                                                 <- Add
+            ZeroMem (&(desc.ed_pld.data_u8[len]), (SVEN_EVENT_PAYLOADSIZE - 1) - len + 1);  <- Add
+        }                                                                                   <- Add
+
+    4.d BpCommonPkg/Library/TraceHubDebugLibSvenTx/sventx/src/sventx_api.c Ln457 Ln515 Ln623
+        sven_u16_t           paramlen = svh->svh_param_count * (sven_u16_t)sizeof(sven_u32_t);                <- Remove
+        sven_u16_t           paramlen = (sven_u16_t)(svh->svh_param_count * (sven_u16_t)sizeof(sven_u32_t));  <- Add
+
+    4.e BpCommonPkg/Library/TraceHubDebugLibSvenTx/sventx/src/sventx_compiler.c Ln69
+        #include <intrin.h>                                 <- Comment it
+
+    4.f BpCommonPkg/Library/TraceHubDebugLibSvenTx/sventx/src/sventx_init.c Ln65
+        #include <Library/BaseMemoryLib.h>                  <- Add
+
+    4.g BpCommonPkg/Library/TraceHubDebugLibSvenTx/sventx/src/sventx_init.c Ln119
+        *header = zero.header;                                 <- Remove
+        CopyMem (header, &zero.header, sizeof (zero.header));  <- Add
+
+    4.h BpCommonPkg/Library/TraceHubDebugLibSvenTx/sventx/src/sventx_init.c Ln131
+        sventx_null_handle = zero.handle;                                   <- Remove
+        CopyMem (&sventx_null_handle, &zero.handle, sizeof (zero.handle));  <- Add
+
+    4.i BpCommonPkg/Library/TraceHubDebugLibSvenTx/sventx/src/sventx_init.c Ln189
+        *svh = zero.handle;                                    <- Remove
+        CopyMem (svh, &zero.handle, sizeof (zero.handle));     <- Add
+
+    4.j BpCommonPkg/Library/TraceHubDebugLibSvenTx/sventx/sventx.h Ln381~383
+        Replace sven_s8_t with sven_u8_t for one bit definition.
+
+5.  Implement platform specific functions
+    5.a Update BpCommonPkg/Library/TraceHubDebugLibSvenTx/sventx/sventx_platform_config.h
+        Disable SVEN_PCFG_ENABLE_WALLCLOCK and SVEN_PCFG_ENABLE_CHECKSUM
+
+    5.b Update BpCommonPkg/Library/TraceHubDebugLibSvenTx/sventx/sventx_platform.h
+        Define SVEN_HEAP_MALLOC and SVEN_HEAP_FREE to refer to MemoryAllocationLib APIs
+        Add TRACE_HUB_PLATFORM_DATA structure in sven_platform_handle_t as TraceHubPlatformData field
+
+    5.c Implement BpCommonPkg/Library/TraceHubDebugLibSvenTx/sventx/platform/UEFI/src/sventx_platform.c

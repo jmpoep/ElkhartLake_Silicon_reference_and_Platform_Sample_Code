@@ -1,0 +1,27 @@
+============================================================================
+                    HOW TO BUILD THE KEYENROLL TOOL (for windows)
+============================================================================
+1. Please make sure openssl is installed and OPENSSL_HOME is defined to your own openssl dir
+   If you haven't installed openssl, please reference to "HOW TO BUILD THE OPENSSL LIB".
+2. Suppose your EDK2 folder is <Work>.
+3. Copy the KeyEnroll folder to <Work>\BaseTools\Source\C.
+4. Open a command prompt(VS2015/VS2013/VS2008), change the current directory to <Work>\edk2.
+5. Run "edksetup --nt32".
+6. Change the current directory to <Work>\edk2\BaseTools\Source\C\Common, and run "nmake".
+7. Change the current directory to <Work>\edk2\BaseTools\Source\C\KeyEnroll, and run "nmake".
+8. Then, KeyEnroll.exe will be generated in <Work>\BaseTools\Bin\Win32.
+
+
+============================================================================
+                    HOW TO BUILD THE OPENSSL LIB (for windows)
+============================================================================
+1. Download OpenSSL source code. (for example openssl-1.0.1u)
+2. Unzip the source code to <OpenSSLDir>.
+3. Open a command prompt(VS2015/VS2013/VS2008), change the current directory to <OpenSSLDir>.
+4. Run "perl Configure VC-WIN32 --prefix=<INSTALL_DIR>", <INSTALL_DIR> will be set as OPENSSL_HOME.
+5. Run "vcvars32.bat".
+5. Run "ms\do_ms.bat".
+6. Run "nmake -f ms\nt.mak install", The "bin","include","lib" and "ssl" folder will copy to <INSTALL_DIR> folder.
+
+The above steps just verified in openssl-1.0.1u, if your OpenSSL version is differnt from 1.0.1u,
+Please reference to the INSTALL file in the specified version.

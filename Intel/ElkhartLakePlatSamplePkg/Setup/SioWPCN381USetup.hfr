@@ -1,0 +1,295 @@
+/** @file
+
+@copyright
+  INTEL CONFIDENTIAL
+  Copyright 2014 - 2016 Intel Corporation.
+
+  The source code contained or described herein and all documents related to the
+  source code ("Material") are owned by Intel Corporation or its suppliers or
+  licensors. Title to the Material remains with Intel Corporation or its suppliers
+  and licensors. The Material may contain trade secrets and proprietary and
+  confidential information of Intel Corporation and its suppliers and licensors,
+  and is protected by worldwide copyright and trade secret laws and treaty
+  provisions. No part of the Material may be used, copied, reproduced, modified,
+  published, uploaded, posted, transmitted, distributed, or disclosed in any way
+  without Intel's prior express written permission.
+
+  No license under any patent, copyright, trade secret or other intellectual
+  property right is granted to or conferred upon you by disclosure or delivery
+  of the Materials, either expressly, by implication, inducement, estoppel or
+  otherwise. Any license under such intellectual property rights must be
+  express and approved by Intel in writing.
+
+  Unless otherwise agreed by Intel in writing, you may not remove or alter
+  this notice or any other notice embedded in Materials by Intel or
+  Intel's suppliers or licensors in any way.
+
+  This file contains a 'Sample Driver' and is licensed as such under the terms
+  of your license agreement with Intel or your vendor. This file may be modified
+  by the user, subject to the additional terms of the license agreement.
+
+@par Specification
+**/
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////SIO Form
+form formid = AUTO_ID(WPCN381U_SIO_FORM_ID),
+	title = STRING_TOKEN(STR_WPCN381U_SIO_FORM);
+	SUBTITLE(STRING_TOKEN(STR_WPCN381U_SIO_FORM))
+
+	SEPARATOR
+
+	text
+	help   = STRING_TOKEN(STR_SIO_FORM_HELP),
+	text   = STRING_TOKEN(STR_SIO_PROMPT),
+	text   = STRING_TOKEN(STR_WPCN381U),
+	flags  = 0,
+	key    = 0;
+
+	//Goto Floppy Form
+	suppressif ideqval WPCN381U_FDC_V_DATA.FdcImplemented == 0x0;	
+		goto WPCN381U_FLOPPY_FORM_ID,
+		prompt  = STRING_TOKEN(STR_WPCN381U_FLOPPY_FORM),
+		help    = STRING_TOKEN(STR_WPCN381U_FLOPPY_FORM_HELP);
+	endif;
+
+	//Goto Serial 0 Form
+	suppressif ideqval WPCN381U_COMA_V_DATA.ComImplemented == 0x00;
+		goto WPCN381U_SIO_SERIAL0_FORM_ID,
+		prompt  = STRING_TOKEN(STR_SERIAL0_FORM),
+		help    = STRING_TOKEN(STR_SERIAL0_FORM_HELP);
+	endif;
+
+	//Goto Serial 1 Form
+	suppressif ideqval WPCN381U_COMB_V_DATA.ComImplemented == 0x00;
+		goto WPCN381U_SIO_SERIAL1_FORM_ID,
+		prompt  = STRING_TOKEN(STR_SERIAL1_FORM),
+		help    = STRING_TOKEN(STR_SERIAL1_FORM_HELP);
+	endif;
+        
+        //Goto Parallel Form
+	suppressif ideqval WPCN381U_LPT_V_DATA.LptImplemented == 0x00;	
+		goto WPCN381U_PARALLEL_FORM_ID,
+ 	  	prompt  = STRING_TOKEN(STR_PARALLEL_FORM),
+  	 	help    = STRING_TOKEN(STR_PARALLEL_FORM_HELP);
+	endif;	
+
+endform;//SIO Form
+
+//////Floppy  Form	
+  form formid = AUTO_ID(WPCN381U_FLOPPY_FORM_ID),
+    title = STRING_TOKEN(STR_WPCN381U_FLOPPY_FORM);
+
+	    SUBTITLE(STRING_TOKEN(STR_WPCN381U_FLOPPY_FORM))
+		SEPARATOR
+
+		oneof varid     = WPCN381U_FDC_NV_DATA.FdcEnable,
+			prompt      = STRING_TOKEN(STR_WPCN381U_FLOPPY_PROMPT),
+			help        = STRING_TOKEN(STR_WPCN381U_FLOPPY_PROMPT_HELP),
+			option text = STRING_TOKEN(STR_DISABLED), value = 0, flags = RESET_REQUIRED;
+   	        option text = STRING_TOKEN(STR_ENABLED), value = 1, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+        endoneof;
+
+	    suppressif ideqval WPCN381U_FDC_NV_DATA.FdcEnable == 0x0;
+	    	text
+			help   = STRING_TOKEN(STR_WPCN381U_FLOPPY_PROMPT_HELP),
+			text   = STRING_TOKEN(STR_CURRENT_CONFIG),
+			text   = STRING_TOKEN(STR_WPCN381U_FLOPPY_CONFIG_VALUE),
+			flags  = 0,
+			key    = 0;
+		endif; //SIO_SETUP_VAR.FdcEnable == 0x0;
+   
+
+	endform; //Floppy  Form	
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////Serial 0 Form
+form formid = AUTO_ID(WPCN381U_SIO_SERIAL0_FORM_ID),
+	title = STRING_TOKEN(STR_SERIAL0_FORM);
+	SUBTITLE(STRING_TOKEN(STR_SERIAL0_FORM))
+
+	SEPARATOR
+
+	checkbox varid	= WPCN381U_COMA_NV_DATA.ComEnable,
+		prompt	= STRING_TOKEN(STR_WB_SERIAL1_PROMPT),
+		help	= STRING_TOKEN(STR_SERIAL_PROMPT_HELP),
+		flags	= CHECKBOX_DEFAULT | RESET_REQUIRED, 
+	endcheckbox;
+
+	suppressif ideqval WPCN381U_COMA_NV_DATA.ComEnable == 0x00;
+		text
+		help   = STRING_TOKEN(STR_SERIAL_PROMPT_HELP),
+		text   = STRING_TOKEN(STR_CURRENT_CONFIG),
+		text   = STRING_TOKEN(STR_WPCN381U_SERIAL0_CONFIG_VALUE),
+		flags  = 0,
+		key    = 0;
+	endif;	// suppressif WPCN381U_SIO_SETUP_VAR.ComAEnable == 0x00;
+
+	SEPARATOR
+
+	suppressif ideqval WPCN381U_COMA_NV_DATA.ComEnable == 0x00;
+		oneof varid = WPCN381U_COMA_NV_DATA.ComPrsId,
+			prompt      = STRING_TOKEN(STR_WB_COMA_CHANGE_CONFIG),
+			help        = STRING_TOKEN(STR_SETTINGS_HELP),
+			option text = STRING_TOKEN(STR_AUTO), value = 0, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+			option text = STRING_TOKEN(STR_WPCN381U_SERIAL_SETTINGS1), value = 1, flags = RESET_REQUIRED;
+			option text = STRING_TOKEN(STR_WPCN381U_SERIAL_SETTINGS2), value = 2, flags = RESET_REQUIRED;
+			option text = STRING_TOKEN(STR_WPCN381U_SERIAL_SETTINGS3), value = 3, flags = RESET_REQUIRED;
+			option text = STRING_TOKEN(STR_WPCN381U_SERIAL_SETTINGS4), value = 4, flags = RESET_REQUIRED;
+			option text = STRING_TOKEN(STR_WPCN381U_SERIAL_SETTINGS5), value = 5, flags = RESET_REQUIRED;
+		endoneof;
+	endif;	// suppressif WPCN381U_SIO_SETUP_VAR.ComAEnable == 0x00;
+
+	suppressif ideqval WPCN381U_COMA_NV_DATA.ComEnable == 0x00;
+		oneof varid = WPCN381U_COMA_NV_DATA.ComMode,
+			prompt      = STRING_TOKEN(STR_WB_COMA_SELECT_MODE),
+			help        = STRING_TOKEN(STR_SERIAL_MODE_HELP),
+			option text = STRING_TOKEN(STR_SERIAL_MODE1), value = 0, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+			option text = STRING_TOKEN(STR_SERIAL_MODE2), value = 1, flags = RESET_REQUIRED;
+		endoneof;
+	endif;	// suppressif WPCN381U_SIO_SETUP_VAR.ComAEnable == 0x00;
+endform;  //Serial 0 Form
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////Serial 1 Form
+form formid = AUTO_ID(WPCN381U_SIO_SERIAL1_FORM_ID),
+	title = STRING_TOKEN(STR_SERIAL1_FORM);
+	SUBTITLE(STRING_TOKEN(STR_SERIAL1_FORM))
+
+	SEPARATOR
+
+	checkbox varid	= WPCN381U_COMB_NV_DATA.ComEnable,
+		prompt	= STRING_TOKEN(STR_WB_SERIAL2_PROMPT),
+		help	= STRING_TOKEN(STR_SERIAL_PROMPT_HELP),
+		flags	= CHECKBOX_DEFAULT | RESET_REQUIRED, 
+	endcheckbox;
+
+	suppressif ideqval WPCN381U_COMB_NV_DATA.ComEnable == 0x00;
+		text
+		help   = STRING_TOKEN(STR_SERIAL_PROMPT_HELP),
+		text   = STRING_TOKEN(STR_CURRENT_CONFIG),
+		text   = STRING_TOKEN(STR_WPCN381U_SERIAL1_CONFIG_VALUE),
+		flags  = 0,
+		key    = 0;
+	endif;	// suppressif WPCN381U_SIO_SETUP_VAR.ComBEnable == 0x00;
+
+	SEPARATOR
+
+	suppressif ideqval WPCN381U_COMB_NV_DATA.ComEnable == 0x00;
+		oneof varid = WPCN381U_COMB_NV_DATA.ComPrsId,
+			prompt      = STRING_TOKEN(STR_WB_COMB_CHANGE_CONFIG),
+			help        = STRING_TOKEN(STR_SETTINGS_HELP),
+			option text = STRING_TOKEN(STR_AUTO), value = 0, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+			option text = STRING_TOKEN(STR_WPCN381U_SERIAL_SETTINGS1_COMB), value = 1, flags = RESET_REQUIRED;
+			option text = STRING_TOKEN(STR_WPCN381U_SERIAL_SETTINGS2), value = 2, flags = RESET_REQUIRED;
+			option text = STRING_TOKEN(STR_WPCN381U_SERIAL_SETTINGS3), value = 3, flags = RESET_REQUIRED;
+			option text = STRING_TOKEN(STR_WPCN381U_SERIAL_SETTINGS4), value = 4, flags = RESET_REQUIRED;
+			option text = STRING_TOKEN(STR_WPCN381U_SERIAL_SETTINGS5), value = 5, flags = RESET_REQUIRED;
+		endoneof;
+	endif;	// suppressif WPCN381U_SIO_SETUP_VAR.ComBEnable == 0x00;
+
+	suppressif ideqval WPCN381U_COMB_NV_DATA.ComEnable == 0x00;
+		oneof varid = WPCN381U_COMB_NV_DATA.ComMode,
+			prompt      = STRING_TOKEN(STR_WB_COMB_SELECT_MODE),
+			help        = STRING_TOKEN(STR_SERIAL_MODE_HELP),
+			option text = STRING_TOKEN(STR_SERIAL_MODE1), value = 0, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+			option text = STRING_TOKEN(STR_SERIAL_MODE2), value = 1, flags = RESET_REQUIRED;
+		endoneof;
+	endif;  // suppressif WPCN381U_SIO_SETUP_VAR.ComBEnable == 0x00;
+endform;  // Serial 1 Form
+
+//////Parallel Port Form
+    form formid = AUTO_ID(WPCN381U_PARALLEL_FORM_ID),
+    title = STRING_TOKEN(STR_PARALLEL_FORM);
+
+		SUBTITLE(STRING_TOKEN(STR_PARALLEL_FORM))
+
+		SEPARATOR
+
+	oneof varid     = WPCN381U_LPT_NV_DATA.LptEnable,
+			prompt      = STRING_TOKEN(STR_WB_PARALLEL_PROMPT),
+			help        = STRING_TOKEN(STR_PARALLEL_PROMPT_HELP),
+			option text = STRING_TOKEN(STR_DISABLED), value = 0, flags = RESET_REQUIRED;
+   	        option text = STRING_TOKEN(STR_ENABLED), value = 1, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+        endoneof;
+
+	    suppressif  ideqval WPCN381U_LPT_NV_DATA.LptEnable == 0x0;
+	    	text
+			help   = STRING_TOKEN(STR_PARALLEL_PROMPT_HELP),
+			text   = STRING_TOKEN(STR_CURRENT_CONFIG),
+			text   = STRING_TOKEN(STR_WPCN381U_PARALLEL_CONFIG_VALUE),
+			flags  = 0,
+			key    = 0;
+		endif;  // suppressif SIO_SETUP_VAR.LptEnable == 0x0;
+
+		SEPARATOR
+
+	    suppressif  ideqval WPCN381U_LPT_NV_DATA.LptEnable == 0x0 
+					OR ideqval WPCN381U_LPT_NV_DATA.LptMode == 0x2 
+					OR ideqval WPCN381U_LPT_NV_DATA.LptMode == 0x3
+					OR ideqval WPCN381U_LPT_NV_DATA.LptMode == 0x4
+					OR ideqval WPCN381U_LPT_NV_DATA.LptMode == 0x5
+					OR ideqval WPCN381U_LPT_NV_DATA.LptMode == 0x6 ;
+			oneof varid     = WPCN381U_LPT_NV_DATA.LptPrsId,
+				prompt      = STRING_TOKEN(STR_WB_LPT_CHANGE_CONFIG),
+				help        = STRING_TOKEN(STR_SETTINGS_HELP),
+				option text = STRING_TOKEN(STR_AUTO), value = 0, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+    	        option text = STRING_TOKEN(STR_PARALLEL_SETTINGS1), value = 1, flags = RESET_REQUIRED;
+    	        option text = STRING_TOKEN(STR_PARALLEL_SETTINGS2), value = 2, flags = RESET_REQUIRED;
+    	        option text = STRING_TOKEN(STR_PARALLEL_SETTINGS3), value = 3, flags = RESET_REQUIRED;
+    	        option text = STRING_TOKEN(STR_PARALLEL_SETTINGS4), value = 4, flags = RESET_REQUIRED;
+    	        option text = STRING_TOKEN(STR_PARALLEL_SETTINGS5), value = 5, flags = RESET_REQUIRED;
+    	        option text = STRING_TOKEN(STR_PARALLEL_SETTINGS6), value = 6, flags = RESET_REQUIRED;
+	        endoneof;
+		endif;  // suppressif SIO_SETUP_VAR.LptEnable == 0x0;
+
+	    suppressif  ideqval WPCN381U_LPT_NV_DATA.LptEnable == 0x0 
+					OR ideqval WPCN381U_LPT_NV_DATA.LptMode == 0x0
+					OR ideqval WPCN381U_LPT_NV_DATA.LptMode == 0x1
+					OR ideqval WPCN381U_LPT_NV_DATA.LptMode == 0x2
+					OR ideqval WPCN381U_LPT_NV_DATA.LptMode == 0x3;
+			oneof varid     = WPCN381U_LPT_NV_DATA.LptPrsId,
+				prompt      = STRING_TOKEN(STR_WB_LPT_CHANGE_CONFIG),
+				help        = STRING_TOKEN(STR_SETTINGS_HELP),
+				option text = STRING_TOKEN(STR_AUTO), value = 0, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+    	        option text = STRING_TOKEN(STR_PARALLELECP_SETTINGS1), value = 1, flags = RESET_REQUIRED;
+    	        option text = STRING_TOKEN(STR_PARALLELECP_SETTINGS2), value = 2, flags = RESET_REQUIRED;
+    	        option text = STRING_TOKEN(STR_PARALLELECP_SETTINGS3), value = 3, flags = RESET_REQUIRED;
+		endoneof;
+		endif;  // suppressif SIO_SETUP_VAR.LptEnable == 0x0;
+
+	    suppressif  ideqval WPCN381U_LPT_NV_DATA.LptEnable == 0x0 
+					OR ideqval WPCN381U_LPT_NV_DATA.LptMode == 0x0
+					OR ideqval WPCN381U_LPT_NV_DATA.LptMode == 0x1
+					OR ideqval WPCN381U_LPT_NV_DATA.LptMode == 0x4
+					OR ideqval WPCN381U_LPT_NV_DATA.LptMode == 0x5
+					OR ideqval WPCN381U_LPT_NV_DATA.LptMode == 0x6;
+			oneof varid     = WPCN381U_LPT_NV_DATA.LptPrsId,
+				prompt      = STRING_TOKEN(STR_WB_LPT_CHANGE_CONFIG),
+				help        = STRING_TOKEN(STR_SETTINGS_HELP),
+				option text = STRING_TOKEN(STR_AUTO), value = 0, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+    	        option text = STRING_TOKEN(STR_PARALLELEPP_SETTINGS1), value = 1, flags = RESET_REQUIRED;
+    	        option text = STRING_TOKEN(STR_PARALLELEPP_SETTINGS2), value = 2, flags = RESET_REQUIRED;
+    	        option text = STRING_TOKEN(STR_PARALLELEPP_SETTINGS3), value = 3, flags = RESET_REQUIRED;
+    	        option text = STRING_TOKEN(STR_PARALLELEPP_SETTINGS4), value = 4, flags = RESET_REQUIRED;
+	        endoneof;
+		endif;  // suppressif SIO_SETUP_VAR.LptEnable == 0x0;
+		
+	    suppressif  ideqval WPCN381U_LPT_NV_DATA.LptEnable == 0x0;
+			oneof varid     = WPCN381U_LPT_NV_DATA.LptMode,
+				prompt      = STRING_TOKEN(STR_WB_LPT_SELECT_MODE),
+				help        = STRING_TOKEN(STR_PARALLEL_MODE_HELP),
+				option text = STRING_TOKEN(STR_PARALLEL_MODE1), value = 0, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+    	        option text = STRING_TOKEN(STR_PARALLEL_MODE2), value = 1, flags = RESET_REQUIRED;
+    	        option text = STRING_TOKEN(STR_PARALLEL_MODE3), value = 2, flags = RESET_REQUIRED;
+    	        option text = STRING_TOKEN(STR_PARALLEL_MODE4), value = 3, flags = RESET_REQUIRED;
+    	        option text = STRING_TOKEN(STR_PARALLEL_MODE5), value = 4, flags = RESET_REQUIRED;
+    	        option text = STRING_TOKEN(STR_PARALLEL_MODE6), value = 5, flags = RESET_REQUIRED;
+    	        option text = STRING_TOKEN(STR_PARALLEL_MODE7), value = 6, flags = RESET_REQUIRED;
+	        endoneof;
+		endif;  // suppressif SIO_SETUP_VAR.LptEnable == 0x0;
+
+    endform;  // Parralel Form
+

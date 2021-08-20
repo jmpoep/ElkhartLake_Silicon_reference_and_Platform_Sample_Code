@@ -1,0 +1,306 @@
+/**@file
+
+ @copyright
+  INTEL CONFIDENTIAL
+  Copyright 2009 - 2018 Intel Corporation.
+
+  The source code contained or described herein and all documents related to the
+  source code ("Material") are owned by Intel Corporation or its suppliers or
+  licensors. Title to the Material remains with Intel Corporation or its suppliers
+  and licensors. The Material may contain trade secrets and proprietary and
+  confidential information of Intel Corporation and its suppliers and licensors,
+  and is protected by worldwide copyright and trade secret laws and treaty
+  provisions. No part of the Material may be used, copied, reproduced, modified,
+  published, uploaded, posted, transmitted, distributed, or disclosed in any way
+  without Intel's prior express written permission.
+
+  No license under any patent, copyright, trade secret or other intellectual
+  property right is granted to or conferred upon you by disclosure or delivery
+  of the Materials, either expressly, by implication, inducement, estoppel or
+  otherwise. Any license under such intellectual property rights must be
+  express and approved by Intel in writing.
+
+  Unless otherwise agreed by Intel in writing, you may not remove or alter
+  this notice or any other notice embedded in Materials by Intel or
+  Intel's suppliers or licensors in any way.
+
+  This file contains a 'Sample Driver' and is licensed as such under the terms
+  of your license agreement with Intel or your vendor. This file may be modified
+  by the user, subject to the additional terms of the license agreement.
+
+@par Specification
+**/
+
+//
+// Name: AcpiSetup.uni
+//
+// Description: ACPI Form String Definitions.
+//
+//**********************************************************************
+/=#
+#include "VFR.uni"
+
+#string STR_ACPI_ENABLED                        #language en-US "Enabled"
+#string STR_ACPI_ENABLED                        #language fr "Enabled"
+
+#string STR_ACPI_DISABLED                       #language en-US "Disabled"
+#string STR_ACPI_DISABLED                       #language fr "Disabled"
+
+#string STR_ACPI_FORM                           #language en-US "ACPI Settings"
+#string STR_ACPI_FORM                           #language fr "ACPI Settings"
+
+#string STR_ACPI_FORM_HELP                      #language en-US "System ACPI Parameters"
+#string STR_ACPI_FORM_HELP                      #language fr "System ACPI Parameters"
+
+#string STR_ACPI_S3_PROMPT                      #language en-US "ACPI S3 Support"
+#string STR_ACPI_S3_PROMPT                      #language fr "ACPI S3 Support"
+
+#string STR_ACPI_VERSION_STRING                 #language en-US "ACPI Version"
+#string STR_ACPI_VERSION_HELP                   #language en-US "ACPI Version details"
+#string STR_ACPI_VERSION_VALUE                  #language en-US "N/A"
+
+#string STR_ACPI_S3_HELP                        #language en-US "Enable ACPI S3 support"
+#string STR_ACPI_S3_HELP                        #language fr "Enable ACPI S3 support"
+
+#string STR_BDAT_EN_PROMPT                      #language en-US "BDAT ACPI Table Support"
+#string STR_BDAT_EN_HELP                        #language en-US "Enables support for the BDAT ACPI table."
+
+#string STR_ACPI_50_ENABLE_PROMPT               #language en-US "ACPI 5.0 Support"
+#string STR_ACPI_50_ENABLE_HELP                 #language en-US " Enables ACPI 5.0 table"
+
+#string STR_ACPI_S4_PROMPT                      #language en-US "Enable Hibernation"
+#string STR_ACPI_S4_PROMPT                      #language fr "Enable Hibernation"
+
+#string STR_ACPI_S4_HELP                        #language en-US "Enables or Disables System ability to Hibernate (OS/S4 Sleep State). This option may not be effective with some OSs."
+#string STR_ACPI_S4_HELP                        #language fr "Enables or Disables System ability to Hibernate (OS/S4 Sleep State)."
+
+#string STR_ACPI_AUTO_PROMPT                    #language en-US "Enable ACPI Auto Configuration"
+#string STR_ACPI_AUTO_PROMPT                    #language fr "Enable ACPI Auto Configuration"
+
+#string STR_ACPI_AUTO_HELP                      #language en-US "Enables or Disables BIOS ACPI Auto Configuration."
+#string STR_ACPI_AUTO_HELP                      #language fr "Enables or Disables BIOS ACPI Auto Configuration."
+
+#string STR_S3_VIDEO_REPOST_PROMPT              #language en-US "S3 Video Repost"
+#string STR_S3_VIDEO_REPOST_HELP                #language en-US "On enabling, Video Option ROM will be dispatched during S3 resume."
+
+#string STR_ACPI_PCIE_NATIVE_PROMPT             #language en-US "Native PCIE Enable"
+#string STR_ACPI_PCIE_NATIVE_HELP               #language en-US "Bit - PCIe Native * control\n 0 - ~ Hot Plug\n 1 - SHPC Native Hot Plug control\n 2 - ~ Power Management Events\n 3 - PCIe Advanced Error Reporting control\n 4 - PCIe Capability Structure control\n 5 - Latency Tolerance Reporting control"
+
+#string STR_NATIVE_ASPM_PROMPT                  #language en-US "Native ASPM"
+#string STR_NATIVE_ASPM_HELP                    #language en-US "Enabled - OS Controlled ASPM, Disabled - BIOS Controlled ASPM"
+
+#string STR_GUID_FORWARD_PROMPT                 #language en-US "Guid Forward"
+#string STR_GUID_FORWARD_HELP                   #language en-US "Forward PPI/Protocol Guid, status code to scratch"
+
+#string STR_PTID_PROMPT                         #language en-US "PTID Support"
+#string STR_PTID_HELP                           #language en-US "PTID Support will be loaded if enabled."
+
+#string STR_PECI_ACCESS_PROMPT                  #language en-US "PECI Access Method"
+#string STR_PECI_ACCESS_HELP                    #language en-US "PECI Access Method is Direct I/O or ACPI"
+#string STR_PECI_ACCESS_IO                      #language en-US "Direct I/O"
+#string STR_PECI_ACCESS_ACPI                    #language en-US "ACPI"
+
+//
+// ACPI DEBUG strings
+//
+#string STR_ACPI_DEBUG_PROMPT                   #language en-US "ACPI Debug"
+#string STR_ACPI_DEBUG_HELP                     #language en-US "Open a memory buffer for storing debug strings. Reenter SETUP after enabling to see the buffer address. Use method ADBG to write strings to buffer."
+
+#string STR_ACPI_DEBUG_ADDRESS_HELP             #language en-US "Acpi Memory Buffer Address"
+#string STR_ACPI_DEBUG_ADDRESS_NAME             #language en-US "  Acpi Memory Buffer Address"
+#string STR_ACPI_DEBUG_ADDRESS_VALUE            #language en-US "N/A" //dynamically updated
+
+#string STR_SERIAL_ACPI_DEBUG_PROMPT            #language en-US "  Print to Serial Port"
+#string STR_SERIAL_ACPI_DEBUG_HELP              #language en-US "Print copy of ACPI debug logs to serial port"
+
+//
+// S5 RTC Wakeup
+//
+#string STR_WAKE_ON_RTC_PROMPT                  #language en-US "Wake System from S5 via RTC"
+#string STR_WAKE_ON_RTC_HELP                    #language en-US "Enable or disable System wake on alarm event. When enabled, System will wake on the hr::min::sec specified"
+
+//
+// Whea Support
+//
+#string STR_WHEA_SUPPORT_PROMPT                 #language en-US "Whea Driver Support"
+#string STR_WHEA_SUPPORT_PROMPT                 #language fr "Whea Driver Support"
+
+#string STR_WHEA_SUPPORT_HELP                   #language en-US "Enables or Disables Whea Driver Support. This option may be not effective with some OS."
+#string STR_WHEA_SUPPORT_HELP                   #language fr "Enables or Disables Whea Driver Support. This option may be not effective with some OS."
+#string STR_WHEA_ENABLED                        #language en-US "Enabled"
+#string STR_WHEA_DISABLED                       #language en-US "Disabled"
+
+#string STR_LOG_ERRORS_PROMPT                   #language en-US "Log Errors"
+#string STR_LOG_ERRORS_HELP                     #language en-US ""
+
+#string STR_PROC_LOG_PROMPT                     #language en-US "Processor Errors"
+#string STR_PROC_LOG_HELP                       #language en-US ""
+
+#string STR_SA_ERROR_PROMPT                     #language en-US "SA Errors"
+#string STR_SA_ERROR_HELP                       #language en-US ""
+
+#string STR_PCH_ERROR_PROMPT                    #language en-US "PCH Errors"
+#string STR_PCH_ERROR_HELP                      #language en-US ""
+
+#string STR_PCIE_LOG_PROMPT                     #language en-US "PCI-Ex Errors"
+#string STR_PCIE_LOG_HELP                       #language en-US ""
+
+#string STR_PLATFORM_LOG_PROMPT                 #language en-US "Platform Errors"
+#string STR_PLATFORM_LOG_HELP                   #language en-US ""
+
+#string STR_ENABLE_SERR_PROP_PROMPT             #language en-US "Enable SERR propagation"
+#string STR_ENABLE_SERR_PROP_HELP               #language en-US ""
+
+#string STR_ENABLE_PERR_PROP_PROMPT             #language en-US "Enable PERR propagation"
+#string STR_ENABLE_PERR_PROP_HELP               #language en-US ""
+
+#string STR_FATAL_ERRORS_PROMPT                 #language en-US "Fatal Errors"
+#string STR_FATAL_ERRORS_HELP                   #language en-US "Enable & escalate fatal errors to error pins."
+
+#string STR_UR_ERRORS_PROMPT                    #language en-US "Uncorrectable/Recoverable Non Fatal Errors"
+#string STR_UR_ERRORS_HELP                      #language en-US "Enable & escalate Uncorrectable/Recoverable to error pins."
+
+#string STR_CORRECTABLE_ERRORS_PROMPT           #language en-US "Correctable Errors"
+#string STR_CORRECTABLE_ERRORS_HELP             #language en-US "Enable & escalate Correctable Errors to error pins."
+
+#string STR_ERROR_GEN_LOG_PROMPT                #language en-US "Error Generation"
+#string STR_ERROR_GEN_LOG_HELP                  #language en-US "IIO Error Generation."
+
+#string STR_NOINBAND                            #language en-US "NoInband"
+#string STR_SMIPMI                              #language en-US "SMI/PMI"
+
+#string STR_ERR0                                #language en-US "Error0"
+#string STR_ERR1                                #language en-US "Error1"
+#string STR_ERR2                                #language en-US "Error2"
+#string STR_MCERR                               #language en-US "MCERR"
+
+#string STR_NO                                  #language en-US "No"
+#string STR_YES                                 #language en-US "Yes"
+
+#string STR_NULL_STRING                         #language en-US ""
+//
+// End Whea Support
+//
+#string STR_LOW_POWER_S0_IDLE                   #language en-US "Low Power S0 Idle Capability"
+#string STR_LOW_POWER_S0_IDLE_HELP              #language en-US "This variable determines if we enable ACPI Lower Power S0 Idle Capability (Mutually exclusive with Smart connect). While this is enabled, it also disable 8254 timer for SLP_S0 support."
+
+#string STR_PEP_CONFIGURATION                   #language en-US "PEP Constraints Configuration"
+#string STR_PEP_CONFIGURATION_HELP              #language en-US "Control which controllers get included in PEP constraint list"
+#string STR_PEP_CPU                             #language en-US "PEP CPU"
+#string STR_PEP_CPU_HELP                        #language en-US "Add CPU in PEP mitigation list"
+#string STR_PEP_GFX                             #language en-US "PEP Graphics"
+#string STR_PEP_GFX_HELP                        #language en-US "Add Gfx in PEP mitigation list"
+#string STR_PEP_IPU                             #language en-US "PEP IPU"
+#string STR_PEP_IPU_HELP                        #language en-US "Add IPU in PEP mitigation list"
+#string STR_PEP_PEG0                            #language en-US "PEP PEG0"
+#string STR_PEP_PEG0_HELP                       #language en-US "Add PEG0 in PEP Constraint list"
+#string STR_PEP_SATA                            #language en-US "PEP SATA"
+#string STR_PEP_SATA_HELP                       #language en-US "Add Storage device in PEP mitigation list"
+#string STR_PEP_SATA_ADAPTER_D0F1               #language en-US "Adapter D0/F1"
+#string STR_PEP_SATA_ADAPTER_D3                 #language en-US "Adapter D3"
+#string STR_PEP_SATA_NO_CONSTRAINT              #language en-US "No Constraint"
+#string STR_PEP_PCIE_STORAGE                    #language en-US "PEP PCIe Storage"
+#string STR_PEP_PCIE_STORAGE_HELP               #language en-US "Add PCIe Storage devices in PEP mitigation list"
+
+#string STR_PEP_UART0                           #language en-US "PEP UART0"
+#string STR_PEP_UART1                           #language en-US "PEP UART1"
+#string STR_PEP_UART2                           #language en-US "PEP UART2"
+#string STR_PEP_UART_HELP                       #language en-US "Add UART in PEP mitigation list"
+#string STR_PEP_SPI0                            #language en-US "PEP SPI0"
+#string STR_PEP_SPI1                            #language en-US "PEP SPI1"
+#string STR_PEP_SPI2                            #language en-US "PEP SPI2"
+#string STR_PEP_SPI_HELP                        #language en-US "Add SPI in PEP mitigation list"
+#string STR_PEP_I2C0                            #language en-US "PEP I2C0"
+#string STR_PEP_I2C1                            #language en-US "PEP I2C1"
+#string STR_PEP_I2C2                            #language en-US "PEP I2C2"
+#string STR_PEP_I2C3                            #language en-US "PEP I2C3"
+#string STR_PEP_I2C4                            #language en-US "PEP I2C4"
+#string STR_PEP_I2C5                            #language en-US "PEP I2C5"
+#string STR_PEP_I2C6                            #language en-US "PEP I2C6"
+#string STR_PEP_I2C7                            #language en-US "PEP I2C7"
+#string STR_PEP_I2C_HELP                        #language en-US "Adds I2C in PEP mitigation list"
+#string STR_PEP_XHCI                            #language en-US "PEP XHCI"
+#string STR_PEP_XHCI_HELP                       #language en-US "Add XHCI in PEP mitigation list"
+#string STR_PEP_AUDIO                           #language en-US "PEP Audio"
+#string STR_PEP_AUDIO_HELP                      #language en-US "Add Audio in PEP mitigation list"
+#string STR_PEP_EMMC                            #language en-US "PEP EMMC"
+#string STR_PEP_EMMC_HELP                       #language en-US "Add EMMC in PEP mitigation list"
+#string STR_PEP_SDXC                            #language en-US "PEP SDXC"
+#string STR_PEP_SDXC_HELP                       #language en-US "Add SDXC in PEP mitigation list"
+#string STR_PEP_WIGIG_F1                        #language en-US "PEP WIGIG F1"
+#string STR_PEP_WIGIG_F1_HELP                   #language en-US "Enable / Disable PEP F1 constraints for WiGig device"
+#string STR_PEP_CSME                            #language en-US "PEP CSME"
+#string STR_PEP_CSME_HELP                       #language en-US "Add CSME in PEP mitigation list"
+#string STR_PEP_GBE                             #language en-US "PEP LAN(GBE)"
+#string STR_PEP_GBE_HELP                        #language en-US "Add LAN(GBE) in PEP mitigation list"
+#string STR_PEP_THC0                            #language en-US "PEP THC0"
+#string STR_PEP_THC1                            #language en-US "PEP THC1"
+#string STR_PEP_THC_HELP                        #language en-US "Add THC in PEP mitigation list. Applies only if THCx has assigned port"
+#string STR_PEP_TCSS                            #language en-US "PEP TCSS"
+#string STR_PEP_TCSS_HELP                       #language en-US "Add TCSS IPs in PEP mitigation list"
+#string STR_PEP_ISI                             #language en-US "PEP ISI"
+#string STR_PEP_ISI_HELP                        #language en-US "Add ISI IPs in PEP mitigation list"
+#string STR_PEP_GBETSN                          #language en-US "PEP GBETSN"
+#string STR_PEP_GBETSN_HELP                     #language en-US "Add GBETSN IPs in PEP mitigation list"
+#string STR_PEP_PSE                             #language en-US "PEP PSE"
+#string STR_PEP_PSE_HELP                        #language en-US "Add PSE IPs in PEP mitigation list"
+#string STR_PEP_PSE_GBE                         #language en-US "PEP PSE GBE"
+#string STR_PEP_PSE_GBE_HELP                    #language en-US "Add PSE GBE IPs in PEP mitigation list"
+#string STR_PEP_PSE_DMA                         #language en-US "PEP PSE DMA"
+#string STR_PEP_PSE_DMA_HELP                    #language en-US "Add PSE DMA IPs in PEP mitigation list"
+#string STR_PEP_PSE_PWM                         #language en-US "PEP PSE PWM"
+#string STR_PEP_PSE_PWM_HELP                    #language en-US "Add PSE PWM IPs in PEP mitigation list"
+#string STR_PEP_PSE_ADC                         #language en-US "PEP PSE ADC"
+#string STR_PEP_PSE_ADC_HELP                    #language en-US "Add PSE ADC IPs in PEP mitigation list"
+#string STR_PEP_PSE_SPI                         #language en-US "PEP PSE SPI"
+#string STR_PEP_PSE_SPI_HELP                    #language en-US "Add PSE SPI IPs in PEP mitigation list"
+#string STR_PEP_PSE_I2C                         #language en-US "PEP PSE I2C"
+#string STR_PEP_PSE_I2C_HELP                    #language en-US "Add PSE I2C IPs in PEP mitigation list"
+#string STR_PEP_PSE_UART                        #language en-US "PEP PSE UART"
+#string STR_PEP_PSE_UART_HELP                   #language en-US "Add PSE UART IPs in PEP mitigation list"
+#string STR_PEP_PSE_I2S                         #language en-US "PEP PSE I2S"
+#string STR_PEP_PSE_I2S_HELP                    #language en-US "Add PSE I2S IPs in PEP mitigation list"
+#string STR_PEP_PSE_GPIO                        #language en-US "PEP PSE GPIO"
+#string STR_PEP_PSE_GPIO_HELP                   #language en-US "Add PSE GPIO IPs in PEP mitigation list"
+#string STR_PEP_PSE_CAN                         #language en-US "PEP PSE CAN"
+#string STR_PEP_PSE_CAN_HELP                    #language en-US "Add PSE CAN IPs in PEP mitigation list"
+#string STR_PEP_PSE_QEP                         #language en-US "PEP PSE QEP"
+#string STR_PEP_PSE_QEP_HELP                    #language en-US "Add PSE QEP IPs in PEP mitigation list"
+
+#string STR_NOTIFY_EC                           #language en-US "EC Notification"
+#string STR_NOTIFY_EC_HELP                      #language en-US "Sends EC notification of Low Power S0 Idle State"
+#string STR_DEBUG_LT_EC                         #language en-US "EC CS Debug Light"
+#string STR_DEBUG_LT_EC_HELP                    #language en-US "When EC enters Low Power S0 Idle State, the CAPS LOCK light will be turned on"
+#string STR_EC_LOWPOWER_MODE                    #language en-US "EC Low Power Mode"
+#string STR_EC_LOWPOWER_MODE_HELP               #language en-US "This option controls whether EC will go to Low power mode during Low Power S0 Idle State"
+#string STR_EC_DEBUG_LED                        #language en-US "EC Debug LED"
+#string STR_EC_DEBUG_LED_HELP                   #language en-US "When disabled all LEDs controlled by the EC are turned off to save power in CS"
+#string STR_EC_DEBUG_BASE_CS_PWR_POLICY         #language en-US "EC Base CS Pwr Policy"
+#string STR_EC_DEBUG_BASE_CS_PWR_POLICY_HELP    #language en-US "While in CS, this policy controls how the system behaves when the Base Battery is depleted."
+#string STR_FULLY_FUNCTIONAL                    #language en-US "Fully Functional"
+#string STR_BATTERY_SAVER                       #language en-US "Battery Saver"
+#string STR_SENSOR_STANDBY                      #language en-US "Sensor Standby"
+#string STR_SENSOR_STANDBY_HELP                 #language en-US "Enable/Disable Sensor standby mode"
+#string STR_PL1_LIMIT_CS                        #language en-US "CS PL1 Limit"
+#string STR_PL1_LIMIT_CS_HELP                   #language en-US "Limit PL1 (Power Limit 1) while in Connected Standby"
+#string STR_PL1_LIMIT_CS_VALUE                  #language en-US "CS PL1 Value"
+#string STR_PL1_LIMIT_CS_VALUE_HELP             #language en-US "PL1 value is in milliwatts with 125 step value"
+#string STR_HID_ENABLE_WARNING_POPUP            #language en-US "Enable Low Power S0 Idle State will also enable HID Event Filter Driver in Platform Settings"
+#string STR_LPIT_RESIDENCY_COUNTER_PROMPT       #language en-US "Lpit Residency Counter"
+#string STR_LPIT_RESIDENCY_COUNTER_HELP         #language en-US "Select Residency Counter"
+#string STR_SLP_S0_RESIDENCY_COUNTER            #language en-US "SLP S0"
+#string STR_C10_RESIDENCY_COUNTER               #language en-US "C10"
+
+#string STR_IRMT                                #language en-US "Intel Ready Mode Technology"
+#string STR_IRMT_HELP                           #language en-US "Enable/Disable Ready Mode support based on Windows Away-mode. Only on DT/AIO. "
+
+//
+// Reading SSDT from a file
+//
+#string STR_ACPI_SSDT_FROM_FILE                 #language en-US "SSDT table from file"
+
+#string STR_PCI_DELAY_OPTIMIZATION_ECR          #language en-US "PCI Delay Optimization"
+#string STR_PCI_DELAY_OPTIMIZATION_ECR_HELP     #language en-US "Experimental ACPI additions for FW latency optimizations"
+
+#string STR_PCI_MSI_ENABLED_IN_FADT             #language en-US "MSI enabled"
+#string STR_PCI_MSI_ENABLED_IN_FADT_HELP        #language en-US "When disabled, MSI support is disabled in FADT"

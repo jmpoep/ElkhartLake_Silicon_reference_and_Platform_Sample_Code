@@ -1,0 +1,131 @@
+//
+// This file contains a 'Sample Driver' and is licensed as such
+// under the terms of your license agreement with Intel or your
+// vendor.  This file may be modified by the user, subject to
+// the additional terms of the license agreement
+//
+/** @file
+ VFR file of Bluetooth LE Connection Manager Driver.
+
+Copyright (c) 2013 - 2017, Intel Corporation. All rights reserved.<BR>
+This software and associated documentation (if any) is furnished
+under a license and may only be used or copied in accordance
+with the terms of the license. Except as permitted by such
+license, no part of this software or documentation may be
+reproduced, stored in a retrieval system, or transmitted in any
+form or by any means without the express written consent of
+Intel Corporation.
+
+**/
+
+#include "BluetoothConnectionManagerHii.h"
+#include "BluetoothConnectionManagerVfr.h"
+
+formset
+  guid     = HII_BLUETOOTH_CONFIG_FORM_SET_GUID,
+  title    = STRING_TOKEN(STR_BLUETOOTH_FORM_SET_TITLE),
+  help     = STRING_TOKEN(STR_BLUETOOTH_FORM_SET_HELP),
+
+  //
+  //Bluetooth Manager Form.
+  //
+  form formid = BLUETOOTH_MANAGEMENT_FORM,
+       title  = STRING_TOKEN(STR_BLUETOOTH_MANAGEMENT_FORM_TITLE);
+
+    text
+      help   = STRING_TOKEN(STR_TEXT_ADDRESS_HELP),
+      text   = STRING_TOKEN(STR_ADDRESS_STRING),
+        text   = STRING_TOKEN(STR_ADDRESS_STRING_VALUE);
+
+    string
+              questionid = KEY_HOST_CONTROLLER_LOCAL_NAME,
+              prompt   = STRING_TOKEN(STR_NAME_STRING),
+              help     = STRING_TOKEN(STR_TEXT_NAME_HELP),
+              flags    = INTERACTIVE,
+              minsize  = 2,
+              maxsize  = 19,
+    endstring;
+
+    subtitle text = STRING_TOKEN(STR_NULL_STRING);
+
+    goto BLUETOOTH_DEVICE_MANAGEMENT_FORM,
+      prompt = STRING_TOKEN(STR_GOTO_DEVICE_MANAGEMENT_FORM),
+      help   = STRING_TOKEN(STR_GOTO_DEVICE_MANAGEMENT_HELP),
+      flags   = INTERACTIVE,
+      key     = KEY_GOTO_DEVICE_MANAGER;
+  endform;
+
+
+  //
+  // Device manager form.
+  //
+  form formid = BLUETOOTH_DEVICE_MANAGEMENT_FORM,
+       title  = STRING_TOKEN(STR_DEVICE_MANAGEMENT_FORM_TITLE);
+
+    label LABEL_BLUETOOTH_SCAN;
+    label LABEL_BLUETOOTH_SCAN_END;
+
+    subtitle text = STRING_TOKEN(STR_NULL_STRING);
+
+    subtitle text = STRING_TOKEN(STR_PAIRED_DEVICE_STRING);
+
+    label LABEL_BLUETOOTH_PAIRED_DEVICE_LIST;
+    label LABEL_BLUETOOTH_PAIRED_END;
+
+    //
+    // Select action opcode, because it can display nothing in the form.
+    //
+    action
+             questionid = KEY_REFRESH_DEVICE_ID,
+             prompt   = STRING_TOKEN(STR_NULL_STRING),
+             help     = STRING_TOKEN(STR_NULL_STRING),
+             flags    = INTERACTIVE,
+             config   = STRING_TOKEN(STR_NULL_STRING),
+             refreshguid = HII_IFR_REFRESH_REMOT_DEV_GUID,
+    endaction;
+
+    subtitle text = STRING_TOKEN(STR_AVAILABLE_DEVICE_STRING);
+
+    label LABEL_BLUETOOTH_AVAILABLE_DEVICE_LIST;
+    label LABEL_BLUETOOTH_AVAILABLE_END;
+
+  endform;
+
+  //
+  // Remove Device Info form.
+  //
+  form formid = BLUETOOTH_REMOTE_DEVICE_FORM,
+       title  = STRING_TOKEN(STR_REMOTE_DEVICE_FORM_TITLE);
+
+  grayoutif TRUE;
+
+    text
+      help   = STRING_TOKEN(STR_TEXT_NAME_HELP),
+      text   = STRING_TOKEN(STR_NAME_STRING),
+        text   = STRING_TOKEN(STR_NAME_STRING_VALUE);
+
+    text
+      help   = STRING_TOKEN(STR_TEXT_ADDRESS_HELP),
+      text   = STRING_TOKEN(STR_ADDRESS_STRING),
+        text   = STRING_TOKEN(STR_REMOTE_ADDRESS_STRING_VALUE);
+
+    text
+      help   = STRING_TOKEN(STR_TEXT_STATE_HELP),
+      text   = STRING_TOKEN(STR_STATE_STRING),
+        text   = STRING_TOKEN(STR_STATE_STRING_VALUE);
+
+    subtitle text = STRING_TOKEN(STR_NULL_STRING);
+
+    text
+      help   = STRING_TOKEN(STR_AVAILABLE_SERVICE_HELP),
+      text   = STRING_TOKEN(STR_AVAILABLE_SERVICE);
+
+    label LABEL_BLUETOOTH_AVAILABLE_SERVICE_LIST;
+    label LABEL_BLUETOOTH_AVAILABLE_SERVICE_END;
+
+  endif;
+
+  endform;
+
+endformset;
+

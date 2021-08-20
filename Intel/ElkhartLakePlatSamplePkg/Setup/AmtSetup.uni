@@ -1,0 +1,153 @@
+/**@file
+
+ @copyright
+  INTEL CONFIDENTIAL
+  Copyright 2009 - 2019 Intel Corporation.
+
+  The source code contained or described herein and all documents related to the
+  source code ("Material") are owned by Intel Corporation or its suppliers or
+  licensors. Title to the Material remains with Intel Corporation or its suppliers
+  and licensors. The Material may contain trade secrets and proprietary and
+  confidential information of Intel Corporation and its suppliers and licensors,
+  and is protected by worldwide copyright and trade secret laws and treaty
+  provisions. No part of the Material may be used, copied, reproduced, modified,
+  published, uploaded, posted, transmitted, distributed, or disclosed in any way
+  without Intel's prior express written permission.
+
+  No license under any patent, copyright, trade secret or other intellectual
+  property right is granted to or conferred upon you by disclosure or delivery
+  of the Materials, either expressly, by implication, inducement, estoppel or
+  otherwise. Any license under such intellectual property rights must be
+  express and approved by Intel in writing.
+
+  Unless otherwise agreed by Intel in writing, you may not remove or alter
+  this notice or any other notice embedded in Materials by Intel or
+  Intel's suppliers or licensors in any way.
+
+  This file contains a 'Sample Driver' and is licensed as such under the terms
+  of your license agreement with Intel or your vendor. This file may be modified
+  by the user, subject to the additional terms of the license agreement.
+
+@par Specification
+**/
+
+//
+// Name:        AmtSetup.UNI
+//
+// Description: AMT Form String Definitions.
+//
+//**********************************************************************
+//**********************************************************************
+/=#
+
+#include "VFR.uni"
+
+#string STR_ENABLED                                        #language en-US  "Enabled"
+#string STR_DISABLED                                       #language en-US  "Disabled"
+
+#string STR_AMT_FORM                                       #language en-US  "AMT Configuration"
+#string STR_AMT_FORM_HELP                                  #language en-US  "Configure Intel(R) Active Management Technology Parameters"
+
+//---------------------------------------------------------------------------
+// AMT Configuration
+//---------------------------------------------------------------------------
+
+#string STR_AMT_USB_PROVISION_PROMPT                       #language en-US  "USB Provisioning of AMT"
+#string STR_AMT_USB_PROVISION_HELP                         #language en-US  "Enable/Disable of AMT USB Provisioning."
+
+//---------------------------------------------------------------------------
+// CIRA Configuration
+//---------------------------------------------------------------------------
+
+#string STR_AMT_CIRA_CONFIGURATION_FORM                    #language en-US  "CIRA Configuration"
+#string STR_AMT_CIRA_CONFIGURATION_FORM_HELP               #language en-US  "Configure Remote Assistance Process parameters."
+
+#string STR_AMT_CIRA_REQUEST_PROMPT                        #language en-US  "Activate Remote Assistance Process"
+#string STR_AMT_CIRA_REQUEST_HELP                          #language en-US  "Trigger CIRA boot\n\nNote:\nNetwork Access must be activated first from MEBx Setup."
+
+#string STR_AMT_CIRA_TIMEOUT_PROMPT                        #language en-US  "CIRA Timeout"
+#string STR_AMT_CIRA_TIMEOUT_HELP                          #language en-US  "OEM defined timeout for MPS connection to be established.\n  0 - use the default timeout value of 60 seconds. \n  255 - MEBx waits until the connection succeeds"
+
+//---------------------------------------------------------------------------
+// ASF Configuration
+//---------------------------------------------------------------------------
+
+#string STR_ASF_CONFIGURATION_FORM                         #language en-US  "ASF Configuration"
+#string STR_ASF_CONFIGURATION_FORM_HELP                    #language en-US  "Configure Alert Standard Format parameters."
+
+#string STR_ASF_PET_PROGRESS_PROMPT                        #language en-US  "PET Progress"
+#string STR_ASF_PET_PROGRESS_HELP                          #language en-US  "Enable/Disable PET Events Progress to receive PET Events."
+
+#string STR_ASF_WATCHDOG_PROMPT                            #language en-US  "WatchDog"
+#string STR_ASF_WATCHDOG_HELP                              #language en-US  "Enable/Disable WatchDog Timer."
+
+#string STR_ASF_WATCHDOG_TIMER_OS_PROMPT                   #language en-US  "OS Timer"
+#string STR_ASF_WATCHDOG_TIMER_OS_HELP                     #language en-US  "Set OS watchdog timer."
+
+#string STR_ASF_WATCHDOG_TIMER_BIOS_PROMPT                 #language en-US  "BIOS Timer"
+#string STR_ASF_WATCHDOG_TIMER_BIOS_HELP                   #language en-US  "Set BIOS watchdog timer."
+
+#string STR_ASF_SENSORS_TABLE_PROMPT                       #language en-US  "ASF Sensors Table"
+#string STR_ASF_SENSORS_TABLE_HELP                         #language en-US  "Adds ASF Sensor Table into ASF! ACPI Table"
+
+//---------------------------------------------------------------------------
+// Secure Erase Configuration
+//---------------------------------------------------------------------------
+
+#string STR_ASF_SECURE_ERASE_FORM                          #language en-US  "Secure Erase Configuration"
+#string STR_ASF_SECURE_ERASE_FORM_HELP                     #language en-US  "Secure Erase configuration menu"
+
+#string STR_SECURE_ERASE_MODE_PROMPT                       #language en-US  "Secure Erase mode"
+#string STR_SECURE_ERASE_MODE_HELP                         #language en-US  "Change Secure Erase module behavior:\nSimulated: Performs SE flow without erasing SSD\nReal: Erase SSD."
+#string STR_SECURE_ERASE_MODE_SIMULATED                    #language en-US  "Simulated"
+#string STR_SECURE_ERASE_MODE_REAL                         #language en-US  "Real"
+
+#string STR_SECURE_ERASE_FORCE_PROMPT                      #language en-US  "Force Secure Erase"
+#string STR_SECURE_ERASE_FORCE_HELP                        #language en-US  "Force Secure Erase on next boot"
+
+
+//---------------------------------------------------------------------------
+// OEM Flags Configuration
+//---------------------------------------------------------------------------
+
+#string STR_MEBX_OEM_FLAGS_FORM                            #language en-US  "OEM Flags Settings"
+#string STR_MEBX_OEM_FLAGS_FORM_HELP                       #language en-US  "Configure OEM Flags"
+
+#string STR_MEBX_HOTKEY_PRESSED_PROMPT                     #language en-US  "MEBx hotkey Pressed"
+#string STR_MEBX_HOTKEY_PRESSED_HELP                       #language en-US  "OEMFLag Bit 1:\nEnable automatic MEBx hotkey press."
+
+#string STR_MEBX_SELECTION_SCREEN_PROMPT                   #language en-US  "MEBx Selection Screen"
+#string STR_MEBX_SELECTION_SCREEN_HELP                     #language en-US  "OEMFLag Bit 2:\nEnable MEBx selection screen with 2 options:\nPress 1 to enter ME Configuration Screens\nPress 2 to initiate a remote connection\nNote:\n\nNetwork Access must be activated from MEBx Setup for this screen to be displayed."
+
+#string STR_MEBX_HIDE_CONFIRMATION_UNCONFIGURE_ME_PROMPT   #language en-US  "Hide Unconfigure ME Confirmation Prompt"
+#string STR_MEBX_HIDE_CONFIRMATION_UNCONFIGURE_ME_HELP     #language en-US  "OEMFlag Bit 6:\nHide Unconfigure ME confirmation prompt when attempting ME unconfiguration."
+
+#string STR_MEBX_DEBUG_MSG_PROMPT                          #language en-US  "MEBx OEM Debug Menu Enable"
+#string STR_MEBX_DEBUG_MSG_HELP                            #language en-US  "OEMFlag Bit 14:\nEnable OEM debug menu in MEBx."
+
+#string STR_MEBX_UNCONFIGURE_ME_PROMPT                     #language en-US  "Unconfigure ME"
+#string STR_MEBX_UNCONFIGURE_ME_HELP                       #language en-US  "OEMFlag Bit 15:\nUnconfigure ME with resetting MEBx password to default."
+
+//---------------------------------------------------------------------------
+// MEBx Resolution Configuration
+//---------------------------------------------------------------------------
+
+#string STR_MEBX_RESOLUTION_FORM                           #language en-US  "MEBx Resolution Settings"
+#string STR_MEBX_RESOLUTION_FORM_HELP                      #language en-US  "Resolution settings for MEBx display modes"
+
+#string STR_MEBX_NONUI_MODE_PROMPT                         #language en-US  "Non-UI Mode Resolution"
+#string STR_MEBX_NONUI_MODE_HELP                           #language en-US  "Resolution for non-UI text mode."
+
+#string STR_MEBX_UI_MODE_PROMPT                            #language en-US  "UI Mode Resolution"
+#string STR_MEBX_UI_MODE_HELP                              #language en-US  "Resolution for UI text mode."
+
+#string STR_MEBX_GRAPHICS_MODE_PROMPT                      #language en-US  "Graphics Mode Resolution"
+#string STR_MEBX_GRAPHICS_MODE_HELP                        #language en-US  "Resolution for graphics mode."
+
+#string STR_MEBX_MODE_AUTO                                 #language en-US  "Auto"
+#string STR_MEBX_TEXT_80_25                                #language en-US  "80x25"
+#string STR_MEBX_TEXT_100_31                               #language en-US  "100x31"
+
+#string STR_MEBX_GRAPHICS_640_480                          #language en-US  "640x480"
+#string STR_MEBX_GRAPHICS_800_600                          #language en-US  "800x600"
+#string STR_MEBX_GRAPHICS_1024_768                         #language en-US  "1024x768"

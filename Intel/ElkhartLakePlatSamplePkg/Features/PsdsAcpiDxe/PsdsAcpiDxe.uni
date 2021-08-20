@@ -1,0 +1,13 @@
+// /** @file
+// PsdsAcpiTable Localized Strings and Content
+//
+// Copyright (c) 2019 - 2020, Intel Corporation. All rights reserved.<BR>
+//
+//
+// **/
+
+#string STR_PROPERTIES_MODULE_NAME
+#language en-US
+"PSDS (Platform Security Discovery) driver"
+
+

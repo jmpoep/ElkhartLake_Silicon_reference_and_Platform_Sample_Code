@@ -1,0 +1,116 @@
+/**@file
+
+ @copyright
+  INTEL CONFIDENTIAL
+  Copyright 2009 - 2016 Intel Corporation.
+
+  The source code contained or described herein and all documents related to the
+  source code ("Material") are owned by Intel Corporation or its suppliers or
+  licensors. Title to the Material remains with Intel Corporation or its suppliers
+  and licensors. The Material may contain trade secrets and proprietary and
+  confidential information of Intel Corporation and its suppliers and licensors,
+  and is protected by worldwide copyright and trade secret laws and treaty
+  provisions. No part of the Material may be used, copied, reproduced, modified,
+  published, uploaded, posted, transmitted, distributed, or disclosed in any way
+  without Intel's prior express written permission.
+
+  No license under any patent, copyright, trade secret or other intellectual
+  property right is granted to or conferred upon you by disclosure or delivery
+  of the Materials, either expressly, by implication, inducement, estoppel or
+  otherwise. Any license under such intellectual property rights must be
+  express and approved by Intel in writing.
+
+  Unless otherwise agreed by Intel in writing, you may not remove or alter
+  this notice or any other notice embedded in Materials by Intel or
+  Intel's suppliers or licensors in any way.
+
+  This file contains a 'Sample Driver' and is licensed as such under the terms
+  of your license agreement with Intel or your vendor. This file may be modified
+  by the user, subject to the additional terms of the license agreement.
+
+@par Specification
+**/
+
+//
+// Name:	PciBusSetup.uni
+//
+// Description:	Generic PCI Form String Definitions.
+//
+//**********************************************************************
+/=#
+#include "VFR.uni"
+#string STR_PCI_FORM					#language en-US "PCI Subsystem Settings"
+
+#string STR_PCI_DRIVER_VER_PROMPT                       #language en-US "PCI Bus Driver Version"
+#string STR_PCI_DRIVER_VER                              #language en-US "00.00"
+#string STR_PCI_FORM_HELP                               #language en-US "PCI, PCI-X and PCI Express Settings."
+
+#string STR_PCI_LATENCY_PROMPT                          #language en-US "PCI Latency Timer"
+#string STR_PCIX_LATENCY_PROMPT                         #language en-US "PCI-X Latency Timer"
+#string STR_PCI_LATENCY_HELP                            #language en-US "Value to be programmed into PCI Latency Timer Register."
+
+#string STR_PCI_SETTINGS                                #language en-US "PCI Settings"
+#string STR_PCIX                                        #language en-US "PCI-X Settings"
+#string STR_PCIE_DEVICE					#language en-US "PCI Express Device Settings"
+#string STR_PCIE_LINK					#language en-US "PCI Express Link Settings"
+
+#string STR_PCI_32			 	        #language en-US "32 PCI Bus Clocks"
+#string STR_PCI_64			 	        #language en-US "64 PCI Bus Clocks"
+#string STR_PCI_96			 	        #language en-US "96 PCI Bus Clocks"
+#string STR_PCI_128			 	        #language en-US "128 PCI Bus Clocks"
+#string STR_PCI_160			 	        #language en-US "160 PCI Bus Clocks"
+#string STR_PCI_192			 	        #language en-US "192 PCI Bus Clocks"
+#string STR_PCI_224			 	        #language en-US "224 PCI Bus Clocks"
+#string STR_PCI_248			 	        #language en-US "248 PCI Bus Clocks"
+
+#string STR_PCI_OPTION_ROM_POST                         #language en-US "PCI ROM Priority"
+#string STR_PCI_OPTION_ROM_POST_HELP                    #language en-US "In case of multiple Option ROMs (Legacy and EFI Compatible), specifies what PCI Option rom to launch."
+
+#string STR_PCI_LEGACY                                  #language en-US "Legacy ROM"
+#string STR_PCI_EFI         	                        #language en-US "EFI Compatible ROM"
+
+#string STR_PCI_INSTALL_EXT_OPROM                       #language en-US "Install Ext OpRom Before BIOS Setup"
+#string STR_PCI_INSTALL_EXT_OPROM_HELP                  #language en-US "Install Ext OpRom for Storage or Other device before BIOS Setup, That we can get the Ext PCIE Card OpRom Setup Menu and have chance to enter into it"
+#string STR_EXT_STORAGE_OPROM                           #language en-US "Ext PCIE Storage OpRom"
+#string STR_EXT_OTHER_OPROM                             #language en-US "Ext PCIE Other OpRom"
+#string STR_EXT_BOTH_OPROM                              #language en-US "Ext PCIE Both Storage and Other OpRom"
+
+#string STR_PCIE_RELAXEDORDERING_PROMPT              	#language en-US "Relaxed Ordering"
+#string STR_PCIE_RELAXEDORDERING_HELP	                #language en-US "Enables or Disables Pci Express Device Relaxed Ordering."
+
+#string STR_PCIE_NOSNOOP_PROMPT                         #language en-US "No Snoop"
+#string STR_PCIE_NOSNOOP_HELP                           #language en-US "Enables or Disables Pci Express Device No Snoop option."
+
+#string STR_PCIE_MAXPAYLOAD_PROMPT                      #language en-US "Maximum Payload"
+#string STR_PCIE_MAXPAYLOAD_HELP                        #language en-US "Set Maximum Payload of Pci Express Device or allow System BIOS select the value."
+
+#string STR_PCIE_MAXREADREQUEST_PROMPT	                #language en-US "Maximum Read Request"
+#string STR_PCIE_MAXREADREQUEST_HELP                    #language en-US "Set Maximum Read Request Size of Pci Express Device or allow System BIOS select the value."
+
+#string STR_MP128					#language en-US "128 Bytes"
+#string STR_MP256					#language en-US "256 Bytes"
+#string STR_MP512					#language en-US "512 Bytes"
+#string STR_MP1024					#language en-US "1024 Bytes"
+#string STR_MP2048					#language en-US "2048 Bytes"
+#string STR_MP4096					#language en-US "4096 Bytes"
+
+#string STR_PCIE_ASPM_PROMPT                            #language en-US "ASPM Support"
+#string STR_PCIE_ASPM_HELP                              #language en-US "Set the ASPM Level: Force L0 - Force all links to L0 State : AUTO - BIOS auto configure : DISABLE - Disables ASPM"
+
+#string STR_PCIE_LINK_WARN1                             #language en-US "Set the ASPM Level supported by the PCI-E Link,"
+#string STR_PCIE_LINK_WARN2                             #language en-US "         or allow BIOS to set value."
+#string STR_PCIE_LINK_WARN3                             #language en-US "WARNING: Enabling ASPM may cause some"
+#string STR_PCIE_LINK_WARN4                             #language en-US "         PCI-E devices to fail"
+
+#string STR_FORCE_L0					#language en-US "Force L0"
+
+#string STR_PCIE_EXTD_SYNCH_PROMPT                      #language en-US "Extended Synch"
+#string STR_PCIE_EXTD_SYNCH_HELP                        #language en-US "If ENABLED allows generation of Extended Synchronization patterns."
+
+#string STR_PCIE_EXTTAGFLD_PROMPT                       #language en-US "Extended Tag"
+#string STR_PCIE_EXTTAGFLD_HELP                         #language en-US "If ENABLED allows Device to use 8-bit TAG field as a requester."
+
+#string STR_EXTERNAL_DMA_ALLOWED                        #language en-US "External DMA Allowed On Boot"
+#string STR_EXTERNAL_DMA_ALLOWED_HELP                   #language en-US "External DMA Allowed On Boot for devices such as 1394, PCMCIA, & CardBus"
+#string STR_NO                                          #language en-US "No"
+#string STR_YES                                         #language en-US "Yes"

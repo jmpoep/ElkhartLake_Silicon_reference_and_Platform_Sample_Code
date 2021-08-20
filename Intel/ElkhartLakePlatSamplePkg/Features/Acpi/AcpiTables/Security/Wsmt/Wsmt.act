@@ -1,0 +1,99 @@
+/** @file
+
+ @copyright
+  INTEL CONFIDENTIAL
+  Copyright 2016 - 2017 Intel Corporation.
+
+  The source code contained or described herein and all documents related to the
+  source code ("Material") are owned by Intel Corporation or its suppliers or
+  licensors. Title to the Material remains with Intel Corporation or its suppliers
+  and licensors. The Material may contain trade secrets and proprietary and
+  confidential information of Intel Corporation and its suppliers and licensors,
+  and is protected by worldwide copyright and trade secret laws and treaty
+  provisions. No part of the Material may be used, copied, reproduced, modified,
+  published, uploaded, posted, transmitted, distributed, or disclosed in any way
+  without Intel's prior express written permission.
+
+  No license under any patent, copyright, trade secret or other intellectual
+  property right is granted to or conferred upon you by disclosure or delivery
+  of the Materials, either expressly, by implication, inducement, estoppel or
+  otherwise. Any license under such intellectual property rights must be
+  express and approved by Intel in writing.
+
+  Unless otherwise agreed by Intel in writing, you may not remove or alter
+  this notice or any other notice embedded in Materials by Intel or
+  Intel's suppliers or licensors in any way.
+
+  This file contains a 'Sample Driver' and is licensed as such under the terms
+  of your license agreement with Intel or your vendor. This file may be modified
+  by the user, subject to the additional terms of the license agreement.
+
+@par Specification Reference:
+**/
+
+
+   //
+   // Statements that include other files
+   //
+
+#include "Wsmt.h"
+
+   //
+   // Windows SMM Security Mitigations Table
+   // Please modify all values in Wsmt.h only.
+   //
+
+ACPI_WINDOWS_SMM_SECURITY_MITIGATIONS_TABLE Wsmt = {
+  //
+  // Header
+  //
+  {
+    ACPI_WSMT_SIGNATURE,
+    ACPI_WSMT_LENGTH,
+    EFI_ACPI_WSMT_REVISION,
+
+    //
+    // Checksum will be updated at runtime
+    //
+    0x00,
+
+    //
+    // It is expected that these values will be updated at runtime
+    //
+    { ' ', ' ', ' ', ' ', ' ', ' ' },
+    0,
+    ACPI_OEM_WSMT_REVISION,
+    0,
+    0
+  },
+  //
+  // Protection Flags
+  //
+  {
+    {0}
+  }
+
+};
+
+#if defined (__GNUC__)
+VOID*
+ReferenceAcpiTable (
+ VOID
+ )
+
+{
+ //
+ // Reference the table being generated to prevent the optimizer from removing the
+ // data structure from the exeutable
+ //
+ return (VOID*)&Wsmt;
+}
+#else
+VOID
+main (
+ VOID
+ )
+
+{
+}
+#endif

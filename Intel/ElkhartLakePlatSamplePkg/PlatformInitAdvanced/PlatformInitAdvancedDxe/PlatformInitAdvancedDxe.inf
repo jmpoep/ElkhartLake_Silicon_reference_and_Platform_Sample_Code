@@ -1,0 +1,136 @@
+### @file
+# Component information file for the Platform Init Advanced DXE module.
+#
+#@copyright
+#  INTEL CONFIDENTIAL
+#  Copyright 2014 - 2019 Intel Corporation.
+#
+#  The source code contained or described herein and all documents related to the
+#  source code ("Material") are owned by Intel Corporation or its suppliers or
+#  licensors. Title to the Material remains with Intel Corporation or its suppliers
+#  and licensors. The Material may contain trade secrets and proprietary and
+#  confidential information of Intel Corporation and its suppliers and licensors,
+#  and is protected by worldwide copyright and trade secret laws and treaty
+#  provisions. No part of the Material may be used, copied, reproduced, modified,
+#  published, uploaded, posted, transmitted, distributed, or disclosed in any way
+#  without Intel's prior express written permission.
+#
+#  No license under any patent, copyright, trade secret or other intellectual
+#  property right is granted to or conferred upon you by disclosure or delivery
+#  of the Materials, either expressly, by implication, inducement, estoppel or
+#  otherwise. Any license under such intellectual property rights must be
+#  express and approved by Intel in writing.
+#
+#  Unless otherwise agreed by Intel in writing, you may not remove or alter
+#  this notice or any other notice embedded in Materials by Intel or
+#  Intel's suppliers or licensors in any way.
+#
+#  This file contains a 'Sample Driver' and is licensed as such under the terms
+#  of your license agreement with Intel or your vendor. This file may be modified
+#  by the user, subject to the additional terms of the license agreement.
+#
+# @par Specification Reference:
+#
+# @par Glossary:
+###
+
+[Defines]
+  INF_VERSION                    = 0x00010017
+  BASE_NAME                      = PlatformInitAdvancedDxe
+  FILE_GUID                      = C5046EFD-7BC3-4206-987C-32DA45026E6D
+  VERSION_STRING                 = 1.0
+  MODULE_TYPE                    = DXE_DRIVER
+  ENTRY_POINT                    = PlatformInitAdvancedDxeEntryPoint
+
+[LibraryClasses]
+  UefiDriverEntryPoint
+  UefiRuntimeServicesTableLib
+  UefiBootServicesTableLib
+  IoLib
+  HobLib
+  UefiLib
+  DebugLib
+  GpioLib
+  PmcLib
+  BaseMemoryLib
+  MemoryAllocationLib
+  S3BootScriptLib
+  PlatformNvRamHookLib
+  CpuPlatformLib
+  ConfigBlockLib
+  Tpm2CommandLib
+  BootGuardLib
+  BootGuardRevocationLib
+  DxeSmbiosProcessorLib
+  DxeFirmwareVersionInfoLib
+  DxeSmbiosDataHobLib
+  DxeSmbiosFirmwareVersionInfoLib
+  PostCodeLib
+  PciSegmentLib
+  TpmMeasurementLib
+  MtrrLib
+  SiMtrrLib
+
+[Packages]
+  MdePkg/MdePkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+  UefiCpuPkg/UefiCpuPkg.dec
+  ClientSiliconPkg/ClientSiliconPkg.dec
+  ElkhartLakePlatSamplePkg/PlatformPkg.dec
+  ClientOneSiliconPkg/SiPkg.dec
+  ClientCommonPkg/ClientCommonPkg.dec
+  SecurityPkg/SecurityPkg.dec
+  ElkhartLakeBoardPkg/BoardPkg.dec
+
+[Pcd]
+  gClientCommonModuleTokenSpaceGuid.PcdCsmEnable                   ## CONSUMES
+  gBoardModuleTokenSpaceGuid.PcdDDISelection
+  gSiPkgTokenSpaceGuid.PcdSoftwareGuardEnable                      ## CONSUMES
+  gEfiSecurityPkgTokenSpaceGuid.PcdTpmInstanceGuid                 ## CONSUMES
+  gPlatformModuleTokenSpaceGuid.PcdSinitAcmBinEnable
+  gSiPkgTokenSpaceGuid.PcdBfxEnable                                ## CONSUMES
+  gBoardModuleTokenSpaceGuid.PcdDimmPopulationError
+
+[Sources]
+  PlatformInitAdvancedDxe.c
+  PlatformInitAdvancedDxe.h
+  SaPlatformInitAdvancedDxe.c
+  GfxInt15Interface.c
+
+[Protocols]
+  gCpuInfoProtocolGuid                          ## CONSUMES
+  gEdkiiVariableLockProtocolGuid                ## CONSUMES
+  gSaPolicyProtocolGuid                         ## CONSUMES
+  gGopPolicyProtocolGuid                        ## CONSUMES
+  gEfiFirmwareVolume2ProtocolGuid               ## CONSUMES
+  gLegacyUsbProtocolGuid                        ## CONSUMES
+  gEfiPciEnumerationCompleteProtocolGuid        ## CONSUMES
+  gEfiCpuArchProtocolGuid                       ## CONSUMES
+  gEfiResetNotificationProtocolGuid             ## CONSUMES
+  gEfiMpServiceProtocolGuid                     ## CONSUMES
+  gEfiUfsDeviceConfigProtocolGuid               ## CONSUMES
+
+[Guids]
+  gEfiEndOfDxeEventGroupGuid                    ## CONSUMES
+  gEpcBiosDataGuid                              ## SOMETIMES_PRODUCES ## Variable
+  gEpcOsDataGuid                                ## SOMETIMES_PRODUCES ## Variable
+  gSetupVariableGuid                            ## CONSUMES
+  gSaSetupVariableGuid                          ## CONSUMES
+  gCpuSetupVariableGuid                         ## CONSUMES
+  gSinitSvnGuid                                 ## CONSUMES ## GUID
+  gGraphicsDxeConfigGuid                        ## CONSUMES
+  gMiscDxeConfigGuid                            ## CONSUMES
+  gEfiSecureBootEnableDisableGuid               ## CONSUMES
+  gSgxPolicyStatusGuid                          ## SOMETIMES_PRODUCES ## Variable
+  gEfiTpmDeviceInstanceNoneGuid                 ## CONSUMES
+  gEfiTpmDeviceInstanceTpm12Guid                ## CONSUMES
+  gTxtInfoHobGuid                               ## CONSUMES
+  gSinitModuleGuid                              ## CONSUMES
+  gITbtInfoHobGuid                              ## CONSUMES
+  gSaDataHobGuid                                ## CONSUMES
+
+[Depex]
+  gCpuInfoProtocolGuid                AND
+  gEfiVariableArchProtocolGuid        AND
+  gEfiVariableWriteArchProtocolGuid   AND
+  gDxePolicyProtocolGuid

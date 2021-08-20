@@ -1,0 +1,38 @@
+rsp
+00f0
+f ds:100,ffff ff
+n ..\..\out16\crcpm32.bin
+l
+rip
+0000
+a 0000
+mov ax, ds
+add ax, 1000
+mov ds, ax
+sub ax, 1000
+mov ds, ax
+
+t3
+f ds:0,100 ff
+
+e ds:f0 ea 00 00 00 f0
+
+t2
+
+rbx
+1
+rcx
+0
+n ..\..\out16\f000.bin
+w cs:100
+q
+
+#--------------------------------------------------------------------
+# This is the input file to DEBUG.EXE for padding the binary so
+# the result is exactly 64KB, placed at (4GB - 64KB).
+#
+#  e ds:f0 ea 00 00 00 f0 <-- JMP F000:0000 (far jump)
+#
+# We set SP to 0x00F0, because by default SP=FFFE, and some data will
+# be written at SS:SP during step-by-step operation.
+#--------------------------------------------------------------------

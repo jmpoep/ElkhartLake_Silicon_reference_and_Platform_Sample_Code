@@ -1,0 +1,113 @@
+/** @file
+
+@copyright
+  INTEL CONFIDENTIAL
+  Copyright 2017 Intel Corporation.
+
+  The source code contained or described herein and all documents related to the
+  source code ("Material") are owned by Intel Corporation or its suppliers or
+  licensors. Title to the Material remains with Intel Corporation or its suppliers
+  and licensors. The Material may contain trade secrets and proprietary and
+  confidential information of Intel Corporation and its suppliers and licensors,
+  and is protected by worldwide copyright and trade secret laws and treaty
+  provisions. No part of the Material may be used, copied, reproduced, modified,
+  published, uploaded, posted, transmitted, distributed, or disclosed in any way
+  without Intel's prior express written permission.
+
+  No license under any patent, copyright, trade secret or other intellectual
+  property right is granted to or conferred upon you by disclosure or delivery
+  of the Materials, either expressly, by implication, inducement, estoppel or
+  otherwise. Any license under such intellectual property rights must be
+  express and approved by Intel in writing.
+
+  Unless otherwise agreed by Intel in writing, you may not remove or alter
+  this notice or any other notice embedded in Materials by Intel or
+  Intel's suppliers or licensors in any way.
+
+  This file contains a 'Sample Driver' and is licensed as such under the terms
+  of your license agreement with Intel or your vendor. This file may be modified
+  by the user, subject to the additional terms of the license agreement.
+
+@par Specification
+**/
+
+form formid = CONCATENATE3(DTBT_CONTROLLER,CONTROLLER_INDEX,_FORM_ID),
+  title = STRING_TOKEN(CONCATENATE3(STR_DTBT_CONTROLLER,CONTROLLER_INDEX,_FORM));
+    oneof varid  = SETUP_DATA.DTbtController[CONTROLLER_INDEX],
+      questionid = AUTO_ID(CONCATENATE2(KEY_DTBT_CONTROLLER,CONTROLLER_INDEX)),
+      prompt = STRING_TOKEN(CONCATENATE2(STR_PCI_DTBT_CONTROLLER,CONTROLLER_INDEX)),
+      help = STRING_TOKEN(CONCATENATE3(STR_PCI_DTBT_CONTROLLER,CONTROLLER_INDEX,_HELP)),
+      option text = STRING_TOKEN(STR_DISABLED),   value = 0, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED | INTERACTIVE;
+      option text = STRING_TOKEN(STR_ENABLED),   value = 1, flags = RESET_REQUIRED | INTERACTIVE;
+    endoneof;
+
+// Assuming Max 2 Discrete Tbt Controller. And We are giving user option to slect any one to be a PEG controller.
+    suppressif (NOT ideqval SETUP_DATA.TbtSetupDTbtPegTypeSupport == 1);
+      oneof varid  = SETUP_DATA.DTbtControllerType[CONTROLLER_INDEX],
+        questionid = AUTO_ID(CONCATENATE2(KEY_DTBT_CONTROLLER_TYPE_,CONTROLLER_INDEX)),
+        prompt = STRING_TOKEN(CONCATENATE2(STR_PCI_DTBT_CONTROLLER,_TYPE)),
+        help = STRING_TOKEN(CONCATENATE3(STR_PCI_DTBT_CONTROLLER,_TYPE,_HELP)),
+        option text = STRING_TOKEN(STR_DTBT_PCI_TYPE),   value = 1, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED | INTERACTIVE;
+        option text = STRING_TOKEN(STR_DTBT_PEG_TYPE),   value = 2, flags = RESET_REQUIRED | INTERACTIVE;
+      endoneof;
+    endif; // Supress if NOT TbtSetupDTbtPegTypeSupport; This Supress if Option is based on Board ID
+
+    oneof varid  = SETUP_DATA.DTbthostRouterPortNumber[CONTROLLER_INDEX],
+      questionid = AUTO_ID(CONCATENATE3(KEY_DTBT_CONTROLLER,CONTROLLER_INDEX,_HOSTROUTER)),
+      prompt = STRING_TOKEN(CONCATENATE3(STR_PCI_DTBT_CONTROLLER,CONTROLLER_INDEX,_HOSTROUTER)),
+      help = STRING_TOKEN(STR_PCI_TBT_HOSTROUTER_HELP),
+      option text = STRING_TOKEN(STR_PCI_TBT_ONEPORT_PROMPT),   value = 1, flags = DEFAULT | MANUFACTURING |RESET_REQUIRED| INTERACTIVE;
+      option text = STRING_TOKEN(STR_PCI_TBT_TWOPORT_PROMPT),   value = 2, flags = RESET_REQUIRED| INTERACTIVE;
+    endoneof;
+
+    numeric varid = SETUP_DATA.DTbtPcieExtraBusRsvd[CONTROLLER_INDEX],
+      prompt      = STRING_TOKEN (CONCATENATE3(STR_PCI_DTBT_CONTROLLER,CONTROLLER_INDEX,_PCIE_RBUS_PROMPT)),
+      help        = STRING_TOKEN (STR_DTBT_PCIE_RBUS_HELP),
+      flags       = RESET_REQUIRED | INTERACTIVE,
+      minimum     = 0,
+      maximum     = 255,
+      step        = 1,    // Stepping of 0 equates to a manual entering of a value, otherwise it will auto-increment with a left/right arrow
+      default     = 56,    // default no extra bus reserved
+    endnumeric;
+
+    numeric varid = SETUP_DATA.DTbtPcieMemRsvd[CONTROLLER_INDEX],
+      prompt      = STRING_TOKEN (CONCATENATE3(STR_PCI_DTBT_CONTROLLER,CONTROLLER_INDEX,_PCIE_RMEM_PROMPT)),
+      help        = STRING_TOKEN (STR_DTBT_PCIE_RMEM_HELP),
+      flags       = RESET_REQUIRED | INTERACTIVE,
+      minimum     = 1,
+      maximum     = 4096,
+      step        = 1,    // Stepping of 0 equates to a manual entering of a value, otherwise it will auto-increment with a left/right arrow
+      default     = 353,   // 353Default 10MB Memory Reserved
+    endnumeric;
+
+    numeric varid = SETUP_DATA.DTbtPcieMemAddrRngMax[CONTROLLER_INDEX],
+      prompt      = STRING_TOKEN (CONCATENATE3(STR_PCI_DTBT_CONTROLLER,CONTROLLER_INDEX,_PCIE_RMEM_ADDRRNGMAX)),
+      help        = STRING_TOKEN (STR_DTBT_PCIE_RMEM_RNG_HELP),
+      flags       = RESET_REQUIRED | INTERACTIVE,
+      minimum     = 0,
+      maximum     = 31,
+      step        = 1,
+      default     = 26,
+    endnumeric;
+
+    numeric varid = SETUP_DATA.DTbtPciePMemRsvd[CONTROLLER_INDEX],
+      prompt      = STRING_TOKEN (CONCATENATE3(STR_PCI_DTBT_CONTROLLER,CONTROLLER_INDEX,_PCIE_RPMEM_PROMPT)),
+      help        = STRING_TOKEN (STR_DTBT_PCIE_RPMEM_HELP),
+      flags     = RESET_REQUIRED | INTERACTIVE,
+      minimum     = 1,
+      maximum     = 4096,
+      step        = 1,    // Stepping of 0 equates to a manual entering of a value, otherwise it will auto-increment with a left/right arrow
+      default     = 544,   // 544Default 10MB Memory Reserved
+    endnumeric;
+
+    numeric varid = SETUP_DATA.DTbtPciePMemAddrRngMax[CONTROLLER_INDEX],
+    prompt      = STRING_TOKEN (CONCATENATE3(STR_PCI_DTBT_CONTROLLER,CONTROLLER_INDEX,_PCIE_RPMEM_ADDRRNGMAX)),
+      help        = STRING_TOKEN (STR_DTBT_PCIE_RPMEM_RNG_HELP),
+      flags     = RESET_REQUIRED | INTERACTIVE,
+      minimum     = 0,
+      maximum     = 31,
+      step        = 1,
+      default     = 28,
+    endnumeric;
+
+  endform;  // DTBT_FORM_ID

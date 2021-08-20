@@ -1,0 +1,1948 @@
+## @file
+#  FDF file of Platform.
+#
+# @copyright
+#  INTEL CONFIDENTIAL
+#  Copyright 2018 - 2020 Intel Corporation.
+#
+#  The source code contained or described herein and all documents related to the
+#  source code ("Material") are owned by Intel Corporation or its suppliers or
+#  licensors. Title to the Material remains with Intel Corporation or its suppliers
+#  and licensors. The Material may contain trade secrets and proprietary and
+#  confidential information of Intel Corporation and its suppliers and licensors,
+#  and is protected by worldwide copyright and trade secret laws and treaty
+#  provisions. No part of the Material may be used, copied, reproduced, modified,
+#  published, uploaded, posted, transmitted, distributed, or disclosed in any way
+#  without Intel's prior express written permission.
+#
+#  No license under any patent, copyright, trade secret or other intellectual
+#  property right is granted to or conferred upon you by disclosure or delivery
+#  of the Materials, either expressly, by implication, inducement, estoppel or
+#  otherwise. Any license under such intellectual property rights must be
+#  express and approved by Intel in writing.
+#
+#  Unless otherwise agreed by Intel in writing, you may not remove or alter
+#  this notice or any other notice embedded in Materials by Intel or
+#  Intel's suppliers or licensors in any way.
+#
+#  This file contains a 'Sample Driver' and is licensed as such under the terms
+#  of your license agreement with Intel or your vendor. This file may be modified
+#  by the user, subject to the additional terms of the license agreement.
+#
+# @par Specification
+##
+
+[Defines]
+!if gSiPkgTokenSpaceGuid.PcdFspWrapperEnable == TRUE
+  !if gBoardModuleTokenSpaceGuid.PcdBiosSizeMbOption == 10
+    !include $(PLATFORM_BOARD_PACKAGE)/Include/Fdf/FlashMapTenMbInclude.fdf
+  !else
+    !include $(PLATFORM_BOARD_PACKAGE)/Include/Fdf/FlashMapInclude.fdf
+  !endif
+!else
+  !if gBoardModuleTokenSpaceGuid.PcdBiosSizeMbOption == 10
+    !include $(PLATFORM_BOARD_PACKAGE)/Include/Fdf/FlashMapTenMbIncludeEdk.fdf
+  !else
+    !include $(PLATFORM_BOARD_PACKAGE)/Include/Fdf/FlashMapIncludeEdk.fdf
+  !endif
+!endif
+################################################################################
+#
+# FD Section
+# The [FD] Section is made up of the definition statements and a
+# description of what goes into  the Flash Device Image.  Each FD section
+# defines one flash "device" image.  A flash device image may be one of
+# the following: Removable media bootable image (like a boot floppy
+# image,) an Option ROM image (that would be "flashed" into an add-in
+# card,) a System "Flash"  image (that would be burned into a system's
+# flash) or an Update ("Capsule") image that will be used to update and
+# existing system flash.
+#
+################################################################################
+[FD.ClientBios]
+#
+# FD Tokens, BaseAddress, Size, ErasePolarity, BlockSize, and NumBlocks, cannot be
+# assigned with PCD values. Instead, it uses the definitions for its variety, which
+# are FLASH_BASE, FLASH_SIZE, FLASH_BLOCK_SIZE and FLASH_NUM_BLOCKS.
+#
+BaseAddress   = $(FLASH_BASE) | gSiPkgTokenSpaceGuid.PcdBiosAreaBaseAddress  #The base address of the FLASH Device.
+Size          = $(FLASH_SIZE) | gSiPkgTokenSpaceGuid.PcdBiosSize             #The size in bytes of the FLASH Device
+ErasePolarity = 1
+BlockSize     = $(FLASH_BLOCK_SIZE)
+NumBlocks     = $(FLASH_NUM_BLOCKS)
+
+!if gBoardModuleTokenSpaceGuid.PcdSipkgBinaryEnable == TRUE
+#
+# It's required to put this marco in the begin of inf declare for all modules under SiPkg except SampleCode
+#
+DEFINE SIPKG_DXE_SMM_BIN  = INF RuleOverride = BINARY USE = X64
+DEFINE SIPKG_PEI_BIN      = INF RuleOverride = BINARY USE = IA32
+!else
+DEFINE SIPKG_DXE_SMM_BIN  = INF
+DEFINE SIPKG_PEI_BIN      = INF
+!endif
+
+# Set FLASH_REGION_FV_RECOVERY_OFFSET to PcdNemCodeCacheBase, because macro expression is not supported.
+# So, PlatformSecLib uses PcdFlashAreaBaseAddress + PcdNemCodeCacheBase to get the real CodeCache base address.
+SET gSiPkgTokenSpaceGuid.PcdNemCodeCacheBase = $(gMinPlatformPkgTokenSpaceGuid.PcdFlashFvPreMemoryOffset)
+SET gSiPkgTokenSpaceGuid.PcdFlashMicrocodeFvBase = $(gSiPkgTokenSpaceGuid.PcdBiosAreaBaseAddress) + $(gSiPkgTokenSpaceGuid.PcdFlashMicrocodeFvOffset)
+SET gSiPkgTokenSpaceGuid.PcdFlashMicrocodeFvSize = $(gSiPkgTokenSpaceGuid.PcdFlashMicrocodeFvSize)
+SET gBoardModuleTokenSpaceGuid.PcdFlashIbbBase = $(gSiPkgTokenSpaceGuid.PcdBiosAreaBaseAddress) + $(gSiPkgTokenSpaceGuid.PcdFlashIbbOffset)
+SET gBoardModuleTokenSpaceGuid.PcdFlashIbbRBase = $(gSiPkgTokenSpaceGuid.PcdBiosAreaBaseAddress) + $(gSiPkgTokenSpaceGuid.PcdFlashIbbROffset)
+SET gBoardModuleTokenSpaceGuid.PcdFlashObbBase = $(gSiPkgTokenSpaceGuid.PcdBiosAreaBaseAddress) + $(gSiPkgTokenSpaceGuid.PcdFlashObbOffset)
+SET gUefiCpuPkgTokenSpaceGuid.PcdCpuMicrocodePatchAddress = $(gSiPkgTokenSpaceGuid.PcdFlashMicrocodeFvBase) + 0x60
+SET gUefiCpuPkgTokenSpaceGuid.PcdCpuMicrocodePatchRegionSize = $(gSiPkgTokenSpaceGuid.PcdFlashMicrocodeFvSize) - 0x60
+!if gSiPkgTokenSpaceGuid.PcdFspWrapperEnable == TRUE
+SET gIntelFsp2WrapperTokenSpaceGuid.PcdCpuMicrocodePatchAddress = $(gSiPkgTokenSpaceGuid.PcdBiosAreaBaseAddress) + $(gSiPkgTokenSpaceGuid.PcdFlashMicrocodeFvOffset)
+SET gIntelFsp2WrapperTokenSpaceGuid.PcdCpuMicrocodePatchRegionSize = $(gSiPkgTokenSpaceGuid.PcdFlashMicrocodeFvSize)
+SET gIntelFsp2WrapperTokenSpaceGuid.PcdFlashMicrocodeOffset = 0x60
+SET gIntelFsp2WrapperTokenSpaceGuid.PcdFlashCodeCacheAddress = gSiPkgTokenSpaceGuid.PcdBiosAreaBaseAddress
+SET gIntelFsp2WrapperTokenSpaceGuid.PcdFlashCodeCacheSize    = gSiPkgTokenSpaceGuid.PcdBiosSize
+SET gClientSiliconPkgTokenSpaceGuid.PcdPeiCoreFv             = $(gSiPkgTokenSpaceGuid.PcdBiosAreaBaseAddress) + $(gMinPlatformPkgTokenSpaceGuid.PcdFlashFvFspMOffset)
+!endif
+SET gMinPlatformPkgTokenSpaceGuid.PcdFlashFvMicrocodeBase    = gSiPkgTokenSpaceGuid.PcdFlashMicrocodeFvBase
+SET gMinPlatformPkgTokenSpaceGuid.PcdFlashFvMicrocodeSize    = gSiPkgTokenSpaceGuid.PcdFlashMicrocodeFvSize
+SET gMinPlatformPkgTokenSpaceGuid.PcdFlashFvMicrocodeOffset  = gSiPkgTokenSpaceGuid.PcdFlashMicrocodeFvOffset
+SET gMinPlatformPkgTokenSpaceGuid.PcdFlashAreaBaseAddress    = gSiPkgTokenSpaceGuid.PcdBiosAreaBaseAddress
+SET gMinPlatformPkgTokenSpaceGuid.PcdFlashAreaSize           = gSiPkgTokenSpaceGuid.PcdBiosSize
+SET gEfiMdeModulePkgTokenSpaceGuid.PcdVpdBaseAddress = $(gSiPkgTokenSpaceGuid.PcdBiosAreaBaseAddress) + $(gPlatformModuleTokenSpaceGuid.PcdFlashFvVpdOffset)
+#!if gSiPkgTokenSpaceGuid.PcdFspWrapperEnable == TRUE
+#!if gPlatformModuleTokenSpaceGuid.PcdCapsuleEnable == TRUE
+#!include $(PLATFORM_FEATURES_PATH)/CapsuleUpdate/FaultTolerance.fdf
+#!endif
+#!endif
+################################################################################
+#
+# Following are lists of FD Region layout which correspond to the locations of different
+# images within the flash device.
+#
+# Regions must be defined in ascending order and may not overlap.
+#
+# A Layout Region start with a eight digit hex offset (leading "0x" required) followed by
+# the pipe "|" character, followed by the size of the region, also in hex with the leading
+# "0x" characters. Like:
+# Offset|Size
+# PcdOffsetCName|PcdSizeCName
+# RegionType <FV, DATA, or FILE>
+# Fv Size can be adjusted
+#
+################################################################################
+gMinPlatformPkgTokenSpaceGuid.PcdFlashNvStorageVariableOffset|gEfiMdeModulePkgTokenSpaceGuid.PcdFlashNvStorageVariableSize
+gEfiMdeModulePkgTokenSpaceGuid.PcdFlashNvStorageVariableBase|gEfiMdeModulePkgTokenSpaceGuid.PcdFlashNvStorageVariableSize
+#NV_VARIABLE_STORE
+DATA = {
+  ## This is the EFI_FIRMWARE_VOLUME_HEADER
+  # ZeroVector []
+  0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+  0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+  # FileSystemGuid
+  0x8D, 0x2B, 0xF1, 0xFF, 0x96, 0x76, 0x8B, 0x4C,
+  0xA9, 0x85, 0x27, 0x47, 0x07, 0x5B, 0x4F, 0x50,
+  # FvLength: 0x60000
+  0x00, 0x00, 0x06, 0x00, 0x00, 0x00, 0x00, 0x00,
+  #Signature "_FVH"       #Attributes
+  0x5F, 0x46, 0x56, 0x48, 0xFF, 0xFE, 0x04, 0x00,
+  #HeaderLength #CheckSum #ExtHeaderOffset #Reserved #Revision
+  #
+  # Be careful on CheckSum field.
+  #
+  0x48, 0x00, 0x2E, 0x09, 0x00, 0x00, 0x00, 0x02,
+  #Blockmap[0]: 6 Blocks  0x10000 Bytes / Block
+  0x06, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00,
+  #Blockmap[1]: End
+  0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+  ## This is the VARIABLE_STORE_HEADER
+!if gMinPlatformPkgTokenSpaceGuid.PcdUefiSecureBootEnable == TRUE
+  #  Signature: gEfiAuthenticatedVariableGuid = { 0xaaf32c78, 0x947b, 0x439a, { 0xa1, 0x80, 0x2e, 0x14, 0x4e, 0xc3, 0x77, 0x92 }}
+  0x78, 0x2c, 0xf3, 0xaa, 0x7b, 0x94, 0x9a, 0x43,
+  0xa1, 0x80, 0x2e, 0x14, 0x4e, 0xc3, 0x77, 0x92,
+!else
+  #  Signature: gEfiVariableGuid = { 0xddcf3616, 0x3275, 0x4164, { 0x98, 0xb6, 0xfe, 0x85, 0x70, 0x7f, 0xfe, 0x7d }}
+  0x16, 0x36, 0xcf, 0xdd, 0x75, 0x32, 0x64, 0x41,
+  0x98, 0xb6, 0xfe, 0x85, 0x70, 0x7f, 0xfe, 0x7d,
+!endif
+  #Size: 0x2E000 (gEfiMdeModulePkgTokenSpaceGuid.PcdFlashNvStorageVariableSize) - 0x48 (size of EFI_FIRMWARE_VOLUME_HEADER) = 0x2DFB8
+  # This can speed up the Variable Dispatch a bit.
+  0xB8, 0xDF, 0x02, 0x00,
+  #FORMATTED: 0x5A #HEALTHY: 0xFE #Reserved: UINT16 #Reserved1: UINT32
+  0x5A, 0xFE, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+}
+
+gMinPlatformPkgTokenSpaceGuid.PcdFlashNvStorageFtwWorkingOffset|gEfiMdeModulePkgTokenSpaceGuid.PcdFlashNvStorageFtwWorkingSize
+gEfiMdeModulePkgTokenSpaceGuid.PcdFlashNvStorageFtwWorkingBase|gEfiMdeModulePkgTokenSpaceGuid.PcdFlashNvStorageFtwWorkingSize
+#NV_FTW_WORKING
+DATA = {
+  # EFI_FAULT_TOLERANT_WORKING_BLOCK_HEADER->Signature = gEdkiiWorkingBlockSignatureGuid         =
+  #  { 0x9e58292b, 0x7c68, 0x497d, { 0xa0, 0xce, 0x65,  0x0, 0xfd, 0x9f, 0x1b, 0x95 }}
+  0x2b, 0x29, 0x58, 0x9e, 0x68, 0x7c, 0x7d, 0x49,
+  0xa0, 0xce, 0x65,  0x0, 0xfd, 0x9f, 0x1b, 0x95,
+  # Crc:UINT32            #WorkingBlockValid:1, WorkingBlockInvalid:1, Reserved
+  0xE2, 0x33, 0xF2, 0x03, 0xFE, 0xFF, 0xFF, 0xFF,
+  # WriteQueueSize: UINT64
+  0xE0, 0x1F, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+}
+
+gMinPlatformPkgTokenSpaceGuid.PcdFlashNvStorageFtwSpareOffset|gEfiMdeModulePkgTokenSpaceGuid.PcdFlashNvStorageFtwSpareSize
+gEfiMdeModulePkgTokenSpaceGuid.PcdFlashNvStorageFtwSpareBase|gEfiMdeModulePkgTokenSpaceGuid.PcdFlashNvStorageFtwSpareSize
+#NV_FTW_SPARE
+
+gBoardModuleTokenSpaceGuid.PcdFlashFvTsnMacAddressOffset|gBoardModuleTokenSpaceGuid.PcdFlashFvTsnMacAddressSize
+gBoardModuleTokenSpaceGuid.PcdFlashFvTsnMacAddressBase|gBoardModuleTokenSpaceGuid.PcdFlashFvTsnMacAddressSize
+FV = FvTsnMacAddress
+
+gBoardModuleTokenSpaceGuid.PcdFlashFvPseTsnIpConfigOffset|gBoardModuleTokenSpaceGuid.PcdFlashFvPseTsnIpConfigSize
+gBoardModuleTokenSpaceGuid.PcdFlashFvPseTsnIpConfigBase|gBoardModuleTokenSpaceGuid.PcdFlashFvPseTsnIpConfigSize
+FV = FvPseTsnIpConfig
+
+gBoardModuleTokenSpaceGuid.PcdFlashFvTsnConfigOffset|gBoardModuleTokenSpaceGuid.PcdFlashFvTsnConfigSize
+gBoardModuleTokenSpaceGuid.PcdFlashFvTsnConfigBase|gBoardModuleTokenSpaceGuid.PcdFlashFvTsnConfigSize
+FV = FvTsnConfig
+
+gBoardModuleTokenSpaceGuid.PcdFlashFvTccConfigOffset|gBoardModuleTokenSpaceGuid.PcdFlashFvTccConfigSize
+gBoardModuleTokenSpaceGuid.PcdFlashFvTccConfigBase|gBoardModuleTokenSpaceGuid.PcdFlashFvTccConfigSize
+FV = FvTccConfig
+
+gBoardModuleTokenSpaceGuid.PcdFlashFvOobConfigOffset|gBoardModuleTokenSpaceGuid.PcdFlashFvOobConfigSize
+gBoardModuleTokenSpaceGuid.PcdFlashFvOobConfigBase|gBoardModuleTokenSpaceGuid.PcdFlashFvOobConfigSize
+FV = FvOobConfig
+
+gBoardModuleTokenSpaceGuid.PcdFlashFvSiipFwOffset|gBoardModuleTokenSpaceGuid.PcdFlashFvSiipFwSize
+gBoardModuleTokenSpaceGuid.PcdFlashFvSiipFwBase|gBoardModuleTokenSpaceGuid.PcdFlashFvSiipFwSize
+FV = FvSiipFw
+
+gBoardModuleTokenSpaceGuid.PcdFlashFvReserved1Offset|gBoardModuleTokenSpaceGuid.PcdFlashFvReserved1Size
+gBoardModuleTokenSpaceGuid.PcdFlashFvReserved1Base|gBoardModuleTokenSpaceGuid.PcdFlashFvReserved1Size
+FV = FvReserved1
+
+gBoardModuleTokenSpaceGuid.PcdFlashFvReserved2Offset|gBoardModuleTokenSpaceGuid.PcdFlashFvReserved2Size
+gBoardModuleTokenSpaceGuid.PcdFlashFvReserved2Base|gBoardModuleTokenSpaceGuid.PcdFlashFvReserved2Size
+FV = FvReserved2
+
+!if gSiPkgTokenSpaceGuid.PcdFspWrapperEnable == FALSE
+gBoardModuleTokenSpaceGuid.PcdFlashFvFirmwareBinariesOffset|gBoardModuleTokenSpaceGuid.PcdFlashFvFirmwareBinariesSize
+gBoardModuleTokenSpaceGuid.PcdFlashFvFirmwareBinariesBase|gBoardModuleTokenSpaceGuid.PcdFlashFvFirmwareBinariesSize
+FV = FvFwBinaries
+
+gSiPkgTokenSpaceGuid.PcdFlashMicrocodeFvOffset|gSiPkgTokenSpaceGuid.PcdFlashMicrocodeFvSize
+gSiPkgTokenSpaceGuid.PcdFlashMicrocodeFvBase|gSiPkgTokenSpaceGuid.PcdFlashMicrocodeFvSize
+#Microcode
+FV = FvMicrocode
+!endif
+
+gMinPlatformPkgTokenSpaceGuid.PcdFlashFvSecurityOffset|gMinPlatformPkgTokenSpaceGuid.PcdFlashFvSecuritySize
+gMinPlatformPkgTokenSpaceGuid.PcdFlashFvSecurityBase|gMinPlatformPkgTokenSpaceGuid.PcdFlashFvSecuritySize
+FV = FvSecurity
+
+gMinPlatformPkgTokenSpaceGuid.PcdFlashFvOsBootOffset|gMinPlatformPkgTokenSpaceGuid.PcdFlashFvOsBootSize
+gMinPlatformPkgTokenSpaceGuid.PcdFlashFvOsBootBase|gMinPlatformPkgTokenSpaceGuid.PcdFlashFvOsBootSize
+FV = FvOsBoot
+
+gMinPlatformPkgTokenSpaceGuid.PcdFlashFvUefiBootOffset|gMinPlatformPkgTokenSpaceGuid.PcdFlashFvUefiBootSize
+gMinPlatformPkgTokenSpaceGuid.PcdFlashFvUefiBootBase|gMinPlatformPkgTokenSpaceGuid.PcdFlashFvUefiBootSize
+FV = FvUefiBoot
+
+gMinPlatformPkgTokenSpaceGuid.PcdFlashFvAdvancedOffset|gMinPlatformPkgTokenSpaceGuid.PcdFlashFvAdvancedSize
+gMinPlatformPkgTokenSpaceGuid.PcdFlashFvAdvancedBase|gMinPlatformPkgTokenSpaceGuid.PcdFlashFvAdvancedSize
+FV = FvAdvanced
+
+gMinPlatformPkgTokenSpaceGuid.PcdFlashFvPostMemoryOffset|gMinPlatformPkgTokenSpaceGuid.PcdFlashFvPostMemorySize
+gMinPlatformPkgTokenSpaceGuid.PcdFlashFvPostMemoryBase|gMinPlatformPkgTokenSpaceGuid.PcdFlashFvPostMemorySize
+FV = FvPostMemory
+
+!if gSiPkgTokenSpaceGuid.PcdFspWrapperEnable == TRUE
+gMinPlatformPkgTokenSpaceGuid.PcdFlashFvFspSOffset|gMinPlatformPkgTokenSpaceGuid.PcdFlashFvFspSSize
+gMinPlatformPkgTokenSpaceGuid.PcdFlashFvFspSBase|gMinPlatformPkgTokenSpaceGuid.PcdFlashFvFspSSize
+# FSP_S Section
+FV=FvFspS
+
+gBoardModuleTokenSpaceGuid.PcdFlashFvFirmwareBinariesOffset|gBoardModuleTokenSpaceGuid.PcdFlashFvFirmwareBinariesSize
+gBoardModuleTokenSpaceGuid.PcdFlashFvFirmwareBinariesBase|gBoardModuleTokenSpaceGuid.PcdFlashFvFirmwareBinariesSize
+FV = FvFwBinaries
+
+gSiPkgTokenSpaceGuid.PcdFlashMicrocodeFvOffset|gSiPkgTokenSpaceGuid.PcdFlashMicrocodeFvSize
+gSiPkgTokenSpaceGuid.PcdFlashMicrocodeFvBase|gSiPkgTokenSpaceGuid.PcdFlashMicrocodeFvSize
+#Microcode
+FV = FvMicrocode
+
+gMinPlatformPkgTokenSpaceGuid.PcdFlashFvFspMOffset|gMinPlatformPkgTokenSpaceGuid.PcdFlashFvFspMSize
+gMinPlatformPkgTokenSpaceGuid.PcdFlashFvFspMBase|gMinPlatformPkgTokenSpaceGuid.PcdFlashFvFspMSize
+# FSP_M Section
+FILE = $(PLATFORM_FSP_BIN_PACKAGE)/Fsp_Rebased_M.fd
+
+gMinPlatformPkgTokenSpaceGuid.PcdFlashFvFspTOffset|gMinPlatformPkgTokenSpaceGuid.PcdFlashFvFspTSize
+gMinPlatformPkgTokenSpaceGuid.PcdFlashFvFspTBase|gMinPlatformPkgTokenSpaceGuid.PcdFlashFvFspTSize
+# FSP_T Section
+FILE = $(PLATFORM_FSP_BIN_PACKAGE)/Fsp_Rebased_T.fd
+!endif
+
+gMinPlatformPkgTokenSpaceGuid.PcdFlashFvPreMemoryOffset|gMinPlatformPkgTokenSpaceGuid.PcdFlashFvPreMemorySize
+gMinPlatformPkgTokenSpaceGuid.PcdFlashFvPreMemoryBase|gMinPlatformPkgTokenSpaceGuid.PcdFlashFvPreMemorySize
+FV = FvPreMemory
+
+!if gSiPkgTokenSpaceGuid.PcdBfxEnable == TRUE
+gSiPkgTokenSpaceGuid.PcdFlashFvCseSramReservedOffset|gSiPkgTokenSpaceGuid.PcdFlashFvCseSramReservedSize
+gSiPkgTokenSpaceGuid.PcdFlashFvCseSramReservedBase|gSiPkgTokenSpaceGuid.PcdFlashFvCseSramReservedSize
+FV = FvCseSramReserved
+!endif
+
+################################################################################
+#
+# FV Section
+#
+# [FV] section is used to define what components or modules are placed within a flash
+# device file.  This section also defines order the components and modules are positioned
+# within the image.  The [FV] section consists of define statements, set statements and
+# module statements.
+#
+################################################################################
+!if gSiPkgTokenSpaceGuid.PcdBfxEnable == TRUE
+[FV.FvCseSramReserved]
+BlockSize     = $(FLASH_BLOCK_SIZE)
+FvForceRebase = FALSE
+FvAlignment        = 16
+ERASE_POLARITY     = 1
+MEMORY_MAPPED      = TRUE
+STICKY_WRITE       = TRUE
+LOCK_CAP           = TRUE
+LOCK_STATUS        = TRUE
+WRITE_DISABLED_CAP = TRUE
+WRITE_ENABLED_CAP  = TRUE
+WRITE_STATUS       = TRUE
+WRITE_LOCK_CAP     = TRUE
+WRITE_LOCK_STATUS  = TRUE
+READ_DISABLED_CAP  = TRUE
+READ_ENABLED_CAP   = TRUE
+READ_STATUS        = TRUE
+READ_LOCK_CAP      = TRUE
+READ_LOCK_STATUS   = TRUE
+FvNameGuid         = A8FA3AED-7554-442D-8D42-E6890B90480E
+!endif
+
+!if gSiPkgTokenSpaceGuid.PcdFspWrapperEnable == TRUE
+[FV.FvFspS]
+BlockSize          = $(FLASH_BLOCK_SIZE)
+FvAlignment        = 16
+ERASE_POLARITY     = 1
+MEMORY_MAPPED      = TRUE
+STICKY_WRITE       = TRUE
+LOCK_CAP           = TRUE
+LOCK_STATUS        = TRUE
+WRITE_DISABLED_CAP = TRUE
+WRITE_ENABLED_CAP  = TRUE
+WRITE_STATUS       = TRUE
+WRITE_LOCK_CAP     = TRUE
+WRITE_LOCK_STATUS  = TRUE
+READ_DISABLED_CAP  = TRUE
+READ_ENABLED_CAP   = TRUE
+READ_STATUS        = TRUE
+READ_LOCK_CAP      = TRUE
+READ_LOCK_STATUS   = TRUE
+
+FILE FV_IMAGE = 3417F275-4CF1-42D8-A0C3-B3F60779DF4D  {
+!if gMinPlatformPkgTokenSpaceGuid.PcdUefiSecureBootEnable == TRUE
+  SECTION GUIDED A7717414-C616-4977-9420-844712A735BF PROCESSING_REQUIRED = TRUE AUTH_STATUS_VALID = TRUE {
+    SECTION FV_IMAGE = $(PLATFORM_FSP_BIN_PACKAGE)/Fsp_Rebased_S.fd
+  }
+!else
+  SECTION FV_IMAGE = $(PLATFORM_FSP_BIN_PACKAGE)/Fsp_Rebased_S.fd
+!endif
+}
+!endif
+
+[FV.FvMicrocode]
+BlockSize          = $(FLASH_BLOCK_SIZE)
+FvAlignment        = 16
+ERASE_POLARITY     = 1
+MEMORY_MAPPED      = TRUE
+STICKY_WRITE       = TRUE
+LOCK_CAP           = TRUE
+LOCK_STATUS        = FALSE
+WRITE_DISABLED_CAP = TRUE
+WRITE_ENABLED_CAP  = TRUE
+WRITE_STATUS       = TRUE
+WRITE_LOCK_CAP     = TRUE
+WRITE_LOCK_STATUS  = TRUE
+READ_DISABLED_CAP  = TRUE
+READ_ENABLED_CAP   = TRUE
+READ_STATUS        = FALSE
+READ_LOCK_CAP      = TRUE
+READ_LOCK_STATUS   = TRUE
+
+!if gBoardModuleTokenSpaceGuid.PcdMicrocodeBinEnable == TRUE
+FILE RAW = 197DB236-F856-4924-90F8-CDF12FB875F3 {
+Align=16 $(PLATFORM_BOARD_PACKAGE)/Binaries/Microcode/m_01_90660_00000005.pdb
+}
+!endif
+
+!include $(PLATFORM_BOARD_PACKAGE)/Include/Fdf/TsnMacAddressInclude.fdf
+!include $(PLATFORM_BOARD_PACKAGE)/Include/Fdf/PseTsnIpConfigInclude.fdf
+!include $(PLATFORM_BOARD_PACKAGE)/Include/Fdf/TsnConfigInclude.fdf
+!include $(PLATFORM_BOARD_PACKAGE)/Include/Fdf/TccConfigInclude.fdf
+!include $(PLATFORM_BOARD_PACKAGE)/Include/Fdf/OobConfigInclude.fdf
+!include $(PLATFORM_BOARD_PACKAGE)/Include/Fdf/SiipFwFvInclude.fdf
+
+[FV.FvPreMemory]
+BlockSize          = $(FLASH_BLOCK_SIZE)
+FvAlignment        = 16
+ERASE_POLARITY     = 1
+MEMORY_MAPPED      = TRUE
+STICKY_WRITE       = TRUE
+LOCK_CAP           = TRUE
+LOCK_STATUS        = TRUE
+WRITE_DISABLED_CAP = TRUE
+WRITE_ENABLED_CAP  = TRUE
+WRITE_STATUS       = TRUE
+WRITE_LOCK_CAP     = TRUE
+WRITE_LOCK_STATUS  = TRUE
+READ_DISABLED_CAP  = TRUE
+READ_ENABLED_CAP   = TRUE
+READ_STATUS        = TRUE
+READ_LOCK_CAP      = TRUE
+READ_LOCK_STATUS   = TRUE
+FvNameGuid         = FC8FE6B5-CD9B-411E-BD8F-31824D0CDE3D
+
+APRIORI PEI {
+  INF  MdeModulePkg/Universal/PCD/Pei/Pcd.inf
+}
+
+INF  $(PLATFORM_FULL_PACKAGE)/Override/UefiCpuPkg/SecCore/SecCore.inf
+
+#
+# In EDK2 mode or FSP API mode, the PeiMain is necessary.
+#
+!if (gSiPkgTokenSpaceGuid.PcdFspWrapperEnable == FALSE) || (gSiPkgTokenSpaceGuid.PcdFspModeSelection == 1)
+!if gSiPkgTokenSpaceGuid.PcdEdk2MasterEnable == TRUE
+  !if gSiPkgTokenSpaceGuid.PcdBfxEnable == TRUE
+    INF $(PLATFORM_FULL_PACKAGE)/Override/MdeModulePkg/Core/Pei201903/PeiMain.inf
+  !else
+    INF MdeModulePkg/Core/Pei/PeiMain.inf
+  !endif
+!else
+  !if gSiPkgTokenSpaceGuid.PcdBfxEnable == TRUE
+    INF $(PLATFORM_FULL_PACKAGE)/Override/MdeModulePkg/Core/Pei/PeiMain.inf
+  !else
+    INF MdeModulePkg/Core/Pei/PeiMain.inf
+  !endif
+!endif
+!endif
+
+!include $(PLATFORM_BOARD_PACKAGE)/Include/Fdf/CorePreMemoryInclude.fdf
+
+!if gBoardModuleTokenSpaceGuid.PcdUfsEnable == TRUE
+!if gSiPkgTokenSpaceGuid.PcdBfxEnable == TRUE
+  INF $(PLATFORM_FULL_PACKAGE)/Override/MdeModulePkg/Bus/Pci/UfsPciHcPei/UfsPciHcPei.inf
+  INF $(PLATFORM_FULL_PACKAGE)/Override/MdeModulePkg/Bus/Ufs/UfsBlockIoPei/UfsBlockIoPei.inf
+!endif
+!endif
+
+!if gSiPkgTokenSpaceGuid.PcdBfxEnable == TRUE
+INF $(PLATFORM_BOARD_PACKAGE)/BootMediaInfo/BootMediaInfoPei.inf
+INF $(PLATFORM_FULL_PACKAGE)/VariableStorageSelector/Pei/VariableStorageSelectorPei.inf
+INF $(PLATFORM_SI_PACKAGE)/VariableStorage/Pei/FvbVariableStoragePei/FvbVariableStoragePei.inf
+!endif
+
+INF  $(CLIENT_COMMON_PACKAGE)/Universal/PlatformStatusCodeHandler/Pei/PlatformStatusCodeHandlerPei.inf
+INF  $(PLATFORM_FULL_PACKAGE)/Features/PlatformStatusCodeHandler/Pei/PlatformStatusCodeHandlerPei.inf
+
+#
+# Features
+#
+!if gBoardModuleTokenSpaceGuid.PcdSetupEnable == TRUE
+  !include $(PLATFORM_BOARD_PACKAGE)/Features/Setup/Include/Fdf/SetupPei.fdf
+!endif
+
+INF $(PLATFORM_BOARD_PACKAGE)/BiosInfo/BiosInfo.inf
+!if gPlatformModuleTokenSpaceGuid.PcdCapsuleEnable == TRUE
+INF $(PLATFORM_FEATURES_PATH)/CapsuleUpdate/BiosInfoRecovery/BiosInfoRecovery.inf
+!endif
+
+!if gMinPlatformPkgTokenSpaceGuid.PcdUefiSecureBootEnable == TRUE
+# @Todo Return assert with current FlashMap
+#INF  $(PLATFORM_FULL_PACKAGE)/Platform/BiosInfoChecker/BiosInfoChecker.inf
+!endif
+
+!if gPlatformModuleTokenSpaceGuid.PcdCapsuleEnable == TRUE
+!if gSiPkgTokenSpaceGuid.PcdEdk2MasterEnable == TRUE
+  INF  $(PLATFORM_FULL_PACKAGE)/Override/MdeModulePkg/Universal/CapsulePei201905/CapsulePei.inf
+!else
+  INF  $(PLATFORM_FULL_PACKAGE)/Override/MdeModulePkg/Universal/CapsulePei/CapsulePei.inf
+!endif
+  INF  MdeModulePkg/Universal/CapsulePei/CapsuleX64.inf
+!endif
+
+INF $(PLATFORM_PACKAGE)/Services/StallServicePei/StallServicePei.inf
+
+!if gSiPkgTokenSpaceGuid.PcdBfxEnable == FALSE
+  INF $(PLATFORM_PACKAGE)/PlatformInit/ReportFv/ReportFvPei.inf
+!endif
+INF $(PLATFORM_FULL_PACKAGE)/Override/MinPlatformPkg/PlatformInit/PlatformInitPei/PlatformInitPreMem.inf
+!if gBoardModuleTokenSpaceGuid.PcdAdvancedFeatureEnable == TRUE
+!if gSiPkgTokenSpaceGuid.PcdBfxEnable == TRUE
+INF $(PLATFORM_FULL_PACKAGE)/PlatformInitAdvanced/PlatformInitAdvancedPei/PlatformInitAdvancedPreMemBfx.inf
+!else
+INF $(PLATFORM_FULL_PACKAGE)/PlatformInitAdvanced/PlatformInitAdvancedPei/PlatformInitAdvancedPreMem.inf
+!endif
+!endif
+
+!if $(TARGET) == DEBUG
+  #
+  # This is for reducing NATIVE DEBUG binary size, replacing some library routines with PPI.
+  #
+  INF $(CLIENT_COMMON_PACKAGE)/Universal/DebugServicePei/DebugServicePei.inf
+!endif
+
+!if gSiPkgTokenSpaceGuid.PcdFspWrapperEnable == TRUE
+  INF $(PLATFORM_FULL_PACKAGE)/Override/IntelFsp2WrapperPkg/FspmWrapperPeim/FspmWrapperPeim.inf
+!else
+  $(SIPKG_PEI_BIN) $(C1S_PRODUCT_PATH)/SiInit/Pei/SiInitPreMem.inf
+!endif
+
+FILE FREEFORM = C3E36D09-8294-4b97-A857-D5288FE33E28 Align=1K {
+  SECTION RAW = $(OUTPUT_DIRECTORY)/$(TARGET)_$(TOOL_CHAIN_TAG)/IA32/BiosId.bin
+}
+
+!if gSiPkgTokenSpaceGuid.PcdAmtEnable == TRUE
+  INF  $(PLATFORM_FULL_PACKAGE)/Features/Amt/AmtStatusCodePei/AmtStatusCodePei.inf
+!endif
+
+!if gMinPlatformPkgTokenSpaceGuid.PcdPerformanceEnable == TRUE
+  INF MdeModulePkg/Universal/Acpi/FirmwarePerformanceDataTablePei/FirmwarePerformancePei.inf
+!endif
+
+INF MdeModulePkg/Universal/ResetSystemPei/ResetSystemPei.inf
+
+# gPlatformModuleTokenSpaceGuid.gObbSha256HashFileGuid
+FILE FREEFORM = F57757FC-2603-404F-AAE2-34C6232388E8 {
+  # To be replaced in post build
+  SECTION RAW = $(PLATFORM_BOARD_PACKAGE)/Binaries/ObbDigest/DummySha256Digest.bin
+  SECTION UI = "ObbDigest"
+}
+
+[FV.FvPostMemoryUncompact]
+BlockSize          = $(FLASH_BLOCK_SIZE)
+FvAlignment        = 16
+ERASE_POLARITY     = 1
+MEMORY_MAPPED      = TRUE
+STICKY_WRITE       = TRUE
+LOCK_CAP           = TRUE
+LOCK_STATUS        = TRUE
+WRITE_DISABLED_CAP = TRUE
+WRITE_ENABLED_CAP  = TRUE
+WRITE_STATUS       = TRUE
+WRITE_LOCK_CAP     = TRUE
+WRITE_LOCK_STATUS  = TRUE
+READ_DISABLED_CAP  = TRUE
+READ_ENABLED_CAP   = TRUE
+READ_STATUS        = TRUE
+READ_LOCK_CAP      = TRUE
+READ_LOCK_STATUS   = TRUE
+FvNameGuid         = 7C4DCFC6-AECA-4707-85B9-FD4B2EEA49E7
+
+!include $(PLATFORM_PACKAGE)/Include/Fdf/CorePostMemoryInclude.fdf
+
+!if gMinPlatformPkgTokenSpaceGuid.PcdUefiSecureBootEnable == TRUE
+# ROYAL_PARK_PORTING - Porting Required
+INF RuleOverride = LzmaCompress MdeModulePkg/Universal/SectionExtractionPei/SectionExtractionPei.inf
+!endif
+
+
+# Init Board Config PCD
+INF $(PLATFORM_PACKAGE)/PlatformInit/PlatformInitPei/PlatformInitPostMem.inf
+
+!if gBoardModuleTokenSpaceGuid.PcdAdvancedFeatureEnable == TRUE
+  !if gSiPkgTokenSpaceGuid.PcdFspWrapperEnable == TRUE
+    INF $(PLATFORM_FULL_PACKAGE)/PlatformInitAdvanced/PlatformInitAdvancedPei/PlatformInitAdvancedPostMemFsp.inf
+  !else
+    INF $(PLATFORM_FULL_PACKAGE)/PlatformInitAdvanced/PlatformInitAdvancedPei/PlatformInitAdvancedPostMem.inf
+  !endif
+
+!endif #PcdAdvancedFeatureEnable
+
+!if gSiPkgTokenSpaceGuid.PcdFspWrapperEnable == TRUE
+  INF $(PLATFORM_FULL_PACKAGE)/Override/IntelFsp2WrapperPkg/FspsWrapperPeim/FspsWrapperPeim.inf
+  INF $(PLATFORM_FULL_PACKAGE)/FspWrapper/FspWrapperPeim/FspWrapperPeim.inf
+!endif
+
+!if gSiPkgTokenSpaceGuid.PcdFspWrapperEnable == TRUE
+!if gSiPkgTokenSpaceGuid.PcdFspModeSelection == 1
+INF RuleOverride = LzmaCompress UefiCpuPkg/CpuMpPei/CpuMpPei.inf
+!endif #PcdFspModeSelection
+!else  # PcdFspWrapperEnable
+
+!if gSiPkgTokenSpaceGuid.PcdPeiDisplayEnable == TRUE
+!if gBoardModuleTokenSpaceGuid.PcdGopConfigBin == TRUE
+  FILE DRIVER = 4f84e985-4c3b-4825-9f42-889109019422 {
+    SECTION Align = Auto PE32 = $(PLATFORM_BOARD_PACKAGE)/Binaries/GopConfigBin/Pei/GopConfigPei.efi
+    SECTION UI = "GopConfigPei"
+  }
+!else
+!endif # PcdGopConfigBin
+  FILE PEIM = 76ed893a-b2f9-4c7d-a05f-1ea170ecf6cd {
+    !if $(TARGET) == DEBUG
+        SECTION Align = Auto PE32 = $(PLATFORM_SI_PACKAGE)/Fru/EhlCpu/Graphics/IntelGraphicsPeim/Binaries/IntelGraphicsPeimDebug.efi
+    !else
+        SECTION Align = Auto PE32 = $(PLATFORM_SI_PACKAGE)/Fru/EhlCpu/Graphics/IntelGraphicsPeim/Binaries/IntelGraphicsPeim.efi
+    !endif
+    SECTION PEI_DEPEX_EXP = {gEfiPeiStallPpiGuid AND gEnablePeiGraphicsPpiGuid}
+    SECTION UI = "IntelGraphicsPeim"
+  }
+!endif # PcdPeiDisplayEnable
+
+#
+# CpuMp PEIM for MpService PPI
+#
+INF RuleOverride = LzmaCompress UefiCpuPkg/CpuMpPei/CpuMpPei.inf
+
+!if gBoardModuleTokenSpaceGuid.PcdSipkgBinaryEnable == TRUE
+  INF RuleOverride = LzmaCompressBinary $(C1S_PRODUCT_PATH)/SiInit/Pei/SiInit.inf
+!else
+  INF RuleOverride = LzmaCompress $(C1S_PRODUCT_PATH)/SiInit/Pei/SiInit.inf
+!endif # PcdSipkgBinaryEnable
+
+!endif # gSiPkgTokenSpaceGuid.PcdFspWrapperEnable == TRUE
+
+!if gPlatformModuleTokenSpaceGuid.PcdCapsuleEnable == TRUE
+INF $(PLATFORM_FULL_PACKAGE)/Features/Nvme/NvmExpressHcPlatformPei/NvmePciHcPei.inf
+INF $(PLATFORM_FULL_PACKAGE)/Features/Nvme/NvmExpressPei/NvmExpressPei.inf
+!if gSiPkgTokenSpaceGuid.PcdEdk2MasterEnable == FALSE
+INF  $(PLATFORM_FULL_PACKAGE)/Override/FatPkg/FatPei/FatPei.inf # RPPO-CNL-0087: RoyalParkOverrideContent
+!else
+INF  FatPkg/FatPei/FatPei.inf
+!endif
+INF $(PLATFORM_FULL_PACKAGE)/Features/Sata/AtaDeviceDriverPei/AtaDeviceDriverPei.inf
+!endif
+
+!if gSiPkgTokenSpaceGuid.PcdPeiDisplayEnable == TRUE
+FILE FREEFORM = PCD(gIntelSiliconPkgTokenSpaceGuid.PcdIntelGraphicsVbtFileGuid) {
+    SECTION RAW = $(PLATFORM_FSP_BIN_PACKAGE)/SampleCode/Vbt/Vbt.bin
+  SECTION UI  = "IntelGopVbt"
+}
+FILE FREEFORM = PCD(gBoardModuleTokenSpaceGuid.PcdVbtMipiGuid) {
+  SECTION RAW = $(PLATFORM_BOARD_PACKAGE)/Binaries/UefiDriver/Gop/Vbt_tgl_Mipi.bin
+  SECTION UI = "IntelGopVbt2"
+}
+
+
+FILE FREEFORM = 7BB28B99-61BB-11D5-9A5D-0090273FC14D {
+  SECTION RAW = MdeModulePkg/Logo/Logo.bmp
+}
+!endif # PcdPeiDisplayEnable
+
+
+!if gSiPkgTokenSpaceGuid.PcdS3Enable == TRUE
+INF UefiCpuPkg/PiSmmCommunication/PiSmmCommunicationPei.inf
+INF UefiCpuPkg/Universal/Acpi/S3Resume2Pei/S3Resume2Pei.inf
+!if gPlatformModuleTokenSpaceGuid.PcdOpalPasswordEnable == TRUE
+INF SecurityPkg/Tcg/Opal/OpalPassword/OpalPasswordPei.inf
+!endif
+!endif
+
+!if gSiPkgTokenSpaceGuid.PcdPpamEnable == TRUE
+INF $(PLATFORM_FULL_PACKAGE)/Features/NiftyRock/MsegSmramPei/MsegSmramPei.inf
+!endif
+
+[FV.FvPostMemory]
+BlockSize          = $(FLASH_BLOCK_SIZE)
+FvAlignment        = 16
+ERASE_POLARITY     = 1
+MEMORY_MAPPED      = TRUE
+STICKY_WRITE       = TRUE
+LOCK_CAP           = TRUE
+LOCK_STATUS        = TRUE
+WRITE_DISABLED_CAP = TRUE
+WRITE_ENABLED_CAP  = TRUE
+WRITE_STATUS       = TRUE
+WRITE_LOCK_CAP     = TRUE
+WRITE_LOCK_STATUS  = TRUE
+READ_DISABLED_CAP  = TRUE
+READ_ENABLED_CAP   = TRUE
+READ_STATUS        = TRUE
+READ_LOCK_CAP      = TRUE
+READ_LOCK_STATUS   = TRUE
+FvNameGuid         = 9DFE49DB-8EF0-4D9C-B273-0036144DE917
+
+FILE FV_IMAGE = 244FAAF4-FAE1-4892-8B7D-7EF84CBFA709 {
+      SECTION GUIDED EE4E5898-3914-4259-9D6E-DC7BD79403CF PROCESSING_REQUIRED = TRUE {
+        SECTION FV_IMAGE = FvPostMemoryUncompact
+      }
+}
+
+FILE FV_IMAGE = 80BB8482-44D5-4BEC-82B5-8D87A933830B {
+       SECTION GUIDED EE4E5898-3914-4259-9D6E-DC7BD79403CF PROCESSING_REQUIRED = TRUE {
+         SECTION FV_IMAGE = FvSecurityPostMemory
+       }
+     }
+
+FILE FV_IMAGE = C83522D9-80A1-4D95-8C25-3F1370497406 {
+       SECTION GUIDED EE4E5898-3914-4259-9D6E-DC7BD79403CF PROCESSING_REQUIRED = TRUE {
+         SECTION FV_IMAGE = FvSecurityLate
+       }
+     }
+
+[FV.FvUefiBootUncompact]
+BlockSize          = $(FLASH_BLOCK_SIZE)
+FvAlignment        = 16
+ERASE_POLARITY     = 1
+MEMORY_MAPPED      = TRUE
+STICKY_WRITE       = TRUE
+LOCK_CAP           = TRUE
+LOCK_STATUS        = TRUE
+WRITE_DISABLED_CAP = TRUE
+WRITE_ENABLED_CAP  = TRUE
+WRITE_STATUS       = TRUE
+WRITE_LOCK_CAP     = TRUE
+WRITE_LOCK_STATUS  = TRUE
+READ_DISABLED_CAP  = TRUE
+READ_ENABLED_CAP   = TRUE
+READ_STATUS        = TRUE
+READ_LOCK_CAP      = TRUE
+READ_LOCK_STATUS   = TRUE
+FvNameGuid         = A881D567-6CB0-4EEE-8435-2E72D33E45B5
+
+#
+# Board specific instance of CoreUefiBootInclude.fdf from MinPlatformPkg
+#
+!include $(PLATFORM_BOARD_PACKAGE)/Include/Fdf/CoreUefiBootInclude.fdf
+
+!if gBoardModuleTokenSpaceGuid.PcdSetupEnable == TRUE
+#
+#  Note : gUiFileGuid is FILE GUID for UiApp.inf/UiAppCsm.inf.
+#       -  GUID gUiFileGuid has to be changed according to the change you make to override UiApp.inf/UiAppCsm.inf FILE_GUID.
+#       -  PCD gEfiMdeModulePkgTokenSpaceGuid.PcdBootManagerMenuFile also has to be changed according to the change you make to override UiApp.inf/UiAppCsm.inf FILE_GUID.
+#
+INF  FILE_GUID = D89A7D8B-D016-4D26-93E3-EAB6B4D3B0A2 RuleOverride = UI UI = "Enter Setup" $(PLATFORM_FULL_PACKAGE)/Features/UiApp/UiApp.inf
+!endif #PcdSetupEnable == TRUE
+
+INF  UefiCpuPkg/CpuDxe/CpuDxe.inf
+INF  UefiCpuPkg/CpuS3DataDxe/CpuS3DataDxe.inf
+INF  MdeModulePkg/Bus/Pci/PciHostBridgeDxe/PciHostBridgeDxe.inf
+
+!if gSiPkgTokenSpaceGuid.PcdBfxEnable == TRUE
+  #
+  # BFX: Please remain the sequence in this way and refrain from changing it
+  #
+  !if gPlatformModuleTokenSpaceGuid.PcdScsiEnable == TRUE
+    INF  $(PLATFORM_FULL_PACKAGE)/Override/MdeModulePkg/Bus/Scsi/ScsiBusDxe/ScsiBusDxe.inf
+    INF  $(PLATFORM_FULL_PACKAGE)/Override/MdeModulePkg/Bus/Scsi/ScsiDiskDxe/ScsiDiskDxe.inf
+  !endif
+  !if gBoardModuleTokenSpaceGuid.PcdUfsEnable == TRUE
+    INF $(PLATFORM_FULL_PACKAGE)/Override/MdeModulePkg/Bus/Pci/UfsPciHcDxe/UfsPciHcDxe.inf
+    INF $(PLATFORM_FULL_PACKAGE)/Override/MdeModulePkg/Bus/Ufs/UfsPassThruDxe/UfsPassThruDxe.inf
+    INF $(PLATFORM_FEATURES_PATH)/Ufs/UfsEarlyInitDxe/UfsEarlyInitDxe.inf
+  !endif
+  $(SIPKG_DXE_SMM_BIN) $(PLATFORM_SI_PACKAGE)/Cpu/CpuInit/Dxe/CpuInitDxe.inf
+!else
+  !if gPlatformModuleTokenSpaceGuid.PcdScsiEnable == TRUE
+    INF  MdeModulePkg/Bus/Scsi/ScsiBusDxe/ScsiBusDxe.inf
+    INF  MdeModulePkg/Bus/Scsi/ScsiDiskDxe/ScsiDiskDxe.inf
+  !endif
+  !if gBoardModuleTokenSpaceGuid.PcdUfsEnable == TRUE
+    INF MdeModulePkg/Bus/Pci/UfsPciHcDxe/UfsPciHcDxe.inf
+    INF $(PLATFORM_FULL_PACKAGE)/Override/MdeModulePkg/Bus/Ufs/UfsPassThruDxe/UfsPassThruDxe.inf
+  !endif
+!endif
+
+INF  MdeModulePkg/Bus/Pci/SataControllerDxe/SataControllerDxe.inf
+!if gSiPkgTokenSpaceGuid.PcdAtaEnable == TRUE
+INF  MdeModulePkg/Bus/Ata/AtaBusDxe/AtaBusDxe.inf
+INF  MdeModulePkg/Bus/Ata/AtaAtapiPassThru/AtaAtapiPassThru.inf
+!endif
+
+INF $(PLATFORM_SI_PACKAGE)/IpBlock/Scs/EmmcSoftwareTuning/EmmcSoftwareTuning.inf
+INF $(PLATFORM_FEATURES_PATH)/EmmcSoftwareTuningStorage/EmmcSoftwareTuningStorage.inf
+!if gSiPkgTokenSpaceGuid.PcdEdk2MasterEnable == TRUE
+INF $(PLATFORM_FULL_PACKAGE)/Override/MdeModulePkg/Bus/Pci/SdMmcPciHcDxe201905/SdMmcPciHcDxe.inf
+!else
+INF $(PLATFORM_FULL_PACKAGE)/Override/MdeModulePkg/Bus/Pci/SdMmcPciHcDxe/SdMmcPciHcDxe.inf
+!endif
+INF MdeModulePkg/Bus/Sd/EmmcDxe/EmmcDxe.inf
+INF MdeModulePkg/Bus/Sd/SdDxe/SdDxe.inf
+INF  MdeModulePkg/Universal/Console/GraphicsOutputDxe/GraphicsOutputDxe.inf
+!if gSiPkgTokenSpaceGuid.PcdSerialIoUartEnable == TRUE
+#$(SIPKG_DXE_SMM_BIN) $(PLATFORM_SI_PACKAGE)/IpBlock/SerialIo/Uart/UartDriver/SerialIoUartDriver.inf
+INF  $(PLATFORM_FEATURES_PATH)/SerialIoDxe/SerialIoDxe.inf
+!endif
+INF  MdeModulePkg/Bus/Pci/PciSioSerialDxe/PciSioSerialDxe.inf
+INF  MdeModulePkg/Bus/Pci/NvmExpressDxe/NvmExpressDxe.inf
+INF  $(CLIENT_COMMON_PACKAGE)/Sio/NationalPC8374LDxe/NationalPC8374L.inf
+INF  $(CLIENT_COMMON_PACKAGE)/Sio/SmscLpc100xDxe/LpcSmsc100x.inf
+INF  $(CLIENT_COMMON_PACKAGE)/Sio/HitachiH8s2113Dxe/HitachiH8s2113Dxe.inf
+INF  $(CLIENT_COMMON_PACKAGE)/Sio/WinbondWpcn381uDxe/WinbondWpcn381u.inf
+
+!if gBoardModuleTokenSpaceGuid.PcdTerminalEnable == TRUE
+INF  MdeModulePkg/Universal/Console/TerminalDxe/TerminalDxe.inf
+!endif
+
+#
+#UEFI Shell
+#
+# Note : gUefiShellFileGuid is FILE GUID for MinUefiShell.inf/UefiShell.inf/Shell.inf.
+#        The GUID has to be changed according to the change you make to override MinUefiShell.inf/UefiShell.inf/Shell.inf FILE_GUID.
+#
+!if gBoardModuleTokenSpaceGuid.PcdUefiShellEnable == TRUE
+    FILE APPLICATION = PCD(gPlatformModuleTokenSpaceGuid.PcdShellFile) {
+    !if $(TARGET) == DEBUG
+      SECTION PE32 = $(OUTPUT_DIRECTORY)/$(TARGET)_$(TOOL_CHAIN_TAG)/X64/ShellPkg/Application/Shell/Shell/OUTPUT/Shell.efi
+    !else
+      SECTION PE32 = $(OUTPUT_DIRECTORY)/$(TARGET)_$(TOOL_CHAIN_TAG)/X64/ShellPkg/Application/Shell/Shell/OUTPUT/Shell.efi
+    !endif
+      SECTION UI = "EdkShell"
+    }
+!endif #PcdUefiShellEnable == TRUE
+
+
+INF  $(PLATFORM_PACKAGE)/PlatformInit/PlatformInitDxe/PlatformInitDxe.inf
+!if gSiPkgTokenSpaceGuid.PcdBfxEnable == FALSE
+  $(SIPKG_DXE_SMM_BIN) $(PLATFORM_SI_PACKAGE)/Cpu/CpuInit/Dxe/CpuInitDxe.inf
+!endif
+
+!if gSiPkgTokenSpaceGuid.PcdFspWrapperEnable == TRUE
+!if gSiPkgTokenSpaceGuid.PcdFspModeSelection == 1
+INF  IntelFsp2WrapperPkg/FspWrapperNotifyDxe/FspWrapperNotifyDxe.inf
+!endif
+!endif
+
+INF  $(PLATFORM_PACKAGE)/Test/TestPointStubDxe/TestPointStubDxe.inf
+
+!if gSiPkgTokenSpaceGuid.PcdSmmVariableEnable == TRUE
+$(SIPKG_DXE_SMM_BIN) $(PLATFORM_SI_PACKAGE)/IpBlock/Spi/Smm/SpiSmm.inf
+$(SIPKG_DXE_SMM_BIN) $(PLATFORM_SI_PACKAGE)/IpBlock/Spi/Dxe/SpiSmmStub.inf
+$(SIPKG_DXE_SMM_BIN) $(PLATFORM_SI_PACKAGE)/IpBlock/Spi/Dxe/SpiSmmDxe.inf
+!else
+$(SIPKG_DXE_SMM_BIN) $(PLATFORM_SI_PACKAGE)/IpBlock/Spi/RuntimeDxe/SpiRuntime.inf
+!endif
+
+!if gSiPkgTokenSpaceGuid.PcdIgdEnable == TRUE
+!if gBoardModuleTokenSpaceGuid.PcdGopConfigBin == TRUE
+  FILE DRIVER = FC637F1E-50DA-4013-924D-C531F1DFF38B {
+    SECTION PE32 = $(PLATFORM_BOARD_PACKAGE)/Binaries/GopConfigBin/Dxe/GopConfig.efi
+    SECTION UI = "GopConfig"
+  }
+!endif
+
+!if gBoardModuleTokenSpaceGuid.PcdIntelGopEnable == TRUE
+  FILE DRIVER = FF0C8745-3270-4439-B74F-3E45F8C77064 {
+  !if $(TARGET) == DEBUG
+       SECTION PE32 = $(PLATFORM_BOARD_PACKAGE)/Binaries/UefiDriver/Gop/IntelGopDriverDebug.efi
+  !else
+       SECTION PE32 = $(PLATFORM_BOARD_PACKAGE)/Binaries/UefiDriver/Gop/IntelGopDriver.efi
+  !endif
+    SECTION DXE_DEPEX_EXP = {gGopPolicyProtocolGuid}
+    SECTION UI = "IntelGopDriver"
+  }
+!endif # PcdIntelGopEnable
+!endif # gSiPkgTokenSpaceGuid.PcdIgdEnable
+
+!if gBoardModuleTokenSpaceGuid.PcdAdvancedFeatureEnable == TRUE
+!if gSiPkgTokenSpaceGuid.PcdAcpiEnable == TRUE
+!if gSiPkgTokenSpaceGuid.PcdBfxEnable == TRUE
+INF  $(PLATFORM_FULL_PACKAGE)/PlatformInitAdvanced/PlatformInitAdvancedSmm/PlatformInitAdvancedSmmBfx.inf
+!else
+INF  $(PLATFORM_FULL_PACKAGE)/PlatformInitAdvanced/PlatformInitAdvancedSmm/PlatformInitAdvancedSmm.inf
+!endif
+!endif
+!endif
+
+!if gSiPkgTokenSpaceGuid.PcdS3Enable == TRUE
+INF MdeModulePkg/Universal/Acpi/S3SaveStateDxe/S3SaveStateDxe.inf
+INF MdeModulePkg/Universal/Acpi/SmmS3SaveState/SmmS3SaveState.inf
+INF MdeModulePkg/Universal/Acpi/BootScriptExecutorDxe/BootScriptExecutorDxe.inf
+INF MdeModulePkg/Universal/LockBox/SmmLockBox/SmmLockBox.inf
+INF UefiCpuPkg/PiSmmCommunication/PiSmmCommunicationSmm.inf
+!endif
+
+!if gSiPkgTokenSpaceGuid.PcdSmbiosEnable == TRUE
+INF  MdeModulePkg/Universal/SmbiosDxe/SmbiosDxe.inf
+INF  $(PLATFORM_FULL_PACKAGE)/Platform/SmbiosPlatformInfo/SmbiosPlatformInfo.inf
+INF  $(PLATFORM_FULL_PACKAGE)/Features/Smbios/SmbiosMiscDxe/SmbiosMiscDxe.inf
+INF  $(PLATFORM_FULL_PACKAGE)/Features/Me/MeSmbiosDxe/MeSmbiosDxe.inf
+!endif
+
+INF  $(PLATFORM_FULL_PACKAGE)/Features/Icc/IccPlatformDxe/IccPlatformDxe.inf
+
+!if gSiPkgTokenSpaceGuid.PcdITbtEnable == TRUE
+!if gSiPkgTokenSpaceGuid.PcdTbtLegacyModeSupport == TRUE
+  INF  $(PLATFORM_SI_PACKAGE)/IpBlock/Tbt/ITbtInit/Smm/ITbtSmm.inf
+!endif
+INF  $(PLATFORM_SI_PACKAGE)/IpBlock/Tbt/ITbtInit/Dxe/ITbtDxe.inf
+!endif
+!if gPlatformModuleTokenSpaceGuid.PcdDTbtEnable == TRUE
+INF  $(PLATFORM_FEATURES_PATH)/Tbt/TbtInit/Smm/DTbtSmm.inf
+INF  $(PLATFORM_FEATURES_PATH)/Tbt/TbtInit/Dxe/DTbtDxe.inf
+!endif
+
+!if gPlatformModuleTokenSpaceGuid.PcdPiI2cStackEnable == TRUE
+INF MdeModulePkg/Bus/I2c/I2cDxe/I2cDxe.inf                                     # Generic Host and Bus drivers
+INF $(PLATFORM_FULL_PACKAGE)/Features/I2c/I2cPlatformDxe/I2cPlatformDxe.inf    # Board-specific Enumerate and BusConfig drivers; list of connected devices
+$(SIPKG_DXE_SMM_BIN) $(PLATFORM_SI_PACKAGE)/IpBlock/SerialIo/I2c/I2cDriver/SerialIoI2cDriver.inf
+!endif
+
+!if gPlatformModuleTokenSpaceGuid.PcdI2cTouchDriverEnable == TRUE
+INF $(PLATFORM_FULL_PACKAGE)/Features/I2c/I2cTouchPanelDxe/I2cTouchPanelDxe.inf
+!endif
+
+!if gBoardModuleTokenSpaceGuid.PcdAdvancedFeatureEnable == TRUE
+
+!endif # PcdAdvancedFeatureEnable
+
+!if gBoardModuleTokenSpaceGuid.PcdSetupEnable == TRUE
+!if gPlatformModuleTokenSpaceGuid.PcdUserAuthenticationEnable == TRUE
+INF UserInterfaceFeaturePkg/UserAuthentication/UserAuthentication2Dxe.inf
+INF UserInterfaceFeaturePkg/UserAuthentication/UserAuthenticationSmm.inf
+!endif
+!endif
+#INF $(PLATFORM_BOARD_PACKAGE)/BootMediaInfo/BootMediaInfo.inf
+
+!if gMinPlatformPkgTokenSpaceGuid.PcdUefiSecureBootEnable == TRUE
+INF FILE_GUID = 84095540-92C0-433B-9B37-AD2FF7CF8E6A UI = "SecureBootConfigDxe_" SecurityPkg/VariableAuthenticated/SecureBootConfigDxe/SecureBootConfigDxe.inf
+!endif
+
+!if gSiPkgTokenSpaceGuid.PcdBfxEnable == TRUE
+  INF  $(PLATFORM_FULL_PACKAGE)/VariableStorageSelector/Dxe/VariableStorageSelectorRuntimeDxe.inf
+  INF  $(PLATFORM_SI_PACKAGE)/VariableStorage/Dxe/FvbVariableStorageSmmRuntimeDxe/FvbVariableStorageRuntimeDxe.inf
+!endif
+
+
+
+[FV.FvUefiBoot]
+BlockSize          = $(FLASH_BLOCK_SIZE)
+FvAlignment        = 16
+ERASE_POLARITY     = 1
+MEMORY_MAPPED      = TRUE
+STICKY_WRITE       = TRUE
+LOCK_CAP           = TRUE
+LOCK_STATUS        = TRUE
+WRITE_DISABLED_CAP = TRUE
+WRITE_ENABLED_CAP  = TRUE
+WRITE_STATUS       = TRUE
+WRITE_LOCK_CAP     = TRUE
+WRITE_LOCK_STATUS  = TRUE
+READ_DISABLED_CAP  = TRUE
+READ_ENABLED_CAP   = TRUE
+READ_STATUS        = TRUE
+READ_LOCK_CAP      = TRUE
+READ_LOCK_STATUS   = TRUE
+FvNameGuid         = 0496D33D-EA79-495C-B65D-ABF607184E3B
+
+FILE FV_IMAGE = 9E21FD93-9C72-4c15-8C4B-E77F1DB2D792 {
+       SECTION GUIDED EE4E5898-3914-4259-9D6E-DC7BD79403CF PROCESSING_REQUIRED = TRUE {
+         SECTION FV_IMAGE = FvUefiBootUncompact
+       }
+     }
+
+[FV.FvOsBootUncompact]
+BlockSize          = $(FLASH_BLOCK_SIZE)
+FvAlignment        = 16
+ERASE_POLARITY     = 1
+MEMORY_MAPPED      = TRUE
+STICKY_WRITE       = TRUE
+LOCK_CAP           = TRUE
+LOCK_STATUS        = TRUE
+WRITE_DISABLED_CAP = TRUE
+WRITE_ENABLED_CAP  = TRUE
+WRITE_STATUS       = TRUE
+WRITE_LOCK_CAP     = TRUE
+WRITE_LOCK_STATUS  = TRUE
+READ_DISABLED_CAP  = TRUE
+READ_ENABLED_CAP   = TRUE
+READ_STATUS        = TRUE
+READ_LOCK_CAP      = TRUE
+READ_LOCK_STATUS   = TRUE
+FvNameGuid         = A0F04529-B715-44C6-BCA4-2DEBDD01EEEC
+
+!if gMinPlatformPkgTokenSpaceGuid.PcdStopAfterMemInit == FALSE
+INF $(PLATFORM_FULL_PACKAGE)/Override/UefiCpuPkg/PiSmmCpuDxeSmm/PiSmmCpuDxeSmm.inf
+!endif #PcdStopAfterMemInit
+
+!if gMinPlatformPkgTokenSpaceGuid.PcdStopAfterDebugInit == FALSE
+!if gMinPlatformPkgTokenSpaceGuid.PcdStopAfterMemInit == FALSE
+!if gMinPlatformPkgTokenSpaceGuid.PcdBootToShellOnly == FALSE
+
+!if gSiPkgTokenSpaceGuid.PcdBfxEnable == TRUE
+  INF  $(PLATFORM_SI_PACKAGE)/IpBlock/Me/TrustedChannel/Smm/TrustedChannelSmm.inf
+    INF $(PLATFORM_SI_PACKAGE)/IpBlock/Me/HeciInit/RunTimeDxe/HeciRuntimeDxe.inf
+    $(SIPKG_DXE_SMM_BIN) $(PLATFORM_SI_PACKAGE)/IpBlock/Me/HeciInit/Smm/HeciInitSmm.inf
+    INF $(PLATFORM_SI_PACKAGE)/IpBlock/Me/StorageProxy/Dxe/StorageProxyDxe.inf
+
+  INF  $(PLATFORM_FULL_PACKAGE)/Platform/PlatformHmacShaSmm/PlatformHmacShaSmm.inf
+  INF  $(PLATFORM_FULL_PACKAGE)/VariableStorageSelector/Smm/VariableStorageSelectorSmm.inf
+  INF  $(PLATFORM_SI_PACKAGE)/VariableStorage/Smm/CseVariableStorageSmm/CseVariableStorageSmm.inf
+  INF  $(PLATFORM_SI_PACKAGE)/VariableStorage/Dxe/CseCommandQueueRuntimeDxe/CseCommandQueueRuntimeDxe.inf
+  INF  $(PLATFORM_SI_PACKAGE)/VariableStorage/Dxe/FvbVariableStorageSmmRuntimeDxe/FvbVariableStorageSmm.inf
+!endif
+
+!include $(PLATFORM_BOARD_PACKAGE)/Include/Fdf/CoreOsBootInclude.fdf
+
+INF  $(PLATFORM_PACKAGE)/PlatformInit/SiliconPolicyDxe/SiliconPolicyDxe.inf
+INF  $(PLATFORM_FULL_PACKAGE)/Platform/SpiFvbService/SpiFvbServiceDxe.inf
+!if gSiPkgTokenSpaceGuid.PcdSmmVariableEnable == TRUE
+INF  $(PLATFORM_PACKAGE)/Flash/SpiFvbService/SpiFvbServiceSmm.inf
+!endif
+
+!if gBoardModuleTokenSpaceGuid.PcdAdvancedFeatureEnable == FALSE
+INF  $(PLATFORM_PACKAGE)/PlatformInit/PlatformInitSmm/PlatformInitSmm.inf
+INF  $(PLATFORM_PACKAGE)/Acpi/AcpiTables/AcpiPlatform.inf
+INF  RuleOverride = DRIVER_ACPITABLE $(PLATFORM_BOARD_PACKAGE)/Acpi/BoardAcpiDxe/BoardAcpiDxe.inf
+!endif #PcdAdvancedFeatureEnable
+
+
+!endif #PcdBootToShellOnly
+!endif #PcdStopAfterMemInit
+!endif #PcdStopAfterDebugInit
+
+[FV.FvLateSilicon]
+BlockSize          = $(FLASH_BLOCK_SIZE)
+FvAlignment        = 16
+ERASE_POLARITY     = 1
+MEMORY_MAPPED      = TRUE
+STICKY_WRITE       = TRUE
+LOCK_CAP           = TRUE
+LOCK_STATUS        = TRUE
+WRITE_DISABLED_CAP = TRUE
+WRITE_ENABLED_CAP  = TRUE
+WRITE_STATUS       = TRUE
+WRITE_LOCK_CAP     = TRUE
+WRITE_LOCK_STATUS  = TRUE
+READ_DISABLED_CAP  = TRUE
+READ_ENABLED_CAP   = TRUE
+READ_STATUS        = TRUE
+READ_LOCK_CAP      = TRUE
+READ_LOCK_STATUS   = TRUE
+FvNameGuid         = 97F09B89-9E83-4DDC-A3D1-10C4AF539D1E
+
+!if gMinPlatformPkgTokenSpaceGuid.PcdStopAfterDebugInit == FALSE
+!if gMinPlatformPkgTokenSpaceGuid.PcdStopAfterMemInit == FALSE
+
+!if gSiPkgTokenSpaceGuid.PcdEhlPchEnable == TRUE
+$(SIPKG_DXE_SMM_BIN) $(PLATFORM_SI_PACKAGE)/Pch/PchInit/Dxe/PchInitDxeEhl.inf
+!else
+$(SIPKG_DXE_SMM_BIN) $(PLATFORM_SI_PACKAGE)/Pch/PchInit/Dxe/PchInitDxeIcl.inf
+!endif
+$(SIPKG_DXE_SMM_BIN) $(PLATFORM_SI_PACKAGE)/SystemAgent/SaInit/Dxe/SaInitDxeEhl.inf
+
+!if gMinPlatformPkgTokenSpaceGuid.PcdBootToShellOnly == FALSE
+
+$(SIPKG_DXE_SMM_BIN) $(PLATFORM_SI_PACKAGE)/SystemAgent/SmmAccess/Dxe/SmmAccess.inf
+
+$(SIPKG_DXE_SMM_BIN) $(PLATFORM_SI_PACKAGE)/SystemAgent/BdatAccessHandler/Dxe/BdatAccessHandler.inf
+
+!if gSiPkgTokenSpaceGuid.PcdTxtEnable == TRUE
+$(SIPKG_DXE_SMM_BIN) $(PLATFORM_SI_PACKAGE)/Cpu/TxtInit/Dxe/TxtDxe.inf
+!endif
+
+$(SIPKG_DXE_SMM_BIN) $(PLATFORM_SI_PACKAGE)/IpBlock/Tcc/Dxe/TccTuningDxe.inf
+$(SIPKG_DXE_SMM_BIN) $(PLATFORM_SI_PACKAGE)/IpBlock/Smbus/Dxe/SmbusDxe.inf
+$(SIPKG_DXE_SMM_BIN) $(PLATFORM_SI_PACKAGE)/Pch/PchSmiDispatcher/Smm/PchSmiDispatcher.inf
+$(SIPKG_DXE_SMM_BIN) $(PLATFORM_SI_PACKAGE)/Pch/PchInit/Smm/PchInitSmm.inf
+$(SIPKG_DXE_SMM_BIN) $(PLATFORM_SI_PACKAGE)/IpBlock/Smbus/Smm/SmbusSmm.inf
+
+$(SIPKG_DXE_SMM_BIN) $(PLATFORM_SI_PACKAGE)/Pch/SmmControl/RuntimeDxe/SmmControl.inf
+
+!if gSiPkgTokenSpaceGuid.PcdAcpiEnable == TRUE
+INF  RuleOverride = ACPITABLE $(PLATFORM_SI_PACKAGE)/SystemAgent/AcpiTables/SaSsdt/SaSsdt.inf
+INF  RuleOverride = ACPITABLE $(PLATFORM_SI_PACKAGE)/IpBlock/Graphics/AcpiTables/IgfxSsdt.inf
+!endif
+
+!endif #PcdBootToShellOnly
+
+!endif #PcdStopAfterMemInit
+!endif #PcdStopAfterDebugInit
+
+!if gSiPkgTokenSpaceGuid.PcdBfxEnable == TRUE
+$(SIPKG_DXE_SMM_BIN) $(PLATFORM_SI_PACKAGE)/IpBlock/Me/HeciInit/Dxe/HeciInitBfx.inf
+!else
+$(SIPKG_DXE_SMM_BIN) $(PLATFORM_SI_PACKAGE)/IpBlock/Me/HeciInit/Dxe/HeciInit.inf
+!endif
+$(SIPKG_DXE_SMM_BIN) $(PLATFORM_SI_PACKAGE)/IpBlock/Me/MeFwDowngrade/Dxe/MeFwDowngrade.inf
+$(SIPKG_DXE_SMM_BIN) $(PLATFORM_SI_PACKAGE)/IpBlock/Me/Asf/Dxe/AsfDxe.inf
+$(SIPKG_DXE_SMM_BIN) $(PLATFORM_SI_PACKAGE)/IpBlock/Me/HwAsset/Dxe/HwAssetDxe.inf
+INF $(PLATFORM_FEATURES_PATH)/Me/MeExtMeasurement/Dxe/MeExtMeasurement.inf
+
+!if gSiPkgTokenSpaceGuid.PcdHgEnable == TRUE
+!if gSiPkgTokenSpaceGuid.PcdAcpiEnable == TRUE
+INF  RuleOverride = ACPITABLE $(PLATFORM_SI_PACKAGE)/SystemAgent/AcpiTables/HybridGraphics/Peg/HgAcpiTables.inf
+INF  RuleOverride = ACPITABLE $(PLATFORM_SI_PACKAGE)/SystemAgent/AcpiTables/HybridGraphics/Pch/HgAcpiTablesPch.inf
+!endif
+!endif
+
+!if gSiPkgTokenSpaceGuid.PcdJhiEnable == TRUE
+INF  $(PLATFORM_SI_PACKAGE)/IpBlock/Me/Jhi/Dxe/JhiDxe.inf
+!endif
+
+$(SIPKG_DXE_SMM_BIN) $(PLATFORM_SI_PACKAGE)/SystemAgent/SaInit/Smm/SaLateInitSmm.inf
+
+[FV.FvOsBoot]
+BlockSize          = $(FLASH_BLOCK_SIZE)
+FvAlignment        = 16
+ERASE_POLARITY     = 1
+MEMORY_MAPPED      = TRUE
+STICKY_WRITE       = TRUE
+LOCK_CAP           = TRUE
+LOCK_STATUS        = TRUE
+WRITE_DISABLED_CAP = TRUE
+WRITE_ENABLED_CAP  = TRUE
+WRITE_STATUS       = TRUE
+WRITE_LOCK_CAP     = TRUE
+WRITE_LOCK_STATUS  = TRUE
+READ_DISABLED_CAP  = TRUE
+READ_ENABLED_CAP   = TRUE
+READ_STATUS        = TRUE
+READ_LOCK_CAP      = TRUE
+READ_LOCK_STATUS   = TRUE
+FvNameGuid         = 13BF8810-75FD-4B1A-91E6-E16C4201F80A
+
+FILE FV_IMAGE = B9020753-84A8-4BB6-947C-CE7D41F5CE39 {
+       SECTION GUIDED EE4E5898-3914-4259-9D6E-DC7BD79403CF PROCESSING_REQUIRED = TRUE {
+         SECTION FV_IMAGE = FvOsBootUncompact
+       }
+     }
+
+FILE FV_IMAGE = D4632741-510C-44E3-BE21-C3D6D7881485 {
+       SECTION GUIDED EE4E5898-3914-4259-9D6E-DC7BD79403CF PROCESSING_REQUIRED = TRUE {
+         SECTION FV_IMAGE = FvLateSilicon
+       }
+     }
+
+[FV.FvSecurityPreMemory]
+BlockSize          = $(FLASH_BLOCK_SIZE)
+FvAlignment        = 16         #FV alignment and FV attributes setting.
+ERASE_POLARITY     = 1
+MEMORY_MAPPED      = TRUE
+STICKY_WRITE       = TRUE
+LOCK_CAP           = TRUE
+LOCK_STATUS        = TRUE
+WRITE_DISABLED_CAP = TRUE
+WRITE_ENABLED_CAP  = TRUE
+WRITE_STATUS       = TRUE
+WRITE_LOCK_CAP     = TRUE
+WRITE_LOCK_STATUS  = TRUE
+READ_DISABLED_CAP  = TRUE
+READ_ENABLED_CAP   = TRUE
+READ_STATUS        = TRUE
+READ_LOCK_CAP      = TRUE
+READ_LOCK_STATUS   = TRUE
+FvNameGuid         = 9B7FA59D-71C6-4A36-906E-9725EA6ADD5B
+
+!if gMinPlatformPkgTokenSpaceGuid.PcdTpm2Enable == TRUE
+  !if gSiPkgTokenSpaceGuid.PcdBfxEnable == TRUE
+    INF  FILE_GUID = 5FA8B78C-1BE8-4478-8396-57AB35B02232 UI = "Tcg2ConfigPei_" $(CLIENT_COMMON_PACKAGE)/Override/SecurityPkg/Tcg/Tcg2Config/Tcg2ConfigPei.inf
+    !if gSiPkgTokenSpaceGuid.PcdEdk2MasterEnable == FALSE
+      INF  FILE_GUID = 5CA8EC13-18DE-48E6-B037-67A2772F3EBB UI = "Tcg2Pei_" $(PLATFORM_FULL_PACKAGE)/Override/SecurityPkg/Tcg/Tcg2Pei/Tcg2Pei.inf
+    !else
+      INF  FILE_GUID = 5CA8EC13-18DE-48E6-B037-67A2772F3EBB UI = "Tcg2Pei_" $(PLATFORM_FULL_PACKAGE)/Override/SecurityPkg/Tcg/Tcg2Pei/Tcg2Pei201905.inf
+    !endif
+  !else
+    INF  FILE_GUID = 5FA8B78C-1BE8-4478-8396-57AB35B02232 UI = "Tcg2ConfigPei_" $(CLIENT_COMMON_PACKAGE)/Universal/Tcg/Tcg2Config/Tcg2ConfigPei.inf
+    INF  FILE_GUID = 5CA8EC13-18DE-48E6-B037-67A2772F3EBB UI = "Tcg2Pei_" SecurityPkg/Tcg/Tcg2Pei/Tcg2Pei.inf
+  !endif
+!endif
+
+!if gPlatformModuleTokenSpaceGuid.PcdTpmEnable == TRUE
+INF  SecurityPkg/Tcg/PhysicalPresencePei/PhysicalPresencePei.inf
+INF  SecurityPkg/Tcg/TcgPei/TcgPei.inf
+!endif
+
+INF  $(PLATFORM_FEATURES_PATH)/VTd/PlatformVTdInfoSamplePei/PlatformVTdInfoSamplePei.inf
+INF  $(PLATFORM_FEATURES_PATH)/VTd/IntelVTdPmrPei/IntelVTdPmrPei.inf
+
+!include $(PLATFORM_PACKAGE)/Include/Fdf/CoreSecurityPreMemoryInclude.fdf
+
+[FV.FvSecurityPostMemory]
+BlockSize          = $(FLASH_BLOCK_SIZE)
+FvAlignment        = 16         #FV alignment and FV attributes setting.
+ERASE_POLARITY     = 1
+MEMORY_MAPPED      = TRUE
+STICKY_WRITE       = TRUE
+LOCK_CAP           = TRUE
+LOCK_STATUS        = TRUE
+WRITE_DISABLED_CAP = TRUE
+WRITE_ENABLED_CAP  = TRUE
+WRITE_STATUS       = TRUE
+WRITE_LOCK_CAP     = TRUE
+WRITE_LOCK_STATUS  = TRUE
+READ_DISABLED_CAP  = TRUE
+READ_ENABLED_CAP   = TRUE
+READ_STATUS        = TRUE
+READ_LOCK_CAP      = TRUE
+READ_LOCK_STATUS   = TRUE
+FvNameGuid         = 4199E560-54AE-45E5-91A4-F7BC3804E14A
+
+!include $(PLATFORM_PACKAGE)/Include/Fdf/CoreSecurityPostMemoryInclude.fdf
+
+!if gMinPlatformPkgTokenSpaceGuid.PcdTpm2Enable == TRUE
+INF $(CLIENT_COMMON_PACKAGE)/Universal/Tcg2PlatformPei/Tcg2PlatformPei.inf
+!endif
+
+[FV.FvSecurityLate]
+BlockSize          = $(FLASH_BLOCK_SIZE)
+FvAlignment        = 16
+ERASE_POLARITY     = 1
+MEMORY_MAPPED      = TRUE
+STICKY_WRITE       = TRUE
+LOCK_CAP           = TRUE
+LOCK_STATUS        = TRUE
+WRITE_DISABLED_CAP = TRUE
+WRITE_ENABLED_CAP  = TRUE
+WRITE_STATUS       = TRUE
+WRITE_LOCK_CAP     = TRUE
+WRITE_LOCK_STATUS  = TRUE
+READ_DISABLED_CAP  = TRUE
+READ_ENABLED_CAP   = TRUE
+READ_STATUS        = TRUE
+READ_LOCK_CAP      = TRUE
+READ_LOCK_STATUS   = TRUE
+FvNameGuid         = F753FE9A-EEFD-485B-840B-E032D538102C
+
+!if gMinPlatformPkgTokenSpaceGuid.PcdBootToShellOnly == FALSE
+INF  $(PLATFORM_FULL_PACKAGE)/Features/Hsti/HstiIhvDxe/HstiIhvDxe.inf
+INF $(PLATFORM_FULL_PACKAGE)/Features/Hsti/HstiIhvSmm/HstiIhvSmm.inf
+#
+# LiteBios
+#
+  INF $(PLATFORM_FULL_PACKAGE)/Features/Hsti/HstiResultDxe/HstiResultDxe.inf
+
+!endif
+
+!if gPlatformModuleTokenSpaceGuid.PcdTpmEnable == TRUE
+INF SecurityPkg/Tcg/TcgConfigDxe/TcgConfigDxe.inf
+
+!if gMinPlatformPkgTokenSpaceGuid.PcdTpm2Enable == TRUE
+INF  FILE_GUID = EFCB058E-8BDC-4062-8DAE-8262886C512B UI = "Tcg2Dxe_" SecurityPkg/Tcg/Tcg2Dxe/Tcg2Dxe.inf
+  !if gSiPkgTokenSpaceGuid.PcdBfxEnable == TRUE
+    INF  FILE_GUID = 7C81E7E9-5348-41EF-BBCE-10733F6B4595 UI = "Tcg2ConfigDxe_" $(CLIENT_COMMON_PACKAGE)/Override/SecurityPkg/Tcg/Tcg2Config/Tcg2ConfigDxe.inf
+  !else
+    INF  FILE_GUID = 7C81E7E9-5348-41EF-BBCE-10733F6B4595 UI = "Tcg2ConfigDxe_" $(CLIENT_COMMON_PACKAGE)/Universal/Tcg/Tcg2Config/Tcg2ConfigDxe.inf
+  !endif
+INF  $(CLIENT_COMMON_PACKAGE)/Universal/Tcg2PlatformDxe/Tcg2PlatformDxe.inf
+!endif #PcdTpm2Enable
+
+INF  SecurityPkg/Tcg/TcgDxe/TcgDxe.inf
+INF  $(PLATFORM_FULL_PACKAGE)/Features/Tcg/TcgSetupDxe/TcgSetupDxe.inf
+!endif #PcdTpmEnable
+
+!if gSiPkgTokenSpaceGuid.PcdTxtEnable == TRUE
+$(SIPKG_DXE_SMM_BIN) $(PLATFORM_SI_PACKAGE)/Cpu/TxtInit/Dxe/TxtDxe.inf
+#INF  $(PLATFORM_SI_PACKAGE)/Cpu/SampleCode/TxtOneTouch/Dxe/TxtOneTouchDxe.inf
+!endif
+
+INF  IntelSiliconPkg/Feature/VTd/IntelVTdDxe/IntelVTdDxe.inf
+INF  $(PLATFORM_FEATURES_PATH)/VTd/PlatformVTdSampleDxe/PlatformVTdSampleDxe.inf
+
+!include $(PLATFORM_BOARD_PACKAGE)/Include/Fdf/CoreSecurityLateInclude.fdf
+
+#
+# Do not use nested FV in PEI phase as current FMMT cannot handle it properly when deleting modules.
+#
+[FV.FvSecurity]
+BlockSize          = $(FLASH_BLOCK_SIZE)
+FvAlignment        = 16
+ERASE_POLARITY     = 1
+MEMORY_MAPPED      = TRUE
+STICKY_WRITE       = TRUE
+LOCK_CAP           = TRUE
+LOCK_STATUS        = TRUE
+WRITE_DISABLED_CAP = TRUE
+WRITE_ENABLED_CAP  = TRUE
+WRITE_STATUS       = TRUE
+WRITE_LOCK_CAP     = TRUE
+WRITE_LOCK_STATUS  = TRUE
+READ_DISABLED_CAP  = TRUE
+READ_ENABLED_CAP   = TRUE
+READ_STATUS        = TRUE
+READ_LOCK_CAP      = TRUE
+READ_LOCK_STATUS   = TRUE
+FvNameGuid         = 5A9A8B4E-149A-4CB2-BDC7-C8D62DE2C8CF
+
+FILE FV_IMAGE = 757CC075-1428-423D-A73C-22639706C119 {
+       SECTION FV_IMAGE = FvSecurityPreMemory
+     }
+
+[FV.FvCnvUnCompact]
+BlockSize          = $(FLASH_BLOCK_SIZE)
+FvForceRebase      = FALSE
+FvAlignment        = 16
+ERASE_POLARITY     = 1
+MEMORY_MAPPED      = TRUE
+STICKY_WRITE       = TRUE
+LOCK_CAP           = TRUE
+LOCK_STATUS        = TRUE
+WRITE_DISABLED_CAP = TRUE
+WRITE_ENABLED_CAP  = TRUE
+WRITE_STATUS       = TRUE
+WRITE_LOCK_CAP     = TRUE
+WRITE_LOCK_STATUS  = TRUE
+READ_DISABLED_CAP  = TRUE
+READ_ENABLED_CAP   = TRUE
+READ_STATUS        = TRUE
+READ_LOCK_CAP      = TRUE
+READ_LOCK_STATUS   = TRUE
+FvNameGuid         = B92CF322-8AFA-4aa4-B946-005DF1D69779
+
+!if gPlatformModuleTokenSpaceGuid.PcdNetworkEnable == TRUE
+!if gSiPkgTokenSpaceGuid.PcdEdk2MasterEnable == FALSE
+INF  NetworkPkg/DnsDxe/DnsDxe.inf
+INF  NetworkPkg/HttpDxe/HttpDxe.inf
+INF  NetworkPkg/HttpUtilitiesDxe/HttpUtilitiesDxe.inf
+INF  NetworkPkg/HttpBootDxe/HttpBootDxe.inf
+!endif
+
+
+INF  RuleOverride = DRIVER_ACPITABLE MdeModulePkg/Universal/Disk/RamDiskDxe/RamDiskDxe.inf
+INF  SecurityPkg/RandomNumberGenerator/RngDxe/RngDxe.inf
+
+# Temporary workaround for GCC and Xcode build due to these drivers causes system hang.
+!if ("MSFT" in $(FAMILY))
+INF $(PLATFORM_FEATURES_PATH)/WifiConnectionManagerDxe/WifiConnectionManagerDxe.inf
+INF BpCommonPkg/Bluetooth/BluetoothConnectionManagerDxe/BluetoothConnectionManagerDxe.inf
+!endif
+INF BpCommonPkg/Bluetooth/UsbBtHciDxe/UsbBtHciDxe.inf
+INF BpCommonPkg/Bluetooth/BluetoothBusDxe/BluetoothBusDxe.inf
+INF BpCommonPkg/Bluetooth/BluetoothHidDxe/BluetoothHidDxe.inf
+INF BpCommonPkg/Bluetooth/HidKbDxe/HidKbDxe.inf
+INF BpCommonPkg/Bluetooth/HidMouseDxe/HidMouseDxe.inf
+!endif
+
+!if gPlatformModuleTokenSpaceGuid.PcdTdsEnable == TRUE
+[FV.FvTrustedDeviceSetupUnCompact]
+BlockSize     = $(FLASH_BLOCK_SIZE)
+FvForceRebase = FALSE
+FvAlignment        = 16
+ERASE_POLARITY     = 1
+MEMORY_MAPPED      = TRUE
+STICKY_WRITE       = TRUE
+LOCK_CAP           = TRUE
+LOCK_STATUS        = TRUE
+WRITE_DISABLED_CAP = TRUE
+WRITE_ENABLED_CAP  = TRUE
+WRITE_STATUS       = TRUE
+WRITE_LOCK_CAP     = TRUE
+WRITE_LOCK_STATUS  = TRUE
+READ_DISABLED_CAP  = TRUE
+READ_ENABLED_CAP   = TRUE
+READ_STATUS        = TRUE
+READ_LOCK_CAP      = TRUE
+READ_LOCK_STATUS   = TRUE
+FvNameGuid         = 30F01DDB-2B1E-49EF-8581-516D98B8DE27
+
+FILE APPLICATION = 658D56F0-4364-4721-B70E-732DDC8A2771 {
+    SECTION PE32 = $(PLATFORM_FULL_PACKAGE)/Features/TrustedDeviceSetup/Intel_TDS_Extension.efi
+    SECTION UI =  "TrustedDeviceSetupApp"
+}
+
+!endif  # gPlatformModuleTokenSpaceGuid.PcdTdsEnable == TRUE
+
+[FV.FvAdvancedUncompact]
+BlockSize          = $(FLASH_BLOCK_SIZE)
+FvAlignment        = 16
+ERASE_POLARITY     = 1
+MEMORY_MAPPED      = TRUE
+STICKY_WRITE       = TRUE
+LOCK_CAP           = TRUE
+LOCK_STATUS        = TRUE
+WRITE_DISABLED_CAP = TRUE
+WRITE_ENABLED_CAP  = TRUE
+WRITE_STATUS       = TRUE
+WRITE_LOCK_CAP     = TRUE
+WRITE_LOCK_STATUS  = TRUE
+READ_DISABLED_CAP  = TRUE
+READ_ENABLED_CAP   = TRUE
+READ_STATUS        = TRUE
+READ_LOCK_CAP      = TRUE
+READ_LOCK_STATUS   = TRUE
+FvNameGuid         = 8461A948-A2FC-4977-B828-217633C06999
+
+!if gBoardModuleTokenSpaceGuid.PcdAdvancedFeatureEnable == TRUE
+$(SIPKG_DXE_SMM_BIN) $(C1S_PRODUCT_PATH)/SiInit/Dxe/SiInitDxe.inf
+INF  $(PLATFORM_FULL_PACKAGE)/PlatformInitAdvanced/PlatformInitAdvancedDxe/PlatformInitAdvancedDxe.inf
+INF  $(PLATFORM_BOARD_PACKAGE)/Acpi/AdvancedAcpiDxe/AdvancedAcpiDxe.inf
+INF RuleOverride = DRIVER_ACPITABLE $(PLATFORM_FULL_PACKAGE)/Features/Acpi/AcpiTables/AcpiFeatures.inf
+INF RuleOverride = ACPITABLE $(PLATFORM_BOARD_PACKAGE)/Acpi/AcpiTables/AcpiTables.inf
+INF RuleOverride = ACPITABLE $(PLATFORM_FULL_PACKAGE)/Features/Dptf/AcpiTables/DptfAcpiTables.inf
+INF RuleOverride = ACPITABLE $(PLATFORM_FULL_PACKAGE)/Features/Dptf/AcpiTables/Sds/DptfAcpiTablesSds.inf
+INF $(PLATFORM_FULL_PACKAGE)/Features/Dptf/Dxe/Dptf.inf
+INF RuleOverride = ACPITABLE $(PLATFORM_SI_PACKAGE)/Cpu/AcpiTables/CpuAcpiTables.inf
+!if gSiPkgTokenSpaceGuid.PcdAcpiEnable == TRUE
+INF  $(PLATFORM_FULL_PACKAGE)/Features/Pep/Smm/PepBccdSmm.inf
+!endif
+!if gSiPkgTokenSpaceGuid.PcdPpmEnable == TRUE
+$(SIPKG_DXE_SMM_BIN) $(PLATFORM_SI_PACKAGE)/Cpu/PowerManagement/Dxe/PowerMgmtDxe.inf
+$(SIPKG_DXE_SMM_BIN) $(PLATFORM_SI_PACKAGE)/Cpu/PowerManagement/Smm/PowerMgmtSmm.inf
+!endif
+
+!if gBoardModuleTokenSpaceGuid.PcdSetupEnable == TRUE
+  !include $(PLATFORM_BOARD_PACKAGE)/Features/Setup/Include/Fdf/SetupDxe.fdf
+!endif
+
+#
+# MEBx
+#
+# The following drivers require below dependencies:
+# gEfiHiiDatabaseProtocolGuid = { 0xef9fc172, 0xa1b2, 0x4693, { 0xb3, 0x27, 0x6d, 0x32, 0xfc, 0x41, 0x60, 0x42 } }
+# gEfiHiiConfigRoutingProtocolGuid = {0x587e72d7, 0xcc50, 0x4f79, {0x82, 0x09, 0xca, 0x29, 0x1f, 0xc1, 0xa1, 0x0f}}
+#
+
+!if gBoardModuleTokenSpaceGuid.PcdNhltBinEnable == TRUE
+FILE FREEFORM = 06ADC9B7-837F-47DF-AC0C-A0EE18BFAD67 {
+  SECTION RAW = $(PLATFORM_BOARD_PACKAGE)/Binaries/Hda/NhltEhl.bin
+    SECTION UI = "HdaNhlt"
+  }
+!endif
+
+# ROYAL_PARK_PORTING - Porting Required
+!if gPlatformModuleTokenSpaceGuid.PcdUsbFnEnable == TRUE
+#
+# UsbDeviceMode XDCI
+#
+INF $(PLATFORM_FULL_PACKAGE)/Features/Usb/UsbDeviceDxe/UsbDeviceDxe.inf
+INF SecurityPkg/Hash2DxeCrypto/Hash2DxeCrypto.inf
+!endif
+
+!if gPlatformModuleTokenSpaceGuid.PcdUsbEnable == TRUE
+INF MdeModulePkg/Bus/Usb/UsbMouseDxe/UsbMouseDxe.inf
+!endif
+
+#
+# Crash Log Support
+#
+INF $(PLATFORM_FULL_PACKAGE)/Features/CrashLogDxe/CrashLogDxe.inf
+
+!if gPlatformModuleTokenSpaceGuid.PcdDnxSupportEnable == TRUE
+  INF  $(PLATFORM_FEATURES_PATH)/Dnx/DnxDxe/DnxDxe.inf
+!endif
+
+INF  $(PLATFORM_FULL_PACKAGE)/Features/FastBoot/FastBootHandlerDxe/FastBootHandlerDxe.inf
+INF  $(PLATFORM_FULL_PACKAGE)/Features/FastBoot/FastBootSetupDxe/FastBootSetupDxe.inf
+
+!if gSiPkgTokenSpaceGuid.PcdOverclockEnable == TRUE
+INF $(PLATFORM_FULL_PACKAGE)/Features/OverClocking/OverClockInit/PeiOverClock.inf
+!endif
+
+!if gSiPkgTokenSpaceGuid.PcdOverclockEnable == TRUE
+INF  $(PLATFORM_FULL_PACKAGE)/Features/OverClocking/OverClockInit/DxeOverClock.inf
+!if gSiPkgTokenSpaceGuid.PcdAcpiEnable == TRUE
+INF  RuleOverride = ACPITABLE $(PLATFORM_FULL_PACKAGE)/Features/OverClocking/OverclockInterface/OverclockInterfaceACPI.inf
+!endif
+INF  $(PLATFORM_FULL_PACKAGE)/Features/OverClocking/OverclockInterface/OverClockSmiHandler.inf
+INF  $(PLATFORM_FULL_PACKAGE)/Features/OverClocking/OverclockInterface/OverclockInterface.inf
+!endif
+
+INF  $(PLATFORM_FULL_PACKAGE)/Features/Me/MeUlvCheckDxe/MeUlvCheckDxe.inf
+!if gPlatformModuleTokenSpaceGuid.PcdIccOverClockingBinEnable == TRUE
+FILE DRIVER = 5BBA83E5-F027-4ca7-BFD0-16358CC9E123 {
+    SECTION PE32 = $(PLATFORM_FULL_PACKAGE)/Features/Icc/IccOverClocking/IccOverClocking.efi
+    SECTION DXE_DEPEX = $(PLATFORM_FULL_PACKAGE)/Features/Icc/IccOverClocking/IccOverClocking.depex
+    SECTION UI = "IccOverClocking"
+  }
+!endif
+
+
+#
+# Trusty Seed
+#
+!if gSiPkgTokenSpaceGuid.PcdEhlPchEnable == TRUE
+!if gSiPkgTokenSpaceGuid.PcdEdk2MasterEnable == FALSE
+#INF $(PLATFORM_FEATURES_PATH)/SeedProtocol/RuntimeDxe/SeedProtocolDxe.inf
+!endif
+!endif
+
+#
+# Network
+#
+!if gPlatformModuleTokenSpaceGuid.PcdNetworkEnable == TRUE
+!if gSiPkgTokenSpaceGuid.PcdEdk2MasterEnable == TRUE
+!include NetworkPkg/Network.fdf.inc
+!else
+INF  MdeModulePkg/Universal/Network/SnpDxe/SnpDxe.inf
+INF  MdeModulePkg/Universal/Network/DpcDxe/DpcDxe.inf
+INF  MdeModulePkg/Universal/Network/MnpDxe/MnpDxe.inf
+INF  MdeModulePkg/Universal/Network/ArpDxe/ArpDxe.inf
+INF  MdeModulePkg/Universal/Network/Ip4Dxe/Ip4Dxe.inf
+INF  MdeModulePkg/Universal/Network/Udp4Dxe/Udp4Dxe.inf
+INF  MdeModulePkg/Universal/Network/Dhcp4Dxe/Dhcp4Dxe.inf
+INF  MdeModulePkg/Universal/Network/Mtftp4Dxe/Mtftp4Dxe.inf
+INF  NetworkPkg/TcpDxe/TcpDxe.inf
+INF  NetworkPkg/UefiPxeBcDxe/UefiPxeBcDxe.inf
+
+!if gPlatformModuleTokenSpaceGuid.PcdNetworkIp6Enable == TRUE
+INF  NetworkPkg/Ip6Dxe/Ip6Dxe.inf
+INF  NetworkPkg/Dhcp6Dxe/Dhcp6Dxe.inf
+INF  NetworkPkg/IpSecDxe/IpSecDxe.inf
+INF  NetworkPkg/Udp6Dxe/Udp6Dxe.inf
+INF  NetworkPkg/Mtftp6Dxe/Mtftp6Dxe.inf
+!endif #gPlatformModuleTokenSpaceGuid.PcdNetworkIp6Enable == TRUE
+!if gPlatformModuleTokenSpaceGuid.PcdNetworkVlanEnable == TRUE
+INF  MdeModulePkg/Universal/Network/VlanConfigDxe/VlanConfigDxe.inf
+!endif
+
+!if gPlatformModuleTokenSpaceGuid.PcdNetworkIscsiEnable == TRUE
+INF  NetworkPkg/IScsiDxe/IScsiDxe.inf
+!endif
+!endif
+INF  $(PLATFORM_FULL_PACKAGE)/Features/Cnv/CnvUefiVariables/CnvUefiVariables.inf
+!endif #gPlatformModuleTokenSpaceGuid.PcdNetworkEnable == TRUE
+
+  !if gPlatformModuleTokenSpaceGuid.PcdTdsEnable == TRUE
+    INF $(PLATFORM_FULL_PACKAGE)/Features/TrustedDeviceSetup/TrustedDeviceSetup.inf
+  !endif
+  !if gSiPkgTokenSpaceGuid.PcdIntegratedTouchEnable == TRUE
+    $(SIPKG_DXE_SMM_BIN) $(PLATFORM_SI_PACKAGE)/IpBlock/Me/IntegratedTouch/IntegratedTouch.inf
+  !endif
+
+INF $(PLATFORM_FULL_PACKAGE)/Platform/SaveMemoryConfig/Dxe/SaveMemoryConfig.inf
+
+#
+# Inst
+#
+!if gSiPkgTokenSpaceGuid.PcdAcpiEnable == TRUE
+INF  RuleOverride = ACPITABLE $(PLATFORM_FULL_PACKAGE)/Features/Acpi/AcpiTables/SsdtIrmt/IrmtAcpiTables.inf
+!endif
+
+
+!if gPlatformModuleTokenSpaceGuid.PcdVtioEnable == TRUE
+INF $(PLATFORM_FULL_PACKAGE)/Vtio/Dxe/VtioDxe.inf
+!endif
+
+INF  $(CLIENT_COMMON_PACKAGE)/Universal/PlatformStatusCodeHandler/RuntimeDxe/PlatformStatusCodeHandlerRuntimeDxe.inf
+INF  $(PLATFORM_FEATURES_PATH)/PlatformStatusCodeHandler/RuntimeDxe/PlatformStatusCodeHandlerRuntimeDxe.inf
+  INF  $(CLIENT_COMMON_PACKAGE)/Universal/PlatformStatusCodeHandler/Smm/PlatformStatusCodeHandlerSmm.inf
+  INF  $(PLATFORM_FEATURES_PATH)/PlatformStatusCodeHandler/Smm/PlatformStatusCodeHandlerSmm.inf
+
+
+# @todo Re-evaluate use case for the MultiFv modules and update for the flash map.
+#INF  $(PLATFORM_FULL_PACKAGE)/Features/MultiFv/DecompressFvMain2Dxe/DecompressFvMain2Dxe.inf
+#!if gSiPkgTokenSpaceGuid.PcdFspWrapperEnable == TRUE
+#!if gSiPkgTokenSpaceGuid.PcdFspModeSelection == 0
+#INF  $(PLATFORM_FULL_PACKAGE)/Features/MultiFv/DecompressFspsDxe/DecompressFspsDxe.inf
+#!endif
+#!endif
+#INF  $(PLATFORM_FULL_PACKAGE)/Features/MultiFv/DecompressFvCnvDxe/DecompressFvCnvDxe.inf
+
+INF  $(CLIENT_COMMON_PACKAGE)/Universal/IsvtCheckpointDxe/IsvtCheckpointDxe.inf
+
+!if gBoardModuleTokenSpaceGuid.PcdTerminalEnable == TRUE
+!if gSiPkgTokenSpaceGuid.PcdSourceDebugEnable == FALSE
+INF  $(CLIENT_COMMON_PACKAGE)/Universal/SpcrAcpiDxe/SpcrAcpiDxe.inf
+!endif
+!endif
+
+!if gPlatformModuleTokenSpaceGuid.PcdUserIdentificationEnable == TRUE
+INF  SecurityPkg/UserIdentification/UserIdentifyManagerDxe/UserIdentifyManagerDxe.inf
+INF  SecurityPkg/UserIdentification/UserProfileManagerDxe/UserProfileManagerDxe.inf
+INF  SecurityPkg/UserIdentification/PwdCredentialProviderDxe/PwdCredentialProviderDxe.inf
+INF  SecurityPkg/UserIdentification/UsbCredentialProviderDxe/UsbCredentialProviderDxe.inf
+!endif
+
+$(SIPKG_DXE_SMM_BIN) $(PLATFORM_SI_PACKAGE)/SystemAgent/BdatAccessHandler/Dxe/BdatAccessHandler.inf
+
+INF  $(PLATFORM_FULL_PACKAGE)/Platform/PciPlatform/Dxe/PciPlatform.inf
+
+INF  $(CLIENT_COMMON_PACKAGE)/Universal/SetTimerPeriodDxe/SetTimerPeriodDxe.inf
+  INF  MdeModulePkg/Bus/Isa/Ps2KeyboardDxe/Ps2KeyboardDxe.inf
+  !if gPlatformModuleTokenSpaceGuid.PcdMouseEnable == TRUE
+    INF  MdeModulePkg/Bus/Isa/Ps2MouseDxe/Ps2MouseDxe.inf
+  !endif
+
+INF  $(PLATFORM_FULL_PACKAGE)/Features/Wdt/WdtAppDxe/WdtAppDxe.inf
+
+!if gSiPkgTokenSpaceGuid.PcdAcpiEnable == TRUE
+!if gBoardModuleTokenSpaceGuid.PcdAcpiDebugFeatureEnable == TRUE
+INF  RuleOverride = DRIVER_ACPITABLE DebugFeaturePkg/AcpiDebug/AcpiDebugDxe.inf
+!endif
+!endif
+
+!endif #PcdAdvancedFeatureEnable
+
+!if gSiPkgTokenSpaceGuid.PcdAmtEnable == TRUE
+
+INF  $(PLATFORM_FULL_PACKAGE)/Features/Amt/AmtSaveMebxConfigDxe/AmtSaveMebxConfigDxe.inf
+INF  $(PLATFORM_FULL_PACKAGE)/Features/Amt/AmtPetAlertDxe/AmtPetAlertDxe.inf
+INF  $(PLATFORM_FULL_PACKAGE)/Features/Amt/AsfTable/AsfTable.inf
+INF  $(PLATFORM_FULL_PACKAGE)/Features/Amt/AmtWrapperDxe/AmtWrapperDxe.inf
+
+!if gPlatformModuleTokenSpaceGuid.PcdEnableSecureErase == TRUE
+INF  $(PLATFORM_FULL_PACKAGE)/Features/Amt/SecureEraseDxe/SecureEraseDxe.inf
+!endif
+$(SIPKG_DXE_SMM_BIN) $(PLATFORM_SI_PACKAGE)/IpBlock/Amt/AmtInit/Dxe/AmtInitDxe.inf
+$(SIPKG_DXE_SMM_BIN) $(PLATFORM_SI_PACKAGE)/IpBlock/Amt/BiosExtensionLoader/Dxe/BiosExtensionLoader.inf
+!endif
+
+!if gBoardModuleTokenSpaceGuid.PcdSetupEnable == TRUE
+!endif
+
+!if gPlatformModuleTokenSpaceGuid.PcdPciHotplugEnable == TRUE
+  INF  $(PLATFORM_FULL_PACKAGE)/Platform/PciHotPlug/PciHotPlug.inf
+!endif
+
+!if gPlatformModuleTokenSpaceGuid.PcdUsbTypeCEnable == TRUE
+INF RuleOverride = DRIVER_ACPITABLE $(PLATFORM_FULL_PACKAGE)/Features/UsbTypeC/UsbTypeCDxe/UsbTypeCDxe.inf
+!endif
+
+!if gPlatformModuleTokenSpaceGuid.PcdSimpleBootFlagEnable == TRUE
+INF  $(CLIENT_COMMON_PACKAGE)/Universal/SimpleBootFlagDxe/SimpleBootFlag.inf
+!endif
+
+!if gPlatformModuleTokenSpaceGuid.PcdVirtualKeyboardEnable == TRUE
+INF $(CLIENT_COMMON_PACKAGE)/Universal/VirtualKeyboardDxe/VirtualKeyboardDxe.inf
+!endif
+
+!if gPlatformModuleTokenSpaceGuid.PcdEbcEnable == TRUE
+INF  MdeModulePkg/Universal/EbcDxe/EbcDxe.inf
+!endif
+
+!if gSiPkgTokenSpaceGuid.PcdAtaEnable == TRUE
+!if gPlatformModuleTokenSpaceGuid.PcdHddPasswordEnable == TRUE
+INF  ClientCommonPkg/Universal/HddPassword/Dxe/HddPasswordDxe.inf
+INF  ClientCommonPkg/Universal/HddPassword/Smm/HddPasswordSmm.inf
+!endif
+!endif
+
+!if gSiPkgTokenSpaceGuid.PcdAtaEnable == TRUE
+!if gBoardModuleTokenSpaceGuid.PcdIntelRaidEnable == TRUE
+INF  $(PLATFORM_FULL_PACKAGE)/Features/Sata/IntelUefiRaidDiskInfo/IntelUefiRaidDiskInfo.inf
+!endif
+!endif
+
+
+#
+# TwoLm
+#
+!if gSiPkgTokenSpaceGuid.Pcd2lmEnable == TRUE
+  $(SIPKG_DXE_SMM_BIN) $(PLATFORM_SI_PACKAGE)/IpBlock/TwoLm/Nfit/Dxe/NfitDxe.inf
+  INF RuleOverride = DRIVER_ACPITABLE $(PLATFORM_SI_PACKAGE)/IpBlock/TwoLm/Nfit/Smm/NfitSmm.inf
+!endif
+
+!if (gSiPkgTokenSpaceGuid.PcdAtaEnable == TRUE) OR (gBoardModuleTokenSpaceGuid.PcdNvmeEnable == TRUE)
+!if gPlatformModuleTokenSpaceGuid.PcdOpalPasswordEnable == TRUE
+INF SecurityPkg/Tcg/Opal/OpalPassword/OpalPasswordDxe.inf
+!endif
+!endif
+
+!if gSiPkgTokenSpaceGuid.PcdAcpiEnable == TRUE
+INF RuleOverride = ACPITABLE $(PLATFORM_SI_PACKAGE)/IpBlock/Vtd/AcpiTables/DmarAcpiTables.inf
+!endif
+
+!if gSiPkgTokenSpaceGuid.PcdThcEnable == TRUE
+$(SIPKG_DXE_SMM_BIN) $(PLATFORM_SI_PACKAGE)/IpBlock/Thc/ThcDriver/Thc.inf
+!endif
+
+$(SIPKG_DXE_SMM_BIN) $(PLATFORM_SI_PACKAGE)/IpBlock/Wdt/Dxe/WdtDxe.inf
+
+!if gSiPkgTokenSpaceGuid.PcdSmmVariableEnable == TRUE
+  !if gPlatformModuleTokenSpaceGuid.PcdCapsuleEnable == TRUE
+    !if gSiPkgTokenSpaceGuid.PcdBfxEnable == TRUE
+      INF  $(PLATFORM_FULL_PACKAGE)/Override/MdeModulePkg/Universal/FaultTolerantWriteDxe/FaultTolerantWriteDxe.inf
+    !else
+     INF MdeModulePkg/Universal/FaultTolerantWriteDxe/FaultTolerantWriteDxe.inf
+    !endif
+  !endif
+!else
+  !if gSiPkgTokenSpaceGuid.PcdBfxEnable == TRUE
+    INF  $(PLATFORM_FULL_PACKAGE)/Override/MdeModulePkg/Universal/FaultTolerantWriteDxe/FaultTolerantWriteDxe.inf
+  !else
+    INF MdeModulePkg/Universal/FaultTolerantWriteDxe/FaultTolerantWriteDxe.inf
+  !endif
+!endif
+
+INF $(PLATFORM_FEATURES_PATH)/Pse/OobInit/OobInit.inf
+
+!if (gBoardModuleTokenSpaceGuid.PcdS5ChargingEnable == TRUE)
+  INF $(PLATFORM_FEATURES_PATH)/S5Charging/S5Charging.inf
+!endif
+
+  INF $(PLATFORM_FEATURES_PATH)/PlatformTcoReset/PlatformTcoReset.inf
+
+
+!if gPlatformModuleTokenSpaceGuid.PcdGopOverrideDriverEnable == TRUE
+INF $(PLATFORM_FULL_PACKAGE)/Features/Gop/GopOverrideDriver/GopOverrideDriver.inf
+!endif
+
+!if gBoardModuleTokenSpaceGuid.PcdIntelGopEnable == TRUE
+INF $(PLATFORM_FULL_PACKAGE)/Features/Gop/GopDebugDxe/GopDebugDxe.inf
+!endif
+
+FILE FREEFORM = PCD(gPlatformModuleTokenSpaceGuid.PcdLogoFile) {
+    SECTION RAW = $(CLIENT_COMMON_PACKAGE)/Logo/Logo.bmp
+    SECTION UI = "Logo"
+}
+
+!if gSiPkgTokenSpaceGuid.PcdAtaEnable == TRUE
+INF $(PLATFORM_FULL_PACKAGE)/Features/Sata/SataController/SataController.inf
+!endif
+
+!if gPlatformModuleTokenSpaceGuid.PcdBootTimeEnable == TRUE
+INF $(CLIENT_COMMON_PACKAGE)/Responsiveness/BootTime/BootTimeDxe.inf
+!endif
+
+
+!if gSiPkgTokenSpaceGuid.PcdEmbeddedEnable == TRUE
+INF  $(CLIENT_COMMON_PACKAGE)/Sio/NuvotonNct6776fDxe/NuvotonNct6776f.inf
+INF  $(CLIENT_COMMON_PACKAGE)/Sio/Nct6776fHwMonDxe/Nct6776fHwMon.inf
+INF  $(PLATFORM_FULL_PACKAGE)/Features/LifeCycleState/LifeCycleState.inf
+!endif
+
+!if gBoardModuleTokenSpaceGuid.PcdEcEnable == TRUE
+INF $(PLATFORM_FULL_PACKAGE)/EC/EC.inf
+!endif
+
+
+!if gSiPkgTokenSpaceGuid.PcdBiosGuardEnable == TRUE
+$(SIPKG_DXE_SMM_BIN) $(PLATFORM_SI_PACKAGE)/IpBlock/BiosGuard/Smm/BiosGuardServices.inf
+!endif
+
+INF  $(PLATFORM_FEATURES_PATH)/PsdsAcpiDxe/PsdsAcpiDxe.inf
+
+!if ("MSFT" in $(FAMILY))
+!if gPlatformModuleTokenSpaceGuid.PcdCapsuleEnable == TRUE
+INF  MdeModulePkg/Universal/EsrtFmpDxe/EsrtFmpDxe.inf
+INF  FILE_GUID = $(FMP_CLIENT_PLATFORM_SYSTEM_MONO)                FmpDevicePkg/FmpDxe/FmpDxe.inf
+INF  FILE_GUID = $(FMP_CLIENT_PLATFORM_SYSTEM_BIOS)                FmpDevicePkg/FmpDxe/FmpDxe.inf
+INF  FILE_GUID = $(FMP_CLIENT_PLATFORM_SYSTEM_ME)                  FmpDevicePkg/FmpDxe/FmpDxe.inf
+INF  FILE_GUID = $(FMP_CLIENT_PLATFORM_SYSTEM_TSN_MAC_ADDR)        FmpDevicePkg/FmpDxe/FmpDxe.inf
+INF  FILE_GUID = $(FMP_CLIENT_PLATFORM_SYSTEM_PSE_TSN_IP_CONFIG)   FmpDevicePkg/FmpDxe/FmpDxe.inf
+INF  FILE_GUID = $(FMP_CLIENT_PLATFORM_SYSTEM_TSN_CONFIG)          FmpDevicePkg/FmpDxe/FmpDxe.inf
+INF  FILE_GUID = $(FMP_CLIENT_PLATFORM_SYSTEM_SIIP_FW)             FmpDevicePkg/FmpDxe/FmpDxe.inf
+INF  FILE_GUID = $(FMP_CLIENT_PLATFORM_SYSTEM_OOB_CONFIG)          FmpDevicePkg/FmpDxe/FmpDxe.inf
+INF  FILE_GUID = $(FMP_CLIENT_PLATFORM_SYSTEM_TCC_CONFIG)          FmpDevicePkg/FmpDxe/FmpDxe.inf
+!endif
+!endif
+
+INF EmbeddedRasPkg/WheaErrorInj/WheaErrorInj.inf
+
+
+[FV.FvCsmSupport]
+BlockSize          = $(FLASH_BLOCK_SIZE)
+FvAlignment        = 16
+ERASE_POLARITY     = 1
+MEMORY_MAPPED      = TRUE
+STICKY_WRITE       = TRUE
+LOCK_CAP           = TRUE
+LOCK_STATUS        = TRUE
+WRITE_DISABLED_CAP = TRUE
+WRITE_ENABLED_CAP  = TRUE
+WRITE_STATUS       = TRUE
+WRITE_LOCK_CAP     = TRUE
+WRITE_LOCK_STATUS  = TRUE
+READ_DISABLED_CAP  = TRUE
+READ_ENABLED_CAP   = TRUE
+READ_STATUS        = TRUE
+READ_LOCK_CAP      = TRUE
+READ_LOCK_STATUS   = TRUE
+FvNameGuid         = F65D0535-80BA-422A-A49F-49191A579807
+
+
+[FV.FvAdvanced]
+BlockSize          = $(FLASH_BLOCK_SIZE)
+FvAlignment        = 16
+ERASE_POLARITY     = 1
+MEMORY_MAPPED      = TRUE
+STICKY_WRITE       = TRUE
+LOCK_CAP           = TRUE
+LOCK_STATUS        = TRUE
+WRITE_DISABLED_CAP = TRUE
+WRITE_ENABLED_CAP  = TRUE
+WRITE_STATUS       = TRUE
+WRITE_LOCK_CAP     = TRUE
+WRITE_LOCK_STATUS  = TRUE
+READ_DISABLED_CAP  = TRUE
+READ_ENABLED_CAP   = TRUE
+READ_STATUS        = TRUE
+READ_LOCK_CAP      = TRUE
+READ_LOCK_STATUS   = TRUE
+FvNameGuid         = B23E7388-9953-45C7-9201-0473DDE5487A
+
+FILE FV_IMAGE = AD198BA5-C330-41CD-B097-16488328B798 {
+       SECTION GUIDED EE4E5898-3914-4259-9D6E-DC7BD79403CF PROCESSING_REQUIRED = TRUE {
+         SECTION FV_IMAGE = FvAdvancedUncompact
+       }
+     }
+
+#
+# CsmSupport FV
+#
+
+FILE FV_IMAGE = F51A7310-7EB6-4BAC-AC98-971C3E4652CC {
+       SECTION GUIDED EE4E5898-3914-4259-9D6E-DC7BD79403CF PROCESSING_REQUIRED = TRUE {
+         SECTION FV_IMAGE = FvCsmSupport
+       }
+     }
+
+#
+# Cnv FV
+#
+
+!if gPlatformModuleTokenSpaceGuid.PcdNetworkEnable == TRUE
+FILE FV_IMAGE = 4E35FD93-9C72-4c15-8C4B-E77F1DB2D793 {
+!if gPlatformModuleTokenSpaceGuid.PcdLzmaEnable == TRUE
+  !if gMinPlatformPkgTokenSpaceGuid.PcdUefiSecureBootEnable == TRUE
+    SECTION GUIDED A7717414-C616-4977-9420-844712A735BF PROCESSING_REQUIRED = TRUE AUTH_STATUS_VALID = TRUE {
+      SECTION GUIDED EE4E5898-3914-4259-9D6E-DC7BD79403CF PROCESSING_REQUIRED = TRUE {
+        SECTION FV_IMAGE = FvCnvUnCompact
+      }
+    }
+  !else
+      SECTION GUIDED EE4E5898-3914-4259-9D6E-DC7BD79403CF PROCESSING_REQUIRED = TRUE {
+        SECTION FV_IMAGE = FvCnvUnCompact
+      }
+  !endif
+!else
+  !if gPlatformModuleTokenSpaceGuid.PcdDxeCompressEnable == TRUE
+  # TianoCompress
+      SECTION GUIDED A31280AD-481E-41B6-95E8-127F4C984779 PROCESSING_REQUIRED = TRUE {
+        SECTION FV_IMAGE = FvCnvUnCompact
+      }
+  !else
+  # NoCompress
+      SECTION COMPRESS PI_NONE {
+        SECTION FV_IMAGE = FvCnvUnCompact
+      }
+  !endif
+!endif
+}
+!endif  #gPlatformModuleTokenSpaceGuid.PcdNetworkEnable == TRUE
+
+#
+# TrustedDeviceSetup FV
+#
+
+!if gPlatformModuleTokenSpaceGuid.PcdTdsEnable == TRUE
+FILE FV_IMAGE = 15357EE2-88D9-402D-A364-76F2BD7D3052 {
+!if gPlatformModuleTokenSpaceGuid.PcdLzmaEnable == TRUE
+  !if gMinPlatformPkgTokenSpaceGuid.PcdUefiSecureBootEnable == TRUE
+    SECTION GUIDED A7717414-C616-4977-9420-844712A735BF PROCESSING_REQUIRED = TRUE AUTH_STATUS_VALID = TRUE {
+      SECTION GUIDED EE4E5898-3914-4259-9D6E-DC7BD79403CF PROCESSING_REQUIRED = TRUE {
+        SECTION FV_IMAGE = FvTrustedDeviceSetupUnCompact
+      }
+    }
+  !else
+      SECTION GUIDED EE4E5898-3914-4259-9D6E-DC7BD79403CF PROCESSING_REQUIRED = TRUE {
+        SECTION FV_IMAGE = FvTrustedDeviceSetupUnCompact
+      }
+  !endif
+!else
+  !if gPlatformModuleTokenSpaceGuid.PcdDxeCompressEnable == TRUE
+  # TianoCompress
+      SECTION GUIDED A31280AD-481E-41B6-95E8-127F4C984779 PROCESSING_REQUIRED = TRUE {
+        SECTION FV_IMAGE = FvTrustedDeviceSetupUnCompact
+      }
+  !else
+  # NoCompress
+      SECTION COMPRESS PI_NONE {
+        SECTION FV_IMAGE = FvTrustedDeviceSetupUnCompact
+      }
+  !endif
+!endif
+}
+!endif # gPlatformModuleTokenSpaceGuid.PcdTdsEnable == TRUE
+
+[FV.FvFwBinaries]
+BlockSize     = $(FLASH_BLOCK_SIZE)
+FvAlignment        = 16
+ERASE_POLARITY     = 1
+MEMORY_MAPPED      = TRUE
+STICKY_WRITE       = TRUE
+LOCK_CAP           = TRUE
+LOCK_STATUS        = TRUE
+WRITE_DISABLED_CAP = TRUE
+WRITE_ENABLED_CAP  = TRUE
+WRITE_STATUS       = TRUE
+WRITE_LOCK_CAP     = TRUE
+WRITE_LOCK_STATUS  = TRUE
+READ_DISABLED_CAP  = TRUE
+READ_ENABLED_CAP   = TRUE
+READ_STATUS        = TRUE
+READ_LOCK_CAP      = TRUE
+READ_LOCK_STATUS   = TRUE
+FvNameGuid         = 8B98AB22-E354-42F0-88B9-049810F0FDAA
+
+!if (gSiPkgTokenSpaceGuid.PcdBootGuardEnable == TRUE) OR (gSiPkgTokenSpaceGuid.PcdTxtEnable == TRUE)
+!if gBoardModuleTokenSpaceGuid.PcdStartupAcmBinEnable == TRUE
+# NOTE: This ACM should be aligned on 128K boundary
+FILE RAW = 26fdaa3d-b7ed-4714-8509-eecf1593800d Align=128K {
+  $(PLATFORM_BOARD_PACKAGE)/Binaries/BootGuard/ACM/StartupAcm.bin
+}
+!endif
+!endif
+
+!if gBoardModuleTokenSpaceGuid.PcdElixirSpringsPatchBinEnable == TRUE
+FILE RAW = 6BF7A32B-EFD9-44B0-B11C-A74F0447DF82 {
+  $(PLATFORM_BOARD_PACKAGE)/Binaries/ElixirSpringsPatch/ElixirSpringsPatch.bin  # @todo: Use existing binary when available.
+}
+!endif
+
+
+
+!if gBoardModuleTokenSpaceGuid.PcdSetupEnable == TRUE
+  !include $(PLATFORM_BOARD_PACKAGE)/Features/Setup/Include/Fdf/SetupFv.fdf
+!endif
+
+
+[FV.FvReserved1]
+BlockSize     = $(FLASH_BLOCK_SIZE)
+FvForceRebase = FALSE
+FvAlignment        = 16
+ERASE_POLARITY     = 1
+MEMORY_MAPPED      = TRUE
+STICKY_WRITE       = TRUE
+LOCK_CAP           = TRUE
+LOCK_STATUS        = TRUE
+WRITE_DISABLED_CAP = TRUE
+WRITE_ENABLED_CAP  = TRUE
+WRITE_STATUS       = TRUE
+WRITE_LOCK_CAP     = TRUE
+WRITE_LOCK_STATUS  = TRUE
+READ_DISABLED_CAP  = TRUE
+READ_ENABLED_CAP   = TRUE
+READ_STATUS        = TRUE
+READ_LOCK_CAP      = TRUE
+READ_LOCK_STATUS   = TRUE
+FvNameGuid         = 2D65BA9C-F70E-4A6B-B8CA-440D464B463A
+
+
+[FV.FvReserved2]
+BlockSize     = $(FLASH_BLOCK_SIZE)
+FvForceRebase = FALSE
+FvAlignment        = 16
+ERASE_POLARITY     = 1
+MEMORY_MAPPED      = TRUE
+STICKY_WRITE       = TRUE
+LOCK_CAP           = TRUE
+LOCK_STATUS        = TRUE
+WRITE_DISABLED_CAP = TRUE
+WRITE_ENABLED_CAP  = TRUE
+WRITE_STATUS       = TRUE
+WRITE_LOCK_CAP     = TRUE
+WRITE_LOCK_STATUS  = TRUE
+READ_DISABLED_CAP  = TRUE
+READ_ENABLED_CAP   = TRUE
+READ_STATUS        = TRUE
+READ_LOCK_CAP      = TRUE
+READ_LOCK_STATUS   = TRUE
+FvNameGuid         = 972D6189-6CFB-492F-B4B8-2A302A6C4B23
+
+################################################################################
+#
+# Rules are use with the [FV] section's module INF type to define
+# how an FFS file is created for a given INF file. The following Rule are the default
+# rules for the different module type. User can add the customized rules to define the
+# content of the FFS file.
+#
+################################################################################
+
+!include $(PLATFORM_BOARD_PACKAGE)/Include/Fdf/RuleInclude.fdf
+
+[Rule.Common.USER_DEFINED.LEGACY16]
+  FILE FREEFORM = $(NAMED_GUID) {
+     RAW BIN |.com
+     UI  STRING="$(MODULE_NAME)" Optional
+     VERSION  STRING="$(INF_VERSION)" Optional BUILD_NUM=$(BUILD_NUMBER)
+     }
+
+[Rule.Common.DXE_DRIVER.DRIVER_ACPITABLE]
+  FILE DRIVER = $(NAMED_GUID) {
+    DXE_DEPEX DXE_DEPEX Optional       $(INF_OUTPUT)/$(MODULE_NAME).depex
+    PE32      PE32                     $(INF_OUTPUT)/$(MODULE_NAME).efi
+    RAW ACPI  Optional                |.acpi
+    RAW ASL   Optional                |.aml
+    UI        STRING="$(MODULE_NAME)" Optional
+    VERSION   STRING="$(INF_VERSION)" Optional BUILD_NUM=$(BUILD_NUMBER)
+  }

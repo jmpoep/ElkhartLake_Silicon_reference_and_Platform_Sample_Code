@@ -1,0 +1,147 @@
+## @file
+#
+# The DEC files are used by the utilities that parse DSC and
+# INF files to generate AutoGen.c and AutoGen.h files
+# for the build infrastructure.
+#
+# Copyright (c) 2017 - 2018, Intel Corporation. All rights reserved.<BR>
+#
+# This program and the accompanying materials are licensed and made available under
+# the terms and conditions of the BSD License which accompanies this distribution.
+# The full text of the license may be found at
+# http://opensource.org/licenses/bsd-license.php
+#
+# THE PROGRAM IS DISTRIBUTED UNDER THE BSD LICENSE ON AN "AS IS" BASIS,
+# WITHOUT WARRANTIES OR REPRESENTATIONS OF ANY KIND, EITHER EXPRESS OR IMPLIED.
+#
+##
+
+
+[Defines]
+DEC_SPECIFICATION = 0x00010017
+PACKAGE_NAME = OpenBoardPkg
+PACKAGE_VERSION = 0.1
+PACKAGE_GUID = 734F5E12-4C70-4EC9-908B-D7421B4B128C
+
+[Includes]
+Include
+ElkhartLakeSimics\Include  # ElkhartLakeOpenBoardPkgContent
+
+[Guids]
+  gBoardModuleTokenSpaceGuid            =  {0x72d1fff7, 0xa42a, 0x4219, {0xb9, 0x95, 0x5a, 0x67, 0x53, 0x6e, 0xa4, 0x2a}}
+  gTianoLogoGuid                        =  {0x7BB28B99, 0x61BB, 0x11D5, {0x9A, 0x5D, 0x00, 0x90, 0x27, 0x3F, 0xC1, 0x4D}}
+
+[Protocols]
+  gPlatformNvsAreaProtocolGuid          =  {0xc77ae556, 0x40a3, 0x41c0, {0xac, 0xe6, 0x71, 0x43, 0x8c, 0x60, 0xf8, 0x71}}
+
+[Ppis]
+
+[LibraryClasses]
+
+[PcdsFixedAtBuild, PcdsPatchableInModule]
+
+[PcdsFixedAtBuild]
+  gBoardModuleTokenSpaceGuid.PcdLpcIoDecodeRange|0x0010|UINT16|0x10001004
+  gBoardModuleTokenSpaceGuid.PchLpcIoEnableDecoding|0x3c03|UINT16|0x10001005
+
+  gBoardModuleTokenSpaceGuid.PcdLpcSioIndexPort|0x4e|UINT16|0x90000018
+  gBoardModuleTokenSpaceGuid.PcdLpcSioDataPort|0x4f|UINT16|0x9000001F
+
+  gBoardModuleTokenSpaceGuid.PcdLpcSioConfigDefaultPort|0x164E|UINT16|0x9000001C
+  gBoardModuleTokenSpaceGuid.PcdSioBaseAddress|0x0680|UINT16|0x9000001D
+
+  gBoardModuleTokenSpaceGuid.PcdDmiBaseAddress|0xFED18000|UINT64|0x90000003
+  gBoardModuleTokenSpaceGuid.PcdDmiMmioSize|0x1000|UINT32|0x90000004
+
+  gBoardModuleTokenSpaceGuid.PcdEpBaseAddress|0xFED19000|UINT64|0x90000005
+  gBoardModuleTokenSpaceGuid.PcdEpMmioSize|0x1000|UINT32|0x90000006
+
+  gBoardModuleTokenSpaceGuid.PcdMchBaseAddress|0xFEDC0000|UINT64|0x00010030
+  gBoardModuleTokenSpaceGuid.PcdMchMmioSize|0x20000|UINT32|0x50000000
+
+[PcdsDynamic]
+  # Board GPIO Table
+  gBoardModuleTokenSpaceGuid.PcdBoardGpioTable|0|UINT32|0x00000040
+  gBoardModuleTokenSpaceGuid.PcdBoardGpioTableSize|0|UINT16|0x00000041
+
+  # DRAM Configuration
+  gBoardModuleTokenSpaceGuid.PcdMrcSpdData00|0|UINT32|0x00000170
+  gBoardModuleTokenSpaceGuid.PcdMrcSpdData01|0|UINT32|0x00000171
+  gBoardModuleTokenSpaceGuid.PcdMrcSpdData10|0|UINT32|0x00000172
+  gBoardModuleTokenSpaceGuid.PcdMrcSpdData11|0|UINT32|0x00000173
+  gBoardModuleTokenSpaceGuid.PcdMrcSpdDataSize|0|UINT16|0x00000071
+
+  # SPD Address Table
+  gBoardModuleTokenSpaceGuid.PcdMrcSpdAddressTable0|0|UINT8|0x00000099
+  gBoardModuleTokenSpaceGuid.PcdMrcSpdAddressTable1|0|UINT8|0x0000009A
+  gBoardModuleTokenSpaceGuid.PcdMrcSpdAddressTable2|0|UINT8|0x0000009B
+  gBoardModuleTokenSpaceGuid.PcdMrcSpdAddressTable3|0|UINT8|0x0000009C
+
+  # USB 2.0 Port Over Current Pin
+  gBoardModuleTokenSpaceGuid.PcdUsb20OverCurrentPinPort0|0|UINT8|0x000000CF
+  gBoardModuleTokenSpaceGuid.PcdUsb20OverCurrentPinPort1|0|UINT8|0x000000D0
+  gBoardModuleTokenSpaceGuid.PcdUsb20OverCurrentPinPort2|0|UINT8|0x000000D1
+  gBoardModuleTokenSpaceGuid.PcdUsb20OverCurrentPinPort3|0|UINT8|0x000000D2
+  gBoardModuleTokenSpaceGuid.PcdUsb20OverCurrentPinPort4|0|UINT8|0x000000D3
+  gBoardModuleTokenSpaceGuid.PcdUsb20OverCurrentPinPort5|0|UINT8|0x000000D4
+  gBoardModuleTokenSpaceGuid.PcdUsb20OverCurrentPinPort6|0|UINT8|0x000000D5
+  gBoardModuleTokenSpaceGuid.PcdUsb20OverCurrentPinPort7|0|UINT8|0x000000D6
+  gBoardModuleTokenSpaceGuid.PcdUsb20OverCurrentPinPort8|0|UINT8|0x000000D7
+  gBoardModuleTokenSpaceGuid.PcdUsb20OverCurrentPinPort9|0|UINT8|0x000000D8
+  gBoardModuleTokenSpaceGuid.PcdUsb20OverCurrentPinPort10|0|UINT8|0x000000D9
+  gBoardModuleTokenSpaceGuid.PcdUsb20OverCurrentPinPort11|0|UINT8|0x000000DA
+  gBoardModuleTokenSpaceGuid.PcdUsb20OverCurrentPinPort12|0|UINT8|0x000000DB
+  gBoardModuleTokenSpaceGuid.PcdUsb20OverCurrentPinPort13|0|UINT8|0x000000DC
+  gBoardModuleTokenSpaceGuid.PcdUsb20OverCurrentPinPort14|0|UINT8|0x000000DD
+  gBoardModuleTokenSpaceGuid.PcdUsb20OverCurrentPinPort15|0|UINT8|0x000000DE
+
+  # USB 3.0 Port Over Current Pin
+  gBoardModuleTokenSpaceGuid.PcdUsb30OverCurrentPinPort0|0|UINT8|0x000000DF
+  gBoardModuleTokenSpaceGuid.PcdUsb30OverCurrentPinPort1|0|UINT8|0x000000E0
+  gBoardModuleTokenSpaceGuid.PcdUsb30OverCurrentPinPort2|0|UINT8|0x000000E1
+  gBoardModuleTokenSpaceGuid.PcdUsb30OverCurrentPinPort3|0|UINT8|0x000000E2
+  gBoardModuleTokenSpaceGuid.PcdUsb30OverCurrentPinPort4|0|UINT8|0x000000E3
+  gBoardModuleTokenSpaceGuid.PcdUsb30OverCurrentPinPort5|0|UINT8|0x000000E4
+  gBoardModuleTokenSpaceGuid.PcdUsb30OverCurrentPinPort6|0|UINT8|0x000000E5
+  gBoardModuleTokenSpaceGuid.PcdUsb30OverCurrentPinPort7|0|UINT8|0x000000E6
+  gBoardModuleTokenSpaceGuid.PcdUsb30OverCurrentPinPort8|0|UINT8|0x000000E7
+  gBoardModuleTokenSpaceGuid.PcdUsb30OverCurrentPinPort9|0|UINT8|0x000000E8
+  gBoardModuleTokenSpaceGuid.PcdCpuUsb30PortEnable|0|UINT8|0x00100032
+
+  # SATA
+  gBoardModuleTokenSpaceGuid.PcdSataPortsEnable0|0|UINT8|0x000000F0
+
+  # CPU
+  gBoardModuleTokenSpaceGuid.PcdCpuRatio|0x0|UINT8|0x00000200
+  gBoardModuleTokenSpaceGuid.PcdBiosGuard|0x0|UINT8|0x00000201
+
+  # MISC
+  gBoardModuleTokenSpaceGuid.PcdPs2KbMsEnable|1|UINT8|0x40000009
+  gBoardModuleTokenSpaceGuid.PcdStackBase|0x0|UINT32|0x50000010
+  gBoardModuleTokenSpaceGuid.PcdStackSize|0x0|UINT32|0x50000011
+  gBoardModuleTokenSpaceGuid.PcdNvsBufferPtr|0x0|UINT32|0x50000012
+  gBoardModuleTokenSpaceGuid.PcdCleanMemory|0x0|UINT8|0x50000013
+
+  # ACPI
+  gBoardModuleTokenSpaceGuid.PcdAcpiSleepState|1|UINT8|0x40000002
+  gBoardModuleTokenSpaceGuid.PcdAcpiHibernate|1|UINT8|0x40000003
+  gBoardModuleTokenSpaceGuid.PcdLowPowerS0Idle|0|UINT8|0x40000004
+  gBoardModuleTokenSpaceGuid.PcdPciExpNative|0|UINT8|0x40000005
+  gBoardModuleTokenSpaceGuid.PcdNativeAspmEnable|1|UINT8|0x40000006
+  gBoardModuleTokenSpaceGuid.PcdDisableActiveTripPoints|1|UINT8|0x4000000A
+  gBoardModuleTokenSpaceGuid.PcdDisablePassiveTripPoints|0|UINT8|0x4000000B
+  gBoardModuleTokenSpaceGuid.PcdDisableCriticalTripPoints|1|UINT8|0x4000000C
+  gBoardModuleTokenSpaceGuid.PcdAcpiGnvsAddress|0|UINT64|0x40000013
+
+  # gIntelPeiGraphicsVbtGuid =  {0x4ad46122, 0xffeb, 0x4a52, {0xbf, 0xb0, 0x51, 0x8c, 0xfc, 0xa0, 0x2d, 0xb0}}
+  gBoardModuleTokenSpaceGuid.PcdGraphicsVbtGuid|{0x22, 0x61, 0xd4, 0x4a, 0xeb, 0xff, 0x52, 0x4a, 0xbf, 0xb0, 0x51, 0x8c, 0xfc, 0xa0, 0x2d, 0xb0}|VOID*|0x40000014
+
+  gBoardModuleTokenSpaceGuid.PcdEcPresent|FALSE|BOOLEAN|0x00101019
+[PcdsDynamicEx]
+
+[PcdsDynamic, PcdsDynamicEx]
+
+[PcdsPatchableInModule]
+
+[PcdsFeatureFlag]
+  gBoardModuleTokenSpaceGuid.PcdIntelGopEnable      |TRUE|BOOLEAN|0xF0000062

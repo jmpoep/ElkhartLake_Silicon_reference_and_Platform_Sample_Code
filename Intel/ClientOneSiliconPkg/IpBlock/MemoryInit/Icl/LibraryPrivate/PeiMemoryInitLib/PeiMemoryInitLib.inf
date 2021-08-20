@@ -1,0 +1,232 @@
+## @file
+# Component description file for PeiMemoryInitLib
+#
+# @copyright
+#  INTEL CONFIDENTIAL
+#  Copyright 1999 - 2019 Intel Corporation.
+#
+#  The source code contained or described herein and all documents related to the
+#  source code ("Material") are owned by Intel Corporation or its suppliers or
+#  licensors. Title to the Material remains with Intel Corporation or its suppliers
+#  and licensors. The Material may contain trade secrets and proprietary and
+#  confidential information of Intel Corporation and its suppliers and licensors,
+#  and is protected by worldwide copyright and trade secret laws and treaty
+#  provisions. No part of the Material may be used, copied, reproduced, modified,
+#  published, uploaded, posted, transmitted, distributed, or disclosed in any way
+#  without Intel's prior express written permission.
+#
+#  No license under any patent, copyright, trade secret or other intellectual
+#  property right is granted to or conferred upon you by disclosure or delivery
+#  of the Materials, either expressly, by implication, inducement, estoppel or
+#  otherwise. Any license under such intellectual property rights must be
+#  express and approved by Intel in writing.
+#
+#  Unless otherwise agreed by Intel in writing, you may not remove or alter
+#  this notice or any other notice embedded in Materials by Intel or
+#  Intel's suppliers or licensors in any way.
+#
+#  This file contains an 'Intel Peripheral Driver' and is uniquely identified as
+#  "Intel Reference Module" and is licensed for Intel CPUs and chipsets under
+#  the terms of your license agreement with Intel or your vendor. This file may
+#  be modified by the user, subject to additional terms of the license agreement.
+#
+# @par Specification Reference:
+#
+##
+
+
+[Defines]
+INF_VERSION = 0x00010017
+BASE_NAME = PeiMemoryInitLib
+FILE_GUID = 3B42EF57-16D3-44CB-8632-9FDB06B41451
+VERSION_STRING = 1.0
+MODULE_TYPE = PEIM
+LIBRARY_CLASS = MemoryInitLib
+#
+# The following information is for reference only and not required by the build tools.
+#
+# VALID_ARCHITECTURES = IA32 X64 IPF
+#
+
+
+
+[BuildOptions]
+MSFT: *_*_*_CC_FLAGS = /Oi /GL- /Gs262144 /Zi /Gm
+
+[LibraryClasses]
+PeimEntryPoint
+BaseMemoryLib
+BaseLib
+IoLib
+DebugLib
+PeiServicesLib
+MemoryAllocationLib
+HobLib
+PcdLib
+PrintLib
+ReportStatusCodeLib
+PeiSaPolicyLib
+ConfigBlockLib
+CpuPlatformLib
+PeiTxtLib
+TxtLib
+PciSegmentLib
+TimerLib
+CpuCommonLib
+PchInfoLib
+MemoryAddressEncodeLib
+GraphicsInitLib
+
+[Packages]
+MdePkg/MdePkg.dec
+UefiCpuPkg/UefiCpuPkg.dec
+ClientOneSiliconPkg/SiPkg.dec
+
+[Pcd]
+gSiPkgTokenSpaceGuid.PcdSiPciExpressBaseAddress
+gSiPkgTokenSpaceGuid.PcdNvVariableEmulationMode             ## CONSUMES
+
+[FixedPcd]
+gSiPkgTokenSpaceGuid.PcdMchBaseAddress
+
+[Sources]
+MemoryInit.c
+MemoryTest.c
+Source/Api/MrcApi.h
+Source/Api/MrcBdat.c
+Source/Api/MrcBdat.h
+Source/Api/MrcDebugPrint.c
+Source/Api/MrcDebugPrint.h
+Source/Api/MrcGeneral.c
+Source/Api/MrcGeneral.h
+Source/Api/MrcMemoryScrub.c
+Source/Api/MrcMemoryScrub.h
+Source/Api/MrcSaveRestore.c
+Source/Api/MrcSaveRestore.h
+Source/Api/MrcStartMemoryConfiguration.c
+Source/Api/MrcStartMemoryConfiguration.h
+Source/CPGC/MrcCpgcApi.c
+Source/CPGC/MrcCpgcApi.h
+Source/CPGC/Cpgc20/Cpgc20.h
+Source/CPGC/Cpgc20/Cpgc20Patterns.c
+Source/CPGC/Cpgc20/Cpgc20Patterns.h
+Source/CPGC/Cpgc20/Cpgc20TestCtl.c
+Source/CPGC/Cpgc20/Cpgc20TestCtl.h
+Source/Hal/MrcCpgcOffsets.c
+Source/Hal/MrcCpgcOffsets.h
+Source/Hal/MrcDdrIoDefines.h
+Source/Hal/MrcDdrIoOffsets.c
+Source/Hal/MrcDdrIoOffsets.h
+Source/Hal/MrcHalRegisterAccess.c
+Source/Hal/MrcHalRegisterAccess.h
+Source/Hal/MrcMcOffsets.c
+Source/Hal/MrcMcOffsets.h
+Source/Hal/MrcRegisterCache.c
+Source/Hal/MrcRegisterCache.h
+Source/Include/McAddress.h
+Source/Include/MrcCommandTraining.h
+Source/Include/MrcCommon.h
+Source/Include/MrcCrosser.h
+Source/Include/MrcDdr4Registers.h
+Source/Include/MrcGears.h
+Source/Include/MrcGlobal.h
+Source/Include/MrcIoControl.h
+Source/Include/MrcMalloc.h
+Source/Include/MrcMcConfiguration.h
+Source/Include/MrcMemoryMap.h
+Source/Include/MrcReset.h
+Source/Include/MrcVersion.h
+Source/MemoryTypes/MrcDdrCommon.c
+Source/MemoryTypes/MrcDdrCommon.h
+Source/MemoryTypes/MrcDdr4.c
+Source/MemoryTypes/MrcDdr4.h
+Source/MemoryTypes/MrcLpddr4.c
+Source/MemoryTypes/MrcLpddr4.h
+Source/MemoryTypes/MrcMemoryApi.c
+Source/MemoryTypes/MrcMemoryApi.h
+Source/Include/MrcRegisters/Icelake/MrcMcRegisterIcl.h
+Source/Include/MrcRegisters/Icelake/MrcMcRegisterIcl0xxx.h
+Source/Include/MrcRegisters/Icelake/MrcMcRegisterIcl1xxx.h
+Source/Include/MrcRegisters/Icelake/MrcMcRegisterIcl2xxx.h
+Source/Include/MrcRegisters/Icelake/MrcMcRegisterIcl3xxx.h
+Source/Include/MrcRegisters/Icelake/MrcMcRegisterIcl4xxx.h
+Source/Include/MrcRegisters/Icelake/MrcMcRegisterIcl5xxx.h
+Source/Include/MrcRegisters/Icelake/MrcMcRegisterIcl6xxx.h
+Source/Include/MrcRegisters/Icelake/MrcMcRegisterIcl7xxx.h
+Source/Include/MrcRegisters/Icelake/MrcMcRegisterIcl8xxx.h
+Source/Include/MrcRegisters/Icelake/MrcMcRegisterIcl9xxx.h
+Source/Include/MrcRegisters/Icelake/MrcMcRegisterIclAxxx.h
+Source/Include/MrcRegisters/Icelake/MrcMcRegisterIclBxxx.h
+Source/Include/MrcRegisters/Icelake/MrcMcRegisterIclCxxx.h
+Source/Include/MrcRegisters/Icelake/MrcMcRegisterIclDxxx.h
+Source/Include/MrcRegisters/Icelake/MrcMcRegisterStructIcl.h
+Source/Include/MrcRegisters/Icelake/MrcMcRegisterStructIcl0xxx.h
+Source/Include/MrcRegisters/Icelake/MrcMcRegisterStructIcl1xxx.h
+Source/Include/MrcRegisters/Icelake/MrcMcRegisterStructIcl2xxx.h
+Source/Include/MrcRegisters/Icelake/MrcMcRegisterStructIcl3xxx.h
+Source/Include/MrcRegisters/Icelake/MrcMcRegisterStructIcl4xxx.h
+Source/Include/MrcRegisters/Icelake/MrcMcRegisterStructIcl5xxx.h
+Source/Include/MrcRegisters/Icelake/MrcMcRegisterStructIcl6xxx.h
+Source/Include/MrcRegisters/Icelake/MrcMcRegisterStructIcl7xxx.h
+Source/Include/MrcRegisters/Icelake/MrcMcRegisterStructIcl8xxx.h
+Source/Include/MrcRegisters/Icelake/MrcMcRegisterStructIcl9xxx.h
+Source/Include/MrcRegisters/Icelake/MrcMcRegisterStructIclAxxx.h
+Source/Include/MrcRegisters/Icelake/MrcMcRegisterStructIclBxxx.h
+Source/Include/MrcRegisters/Icelake/MrcMcRegisterStructIclCxxx.h
+Source/Include/MrcRegisters/Icelake/MrcMcRegisterStructIclDxxx.h
+Source/McConfiguration/MrcAddressDecodeConfiguration.c
+Source/McConfiguration/MrcAddressDecodeConfiguration.h
+Source/McConfiguration/MrcPowerModes.c
+Source/McConfiguration/MrcPowerModesUpServer.c
+Source/McConfiguration/MrcPowerModes.h
+Source/McConfiguration/MrcMaintenance.c
+Source/McConfiguration/MrcMaintenance.h
+Source/McConfiguration/MrcRefreshConfiguration.c
+Source/McConfiguration/MrcRefreshConfiguration.h
+Source/McConfiguration/MrcSchedulerParameters.c
+Source/McConfiguration/MrcSchedulerParameters.h
+Source/McConfiguration/MrcTimingConfiguration.c
+Source/McConfiguration/MrcTimingConfiguration.h
+Source/ReadTraining/MrcReadDqDqs.c
+Source/ReadTraining/MrcReadDqDqs.h
+Source/ReadTraining/MrcReadReceiveEnable.c
+Source/ReadTraining/MrcReadReceiveEnable.h
+Source/Services/MrcCommandTraining.c
+Source/Services/MrcCommon.c
+Source/Services/MrcCrosser.c
+Source/Services/MrcGears.c
+Source/Services/MrcIoControl.c
+Source/Services/MrcMalloc.c
+Source/Services/MrcMcConfiguration.c
+Source/Services/MrcMemoryMap.c
+Source/Services/MrcReset.c
+Source/SpdProcessing/MrcSpdProcessing.c
+Source/SpdProcessing/MrcSpdProcessing.h
+Source/WriteTraining/MrcWriteDqDqs.c
+Source/WriteTraining/MrcWriteDqDqs.h
+Source/WriteTraining/MrcWriteLeveling.c
+Source/WriteTraining/MrcWriteLeveling.h
+
+[Ppis]
+gSiPolicyPpiGuid ## CONSUMES
+gPeiTxtMemoryUnlockedPpiGuid ## CONSUMES
+gPeiCapsulePpiGuid ## CONSUMES
+gPeiTxtReadyToRunMemoryInitPpiGuid ## CONSUMES
+gFspmArchConfigPpiGuid ## CONSUMES
+
+[Guids]
+gEfiMemoryTypeInformationGuid
+gSaDataHobGuid
+gSiMemoryS3DataGuid                     ## PRODUCES ## HOB
+gSiMemoryInfoDataGuid                   ## PRODUCES ## HOB
+gSiMemoryPlatformDataGuid               ## PRODUCES ## HOB
+gEfiAcpiVariableGuid
+gEfiSmmPeiSmramMemoryReserveGuid
+gPramPreMemConfigGuid
+gEfiMemorySchemaGuid
+gMrcSchemaListHobGuid
+gSsaBiosResultsGuid
+gRmtResultMetadataGuid
+gRmtResultColumnsGuid
+gMargin2DResultMetadataGuid
+gMargin2DResultColumnsGuid

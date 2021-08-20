@@ -1,0 +1,315 @@
+
+/** @file
+  VirtualMsrcommon.h
+
+
+  <b>Conventions</b>
+  - Definitions beginning with "MSR_" are MSRs
+  - Definitions beginning with "R_" are registers
+  - Definitions beginning with "B_" are bits within registers
+  - Definitions beginning with "V_" are meaningful values of bits within the registers
+  - Definitions beginning with "S_" are register sizes
+  - Definitions beginning with "N_" are the bit position
+
+ @copyright
+  INTEL CONFIDENTIAL
+  Copyright 2017 Intel Corporation.
+
+  The source code contained or described herein and all documents related to the
+  source code ("Material") are owned by Intel Corporation or its suppliers or
+  licensors. Title to the Material remains with Intel Corporation or its suppliers
+  and licensors. The Material may contain trade secrets and proprietary and
+  confidential information of Intel Corporation and its suppliers and licensors,
+  and is protected by worldwide copyright and trade secret laws and treaty
+  provisions. No part of the Material may be used, copied, reproduced, modified,
+  published, uploaded, posted, transmitted, distributed, or disclosed in any way
+  without Intel's prior express written permission.
+
+  No license under any patent, copyright, trade secret or other intellectual
+  property right is granted to or conferred upon you by disclosure or delivery
+  of the Materials, either expressly, by implication, inducement, estoppel or
+  otherwise. Any license under such intellectual property rights must be
+  express and approved by Intel in writing.
+
+  Unless otherwise agreed by Intel in writing, you may not remove or alter
+  this notice or any other notice embedded in Materials by Intel or
+  Intel's suppliers or licensors in any way.
+
+  This file contains an 'Intel Peripheral Driver' and is uniquely identified as
+  "Intel Reference Module" and is licensed for Intel CPUs and chipsets under
+  the terms of your license agreement with Intel or your vendor. This file may
+  be modified by the user, subject to additional terms of the license agreement.
+
+@par Specification Reference:
+**/
+
+#ifndef _VIRTUAL_MSRCOMMON_h
+#define _VIRTUAL_MSRCOMMON_h
+
+#define MSR_PPIN_CTL 0x0000004E
+
+#define N_MSR_PPIN_CTL_LOCK_OFFSET 0
+#define S_MSR_PPIN_CTL_LOCK_WIDTH 1
+#define B_MSR_PPIN_CTL_LOCK_MASK BIT0
+
+#define N_MSR_PPIN_CTL_ENABLE_OFFSET 1
+#define S_MSR_PPIN_CTL_ENABLE_WIDTH 1
+#define B_MSR_PPIN_CTL_ENABLE_MASK BIT1
+
+/*
+*/
+#define MSR_PLAT_FRMW_PROT_CTRL 0x00000110
+
+/*
+*/
+#define N_MSR_PLAT_FRMW_PROT_CTRL_PFAT_LOCK_OFFSET 0
+#define S_MSR_PLAT_FRMW_PROT_CTRL_PFAT_LOCK_WIDTH 1
+#define B_MSR_PLAT_FRMW_PROT_CTRL_PFAT_LOCK_MASK BIT0
+
+/*
+*/
+#define N_MSR_PLAT_FRMW_PROT_CTRL_PFAT_ENABLE_OFFSET 1
+#define S_MSR_PLAT_FRMW_PROT_CTRL_PFAT_ENABLE_WIDTH 1
+#define B_MSR_PLAT_FRMW_PROT_CTRL_PFAT_ENABLE_MASK BIT1
+
+/*
+*/
+#define N_MSR_PLAT_FRMW_PROT_CTRL_PFAT_DP_OFFSET 2
+#define S_MSR_PLAT_FRMW_PROT_CTRL_PFAT_DP_WIDTH 1
+#define B_MSR_PLAT_FRMW_PROT_CTRL_PFAT_DP_MASK BIT2
+
+/*
+*/
+#define N_MSR_PLAT_FRMW_PROT_CTRL_RESERVED_OFFSET 3
+#define S_MSR_PLAT_FRMW_PROT_CTRL_RESERVED_WIDTH 61
+#define B_MSR_PLAT_FRMW_PROT_CTRL_RESERVED_MASK (0xFFFFFFFFFFFFFFF8ULL)
+
+/*
+*/
+#define MSR_PLAT_FRMW_PROT_HASH_0 0x00000111
+
+/*
+*/
+#define N_MSR_PLAT_FRMW_PROT_HASH_0_HASH_VALUE_OFFSET 0
+#define S_MSR_PLAT_FRMW_PROT_HASH_0_HASH_VALUE_WIDTH 64
+#define B_MSR_PLAT_FRMW_PROT_HASH_0_HASH_VALUE_MASK (0xFFFFFFFFFFFFFFFFULL)
+
+/*
+*/
+#define MSR_PLAT_FRMW_PROT_HASH_1 0x00000112
+
+/*
+*/
+#define N_MSR_PLAT_FRMW_PROT_HASH_1_HASH_VALUE_OFFSET 0
+#define S_MSR_PLAT_FRMW_PROT_HASH_1_HASH_VALUE_WIDTH 64
+#define B_MSR_PLAT_FRMW_PROT_HASH_1_HASH_VALUE_MASK (0xFFFFFFFFFFFFFFFFULL)
+
+/*
+*/
+#define MSR_PLAT_FRMW_PROT_HASH_2 0x00000113
+
+/*
+*/
+#define N_MSR_PLAT_FRMW_PROT_HASH_2_HASH_VALUE_OFFSET 0
+#define S_MSR_PLAT_FRMW_PROT_HASH_2_HASH_VALUE_WIDTH 64
+#define B_MSR_PLAT_FRMW_PROT_HASH_2_HASH_VALUE_MASK (0xFFFFFFFFFFFFFFFFULL)
+
+/*
+*/
+#define MSR_PLAT_FRMW_PROT_HASH_3 0x00000114
+
+/*
+*/
+#define N_MSR_PLAT_FRMW_PROT_HASH_3_HASH_VALUE_OFFSET 0
+#define S_MSR_PLAT_FRMW_PROT_HASH_3_HASH_VALUE_WIDTH 64
+#define B_MSR_PLAT_FRMW_PROT_HASH_3_HASH_VALUE_MASK (0xFFFFFFFFFFFFFFFFULL)
+
+/*
+*/
+#define MSR_PLAT_FRMW_PROT_TRIG_PARAM 0x00000115
+
+/*
+*/
+#define N_MSR_PLAT_FRMW_PROT_TRIG_PARAM_ADDRESS_OFFSET 0
+#define S_MSR_PLAT_FRMW_PROT_TRIG_PARAM_ADDRESS_WIDTH 64
+#define B_MSR_PLAT_FRMW_PROT_TRIG_PARAM_ADDRESS_MASK (0xFFFFFFFFFFFFFFFFULL)
+
+/*
+*/
+#define MSR_PLAT_FRMW_PROT_TRIGGER 0x00000116
+
+/*
+*/
+#define N_MSR_PLAT_FRMW_PROT_TRIGGER_DUMMY_DATA_OFFSET 0
+#define S_MSR_PLAT_FRMW_PROT_TRIGGER_DUMMY_DATA_WIDTH 64
+#define B_MSR_PLAT_FRMW_PROT_TRIGGER_DUMMY_DATA_MASK (0xFFFFFFFFFFFFFFFFULL)
+
+/*
+*/
+#define MSR_MISC_PWR_MGMT 0x000001AA
+
+#define N_MSR_MISC_PWR_MGMT_SINGLE_PCTL_EN_OFFSET 0
+#define S_MSR_MISC_PWR_MGMT_SINGLE_PCTL_EN_WIDTH 1
+#define B_MSR_MISC_PWR_MGMT_SINGLE_PCTL_EN_MASK BIT0
+
+#define N_MSR_MISC_PWR_MGMT_ENABLE_HWP_OFFSET 6
+#define S_MSR_MISC_PWR_MGMT_ENABLE_HWP_WIDTH 1
+#define B_MSR_MISC_PWR_MGMT_ENABLE_HWP_MASK BIT6
+
+#define N_MSR_MISC_PWR_MGMT_ENABLE_HWP_INTERRUPT_OFFSET 7
+#define S_MSR_MISC_PWR_MGMT_ENABLE_HWP_INTERRUPT_WIDTH 1
+#define B_MSR_MISC_PWR_MGMT_ENABLE_HWP_INTERRUPT_MASK BIT7
+
+#define N_MSR_MISC_PWR_MGMT_ENABLE_OUT_OF_BAND_AUTONOMOUS_OFFSET 8
+#define S_MSR_MISC_PWR_MGMT_ENABLE_OUT_OF_BAND_AUTONOMOUS_WIDTH 1
+#define B_MSR_MISC_PWR_MGMT_ENABLE_OUT_OF_BAND_AUTONOMOUS_MASK BIT8
+
+#define N_MSR_MISC_PWR_MGMT_ENABLE_SDC_OOB_OFFSET 9
+#define S_MSR_MISC_PWR_MGMT_ENABLE_SDC_OOB_WIDTH 1
+#define B_MSR_MISC_PWR_MGMT_ENABLE_SDC_OOB_MASK BIT9
+
+#define N_MSR_MISC_PWR_MGMT_ENABLE_SDC_OFFSET 10
+#define S_MSR_MISC_PWR_MGMT_ENABLE_SDC_WIDTH 1
+#define B_MSR_MISC_PWR_MGMT_ENABLE_SDC_MASK BIT10
+
+/*
+*/
+#define N_MSR_MISC_PWR_MGMT_SDC_OOB_CAPABLE_OFFSET 11
+#define S_MSR_MISC_PWR_MGMT_SDC_OOB_CAPABLE_WIDTH 1
+#define B_MSR_MISC_PWR_MGMT_SDC_OOB_CAPABLE_MASK BIT11
+
+#define N_MSR_MISC_PWR_MGMT_ENABLE_HWP_EPP_OFFSET 12
+#define S_MSR_MISC_PWR_MGMT_ENABLE_HWP_EPP_WIDTH 1
+#define B_MSR_MISC_PWR_MGMT_ENABLE_HWP_EPP_MASK BIT12
+
+/*
+*/
+#define N_MSR_MISC_PWR_MGMT_LOCK_OFFSET 13
+#define S_MSR_MISC_PWR_MGMT_LOCK_WIDTH 1
+#define B_MSR_MISC_PWR_MGMT_LOCK_MASK BIT13
+
+/*
+*/
+#define N_MSR_MISC_PWR_MGMT_PLAT_P_STATE_CTRL_OFFSET 18
+#define S_MSR_MISC_PWR_MGMT_PLAT_P_STATE_CTRL_WIDTH 1
+#define B_MSR_MISC_PWR_MGMT_PLAT_P_STATE_CTRL_MASK BIT18
+
+#define N_MSR_MISC_PWR_MGMT_LOCK_THERM_INT_OFFSET 22
+#define S_MSR_MISC_PWR_MGMT_LOCK_THERM_INT_WIDTH 1
+#define B_MSR_MISC_PWR_MGMT_LOCK_THERM_INT_MASK BIT22
+
+/*
+*/
+#define MSR_POWER_CTL 0x000001FC
+
+#define N_MSR_POWER_CTL_ENABLE_BIDIR_PROCHOT_OFFSET 0
+#define S_MSR_POWER_CTL_ENABLE_BIDIR_PROCHOT_WIDTH 1
+#define B_MSR_POWER_CTL_ENABLE_BIDIR_PROCHOT_MASK BIT0
+
+#define N_MSR_POWER_CTL_C1E_ENABLE_OFFSET 1
+#define S_MSR_POWER_CTL_C1E_ENABLE_WIDTH 1
+#define B_MSR_POWER_CTL_C1E_ENABLE_MASK BIT1
+
+#define N_MSR_POWER_CTL_SAPM_IMC_C2_POLICY_OFFSET 2
+#define S_MSR_POWER_CTL_SAPM_IMC_C2_POLICY_WIDTH 1
+#define B_MSR_POWER_CTL_SAPM_IMC_C2_POLICY_MASK BIT2
+
+#define N_MSR_POWER_CTL_FAST_BRK_SNP_EN_OFFSET 3
+#define S_MSR_POWER_CTL_FAST_BRK_SNP_EN_WIDTH 1
+#define B_MSR_POWER_CTL_FAST_BRK_SNP_EN_MASK BIT3
+
+#define N_MSR_POWER_CTL_FAST_BRK_INT_EN_OFFSET 4
+#define S_MSR_POWER_CTL_FAST_BRK_INT_EN_WIDTH 1
+#define B_MSR_POWER_CTL_FAST_BRK_INT_EN_MASK BIT4
+
+#define N_MSR_POWER_CTL_RSRVD_OFFSET 5
+#define S_MSR_POWER_CTL_RSRVD_WIDTH 1
+#define B_MSR_POWER_CTL_RSRVD_MASK BIT5
+
+#define N_MSR_POWER_CTL_PHOLD_CST_PREVENTION_INIT_OFFSET 6
+#define S_MSR_POWER_CTL_PHOLD_CST_PREVENTION_INIT_WIDTH 11
+#define B_MSR_POWER_CTL_PHOLD_CST_PREVENTION_INIT_MASK (0x000000000001FFC0)
+
+/*
+*/
+#define N_MSR_POWER_CTL_PHOLD_SR_DISABLE_OFFSET 17
+#define S_MSR_POWER_CTL_PHOLD_SR_DISABLE_WIDTH 1
+#define B_MSR_POWER_CTL_PHOLD_SR_DISABLE_MASK BIT17
+
+#define N_MSR_POWER_CTL_PWR_PERF_PLTFRM_OVR_OFFSET 18
+#define S_MSR_POWER_CTL_PWR_PERF_PLTFRM_OVR_WIDTH 1
+#define B_MSR_POWER_CTL_PWR_PERF_PLTFRM_OVR_MASK BIT18
+
+/*
+*/
+#define N_MSR_POWER_CTL_EE_TURBO_DISABLE_OFFSET 19
+#define S_MSR_POWER_CTL_EE_TURBO_DISABLE_WIDTH 1
+#define B_MSR_POWER_CTL_EE_TURBO_DISABLE_MASK BIT19
+
+/*
+*/
+#define N_MSR_POWER_CTL_RTH_DISABLE_OFFSET 20
+#define S_MSR_POWER_CTL_RTH_DISABLE_WIDTH 1
+#define B_MSR_POWER_CTL_RTH_DISABLE_MASK BIT20
+
+/*
+*/
+#define N_MSR_POWER_CTL_DIS_PROCHOT_OUT_OFFSET 21
+#define S_MSR_POWER_CTL_DIS_PROCHOT_OUT_WIDTH 1
+#define B_MSR_POWER_CTL_DIS_PROCHOT_OUT_MASK BIT21
+
+/*
+*/
+#define N_MSR_POWER_CTL_PROCHOT_RESPONSE_OFFSET 22
+#define S_MSR_POWER_CTL_PROCHOT_RESPONSE_WIDTH 1
+#define B_MSR_POWER_CTL_PROCHOT_RESPONSE_MASK BIT22
+
+/*
+*/
+#define N_MSR_POWER_CTL_PROCHOT_LOCK_OFFSET 23
+#define S_MSR_POWER_CTL_PROCHOT_LOCK_WIDTH 1
+#define B_MSR_POWER_CTL_PROCHOT_LOCK_MASK BIT23
+
+/*
+*/
+#define N_MSR_POWER_CTL_VR_THERM_ALERT_DISABLE_OFFSET 24
+#define S_MSR_POWER_CTL_VR_THERM_ALERT_DISABLE_WIDTH 1
+#define B_MSR_POWER_CTL_VR_THERM_ALERT_DISABLE_MASK BIT24
+
+/*
+*/
+#define N_MSR_POWER_CTL_DISABLE_RING_EE_OFFSET 25
+#define S_MSR_POWER_CTL_DISABLE_RING_EE_WIDTH 1
+#define B_MSR_POWER_CTL_DISABLE_RING_EE_MASK BIT25
+
+/*
+*/
+#define N_MSR_POWER_CTL_DISABLE_SA_OPTIMIZATION_OFFSET 26
+#define S_MSR_POWER_CTL_DISABLE_SA_OPTIMIZATION_WIDTH 1
+#define B_MSR_POWER_CTL_DISABLE_SA_OPTIMIZATION_MASK BIT26
+
+/*
+*/
+#define N_MSR_POWER_CTL_DISABLE_OOK_OFFSET 27
+#define S_MSR_POWER_CTL_DISABLE_OOK_WIDTH 1
+#define B_MSR_POWER_CTL_DISABLE_OOK_MASK BIT27
+
+/*
+*/
+#define N_MSR_POWER_CTL_DISABLE_AUTONOMOUS_OFFSET 28
+#define S_MSR_POWER_CTL_DISABLE_AUTONOMOUS_WIDTH 1
+#define B_MSR_POWER_CTL_DISABLE_AUTONOMOUS_MASK BIT28
+
+/*
+*/
+#define N_MSR_POWER_CTL_CSTATE_PREWAKE_DISABLE_OFFSET 30
+#define S_MSR_POWER_CTL_CSTATE_PREWAKE_DISABLE_WIDTH 1
+#define B_MSR_POWER_CTL_CSTATE_PREWAKE_DISABLE_MASK BIT30
+
+/*
+*/
+#define N_MSR_POWER_CTL_RESERVED_MODE_OFFSET 31
+#define S_MSR_POWER_CTL_RESERVED_MODE_WIDTH 1
+#define B_MSR_POWER_CTL_RESERVED_MODE_MASK BIT31
+
+#endif

@@ -1,0 +1,560 @@
+/** @file
+
+    Boot Maintenance Utility Formset
+
+@copyright
+  INTEL CONFIDENTIAL
+  Copyright 2004 - 2016 Intel Corporation.
+
+  The source code contained or described herein and all documents related to the
+  source code ("Material") are owned by Intel Corporation or its suppliers or
+  licensors. Title to the Material remains with Intel Corporation or its suppliers
+  and licensors. The Material may contain trade secrets and proprietary and
+  confidential information of Intel Corporation and its suppliers and licensors,
+  and is protected by worldwide copyright and trade secret laws and treaty
+  provisions. No part of the Material may be used, copied, reproduced, modified,
+  published, uploaded, posted, transmitted, distributed, or disclosed in any way
+  without Intel's prior express written permission.
+
+  No license under any patent, copyright, trade secret or other intellectual
+  property right is granted to or conferred upon you by disclosure or delivery
+  of the Materials, either expressly, by implication, inducement, estoppel or
+  otherwise. Any license under such intellectual property rights must be
+  express and approved by Intel in writing.
+
+  Unless otherwise agreed by Intel in writing, you may not remove or alter
+  this notice or any other notice embedded in Materials by Intel or
+  Intel's suppliers or licensors in any way.
+
+  This file contains a 'Sample Driver' and is licensed as such under the terms
+  of your license agreement with Intel or your vendor. This file may be modified
+  by the user, subject to the additional terms of the license agreement.
+
+@par Specification Reference:
+**/
+
+#include "FormGuid.h"
+
+#pragma pack(push, 1)
+typedef struct {
+  UINT8   ComNum;
+} SERIAL_PORT_TAG;
+
+typedef struct _SERIAL_PORT_ATTRIBUTE {
+  UINT64            BaudRate;
+  UINT8             DataBits;
+  UINT8             StopBits;
+  UINT8             Parity;
+  UINT8             TerminalType;
+  UINT8             FlowControl;
+  UINT8             LegacyResolution;
+  UINT8             IsEnabled;
+  UINT8             Length;
+  SERIAL_PORT_TAG   ComTag;
+} SERIAL_PORT_ATTRIBUTE;
+
+typedef struct {
+  UINT64 TotalSize;
+  SERIAL_PORT_ATTRIBUTE PortAttributes[1];
+} TOTAL_SERIAL_PORT_INFO;
+
+typedef struct {
+  UINT16  BootTimeOut;
+} TIME_OUT_INFO;
+#pragma pack(pop)
+
+formset
+  guid = BOOT_MAINT_FORMSET_GUID,
+  title = STRING_TOKEN(STR_FORM_MAIN_TITLE),
+  help = STRING_TOKEN(STR_NULL_STRING),
+  classguid = BOOT_MAINT_FORMSET_GUID,
+  class = 0,
+  subclass = 0,
+
+  varstore SETUP_VOLATILE_DATA,
+    varid = AUTO_ID(SETUP_VOLATILE_DATA_ID),
+    name  = SetupVolatileData,
+    guid  = SETUP_GUID;
+
+  defaultstore MyStandardDefault,
+    prompt      = STRING_TOKEN(STR_STANDARD_DEFAULT_PROMPT),
+    attribute   = 0x0000;                         // Default ID: 0000 standard default
+   
+  // ComAttributes is an EfiVarStore that is related to EFI variable with attribute 0x03 
+  // (EFI_VARIABLE_NON_VOLATILE | EFI_VARIABLE_BOOTSERVICE_ACCESS | EFI_VARIABLE_RUNTIME_ACCESS)
+  efivarstore TOTAL_SERIAL_PORT_INFO,
+    varid = 0x1002,
+    attribute = 0x3,
+    name = ComAttributes,
+    guid = SETUP_GUID;
+
+  // Timeout is an EfiVarStore that is related to EFI variable with attribute 0x07 
+  // (EFI_VARIABLE_NON_VOLATILE | EFI_VARIABLE_BOOTSERVICE_ACCESS | EFI_VARIABLE_RUNTIME_ACCESS)
+  efivarstore TIME_OUT_INFO,
+    varid = 0x1003,
+    attribute = 0x7,
+    name = Timeout,
+    guid = EFI_GLOBAL_VARIABLE;
+
+  varstore BMM_FAKE_NV_DATA,
+    varid = VARSTORE_ID_BOOT_MAINT,
+    name = BmmData,
+    guid = BOOT_MAINT_FORMSET_GUID;
+
+  form formid = FORM_MAIN_ID,
+       title = STRING_TOKEN(STR_FORM_MAIN_TITLE);
+
+    goto FORM_BOOT_SETUP_ID,
+         prompt = STRING_TOKEN(STR_FORM_BOOT_SETUP_TITLE),
+         help = STRING_TOKEN(STR_FORM_BOOT_SETUP_HELP),
+         flags = INTERACTIVE,
+         key = FORM_BOOT_SETUP_ID;
+
+
+    goto FORM_DRIVER_SETUP_ID,
+         prompt = STRING_TOKEN(STR_FORM_DRIVER_SETUP_TITLE),
+         help = STRING_TOKEN(STR_FORM_DRIVER_SETUP_HELP),
+         flags = INTERACTIVE,
+         key = FORM_DRIVER_SETUP_ID;
+
+
+    goto FORM_CON_MAIN_ID,
+         prompt = STRING_TOKEN(STR_FORM_CON_MAIN_TITLE),
+         help = STRING_TOKEN(STR_FORM_CON_MAIN_HELP),
+         flags = INTERACTIVE,
+         key = FORM_CON_MAIN_ID;
+
+    label LABEL_BOOT_MAINTENANCE_INFORMATION; 
+    //
+    // This is where we will dynamically add a Action type op-code to show 
+    // the Boot Maintenance information.
+    //
+
+    //
+    // This is where we will dynamically add a Action type op-code to show 
+    // the HDD Security Configuration Menu.
+    //
+
+    //
+    // This is where we will dynamically add a Action type op-code to show 
+    // the Platform Driver Override Selection Menu.
+    //
+    label LABEL_END;
+
+    subtitle text = STRING_TOKEN(STR_NULL_STRING);
+
+    text
+         help   = STRING_TOKEN(STR_BOOT_FROM_FILE_HELP),
+         text   = STRING_TOKEN(STR_BOOT_FROM_FILE),
+         flags  = INTERACTIVE,
+         key    = KEY_VALUE_BOOT_FROM_FILE;
+
+    label FORM_BOOT_NEXT_ID;
+    label LABEL_END; 
+
+    oneof varid     = BmmData.MemoryCheck,
+        questionid  = FORM_MEMORY_CHECK_ID,
+        prompt      = STRING_TOKEN(STR_MEMORY_CHECK_SETUP),
+        help        = STRING_TOKEN(STR_MEMORY_CHECK_SETUP_HELP),
+        option text = STRING_TOKEN(STR_MEMORY_CHECK_IGNORE),    value = 0x0, flags = DEFAULT;
+        option text = STRING_TOKEN(STR_MEMORY_CHECK_QUICK),     value = 0x1, flags = 0;
+        option text = STRING_TOKEN(STR_MEMORY_CHECK_SPARSE),    value = 0x2, flags = 0;
+        option text = STRING_TOKEN(STR_MEMORY_CHECK_EXTENSIVE), value = 0x3, flags = 0;
+    endoneof; 
+
+    suppressif ideqval BmmData.FastBootEnable == 1;
+      numeric varid   = Timeout.BootTimeOut,
+          questionid  = FORM_TIME_OUT_ID,
+          prompt      = STRING_TOKEN(STR_NUM_AUTO_BOOT),
+          help        = STRING_TOKEN(STR_HLP_AUTO_BOOT), 
+          minimum     = 0,
+          maximum     = 65535,
+          step        = 0,
+          default     = DEFAULT_BOOT_TIME_OUT, defaultstore = MyStandardDefault,
+      endnumeric;
+    endif;
+
+    suppressif ideqval BmmData.FastBootEnable == 0;
+      numeric varid   = BmmData.FastBootTimeOut,
+          prompt      = STRING_TOKEN(STR_NUM_AUTO_BOOT),
+          help        = STRING_TOKEN(STR_HLP_AUTO_BOOT), 
+          minimum     = 0,
+          maximum     = 65535,
+          step        = 0,
+          default     = 0,
+      endnumeric;
+    endif;
+
+  suppressif TRUE;
+    checkbox varid   = BmmData.FastBootEnable,
+            prompt   = STRING_TOKEN(0),
+            help     = STRING_TOKEN(0),
+    endcheckbox;
+
+    numeric varid = BmmData.BootNext,
+      prompt      = STRING_TOKEN(0),
+      help        = STRING_TOKEN(0),
+      minimum     = 0,
+      maximum     = 65535,
+    endnumeric;
+  endif;
+
+  endform;
+
+  form formid = FORM_BOOT_SETUP_ID,
+       title = STRING_TOKEN(STR_FORM_BOOT_SETUP_TITLE);
+
+
+       goto FORM_BOOT_ADD_ID,
+            prompt = STRING_TOKEN(STR_FORM_BOOT_ADD_TITLE),
+            help = STRING_TOKEN(STR_FORM_BOOT_ADD_HELP),
+            flags = INTERACTIVE,
+            key = FORM_BOOT_ADD_ID;
+
+       goto FORM_BOOT_DEL_ID,
+            prompt = STRING_TOKEN(STR_FORM_BOOT_DEL_TITLE),
+            help = STRING_TOKEN(STR_FORM_BOOT_IMMEDIATE_HELP),
+            flags = INTERACTIVE,
+            key = FORM_BOOT_DEL_ID;
+
+       goto FORM_BOOT_CHG_ID,
+            prompt = STRING_TOKEN(STR_FORM_BOOT_CHG_TITLE),
+            help = STRING_TOKEN(STR_FORM_BOOT_IMMEDIATE_HELP),
+            flags = INTERACTIVE,
+            key = FORM_BOOT_CHG_ID;
+
+       subtitle text = STRING_TOKEN(STR_NULL_STRING);
+    //
+    // We will add "Select Legacy Boot Floppy Drive" and "Select Legacy Boot Hard Drive"
+    // here dynamically
+    //
+       label FORM_BOOT_LEGACY_DEVICE_ID;
+       label LABEL_END;
+
+  endform;
+
+  form formid = FORM_DRIVER_SETUP_ID,
+       title = STRING_TOKEN(STR_FORM_DRIVER_SETUP_TITLE);
+
+
+       goto FORM_DRV_ADD_ID,
+            prompt = STRING_TOKEN(STR_FORM_DRV_ADD_TITLE),
+            help = STRING_TOKEN(STR_FORM_DRV_ADD_HELP),
+            flags = INTERACTIVE,
+            key = FORM_DRV_ADD_ID;
+
+       goto FORM_DRV_DEL_ID,
+            prompt = STRING_TOKEN(STR_FORM_DRV_DEL_TITLE),
+            help = STRING_TOKEN(STR_FORM_NEXT_BOOT_HELP),
+            flags = INTERACTIVE,
+            key = FORM_DRV_DEL_ID;
+
+       goto FORM_DRV_CHG_ID,
+            prompt = STRING_TOKEN(STR_FORM_DRV_CHG_TITLE),
+            help = STRING_TOKEN(STR_FORM_NEXT_BOOT_HELP),
+            flags = INTERACTIVE,
+            key = FORM_DRV_CHG_ID;
+  endform;
+
+  form formid = FORM_BOOT_DEL_ID,
+       title = STRING_TOKEN(STR_FORM_BOOT_DEL_TITLE);
+
+       label FORM_BOOT_DEL_ID;
+       label LABEL_END;
+  endform;
+
+  form formid = FORM_BOOT_CHG_ID,
+       title = STRING_TOKEN(STR_FORM_BOOT_CHG_TITLE);
+
+       label FORM_BOOT_CHG_ID;
+       label LABEL_END;
+  endform;
+
+
+  form formid = FORM_DRV_ADD_ID,
+       title = STRING_TOKEN(STR_FORM_DRV_ADD_TITLE);
+
+
+       goto FORM_DRV_ADD_FILE_ID,
+            prompt = STRING_TOKEN(STR_FORM_DRV_ADD_FILE_TITLE),
+            help = STRING_TOKEN(STR_FORM_DRV_ADD_FILE_TITLE),
+            flags = INTERACTIVE,
+            key = FORM_DRV_ADD_FILE_ID;
+
+  endform;
+
+  form formid = FORM_DRV_DEL_ID,
+       title = STRING_TOKEN(STR_FORM_DRV_DEL_TITLE);
+
+       label FORM_DRV_DEL_ID;
+       label LABEL_END;
+
+  endform;
+
+  form formid = FORM_DRV_CHG_ID,
+       title = STRING_TOKEN(STR_FORM_DRV_CHG_TITLE);
+
+       label FORM_DRV_CHG_ID;
+       label LABEL_END;
+
+  endform;
+
+  form formid = FORM_CON_MAIN_ID,
+       title = STRING_TOKEN(STR_FORM_CON_MAIN_TITLE);
+
+
+       goto FORM_CON_IN_ID,
+       prompt = STRING_TOKEN(STR_FORM_CON_IN_TITLE),
+       help = STRING_TOKEN(STR_FORM_CON_IN_HELP),
+       flags = INTERACTIVE,
+       key = FORM_CON_IN_ID;
+
+       goto FORM_CON_OUT_ID,
+       prompt = STRING_TOKEN(STR_FORM_CON_OUT_TITLE),
+       help = STRING_TOKEN(STR_FORM_CON_OUT_HELP),
+       flags = INTERACTIVE,
+       key = FORM_CON_OUT_ID;
+
+       goto FORM_CON_ERR_ID,
+       prompt = STRING_TOKEN(STR_FORM_STD_ERR_TITLE),
+       help = STRING_TOKEN(STR_FORM_STD_ERR_HELP),
+       flags = INTERACTIVE,
+       key = FORM_CON_ERR_ID;
+
+       goto FORM_CON_MODE_ID,
+       prompt = STRING_TOKEN(STR_FORM_MODE_TITLE),
+       help = STRING_TOKEN(STR_FORM_MODE_HELP),
+       flags = INTERACTIVE,
+       key = FORM_CON_MODE_ID;
+
+       goto FORM_CON_COM_ID,
+       prompt = STRING_TOKEN(STR_FORM_COM_TITLE),
+       help = STRING_TOKEN(STR_FORM_COM_HELP),
+       flags = INTERACTIVE,
+       key = FORM_CON_COM_ID;
+  endform;
+
+  form formid = FORM_CON_MODE_ID,
+       title = STRING_TOKEN(STR_FORM_MODE_TITLE);
+
+       label FORM_CON_MODE_ID;
+       label LABEL_END;
+  endform;
+
+  form formid = FORM_CON_COM_ID,
+       title = STRING_TOKEN(STR_FORM_COM_TITLE);
+
+       label FORM_CON_COM_ID;
+
+        checkbox varid  = ComAttributes.PortAttributes[0].IsEnabled,
+                 prompt  = STRING_TOKEN(STR_COM0),
+                 help    = STRING_TOKEN(STR_COM0),
+                 flags  = CHECKBOX_DEFAULT | RESET_REQUIRED,
+        endcheckbox;
+
+       label LABEL_END;
+  endform;
+
+  form formid = FORM_CON_COM_SETUP_ID,
+       title = STRING_TOKEN(STR_CON_COM_SETUP);
+
+       label FORM_CON_COM_SETUP_ID;
+
+        suppressif ideqval ComAttributes.PortAttributes[0].IsEnabled == 0;
+           oneof varid = ComAttributes.PortAttributes[0].TerminalType,
+                prompt = STRING_TOKEN (STR_COM_TERMI_TYPE),
+                help   = STRING_TOKEN (STR_COM_TERMI_TYPE),
+                option text  = STRING_TOKEN (STR_COM_TYPE_1), value = 1, flags = 0;
+                option text  = STRING_TOKEN (STR_COM_TYPE_2), value = 2, flags = 0;
+                option text  = STRING_TOKEN (STR_COM_TYPE_3), value = 3, flags = 0;
+                option text  = STRING_TOKEN (STR_COM_TYPE_0), value = 0, flags = DEFAULT  | RESET_REQUIRED;
+          endoneof;
+        endif;
+
+        suppressif ideqval ComAttributes.PortAttributes[0].IsEnabled == 0;
+          oneof varid = ComAttributes.PortAttributes[0].BaudRate, 
+                prompt = STRING_TOKEN (STR_COM_BAUD_RATE),
+                help   = STRING_TOKEN (STR_COM_BAUD_RATE),
+                option text  = STRING_TOKEN (STR_COM_BAUD_RATE_4), value = 9600, flags = 0;
+                option text  = STRING_TOKEN (STR_COM_BAUD_RATE_3), value = 19200, flags = 0; 
+                option text  = STRING_TOKEN (STR_COM_BAUD_RATE_2), value = 38400, flags = 0; 
+                option text  = STRING_TOKEN (STR_COM_BAUD_RATE_1), value = 57600, flags = 0;
+                option text  = STRING_TOKEN (STR_COM_BAUD_RATE_0), value = 115200, flags = DEFAULT | RESET_REQUIRED;
+          endoneof;
+        endif;
+
+        suppressif ideqval ComAttributes.PortAttributes[0].IsEnabled == 0;
+          oneof varid = ComAttributes.PortAttributes[0].DataBits,
+                prompt = STRING_TOKEN (STR_COM_DATA_BITS),
+                help   = STRING_TOKEN (STR_COM_DATA_BITS),
+                option text  = STRING_TOKEN (STR_COM_DATA_BITS_2), value = 7, flags = 0;
+                option text  = STRING_TOKEN (STR_COM_DATA_BITS_3), value = 8, flags = DEFAULT | RESET_REQUIRED;
+          endoneof;
+        endif;
+
+        suppressif ideqval ComAttributes.PortAttributes[0].IsEnabled == 0;
+          oneof varid  = ComAttributes.PortAttributes[0].Parity,
+                prompt = STRING_TOKEN (STR_COM_PARITY),
+                help   = STRING_TOKEN (STR_COM_PARITY),
+                option text  = STRING_TOKEN (STR_COM_PAR_0), value = 1, flags = DEFAULT  |RESET_REQUIRED;
+                option text  = STRING_TOKEN (STR_COM_PAR_1), value = 2, flags = 0;
+                option text  = STRING_TOKEN (STR_COM_PAR_2), value = 3, flags = 0;
+                option text  = STRING_TOKEN (STR_COM_PAR_3), value = 4, flags = 0;
+                option text  = STRING_TOKEN (STR_COM_PAR_4), value = 5, flags = 0;
+          endoneof;
+        endif;
+
+        suppressif ideqval ComAttributes.PortAttributes[0].IsEnabled == 0;
+          oneof varid = ComAttributes.PortAttributes[0].StopBits,
+                prompt = STRING_TOKEN (STR_COM_STOP_BITS),
+                help   = STRING_TOKEN (STR_COM_STOP_BITS),
+                option text  = STRING_TOKEN (STR_COM_STOP_BITS_0), value = 1, flags = DEFAULT | RESET_REQUIRED;
+                option text  = STRING_TOKEN (STR_COM_STOP_BITS_2), value = 3, flags = 0;
+          endoneof;
+        endif;
+
+        suppressif ideqval ComAttributes.PortAttributes[0].IsEnabled == 0;
+          oneof varid = ComAttributes.PortAttributes[0].FlowControl,
+                prompt = STRING_TOKEN (STR_COM_FLOW_CONTROL),
+                help   = STRING_TOKEN (STR_COM_FLOW_CONTROL),
+                option text  = STRING_TOKEN (STR_NONE_FLOW_CONTROL), value = 0, flags = DEFAULT | RESET_REQUIRED;
+                option text  = STRING_TOKEN (STR_HARDWARE_FLOW_CONTROL), value = 1, flags = 0;
+                option text  = STRING_TOKEN (STR_SOFTWARE_FLOW_CONTROL), value = 2, flags = 0;
+          endoneof;
+        endif;
+
+        suppressif ideqval ComAttributes.PortAttributes[0].IsEnabled == 0;
+          oneof varid = ComAttributes.PortAttributes[0].LegacyResolution,
+                prompt = STRING_TOKEN (STR_LEGACY_RESOLUTION_SETTING),
+                help   = STRING_TOKEN (STR_LEGACY_RESOLUTION_SETTING),
+                option text  = STRING_TOKEN (STR_LEGACY_RESOLUTION_85X24), value = 0, flags = 0;
+                option text  = STRING_TOKEN (STR_LEGACY_RESOLUTION_85X25), value = 1, flags = DEFAULT  | RESET_REQUIRED;
+          endoneof;
+        endif;
+
+        suppressif ideqval ComAttributes.PortAttributes[0].IsEnabled == 0;
+          numeric varid   = ComAttributes.PortAttributes[0].Length,
+              prompt      = STRING_TOKEN(STR_LENGTH),
+              help        = STRING_TOKEN(STR_LENGTH), 
+              minimum     = 0,
+              maximum     = 255,
+              step        = 0,
+              default     = 0,
+          endnumeric;
+        endif;
+
+        suppressif ideqval ComAttributes.PortAttributes[0].IsEnabled == 0;
+          numeric varid     = ComAttributes.PortAttributes[0].ComTag.ComNum,
+              prompt      = STRING_TOKEN(STR_COM_TAG),
+              help        = STRING_TOKEN(STR_COM_TAG), 
+              minimum     = 0,
+              maximum     = 255,
+              step        = 0,
+              default     = 0,
+          endnumeric;
+        endif;
+
+        suppressif ideqval ComAttributes.PortAttributes[0].IsEnabled == 0;
+          numeric varid     = ComAttributes.TotalSize,
+              prompt      = STRING_TOKEN(STR_COM_DATA_LENGTH),
+              help        = STRING_TOKEN(STR_COM_DATA_LENGTH),
+              minimum     = 0,
+              maximum     = 255,
+              step        = 0,
+              default     = 0x19,
+          endnumeric;
+        endif;
+
+       label LABEL_END;
+  endform;
+
+  form formid = FORM_FILE_SEEK_ID,
+       title = STRING_TOKEN(STR_FORM_BOOT_ADD_TITLE);
+
+       label FORM_FILE_SEEK_ID;
+       label LABEL_END;
+  endform;
+
+  form formid = FORM_FILE_NEW_SEEK_ID,
+       title = STRING_TOKEN(STR_FORM_BOOT_ADD_TITLE);
+
+       label FORM_FILE_NEW_SEEK_ID;
+       label LABEL_END;
+  endform;
+
+
+  form formid = FORM_DRV_ADD_HANDLE_ID,
+       title = STRING_TOKEN(STR_FORM_DRV_ADD_HANDLE_TITLE);
+
+       label FORM_DRV_ADD_HANDLE_ID;
+       label LABEL_END;
+  endform;
+
+  form formid = FORM_DRV_ADD_HANDLE_DESC_ID,
+       title = STRING_TOKEN(STR_FORM_DRV_ADD_DESC_TITLE);
+
+       label FORM_DRV_ADD_HANDLE_DESC_ID;
+       label LABEL_END;
+
+  endform;
+
+  form formid = FORM_CON_IN_ID,
+       title = STRING_TOKEN(STR_FORM_CON_IN_TITLE);
+
+       label FORM_CON_IN_ID;
+       label LABEL_END;
+
+  endform;
+
+  form formid = FORM_CON_OUT_ID,
+       title = STRING_TOKEN(STR_FORM_CON_OUT_TITLE);
+
+       label FORM_CON_OUT_ID;
+       label LABEL_END;
+
+  endform;
+
+  form formid = FORM_CON_ERR_ID,
+       title = STRING_TOKEN(STR_FORM_STD_ERR_TITLE);
+
+       label FORM_CON_ERR_ID;
+       label LABEL_END;
+
+  endform;
+
+  form formid = FORM_SET_FD_ORDER_ID,
+       title = STRING_TOKEN(STR_FORM_SET_FD_ORDER_TITLE);
+
+       label FORM_SET_FD_ORDER_ID;
+       label LABEL_END;
+  endform;
+
+  form formid = FORM_SET_HD_ORDER_ID,
+       title = STRING_TOKEN(STR_FORM_SET_HD_ORDER_TITLE);
+
+       label FORM_SET_HD_ORDER_ID;
+       label LABEL_END;
+  endform;
+
+  form formid = FORM_SET_CD_ORDER_ID,
+       title = STRING_TOKEN(STR_FORM_SET_CD_ORDER_TITLE);
+
+       label FORM_SET_CD_ORDER_ID;
+       label LABEL_END;
+  endform;
+
+  form formid = FORM_SET_NET_ORDER_ID,
+       title = STRING_TOKEN(STR_FORM_SET_NET_ORDER_TITLE);
+
+       label FORM_SET_NET_ORDER_ID;
+       label LABEL_END;
+  endform;
+
+  form formid = FORM_SET_BEV_ORDER_ID,
+       title = STRING_TOKEN(STR_FORM_SET_BEV_ORDER_TITLE);
+
+       label FORM_SET_BEV_ORDER_ID;
+       label LABEL_END;
+  endform;
+
+endformset;

@@ -1,0 +1,75 @@
+#/*++
+# This file contains a 'Sample Driver' and is licensed as such
+# under the terms of your license agreement with Intel or your
+# vendor.  This file may be modified by the user, subject to
+# the additional terms of the license agreement
+#--*/
+## @file
+# This driver implement LegacyBios ReverseThunk.
+#
+# Copyright (c) 2016, Intel Corporation. All rights reserved.<BR>
+#
+#  This software and associated documentation (if any) is furnished
+#  under a license and may only be used or copied in accordance
+#  with the terms of the license. Except as permitted by such
+#  license, no part of this software or documentation may be
+#  reproduced, stored in a retrieval system, or transmitted in any
+#  form or by any means without the express written consent of
+#  Intel Corporation.
+#
+#
+##
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = LegacyBiosReverseThunk
+  FILE_GUID                      = 6AEA1B20-6384-4b5f-ABAC-776A11698DED
+  MODULE_TYPE                    = DXE_DRIVER
+  VERSION_STRING                 = 1.0
+  ENTRY_POINT                    = InitializeLegacyBiosReverseThunk
+
+[Sources]
+  LegacyBiosReverseThunk.c
+
+[Sources.Ia32]
+  Ia32/ReverseThunk.nasm
+  Ia32/ReverseThunk.s
+
+[Sources.X64]
+  X64/ReverseThunk.nasm
+  X64/ReverseThunk.s
+
+[Packages]
+  MdePkg/MdePkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+  ClientCommonPkg/ClientCommonPkg.dec
+  ClientSiliconPkg/ClientSiliconPkg.dec
+
+[LibraryClasses]
+  DebugLib
+  BaseLib
+  UefiBootServicesTableLib
+  UefiDriverEntryPoint
+  DxeServicesLib
+  UefiLib
+  DevicePathLib
+  PeCoffLib
+  CacheMaintenanceLib
+  LegacyInterruptSupportLib
+  DxeServicesTableLib
+
+[Protocols]
+  gEfiLegacyBiosProtocolGuid           ## CONSUMES
+  gEfiLegacyRegion2ProtocolGuid        ## CONSUMES
+  gLegacyBiosReverseThunkProtocolGuid  ## PRODUCES
+
+[Guids]
+  gEdkiiMemoryProfileGuid               ## SOMETIMES_CONSUMES ## GUID # Locate protocol
+
+[Pcd]
+  gEfiMdeModulePkgTokenSpaceGuid.PcdMemoryProfilePropertyMask   ## CONSUMES
+
+[Depex]
+  gEfiLegacyBiosProtocolGuid AND
+  gEfiLegacyRegion2ProtocolGuid
+

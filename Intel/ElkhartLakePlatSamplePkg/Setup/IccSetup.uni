@@ -1,0 +1,207 @@
+/**@file
+
+ @copyright
+  INTEL CONFIDENTIAL
+  Copyright 2009 - 2018 Intel Corporation.
+
+  The source code contained or described herein and all documents related to the
+  source code ("Material") are owned by Intel Corporation or its suppliers or
+  licensors. Title to the Material remains with Intel Corporation or its suppliers
+  and licensors. The Material may contain trade secrets and proprietary and
+  confidential information of Intel Corporation and its suppliers and licensors,
+  and is protected by worldwide copyright and trade secret laws and treaty
+  provisions. No part of the Material may be used, copied, reproduced, modified,
+  published, uploaded, posted, transmitted, distributed, or disclosed in any way
+  without Intel's prior express written permission.
+
+  No license under any patent, copyright, trade secret or other intellectual
+  property right is granted to or conferred upon you by disclosure or delivery
+  of the Materials, either expressly, by implication, inducement, estoppel or
+  otherwise. Any license under such intellectual property rights must be
+  express and approved by Intel in writing.
+
+  Unless otherwise agreed by Intel in writing, you may not remove or alter
+  this notice or any other notice embedded in Materials by Intel or
+  Intel's suppliers or licensors in any way.
+
+  This file contains a 'Sample Driver' and is licensed as such under the terms
+  of your license agreement with Intel or your vendor. This file may be modified
+  by the user, subject to the additional terms of the license agreement.
+
+@par Specification
+**/
+
+//
+//Module Name:
+//
+//  IccSetup.uni
+//
+//Abstract:
+//
+// Strings for Icc advanced menu.
+//
+//--*/
+/=#
+#include "VFR.uni"
+
+
+#string STR_BCLK_FORM                   #language en-US "BCLK Configuration"
+
+#string STR_BCLK_SOURCE                 #language en-US "BCLK Source Config"
+#string STR_BCLK_SOURCE_HELP            #language en-US "Selects which BCLK configuration to use. CPU/pcode controlled BCLK, or PCH/CSME controlled BCLK. The POR for EHL is CPU BCLK."
+#string STR_CPU_BCLK_SOURCE             #language en-US "CPU BCLK"
+#string STR_PCH_BCLK_SOURCE             #language en-US "PCH BCLK"
+
+//
+// WDT
+//
+#string STR_OC_WDT_ENABLE              #language en-US "OC Watchdog Timer"
+#string STR_OC_WDT_ENABLE_HELP         #language en-US "When enabled, the OC watchdog timer is exposed to OS as an ACPI device. WDT HW is always used by BIOS when clock settings are changed."
+
+//
+// ICC Profile
+//
+#string STR_ICC_PROFILE                 #language en-US "ICC Profile"
+#string STR_ICC_PROFILE_HELP            #language en-US "Select clock profile that corresponds to the platform configuration. Profiles are defined by the OEM and platform capabilites. Tpically, profile 0 has failsafe settings. Other profiles correspond to WiMax, 3G, or Overclocking settings."
+#string STR_ICC_PLL_SHUTDOWN            #language en-US "ICC PLL Shutdown"
+#string STR_ICC_PLL_SHUTDOWN_HELP       #language en-US "This option controls the programming of the ICC PLL shutdown flow. When enabled, this ICC PM register will be programmed on every non-Sx boot."
+
+//
+// ICC Clocking Library
+//
+#string STR_BCLK_FORM_HELP              #language en-US "BCLK Configuration options"
+#string STR_ICC_LIB_VERSION             #language en-US "ICC Clocking Library"
+#string STR_ICC_LIB_VERSION_NR          #language en-US "N/A"
+
+//
+// CPU BCLK Clock Settings
+//
+#string STR_CPU_BCLK_TITLE              #language en-US "CPU - BCLK Clock Settings"
+#string STR_CPU_BCLK_RFI_FREQUENCY_LOW  #language en-US "BCLK RFI Frequency - SAGV Low"
+#string STR_CPU_BCLK_RFI_FREQUENCY_MID  #language en-US "BCLK RFI Frequency - SAGV Mid"
+#string STR_CPU_BCLK_RFI_FREQUENCY_HIGH #language en-US "BCLK RFI Frequency - SAGV High"
+#string STR_CPU_BCLK_RFI_FREQUENCY_MAX  #language en-US "BCLK RFI Frequency - SAGV Max"
+#string STR_CPU_BCLK_RFI_FREQUENCY_HELP #language en-US "BCLK RFI Frequency in 10kHz increments. Specifies new CPU BCLK RFI frequency for the specified SAGV point. Allowed range is 0 and 98-100Mhz. 0 = No RFI frequency applied. Example: For 98.75MHz, enter 9875."
+#string STR_CPU_BCLK_SPREAD             #language en-US "BCLK Spread"
+#string STR_CPU_BCLK_SPREAD_HELP        #language en-US "BCLK Spread Enable or Disable. When enabled, BCLK frequency will run at a fixed spread percentage. Spread percentage is not configurable."
+
+//
+// PCH BCLK Clock Settings
+//
+#string STR_ICC_CLOCK_NUMBER                #language en-US "placeholder for clock number"
+#string STR_ICC_CLOCK1_TITLE                #language en-US "CSME - BCLK Clock Settings"
+#string STR_ICC_CLOCK_DEFAULT_SETTINGS      #language en-US "    Default Clock Settings"
+#string STR_ICC_CLOCK1_DEFAULT_TEXT         #language en-US "100.00MHz 0.50% Downspread"
+
+#string STR_ICC_CLOCK_FREQ_RANGE            #language en-US "    Frequency Range Limits"
+#string STR_ICC_CLOCK1_FREQ_RANGE_TEXT       #language en-US "uninitialized MHz"
+
+#string STR_ICC_CLOCK_MAX_SPREAD            #language en-US "    Maximum Spread %"
+#string STR_ICC_CLOCK1_MAX_SPREAD_TEXT      #language en-US "uninitialized %"
+
+#string STR_ICC_CLOCK_SPREAD_ADJUSTMENTS    #language en-US "    Spread Mode Adjustments"
+#string STR_ICC_CLOCK1_SPREAD_ADJUSTMENTS_TEXT #language en-US "Uninitialized"
+
+#string STR_ICC_CLOCK_FREQUENCY1            #language en-US "    Clock Frequency"
+#string STR_ICC_CLOCK_FREQUENCY2            #language en-US "    Clock Frequency"
+#string STR_ICC_CLOCK_FREQUENCY_HELP        #language en-US "Frequency in 10kHz increments. Specifies new BCLK frequency to be applied. Frequency is rounded to nearest valid value. Allowed range is limited by the Max/Min supported frequencies. Changes are not applied until settings are saved and platform resets. Example: For 125.70MHz, enter 12570."
+
+#string STR_ICC_CLOCK_SPREAD_PERCENT1       #language en-US "    Spread %"
+#string STR_ICC_CLOCK_SPREAD_PERCENT2       #language en-US "    Spread %"
+#string STR_ICC_CLOCK_SPREAD_PERCENT_HELP   #language en-US "Specifies the amount of spread spectrum clocking to be applied to the base clock frequency in 0.01% increments. Allowed range is limited by Maximum Spread % and supported Spread mode Adjustements. If Changes Allowed, a value between 0 and Max Spread % can be specified. Value is adjusted to settings supported by HW. If only Halt Allowed, only 0% and default spread % can be specified. Changes are not applied until settings are saved and platform resets."
+
+#string STR_ICC_CLOCK_SPREAD_MODE1          #language en-US "    Spread Mode"
+#string STR_ICC_CLOCK_SPREAD_MODE2          #language en-US "    Spread Mode"
+#string STR_ICC_CLOCK_SPREAD_MODE_HELP      #language en-US "Determines method of clock spectrum distribution applied to the base frequency. Changes are not appied until settings are saved and platform resets."
+
+#string STR_ICC_BCLK_CHANGE_WARMRESET       #language en-US "    Bclk Change Permanent"
+#string STR_ICC_BCLK_CHANGE_WARMRESET_HELP  #language en-US "Changes how the BCLK frequency changes are applied permanent with warm reset. 0 - Disabled. 1 - Enabled."
+
+#string STR_ICC_BCLK_CHANGE_CONTINUES       #language en-US "    Bclk Change w/o Reset"
+#string STR_ICC_BCLK_CHANGE_CONTINUES_HELP  #language en-US "Changes how the BCLK frequency changes are applied. 0 - Realtime. 1 - Permanent, without warm reset. NOTE: Realtime changes will be applied when 'F4' hotkey is pressed. Uses MEI SET_CLOCK_SETTINGS command 0x1B."
+
+#string STR_BCLK_CHANGE_PERM_WITH_RESET     #language en-US "Permanent, with warm reset"
+#string STR_BCLK_CHANGE_PERM_NO_RESET       #language en-US "Permanent, no warm reset"
+#string STR_BCLK_CHANGE_REAL_TIME           #language en-US "Real Time change"
+
+#string STR_ICC_CLOCK_1_LIB_ERROR           #language en-US "Bclk Settings unavailable"
+
+#string STR_ICC_NEW_FREQUENCY1              #language en-US "New frequency [10kHz]"
+#string STR_ICC_NEW_FREQUENCY2              #language en-US "New frequency [10kHz]"
+#string STR_ICC_NEW_FREQUENCY_HELP          #language en-US "Frequency in 10kHz increments. Frequency will be automatically rounded to nearest valid value. Allowed range is limited by Max / Min supported frequencies. Changes will not be applied unless 'Apply settings' is pressed."
+
+#string STR_ICC_SSC_MODE_SELECTION_HELP     #language en-US "Spread Spectrum Clocking mode. Determines method of clock spectrum distribution around base frequency. Changes will not be applied unless 'Apply settings' is pressed."
+
+//
+// spaces at the end of the following 4 strings are there on purpose.
+//
+#string STR_ICC_MODE_UP                     #language en-US "Up "
+#string STR_ICC_MODE_CENTRE                 #language en-US "Center "
+#string STR_ICC_MODE_DOWN                   #language en-US "Down "
+#string STR_ICC_MODE_NONE                   #language en-US "None "
+
+#string STR_ICC_SSC_NEW_PERCENT_HELP        #language en-US "Clock spectrum spread in 0.01% increments. Determines spectrum deviation away from base frequency. Allowed range is limited by Max supported SSC%. Changes will not be applied unless 'Apply settings' is pressed."
+
+#string STR_YES                             #language en-US "yes"
+#string STR_NO                              #language en-US "no"
+
+#string STR_ICC_MAX_FREQUENCY               #language en-US "Maximum supported frequency"
+#string STR_ICC_MIN_FREQUENCY               #language en-US "Minimum supported frequency"
+#string STR_ICC_CURRENT_FREQUENCY           #language en-US "Current frequency"
+#string STR_ICC_SSC_MODES                   #language en-US "Supported SSC modes"
+#string STR_ICC_SSC_CURRENT_MODE            #language en-US "Current SSC mode"
+#string STR_ICC_SSC_MAX                     #language en-US "Maximum supported SSC %"
+#string STR_ICC_SSC_CURRENT                 #language en-US "Current SSC %"
+
+#string STR_ICC_MAX_FREQUENCY_VALUE         #language en-US "many MHz"
+#string STR_ICC_MIN_FREQUENCY_VALUE         #language en-US "many MHz"
+#string STR_ICC_CURRENT_FREQUENCY_VALUE     #language en-US "many MHz"
+#string STR_ICC_SSC_MODES_VALUE             #language en-US "many MHz"
+#string STR_ICC_SSC_CURRENT_MODE_VALUE      #language en-US "many MHz"
+#string STR_ICC_SSC_MAX_VALUE               #language en-US "many MHz"
+#string STR_ICC_SSC_CURRENT_VALUE           #language en-US "many MHz"
+
+#string STR_ICC_ZERO                        #language en-US "0"
+
+#string STR_ICC_MSGBOX_BAD_PROTOCOL         #language en-US "Library failed to load."
+#string STR_ICC_MSGBOX_AFTER_EOP            #language en-US "Library disabled after End Of Post event."
+#string STR_ICC_MSGBOX_INIT_ERROR_FW        #language en-US "Firmware error."
+#string STR_ICC_MSGBOX_INIT_ERROR_HECI      #language en-US "HECI error."
+#string STR_ICC_MSGBOX_INIT_ERROR_STRANGE   #language en-US "Initialization error."
+#string STR_ICC_MSGBOX_FINAL                #language en-US " "
+
+
+#string STR_ICC_MSGBOX_NO_DYNAMIC           #language en-US "Error: The change cannot be performed immediately. Try using 'permanent' option to perform clock change after reboot."
+#string STR_ICC_MSGBOX_LOCKED               #language en-US "Error: Overclocking registers locked, can't apply changes."
+#string STR_ICC_MSGBOX_FREQ_HIGH            #language en-US "Error: Frequency too high."
+#string STR_ICC_MSGBOX_FREQ_LOW             #language en-US "Error: Frequency too low."
+#string STR_ICC_MSGBOX_SSC_HIGH             #language en-US "Error: SSC parameter too high."
+#string STR_ICC_MSGBOX_SSC_LOW              #language en-US "Error: SSC parameter too low. Increase it or set to 0%%."
+#string STR_ICC_MSGBOX_SSC_MODE             #language en-US "Error: Unsupported SSC mode selected."
+#string STR_ICC_MSGBOX_SSC_MODE_NOT_MATCH   #language en-US "Error: Frequency and SSC mode do not match."
+#string STR_ICC_MSGBOX_SSC_DISABLED         #language en-US "Error: SSC is not supported for selected frequency. SSC must be set to 0%%."
+#string STR_ICC_MSGBOX_SSC_CONSTANT         #language en-US "Error: SSC cannot be changed."
+#string STR_ICC_MSGBOX_HECI                 #language en-US "Error: HECI communications failed."
+#string STR_ICC_MSGBOX_SUCCESS              #language en-US "Success."
+#string STR_ICC_MSGBOX_UNKNOWN              #language en-US "Unrecognized error. Code = 0x%08x."
+#string STR_ICC_MSGBOX_SUCCESS_NEED_REBOOT  #language en-US "Success. Settings will take effect after reboot."
+#string STR_ICC_MSGBOX_PROFILE_OUT_OF_RANGE #language en-US "Error: Profile out of range."
+#string STR_ICC_MSGBOX_PROFILE_FW_ERROR     #language en-US "Error: Firmware error when setting ICC profile."
+#string STR_ICC_MSGBOX_LOCK_FW_ERROR        #language en-US "Error: Firmware error when setting ICC Lock mask."
+
+#string STR_ICC_CLOCK_NOT_FOUND             #language en-US "Clock %d not found"
+#string STR_ICC_MEI_INITIALIZATION_FAILED   #language en-US "Clock %d - MEI initializion failed"
+#string STR_ICC_MEI_CONNECTION_FAILED       #language en-US "Clock %d - MEI connection failed"
+#string STR_ICC_UNEXPECTED_FW_ERROR         #language en-US "Clock %d - Unexpected fw error"
+#string STR_ICC_UNSUPPORTED_HW              #language en-US "Clock %d - Unsupported HW"
+#string STR_ICC_DATA_NOT_AVAILABLE          #language en-US "Clock %d - data not available"
+#string STR_ICC_NO_USAGE_DEFINED_FOR_THE_CLOCK #language en-US "Clock %d - No usage defined"
+#string STR_ICC_UNKNOWN_ERROR               #language en-US "Clock %d - Library error %2X"
+
+#string STR_ICC_CLOCK_SETTINGS              #language en-US " Clock Settings"
+#string STR_ICC_SSC_CHANGE_ALLOWED          #language en-US "Change Allowed"
+#string STR_ICC_SSC_HALT_ALLOWED            #language en-US "Halt/Unhalt Allowed"
+#string STR_ICC_SSC_NOTHING_ALLOWED         #language en-US "None Allowed"
+
+#string STR_ICC_OK                          #language en-US "Enter (OK)"
+#string STR_ICC_OK_CANCEL                   #language en-US "Enter (OK) / Esc (Cancel)"

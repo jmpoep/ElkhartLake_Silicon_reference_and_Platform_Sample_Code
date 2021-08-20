@@ -1,0 +1,413 @@
+/** @file
+
+@copyright
+  INTEL CONFIDENTIAL
+  Copyright 2014 - 2020 Intel Corporation.
+
+  The source code contained or described herein and all documents related to the
+  source code ("Material") are owned by Intel Corporation or its suppliers or
+  licensors. Title to the Material remains with Intel Corporation or its suppliers
+  and licensors. The Material may contain trade secrets and proprietary and
+  confidential information of Intel Corporation and its suppliers and licensors,
+  and is protected by worldwide copyright and trade secret laws and treaty
+  provisions. No part of the Material may be used, copied, reproduced, modified,
+  published, uploaded, posted, transmitted, distributed, or disclosed in any way
+  without Intel's prior express written permission.
+
+  No license under any patent, copyright, trade secret or other intellectual
+  property right is granted to or conferred upon you by disclosure or delivery
+  of the Materials, either expressly, by implication, inducement, estoppel or
+  otherwise. Any license under such intellectual property rights must be
+  express and approved by Intel in writing.
+
+  Unless otherwise agreed by Intel in writing, you may not remove or alter
+  this notice or any other notice embedded in Materials by Intel or
+  Intel's suppliers or licensors in any way.
+
+  This file contains a 'Sample Driver' and is licensed as such under the terms
+  of your license agreement with Intel or your vendor. This file may be modified
+  by the user, subject to the additional terms of the license agreement.
+
+@par Specification
+**/
+
+form formid = AUTO_ID(ME_FORM_ID),
+  title     = STRING_TOKEN(STR_ME_FORM);
+
+  text
+    help  = STRING_TOKEN(STR_ME_FW_VERSION_HELP),
+    text  = STRING_TOKEN(STR_ME_FW_VERSION_PROMPT),
+    text  = STRING_TOKEN(STR_ME_FW_VERSION_VALUE),
+    flags = 0,
+    key   = 0;
+
+  suppressif NOT ideqval ME_SETUP.MeFirmwareInfo == 0xFF;
+    INVENTORY(STRING_TOKEN(STR_ME_FW_MODE_PROMPT),STRING_TOKEN(STR_ME_FW_MODE_NORMAL_MODE))
+    INVENTORY(STRING_TOKEN(STR_ME_FW_MODE_PROMPT),STRING_TOKEN(STR_ME_FW_MODE_ALT_DISABLED))
+    INVENTORY(STRING_TOKEN(STR_ME_FW_MODE_PROMPT),STRING_TOKEN(STR_ME_FW_MODE_TEMP_DISABLED))
+    INVENTORY(STRING_TOKEN(STR_ME_FW_MODE_PROMPT),STRING_TOKEN(STR_ME_FW_MODE_SECOVER))
+    INVENTORY(STRING_TOKEN(STR_ME_FW_MODE_PROMPT),STRING_TOKEN(STR_ME_FW_MODE_FAILED))
+  endif; // suppressif
+
+  text
+    help  = STRING_TOKEN(STR_ME_FW_MODE_HELP),
+    text  = STRING_TOKEN(STR_ME_FW_MODE_PROMPT),
+    text  = STRING_TOKEN(STR_ME_FW_MODE_VALUE),
+    flags = 0,
+    key   = 0;
+
+  text
+    help  = STRING_TOKEN(STR_ME_FW_SKU_HELP),
+    text  = STRING_TOKEN(STR_ME_FW_SKU_PROMPT),
+    text  = STRING_TOKEN(STR_ME_FW_SKU_VALUE),
+    flags = 0,
+    key   = 0;
+
+  text
+    help  = STRING_TOKEN(STR_ME_FW_STATUS_1_HELP),
+    text  = STRING_TOKEN(STR_ME_FW_STATUS_1_PROMPT),
+    text  = STRING_TOKEN(STR_ME_FW_STATUS_1_VALUE),
+    flags = 0,
+    key   = 0;
+
+  text
+    help  = STRING_TOKEN(STR_ME_FW_STATUS_2_HELP),
+    text  = STRING_TOKEN(STR_ME_FW_STATUS_2_PROMPT),
+    text  = STRING_TOKEN(STR_ME_FW_STATUS_2_VALUE),
+    flags = 0,
+    key   = 0;
+
+  SEPARATOR
+
+  grayoutif ideqval ME_SETUP_STORAGE.RemoteSessionActive == 0x1 OR
+            ideqval ME_SETUP_STORAGE.AfterEoP == 0x1;
+    oneof varid   = ME_SETUP_STORAGE.MeStateControl,
+      prompt      = STRING_TOKEN(STR_ME_STATE_CONTROL_PROMPT),
+      help        = STRING_TOKEN(STR_ME_STATE_CONTROL_HELP),
+      option text = STRING_TOKEN(STR_DISABLED), value = 0, flags = RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_ENABLED),  value = 1, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+    endoneof;
+  endif;
+
+  suppressif ideqval ME_SETUP_STORAGE.MeStateControl == 0;
+#if FixedPcdGetBool(PcdAmtEnable) == 1
+    suppressif NOT ideqval ME_SETUP.MeImageType == ME_IMAGE_CORPORATE_SKU_FW OR
+               NOT ideqval ME_SETUP.MeFirmwareInfo == NORMAL_MODE;
+      grayoutif ideqval ME_SETUP_STORAGE.RemoteSessionActive == 0x1;
+
+        grayoutif ideqval ME_SETUP_STORAGE.AfterEoP == 0x1;
+          oneof varid   = ME_SETUP_STORAGE.MngState,
+            questionid  = MNG_STATE_KEY,
+            prompt      = STRING_TOKEN(STR_MNG_STATE_PROMPT),
+            help        = STRING_TOKEN(STR_MNG_STATE_HELP),
+            option text = STRING_TOKEN(STR_DISABLED), value = 0, flags = INTERACTIVE | RESET_REQUIRED;
+            option text = STRING_TOKEN(STR_ENABLED), value = 1, flags = DEFAULT | INTERACTIVE | RESET_REQUIRED;
+          endoneof;
+        endif;
+
+        suppressif ideqval ME_SETUP_STORAGE.MngState == 0;
+          grayoutif ideqval ME_SETUP_STORAGE.AfterEoP == 0x1;
+            oneof varid   = ME_SETUP.Amt,
+              prompt      = STRING_TOKEN(STR_AMT_PROMPT),
+              help        = STRING_TOKEN(STR_AMT_HELP),
+              option text = STRING_TOKEN(STR_DISABLED), value = 0, flags = RESET_REQUIRED;
+              option text = STRING_TOKEN(STR_ENABLED),  value = 1, flags = DEFAULT | RESET_REQUIRED;
+            endoneof;
+          endif;
+
+          grayoutif ideqval ME_SETUP.Amt == 0;
+              goto AMT_FORM_ID,
+                prompt = STRING_TOKEN(STR_AMT_FORM),
+                help   = STRING_TOKEN(STR_AMT_FORM_HELP);
+          endif;
+
+        endif; //suppressif ideqval ME_SETUP_STORAGE.MngState == 0;
+
+      endif; //grayoutif ideqval ME_SETUP_STORAGE.RemoteSessionActive == 0x1
+    endif; //suppressif NOT ideqval ME_SETUP.MeImageType == ME_IMAGE_CORPORATE_SKU_FW
+#endif
+
+    suppressif NOT ideqval ME_SETUP.UnconfigOnRtcAvailable == 1;
+      oneof varid   = ME_SETUP.MeUnconfigOnRtcClear,
+        prompt      = STRING_TOKEN (STR_ME_UNCONF_RTC_STATE_PROMPT),
+        help        = STRING_TOKEN (STR_ME_UNCONF_RTC_STATE_PROMPT_HELP),
+        option text = STRING_TOKEN (STR_DISABLED), value = 0, flags = RESET_REQUIRED;
+        option text = STRING_TOKEN (STR_ENABLED),  value = 1, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+      endoneof;
+    endif; // suppressif
+
+    oneof varid   = ME_SETUP.CommsHubEnable,
+      prompt      = STRING_TOKEN (STR_COMMS_HUB_PROMPT),
+      help        = STRING_TOKEN (STR_COMMS_HUB_HELP),
+      option text = STRING_TOKEN(STR_DISABLED), value = 0, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_ENABLED),  value = 1, flags = RESET_REQUIRED;
+    endoneof;
+
+    oneof varid   = ME_SETUP.MeJhiSupport,
+      prompt      = STRING_TOKEN(STR_ME_JHI_CONTROL_PROMPT),
+      help        = STRING_TOKEN(STR_ME_JHI_CONTROL_PROMPT_HELP),
+      option text = STRING_TOKEN(STR_DISABLED), value = 0, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_ENABLED),  value = 1, flags = RESET_REQUIRED;
+    endoneof;
+
+    grayoutif ideqval ME_SETUP_STORAGE.MeasureBoot == 0;
+      oneof varid   = ME_SETUP.ExtendMeMeasuredBoot,
+        prompt      = STRING_TOKEN (STR_EXTEND_ME_MEASURED_BOOT_PROMPT),
+        help        = STRING_TOKEN (STR_EXTEND_ME_MEASURED_BOOT_HELP),
+        option text = STRING_TOKEN (STR_DISABLED), value = 0, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+        option text = STRING_TOKEN (STR_ENABLED),  value = 1, flags = RESET_REQUIRED;
+      endoneof;
+    endif; //grayoutif ideqval ME_SETUP_STORAGE.MeasureBoot == 0;
+
+    oneof varid   = ME_SETUP.CoreBiosDoneEnabled,
+      prompt      = STRING_TOKEN(STR_ME_CORE_BIOS_DONE_PROMPT),
+      help        = STRING_TOKEN(STR_ME_CORE_BIOS_DONE_HELP),
+      option text = STRING_TOKEN(STR_DISABLED), value = 0, flags = RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_ENABLED),  value = 1, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+    endoneof;
+
+    SEPARATOR
+
+    goto ME_FW_UPGRADE_FORM_ID,
+      prompt = STRING_TOKEN(STR_FW_UPGRADE_FORM),
+      help   = STRING_TOKEN(STR_FW_UPGRADE_FORM_HELP);
+
+    goto ME_PTT_CONFIGURATION_FORM_ID,
+      prompt = STRING_TOKEN(STR_ME_PTT_CONFIGURATION_FORM),
+      help   = STRING_TOKEN(STR_ME_PTT_CONFIGURATION_FORM_HELP);
+
+    goto ME_FW_FIPS_MODE_FORM_ID,
+      prompt = STRING_TOKEN(STR_FW_FIPS_MODE),
+      help   = STRING_TOKEN(STR_FW_FIPS_MODE_HELP);
+
+    goto ME_DEBUG_CONFIGURATION_FORM_ID,
+      prompt = STRING_TOKEN(STR_ME_DEBUG_CONFIGURATION_FORM),
+      help   = STRING_TOKEN(STR_ME_DEBUG_CONFIGURATION_FORM_HELP);
+
+    goto ARB_SVN_CONFIGURATION_FORM_ID,
+      prompt = STRING_TOKEN(STR_ARB_SVN_FORM),
+      help   = STRING_TOKEN(STR_ARB_SVN_FORM_HELP);
+
+  endif; //suppressif ideqval ME_SETUP_STORAGE.MeStateControl == 0;
+
+endform; // ME_FORM_ID
+
+form formid = AUTO_ID(ME_PTT_CONFIGURATION_FORM_ID),
+  title     = STRING_TOKEN(STR_ME_PTT_CONFIGURATION_FORM);
+
+  //
+  // Invisible text to indicate entry into PTT Submenu and triggering form open action.
+  //
+  suppressif TRUE;
+   text
+         help  = STRING_TOKEN(STR_NONE),
+         text  = STRING_TOKEN(STR_NONE),
+         flags = INTERACTIVE,
+         key   = PTT_TRIGGER_FORM_OPEN_ACTION_KEY;
+  endif;
+
+  text
+    help  = STRING_TOKEN(STR_PTT_CAP_STATE_HELP),
+    text  = STRING_TOKEN(STR_PTT_CAP_STATE_PROMPT),
+    text  = STRING_TOKEN(STR_PTT_CAP_STATE_VALUE),
+    flags = 0,
+    key   = 0;
+
+  SEPARATOR
+
+
+  grayoutif ideqval ME_SETUP_STORAGE.AfterEoP == 0x1;
+
+    suppressif ideqval ME_SETUP_STORAGE.BootGuardSupport == 0 OR
+#if FixedPcdGetBool(PcdTpmEnable) == 1
+               ideqval TCG_SETUP.dTpm12Present == 0 OR
+#endif
+               ideqval ME_SETUP_STORAGE.MeasureBoot == 0;
+      oneof varid   = ME_SETUP_STORAGE.TpmDeactivate,
+        prompt      = STRING_TOKEN(STR_TPM_1_2_DEACTIVATE_PROMPT),
+        help        = STRING_TOKEN(STR_TPM_1_2_DEACTIVATE_PROMPT_HELP),
+        option text = STRING_TOKEN(STR_DISABLED), value = 0, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_ENABLED),  value = 1, flags = RESET_REQUIRED;
+      endoneof;
+    endif; // suppressif
+  endif; // grayoutif
+
+endform; // ME_PTT_CONFIGURATION_FORM_ID
+
+form formid = AUTO_ID(ME_FW_UPGRADE_FORM_ID),
+  title     = STRING_TOKEN(STR_FW_UPGRADE_FORM);
+
+  oneof varid   = ME_SETUP.MeFwDowngrade,
+    prompt      = STRING_TOKEN(STR_AMT_ME_FW_DOWNGRADE_PROMPT),
+    help        = STRING_TOKEN(STR_AMT_ME_FW_DOWNGRADE_HELP),
+    option text = STRING_TOKEN(STR_DISABLED), value = 0, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+    option text = STRING_TOKEN(STR_ENABLED),  value = 1, flags = RESET_REQUIRED;
+  endoneof;
+
+  grayoutif ideqval ME_SETUP_STORAGE.AfterEoP == 0x1;
+    oneof varid   = ME_SETUP_STORAGE.FwUpdEnabled,
+      prompt      = STRING_TOKEN(STR_FW_UPDATE_PROMPT),
+      help        = STRING_TOKEN(STR_FW_UPDATE_HELP),
+      option text = STRING_TOKEN(STR_DISABLED), value = 0, flags = RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_ENABLED),  value = 1, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+    endoneof;
+  endif; // grayoutif
+
+endform; // ME_FW_UPGRADE_FORM_ID
+
+form formid = AUTO_ID(ME_DEBUG_CONFIGURATION_FORM_ID),
+  title     = STRING_TOKEN(STR_ME_DEBUG_CONFIGURATION_FORM);
+
+  checkbox varid    = ME_SETUP.HeciTimeouts,
+    prompt   = STRING_TOKEN(STR_HECI_TIMEOUTS_PROMPT),
+    help     = STRING_TOKEN(STR_HECI_TIMEOUTS_HELP),
+    // Flags behavior for checkbox is overloaded so that it equals
+    // a DEFAULT value.  CHECKBOX_DEFAULT = ON, 0 = off
+#if (FixedPcdGetBool(PcdBfxEnable) == 1) && (FixedPcdGetBool(PcdBfxHfpgaWorkAroundEnable) == 1)
+    flags    = RESET_REQUIRED,
+#else
+    flags    = CHECKBOX_DEFAULT | RESET_REQUIRED,
+#endif
+    key      = 0,
+  endcheckbox;
+
+  SEPARATOR
+
+  oneof varid = ME_SETUP.DidInitStat,
+    prompt   = STRING_TOKEN(STR_ME_DID_INIT_STAT_PROMPT),
+    help     = STRING_TOKEN(STR_ME_DID_INIT_STAT_HELP),
+    option text = STRING_TOKEN(STR_DISABLED), value = 0, flags = DEFAULT | RESET_REQUIRED;
+    option text = STRING_TOKEN(STR_ME_DID_INIT_STAT_0), value = 1, flags = RESET_REQUIRED;
+    option text = STRING_TOKEN(STR_ME_DID_INIT_STAT_1), value = 2, flags = RESET_REQUIRED;
+    option text = STRING_TOKEN(STR_ME_DID_INIT_STAT_2), value = 3, flags = RESET_REQUIRED;
+  endoneof;
+
+  oneof varid    = ME_SETUP.DisableCpuReplacedPolling,
+    prompt   = STRING_TOKEN(STR_CPU_REPLACED_POLLING_DISABLE_PROMPT),
+    help     = STRING_TOKEN(STR_CPU_REPLACED_POLLING_DISABLE_HELP),
+    option text = STRING_TOKEN(STR_DISABLED), value = 0, flags = DEFAULT | RESET_REQUIRED;
+    option text = STRING_TOKEN(STR_ENABLED), value = 1, flags = RESET_REQUIRED;
+  endoneof;
+
+  oneof varid    = ME_SETUP.SendDidMsg,
+    prompt   = STRING_TOKEN(STR_SEND_ME_DID_MSG_PROMPT),
+    help     = STRING_TOKEN(STR_SEND_ME_DID_MSG_HELP),
+    option text = STRING_TOKEN(STR_DISABLED), value = 0, flags = RESET_REQUIRED;
+    option text = STRING_TOKEN(STR_ENABLED), value = 1, flags = DEFAULT | RESET_REQUIRED;
+  endoneof;
+
+  oneof varid    = ME_SETUP.DisableMessageCheck,
+    prompt   = STRING_TOKEN(STR_DISABLE_MESSAGE_CHECK_PROMPT),
+    help     = STRING_TOKEN(STR_DISABLE_MESSAGE_CHECK_HELP),
+    option text = STRING_TOKEN(STR_DISABLED), value = 0, flags = DEFAULT | RESET_REQUIRED;
+    option text = STRING_TOKEN(STR_ENABLED), value = 1, flags = RESET_REQUIRED;
+  endoneof;
+
+  oneof varid    = ME_SETUP.SkipMbpHob,
+    prompt   = STRING_TOKEN(STR_SKIP_MBP_HOB_PROMPT),
+    help     = STRING_TOKEN(STR_SKIP_MBP_HOB_HELP),
+    option text = STRING_TOKEN(STR_DISABLED), value = 0, flags = DEFAULT | RESET_REQUIRED;
+    option text = STRING_TOKEN(STR_ENABLED), value = 1, flags = RESET_REQUIRED;
+  endoneof;
+
+  checkbox varid = ME_SETUP.HeciCommunication2,
+    prompt = STRING_TOKEN(STR_HECI_COMM_PROMPT2),
+    help   = STRING_TOKEN(STR_HECI_COMM_HELP2),
+    // Flags behavior for checkbox is overloaded so that it equals
+    // a DEFAULT value.  CHECKBOX_DEFAULT = ON, 0 = off
+    flags  = RESET_REQUIRED,
+    key    = 0,
+  endcheckbox;
+
+  checkbox varid = ME_SETUP.KtDeviceEnable,
+    prompt = STRING_TOKEN(STR_KT_DEVICE_ENABLE_PROMPT),
+    help   = STRING_TOKEN(STR_KT_DEVICE_ENABLE_HELP),
+    // Flags behavior for checkbox is overloaded so that it equals
+    // a DEFAULT value.  CHECKBOX_DEFAULT = ON, 0 = off
+    flags  = RESET_REQUIRED,
+    key    = 0,
+  endcheckbox;
+
+
+  oneof varid    = ME_SETUP.DisableD0I3SettingForHeci,
+    prompt   = STRING_TOKEN(STR_D0I3_SETTING_DISABLE_PROMPT),
+    help     = STRING_TOKEN(STR_D0I3_SETTING_DISABLE_HELP),
+    option text = STRING_TOKEN(STR_DISABLED), value = 0, flags = DEFAULT | RESET_REQUIRED;
+    option text = STRING_TOKEN(STR_ENABLED), value = 1, flags = RESET_REQUIRED;
+  endoneof;
+
+  oneof varid    = ME_SETUP.MctpBroadcastCycle,
+    prompt   = STRING_TOKEN(STR_MCTP_BROADCAST_CYCLE_PROMPT),
+    help     = STRING_TOKEN(STR_MCTP_BROADCAST_CYCLE_HELP),
+    option text = STRING_TOKEN(STR_DISABLED), value = 0, flags = DEFAULT | RESET_REQUIRED;
+    option text = STRING_TOKEN(STR_ENABLED), value = 1, flags = RESET_REQUIRED;
+  endoneof;
+
+endform; // ME_DEBUG_CONFIGURATION_FORM_ID
+
+form formid = ME_FW_FIPS_MODE_FORM_ID,
+  title     = STRING_TOKEN(STR_ME_FW_FIPS_MODE_FORM);
+
+  oneof varid   = ME_SETUP_STORAGE.FipsModeSelect,
+    prompt      = STRING_TOKEN(STR_FIPS_MODE_PROMPT),
+    help        = STRING_TOKEN(STR_FIPS_MODE_HELP),
+    option text = STRING_TOKEN(STR_DISABLED), value = 0, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+    option text = STRING_TOKEN(STR_ENABLED),  value = 1, flags = RESET_REQUIRED;
+  endoneof;
+
+  text
+    help  = STRING_TOKEN(STR_ME_FW_FIPS_CURRENT_MODE_HELP),
+    text  = STRING_TOKEN(STR_ME_FW_FIPS_CURRENT_MODE_PROMPT),
+    text  = STRING_TOKEN(STR_ME_FW_FIPS_CURRENT_MODE_VALUE),
+    flags = 0,
+    key   = 0;
+
+  text
+    help  = STRING_TOKEN(STR_ME_FW_FIPS_CRYPTO_VER_HELP),
+    text  = STRING_TOKEN(STR_ME_FW_FIPS_CRYPTO_VER_PROMPT),
+    text  = STRING_TOKEN(STR_ME_FW_FIPS_CRYPTO_VER_VALUE),
+    flags = 0,
+    key   = 0;
+
+endform; // ME_FW_FIPS_MODE_FORM_ID
+
+form formid = AUTO_ID(ARB_SVN_CONFIGURATION_FORM_ID),
+  title     = STRING_TOKEN(STR_ARB_SVN_FORM);
+
+  text
+    help  = STRING_TOKEN(STR_ARB_SVN_MIN_HELP),
+    text  = STRING_TOKEN(STR_ARB_SVN_MIN_PROMPT),
+    text  = STRING_TOKEN(STR_ARB_SVN_MIN_VALUE),
+    flags = 0,
+    key   = 0;
+
+  text
+    help  = STRING_TOKEN(STR_ARB_SVN_CURR_HELP),
+    text  = STRING_TOKEN(STR_ARB_SVN_CURR_PROMPT),
+    text  = STRING_TOKEN(STR_ARB_SVN_CURR_VALUE),
+    flags = 0,
+    key   = 0;
+
+  grayoutif ideqval ME_SETUP_STORAGE.AfterEoP == 0x1;
+    oneof varid   = ME_SETUP.AutoArbSvnCommit,
+      prompt      = STRING_TOKEN(STR_ARB_SVN_AUTO_PROMPT),
+      help        = STRING_TOKEN(STR_ARB_SVN_AUTO_HELP),
+      option text = STRING_TOKEN(STR_DISABLED), value = 0, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_ENABLED),  value = 1, flags = RESET_REQUIRED;
+    endoneof;
+
+    suppressif ideqval ME_SETUP.AutoArbSvnCommit == 1;
+      oneof varid   = ME_SETUP_STORAGE.InvokeArbSvnCommit,
+        prompt      = STRING_TOKEN(STR_ARB_SVN_COMMIT_PROMPT),
+        help        = STRING_TOKEN(STR_ARB_SVN_COMMIT_HELP),
+        option text = STRING_TOKEN(STR_DISABLED), value = 0, flags = DEFAULT | MANUFACTURING | INTERACTIVE;
+        option text = STRING_TOKEN(STR_ENABLED),  value = 1, flags = INTERACTIVE;
+      endoneof;
+    endif; // suppressif
+  endif; // grayoutif
+
+endform; // ARB_SVN_CONFIGURATION_FORM_ID
+
+#if FixedPcdGetBool(PcdAmtEnable) == 1
+#include "AmtSetup.hfr"
+#endif

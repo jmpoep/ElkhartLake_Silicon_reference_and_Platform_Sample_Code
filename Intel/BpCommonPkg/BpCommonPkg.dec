@@ -1,0 +1,190 @@
+#
+# This file contains 'Framework Code' and is licensed as such
+# under the terms of your license agreement with Intel or your
+# vendor.  This file may not be modified, except as allowed by
+# additional terms of your license agreement.
+#
+## @file
+# BpCommonPkg Package
+#
+# This package provides common modules on Bailey Park.
+# Copyright (c) 2011 - 2018, Intel Corporation. All rights reserved.<BR>
+#
+#    This software and associated documentation (if any) is furnished
+#    under a license and may only be used or copied in accordance
+#    with the terms of the license. Except as permitted by such
+#    license, no part of this software or documentation may be
+#    reproduced, stored in a retrieval system, or transmitted in any
+#    form or by any means without the express written consent of
+#    Intel Corporation.
+#
+##
+
+[Defines]
+  DEC_SPECIFICATION              = 0x00010005
+  PACKAGE_NAME                   = BpCommonPkg
+  PACKAGE_GUID                   = 09AE2397-B177-41ad-A6BA-FA4483A7E85A
+  PACKAGE_VERSION                = 0.1
+
+[Includes]
+  Include
+
+  # All Bluetooth related things in Bluetooth dir.
+  Bluetooth/Include
+
+
+[LibraryClasses]
+  ##  @libraryclass    Provide services to send progress/error codes to Beep device.
+  BeepLib|Include/Library/BeepLib.h
+
+  ##  @libraryclass    Provide platform beep map.
+  PlatformBeepMapLib|Include/Library/PlatformBeepMapLib.h
+
+  ##  @libraryclass    Provide platform post code map.
+  PlatformPostCodeMapLib|Include/Library/PlatformPostCodeMapLib.h
+
+  ##  @libraryclass    Provide common USB3 debug port functions.
+  PlatformPostCodeMapLib|Include/Library/Usb3DebugPortLib.h
+
+  ##  @libraryclass    Provide capability to get/set USB3 debug port parameter.
+  Usb3DebugPortParameterLib|Include/Library/Usb3DebugPortParameterLib.h
+
+  ##  @libraryclass    Provide services to get BIOS ID information.
+  BiosIdLib|Include/Library/BiosIdLib.h
+
+  ##  @libraryclass    Provide services to write buffer to TraceHub.
+  TraceHubDebugLib|Include/Library/TraceHubDebugLib.h
+
+  ##  @libraryclass    Provide the specific hooks for TraceHub.
+  TraceHubHookLib|Include/Library/TraceHubHookLib.h
+
+  ##  @libraryclass    Provide services to access CMOS area.
+  CmosAccessLib|Include/Library/CmosAccessLib.h
+
+  ##  @libraryclass    Provide platform relevant services to access CMOS area.
+  PlatformCmosAccessLib|Include/Library/PlatformCmosAccessLib.h
+
+  ##  @libraryclass  Provides a platform-specific method to return password policy.
+  #
+  PlatformPasswordLib|Include/Library/PlatformPasswordLib.h
+  ##  @libraryclass  Provides services to set/verify password and return if the password is set.
+  #
+  UserPasswordLib|Include/Library/UserPasswordLib.h
+  ##  @libraryclass  Provides services to do password authentication.
+  #
+  UserPasswordUiLib|Include/Library/UserPasswordUiLib.h
+
+  ##  @libraryclass    Provide Hid lib support.
+  HidLib|Bluetooth/Include/Library/HidLib.h
+
+  ##  @libraryclass    Provide Bluetooth lib support.
+  BluetoothLib|Bluetooth/Include/Library/BluetoothLib.h
+
+[Guids]
+  gEfiBpCommonPkgTokenSpaceGuid  = { 0x26703ed8, 0x9171, 0x40a3, { 0x95, 0xc2, 0x56, 0x43, 0x6f, 0x8a, 0x5e, 0x56 } }
+  gEfiUsb3DebugPortTokenSpaceGuid = { 0x87e7378b, 0xc59d, 0x4a16, { 0xa4, 0x21, 0x2c, 0xdb, 0x78, 0x26, 0xb1, 0xca } }
+  gEfiHddPasswordSecurityVariableGuid = { 0x5e22f4e2, 0x35ea, 0x421b, { 0x8f, 0xd1, 0xd4, 0xae, 0x85, 0x67, 0xa4, 0x51 }}
+
+  ## Include Include/Guid/BiosId.h
+  gBiosIdGuid = { 0xC3E36D09, 0x8294, 0x4b97, { 0xA8, 0x57, 0xD5, 0x28, 0x8F, 0xE3, 0x3E, 0x28 } }
+
+  ## Include Include/Guid/PeiFirmwarePerformance.h
+  gPeiFirmwarePerformanceGuid = { 0x55765e8f, 0x021a, 0x41f9, { 0x93, 0x2d, 0x4c, 0x49, 0xc5, 0xb7, 0xef, 0x5d }}
+
+  ## Bluetooth/Include/Guid/HidKeyBoardLayout.h
+  gHidKeyboardLayoutPackageGuid       = { 0x16388a95, 0x4d5c, 0x459a, { 0xa1, 0x62, 0x7e, 0x2, 0x13, 0xaa, 0xc9, 0x70 } }
+  gHidKeyboardLayoutKeyGuid           = { 0xf07b4ce2, 0x2de1, 0x472d, { 0xa8, 0x52, 0x75, 0xd3, 0x3e, 0xd1, 0xd1, 0x5b } }
+
+  ## Include Include/Guid/UserAuthentication.h
+  gUserAuthenticationGuid = { 0xee24a7f7, 0x606b, 0x4724, { 0xb3, 0xc9, 0xf5, 0xae, 0x4a, 0x3b, 0x81, 0x65} }
+
+[PcdsFeatureFlag]
+  ## This PCD specifies whether StatusCode is reported via USB3 Serial port.
+  gEfiUsb3DebugPortTokenSpaceGuid.PcdStatusCodeUseUsb3Serial|TRUE|BOOLEAN|0x10000003
+  gEfiBpCommonPkgTokenSpaceGuid.PcdDisableDefaultKeyboardLayoutInHidKbDriver|FALSE|BOOLEAN|0x00010201
+
+[PcdsFixedAtBuild, PcdsPatchableInModule]
+  ## This PCD specifies the boot option max size for variable check.
+  gEfiBpCommonPkgTokenSpaceGuid.PcdVarCheckBootOptionMaxSize|0x200|UINT32|0x0000000A
+  ## This PCD specifies the boot option max count for variable check.
+  # Then max size of BootOrder will be PcdVarCheckBootOptionMaxCount * sizeof (UINT16).
+  gEfiBpCommonPkgTokenSpaceGuid.PcdVarCheckBootOptionMaxCount|0x10|UINT32|0x0000000B
+  ## This PCD specifies the driver option max size for variable check.
+  gEfiBpCommonPkgTokenSpaceGuid.PcdVarCheckDriverOptionMaxSize|0x200|UINT32|0x0000000C
+  ## This PCD specifies the driver option max count for variable check.
+  # Then max size for DriverOrder will be PcdVarCheckDriverOptionMaxCount * sizeof (UINT16)
+  gEfiBpCommonPkgTokenSpaceGuid.PcdVarCheckDriverOptionMaxCount|0x10|UINT32|0x0000000D
+  ## This PCD specifies the SysPrep option max size for variable check.
+  gEfiBpCommonPkgTokenSpaceGuid.PcdVarCheckSysPrepOptionMaxSize|0x200|UINT32|0x00000010
+  ## This PCD specifies the SysPrep option max count for variable check.
+  # Then max size for SysPrepOrder will be PcdVarCheckSysPrepOptionMaxCount * sizeof (UINT16)
+  gEfiBpCommonPkgTokenSpaceGuid.PcdVarCheckSysPrepOptionMaxCount|0x10|UINT32|0x00000011
+  ## This PCD specifies the device path max size for variable check.
+  gEfiBpCommonPkgTokenSpaceGuid.PcdVarCheckDevicePathMaxSize|0x200|UINT32|0x0000000E
+
+  ## This PCD specifies Master of TraceHub device
+  gEfiBpCommonPkgTokenSpaceGuid.PcdTraceHubDebugLibMaster|0x0|UINT32|0x00000027
+  ## This PCD specifies Channel of TraceHub device
+  gEfiBpCommonPkgTokenSpaceGuid.PcdTraceHubDebugLibChannel|0x0|UINT32|0x00000028
+
+[PcdsFixedAtBuild,PcdsPatchableInModule,PcdsDynamic,PcdsDynamicEx]
+  ## This PCD specifies whether StatusCode is reported via PostCode
+  gEfiBpCommonPkgTokenSpaceGuid.PcdStatusCodeUsePostCode|FALSE|BOOLEAN|0x00000004
+
+  ## This PCD specifies whether StatusCode is reported via Beep
+  gEfiBpCommonPkgTokenSpaceGuid.PcdStatusCodeUseBeep|FALSE|BOOLEAN|0x00000005
+
+  ## This PCD specifies whether StatusCode is reported via Serial Port Plaftorm solution
+  gEfiBpCommonPkgTokenSpaceGuid.PcdStatusCodeUseSerialPortPlatform|FALSE|BOOLEAN|0x00000006
+
+  ## This PCD specifies whether unregister Serial Port StatusCode Handler
+  gEfiBpCommonPkgTokenSpaceGuid.PcdStatusCodeUnregisterSerialPort|TRUE|BOOLEAN|0x00000007
+
+  ## This PCD specifies whether StatusCode is reported via TraceHub
+  gEfiBpCommonPkgTokenSpaceGuid.PcdStatusCodeUseTraceHub|FALSE|BOOLEAN|0x00000029
+
+  ## This PCD specifies AcpiDebug feature is enable/disable.
+  gEfiBpCommonPkgTokenSpaceGuid.PcdAcpiDebugEnable|FALSE|BOOLEAN|0x00000012
+
+  ## This PCD specifies AcpiDebug buffer size.
+  gEfiBpCommonPkgTokenSpaceGuid.PcdAcpiDebugBufferSize|0x10000|UINT32|0x00000013
+
+  ## Indicate whether the password is cleared.
+  # When it is configured to Dynamic or DynamicEx, it can be set through detection using
+  # a platform-specific method (e.g. Board Jumper set) in a actual platform in early boot phase.<BR><BR>
+  # @Prompt The password clear status
+  gEfiBpCommonPkgTokenSpaceGuid.PcdPasswordCleared|FALSE|BOOLEAN|0x0001001C
+
+[PcdsDynamic, PcdsDynamicEx]
+  ## This PCD specifies AcpiDebug buffer address
+  gEfiBpCommonPkgTokenSpaceGuid.PcdAcpiDebugAddress|0|UINT32|0x00000014
+
+[PcdsFixedAtBuild]
+  ## These PCD specify XHCI controller Bus/Device/Function, which are used to enable
+  #  XHCI debug device.
+  gEfiUsb3DebugPortTokenSpaceGuid.PcdUsbSerialXhciBus|0x00|UINT8|0x00000016
+  gEfiUsb3DebugPortTokenSpaceGuid.PcdUsbSerialXhciDev|0x14|UINT8|0x00000017
+  gEfiUsb3DebugPortTokenSpaceGuid.PcdUsbSerialXhciFunc|0x00|UINT8|0x00000018
+  gEfiUsb3DebugPortTokenSpaceGuid.PcdXhciDefaultBaseAddress|0xFEA10000|UINT32|0x00000019
+
+  ## This PCD specifies the wait timeout value in microsecond if USB debug cable is detected but host not connected.
+  #  Default timeout value is 2000000 microseconds.
+  #  If user does not want system stall for long time, it can be set to small value.
+  gEfiUsb3DebugPortTokenSpaceGuid.PcdXhciHostWaitTimeout|2000000|UINT64|0x00000020
+
+  ## This PCD sepcifies the start index in CMOS, it will occupy 1 bytes space.
+  gEfiUsb3DebugPortTokenSpaceGuid.PcdUsb3DebugPortBusIndex|0x59|UINT8|0x10000024
+  ## This PCD sepcifies the start index in CMOS, it will occupy 1 bytes space.
+  gEfiUsb3DebugPortTokenSpaceGuid.PcdUsb3DebugPortDeviceIndex|0x5A|UINT8|0x10000025
+  ## This PCD sepcifies the start index in CMOS, it will occupy 1 bytes space.
+  gEfiUsb3DebugPortTokenSpaceGuid.PcdUsb3DebugPortFunctionIndex|0x5B|UINT8|0x10000026
+
+[Protocols]
+  gEfiHddPasswordNotifyProtocolGuid  = { 0x3cf71ad0, 0xd726, 0x4a26, { 0x8f, 0x68, 0x5c, 0x9b, 0x69, 0x91, 0x1a, 0xa3 } }
+
+  ## Include/Protocol/PciHostBridgePlatform.h
+  gEdkiiPciHostBridgePlatformProtocolGuid = { 0x1ff4c0cb, 0x3b4e, 0x4ade, { 0x8a, 0x20, 0x56, 0x1d, 0x86, 0xb6, 0x21, 0x16 } }
+
+  ## Bluetooth/Include/Protocol/Hid.h
+  gEdkiiHidProtocolGuid                     = { 0xc9520968, 0x20df, 0x40a9, { 0x94, 0xf3, 0x58, 0x5b, 0x3f, 0x18, 0xa9, 0x9 } }
+

@@ -1,0 +1,4 @@
+BoardPkgSvPlatRestricted.dsc
+ValidationFv.fdf
+ValidationFvDef.fdf
+Include/PlatformNvsAreaDef.h

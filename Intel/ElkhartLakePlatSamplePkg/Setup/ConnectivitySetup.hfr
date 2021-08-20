@@ -1,0 +1,922 @@
+/** @file
+
+@copyright
+  INTEL CONFIDENTIAL
+  Copyright 2016 - 2019 Intel Corporation.
+
+  The source code contained or described herein and all documents related to the
+  source code ("Material") are owned by Intel Corporation or its suppliers or
+  licensors. Title to the Material remains with Intel Corporation or its suppliers
+  and licensors. The Material may contain trade secrets and proprietary and
+  confidential information of Intel Corporation and its suppliers and licensors,
+  and is protected by worldwide copyright and trade secret laws and treaty
+  provisions. No part of the Material may be used, copied, reproduced, modified,
+  published, uploaded, posted, transmitted, distributed, or disclosed in any way
+  without Intel's prior express written permission.
+
+  No license under any patent, copyright, trade secret or other intellectual
+  property right is granted to or conferred upon you by disclosure or delivery
+  of the Materials, either expressly, by implication, inducement, estoppel or
+  otherwise. Any license under such intellectual property rights must be
+  express and approved by Intel in writing.
+
+  Unless otherwise agreed by Intel in writing, you may not remove or alter
+  this notice or any other notice embedded in Materials by Intel or
+  Intel's suppliers or licensors in any way.
+
+  This file contains a 'Sample Driver' and is licensed as such under the terms
+  of your license agreement with Intel or your vendor. This file may be modified
+  by the user, subject to the additional terms of the license agreement.
+
+@par Specification Reference:
+**/
+
+  // Define form for Connectivity related options
+  form formid = AUTO_ID(CONNECTIVITY_OPTIONS_FORM_ID),
+  title       = STRING_TOKEN(STR_CONNECTIVITY_CONFIGURATION);
+
+    text
+      help   = STRING_TOKEN(STR_CNVI_HELP),
+      text   = STRING_TOKEN(STR_CNVI_STATE),
+      text   = STRING_TOKEN(STR_CNVI_CURRENT_STATE),
+      flags  = 0, key = 0;
+
+    text
+      help   = STRING_TOKEN(STR_CNVI_CONFIG),
+      text   = STRING_TOKEN(STR_CNVI_CONFIG),
+      flags  = 0,
+      key    = 0;
+
+    oneof varid   = PCH_SETUP.CnviMode,
+      prompt      = STRING_TOKEN(STR_CNVI_MODE),
+      help        = STRING_TOKEN(STR_CNVI_MODE_HELP),
+      option text = STRING_TOKEN(STR_CNVI_DISABLE), value = 0, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_CNVI_AUTO), value = 1, flags = RESET_REQUIRED;
+    endoneof;
+
+    suppressif ideqval PCH_SETUP.CnviMode == 0;
+      grayoutif match (stringref (STRING_TOKEN (STR_CNVI_IS_NOT_PRESENT_PATTERN)), stringref (STRING_TOKEN (STR_CNVI_CURRENT_STATE)));
+        oneof varid   = PCH_SETUP.CnviBtCore,
+          prompt      = STRING_TOKEN(STR_CNVI_BT_CORE),
+          help        = STRING_TOKEN(STR_CNVI_BT_CORE_HELP),
+          option text = STRING_TOKEN(STR_ENABLED), value = 1, flags = DEFAULT | RESET_REQUIRED;
+          option text = STRING_TOKEN(STR_DISABLED), value = 0, flags = RESET_REQUIRED;
+        endoneof;
+        grayoutif  ideqval PCH_SETUP.CnviBtCore == 0;
+          oneof varid   = PCH_SETUP.CnviBtAudioOffload,
+            questionid  = KEY_CNV_BT_AUDIO_OFFLOAD,
+            prompt      = STRING_TOKEN(STR_CNVI_BT_AUDIO_OFFLOAD),
+            help        = STRING_TOKEN(STR_CNVI_BT_AUDIO_OFFLOAD_HELP),
+            option text = STRING_TOKEN(STR_DISABLED), value = 0, flags = DEFAULT | RESET_REQUIRED | INTERACTIVE;
+            option text = STRING_TOKEN(STR_ENABLED), value = 1, flags = RESET_REQUIRED | INTERACTIVE;
+          endoneof;
+        endif;
+      endif;
+    endif;
+
+    SEPARATOR
+
+    grayoutif ideqval SETUP_DATA.WwanEnable == 0;
+      oneof varid   = SETUP_DATA.CoExistenceManager,
+        prompt      = STRING_TOKEN(STR_COEX_MANAGER_PROMPT),
+        help        = STRING_TOKEN(STR_COEX_MANAGER_HELP),
+        option text = STRING_TOKEN(STR_DISABLED), value = 0, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_ENABLED),  value = 1, flags = RESET_REQUIRED;
+      endoneof;
+    endif; //grayoutif ideqval SETUP_DATA.WwanEnable == 0;
+
+    SEPARATOR
+
+      oneof varid   = SETUP_DATA.PrebootBleEnable,
+        prompt      = STRING_TOKEN(STR_PREBOOT_BLE_PROMPT),
+        help        = STRING_TOKEN(STR_PREBOOT_BLE_HELP),
+        option text = STRING_TOKEN(STR_DISABLED), value = 0, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_ENABLED),  value = 1, flags = RESET_REQUIRED;
+      endoneof;
+
+    suppressif ideqval SETUP_DATA.PrebootBleEnable == 0;
+      numeric varid = SETUP_DATA.BleReconnectionDelay,
+        prompt   = STRING_TOKEN(STR_BLE_RECONNECTION_DELAY),
+        help     = STRING_TOKEN(STR_BLE_RECONNECTION_DELAY_HELP),
+        flags    = RESET_REQUIRED,
+        minimum = 0,
+        maximum = 1000,
+        step    = 1,
+        default = 100,
+      endnumeric;
+    endif;
+
+    SEPARATOR
+
+    // Discrete Bluetooth Selection over UART or USB
+    oneof varid  = SETUP_DATA.DiscreteBtModule,
+      prompt   = STRING_TOKEN(STR_BT_MODULE),
+      help     = STRING_TOKEN(STR_BT_MODULE_HELP),
+        option text = STRING_TOKEN(STR_DISABLED), value = 0, flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_BT_THUNDER_PEAK_USB), value = 1, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+        suppressif ideqval PCH_SETUP.PchSerialIoUart[0] == 0;
+          option text = STRING_TOKEN(STR_BT_THUNDER_PEAK_UART), value = 2, flags = RESET_REQUIRED;
+        endif;
+    endoneof;
+
+    suppressif ideqval SETUP_DATA.DiscreteBtModule == 0;
+      oneof varid  = SETUP_DATA.DiscreteBtModuleIrqMode,
+        prompt   = STRING_TOKEN(STR_BT_IRQ_MODE),
+        help     = STRING_TOKEN(STR_BT_IRQ_MODE_HELP),
+        option text = STRING_TOKEN(STR_GPIO_INT), value = 0, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_APIC_INT), value = 1, flags = RESET_REQUIRED;
+      endoneof;
+    endif;
+
+    SEPARATOR
+
+    oneof varid  = SETUP_DATA.WifiEnable,
+      prompt   = STRING_TOKEN(STR_WIFI_ENABLE_PROMPT),
+      help     = STRING_TOKEN(STR_WIFI_ENABLE_HELP),
+      option text = STRING_TOKEN(STR_DISABLED), value = 0, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_ENABLED), value = 1, flags = RESET_REQUIRED;
+    endoneof;
+
+    suppressif ideqval SETUP_DATA.WifiEnable == 0;
+      oneof varid  = SETUP_DATA.AntennaDiversity,
+        prompt   = STRING_TOKEN(STR_ANTENNA_DIVERSITY_PROMPT),
+        help     = STRING_TOKEN(STR_ANTENNA_DIVERSITY_HELP),
+        option text = STRING_TOKEN(STR_ANTENNA1), value = 0, flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_ANTENNA2), value = 1, flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_DIVERSITY), value = 2, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_DIVERSITY_ANTENNA1), value = 3, flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_DIVERSITY_ANTENNA2), value = 4, flags = RESET_REQUIRED;
+      endoneof;
+
+      numeric varid = SETUP_DATA.WifiDomainType1,
+        prompt   = STRING_TOKEN(STR_WIFI_DOMAIN_TYPE1_PROMPT),
+        help     = STRING_TOKEN(STR_PSM_DOMAIN_TYPE_HELP),
+        minimum = 0,
+        maximum = 0x14,
+        step    = 1,
+        default = 0x7,
+      endnumeric;
+
+      numeric varid = SETUP_DATA.WifiPowerLimit1,
+        prompt   = STRING_TOKEN(STR_WIFI_POWER_LIMIT1_PROMPT),
+        help     = STRING_TOKEN(STR_WIFI_POWER_LIMIT_HELP),
+        flags    = RESET_REQUIRED | INTERACTIVE,
+        key      = KEY_WIFI_POWER_LIMIT,
+        minimum  = 1,
+        maximum  = 0xFFFF,
+        step     = 1,
+        default  = 0xFFFF,
+      endnumeric;
+
+      numeric varid = SETUP_DATA.WifiTimeWindow1,
+        prompt   = STRING_TOKEN(STR_WIFI_TIME_WINDOW1_PROMPT),
+        help     = STRING_TOKEN(STR_WIFI_TIME_WINDOW_HELP),
+        minimum = 1,
+        maximum = 100000,
+        step    = 1,
+        default = 30000,
+      endnumeric;
+
+      numeric varid = SETUP_DATA.TRxDelay0,
+        prompt   = STRING_TOKEN(STR_TR_DELAY0_PROMPT),
+        help     = STRING_TOKEN(STR_TR_DELAY0_HELP),
+        minimum = 1,
+        maximum = 100,
+        step    = 1,
+        default = 50,
+      endnumeric;
+
+      numeric varid = SETUP_DATA.TRxCableLength0,
+        prompt  = STRING_TOKEN(STR_TR_CABLE_LENGTH0_PROMPT),
+        help    = STRING_TOKEN(STR_TR_CABLE_LENGTH0_HELP),
+        minimum = 1,
+        maximum = 100,
+        step    = 1,
+        default = 50,
+      endnumeric;
+
+      numeric varid = SETUP_DATA.TRxDelay1,
+        prompt   = STRING_TOKEN(STR_TR_DELAY1_PROMPT),
+        help     = STRING_TOKEN(STR_TR_DELAY1_HELP),
+        minimum = 1,
+        maximum = 100,
+        step    = 1,
+        default = 50,
+      endnumeric;
+
+      numeric varid = SETUP_DATA.TRxCableLength1,
+        prompt  = STRING_TOKEN(STR_TR_CABLE_LENGTH1_PROMPT),
+        help    = STRING_TOKEN(STR_TR_CABLE_LENGTH1_HELP),
+        minimum = 1,
+        maximum = 100,
+        step    = 1,
+        default = 50,
+      endnumeric;
+
+      text
+      help   = STRING_TOKEN(STR_WRDD_PACKAGE1),
+      text   = STRING_TOKEN(STR_WRDD_PACKAGE1),
+      flags  = 0,
+      key    = 0;
+
+      numeric varid = SETUP_DATA.WrddDomainType1,
+        prompt   = STRING_TOKEN(STR_DOMAIN_TYPE1_PROMPT),
+        help     = STRING_TOKEN(STR_DOMAIN_TYPE_HELP),
+        minimum = 0,
+        maximum = 100,
+        step    = 1,
+        default = 0x07,
+      endnumeric;
+
+      numeric varid = SETUP_DATA.WrddCountryIndentifier1,
+        prompt   = STRING_TOKEN(STR_COUNTRY_IDENTIFIER1_PROMPT),
+        help     = STRING_TOKEN(STR_COUNTRY_IDENTIFIER_HELP),
+        minimum = 1,
+        maximum = 0xFFFF,
+        step    = 1,
+        default = 0x4150,  // "AP"
+      endnumeric;
+
+      text
+      help   = STRING_TOKEN(STR_WRDS_PACKAGE),
+      text   = STRING_TOKEN(STR_WRDS_PACKAGE),
+      flags  = 0,
+      key    = 0;
+
+      oneof varid  = SETUP_DATA.WrdsWiFiSarEnable,
+        prompt   = STRING_TOKEN(STR_WIFI_SAR_PROMPT),
+        help     = STRING_TOKEN(STR_WIFI_SAR_HELP),
+        default  = 0, defaultstore = MyStandardDefault,
+        option text = STRING_TOKEN(STR_DISABLED), value = 0, flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_ENABLED),  value = 1, flags = RESET_REQUIRED;
+      endoneof;
+
+      suppressif ideqval SETUP_DATA.WrdsWiFiSarEnable == 0;
+        numeric varid = SETUP_DATA.WrdsWiFiSarTxPowerSet1Limit1,
+          prompt   = STRING_TOKEN(STR_WIFI_SAR_SET1_TX1_PROMPT),
+          help     = STRING_TOKEN(STR_WIFI_SAR_TX_HELP),
+          minimum = 0,
+          maximum = 0xFF,
+          step    = 1,
+          default = 0,
+        endnumeric;
+
+        numeric varid = SETUP_DATA.WrdsWiFiSarTxPowerSet1Limit2,
+          prompt   = STRING_TOKEN(STR_WIFI_SAR_SET1_TX2_PROMPT),
+          help     = STRING_TOKEN(STR_WIFI_SAR_TX_HELP),
+          minimum = 0,
+          maximum = 0xFF,
+          step    = 1,
+          default = 0,
+        endnumeric;
+
+        numeric varid = SETUP_DATA.WrdsWiFiSarTxPowerSet1Limit3,
+          prompt   = STRING_TOKEN(STR_WIFI_SAR_SET1_TX3_PROMPT),
+          help     = STRING_TOKEN(STR_WIFI_SAR_TX_HELP),
+          minimum = 0,
+          maximum = 0xFF,
+          step    = 1,
+          default = 0,
+        endnumeric;
+
+        numeric varid = SETUP_DATA.WrdsWiFiSarTxPowerSet1Limit4,
+          prompt   = STRING_TOKEN(STR_WIFI_SAR_SET1_TX4_PROMPT),
+          help     = STRING_TOKEN(STR_WIFI_SAR_TX_HELP),
+          minimum = 0,
+          maximum = 0xFF,
+          step    = 1,
+          default = 0,
+        endnumeric;
+
+        numeric varid = SETUP_DATA.WrdsWiFiSarTxPowerSet1Limit5,
+          prompt   = STRING_TOKEN(STR_WIFI_SAR_SET1_TX5_PROMPT),
+          help     = STRING_TOKEN(STR_WIFI_SAR_TX_HELP),
+          minimum = 0,
+          maximum = 0xFF,
+          step    = 1,
+          default = 0,
+        endnumeric;
+
+        numeric varid = SETUP_DATA.WrdsWiFiSarTxPowerSet1Limit6,
+          prompt   = STRING_TOKEN(STR_WIFI_SAR_SET1_TX6_PROMPT),
+          help     = STRING_TOKEN(STR_WIFI_SAR_TX_HELP),
+          minimum = 0,
+          maximum = 0xFF,
+          step    = 1,
+          default = 0,
+        endnumeric;
+
+        numeric varid = SETUP_DATA.WrdsWiFiSarTxPowerSet1Limit7,
+          prompt   = STRING_TOKEN(STR_WIFI_SAR_SET1_TX7_PROMPT),
+          help     = STRING_TOKEN(STR_WIFI_SAR_TX_HELP),
+          minimum = 0,
+          maximum = 0xFF,
+          step    = 1,
+          default = 0,
+        endnumeric;
+
+        numeric varid = SETUP_DATA.WrdsWiFiSarTxPowerSet1Limit8,
+          prompt   = STRING_TOKEN(STR_WIFI_SAR_SET1_TX8_PROMPT),
+          help     = STRING_TOKEN(STR_WIFI_SAR_TX_HELP),
+          minimum = 0,
+          maximum = 0xFF,
+          step    = 1,
+          default = 0,
+        endnumeric;
+
+        numeric varid = SETUP_DATA.WrdsWiFiSarTxPowerSet1Limit9,
+          prompt   = STRING_TOKEN(STR_WIFI_SAR_SET1_TX9_PROMPT),
+          help     = STRING_TOKEN(STR_WIFI_SAR_TX_HELP),
+          minimum = 0,
+          maximum = 0xFF,
+          step    = 1,
+          default = 0,
+        endnumeric;
+
+        numeric varid = SETUP_DATA.WrdsWiFiSarTxPowerSet1Limit10,
+          prompt   = STRING_TOKEN(STR_WIFI_SAR_SET1_TX10_PROMPT),
+          help     = STRING_TOKEN(STR_WIFI_SAR_TX_HELP),
+          minimum = 0,
+          maximum = 0xFF,
+          step    = 1,
+          default = 0,
+        endnumeric;
+      endif; // suppressif ideqval SETUP_DATA.WrdsWiFiSarEnable == 0;
+
+      text
+      help   = STRING_TOKEN(STR_EWRD_PACKAGE),
+      text   = STRING_TOKEN(STR_EWRD_PACKAGE),
+      flags  = 0,
+      key    = 0;
+      oneof varid  = SETUP_DATA.EwrdWiFiDynamicSarEnable,
+        prompt   = STRING_TOKEN(STR_WIFI_DYNAMIC_SAR_PROMPT),
+        help     = STRING_TOKEN(STR_WIFI_DYNAMIC_SAR_HELP),
+        option text = STRING_TOKEN(STR_DISABLED), value = 0, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_ENABLED),  value = 1, flags = RESET_REQUIRED;
+      endoneof;
+
+      suppressif ideqval SETUP_DATA.EwrdWiFiDynamicSarEnable == 0;
+        oneof varid  = SETUP_DATA.EwrdWiFiDynamicSarRangeSets,
+          prompt   = STRING_TOKEN(STR_WIFI_EXTENDED_SAR_RANGE_SETS_PROMPT),
+          help     = STRING_TOKEN(STR_WIFI_EXTENDED_SAR_RANGE_SETS_HELP),
+          option text = STRING_TOKEN(STR_NO_ADDITIONAL_SETS), value = 0, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+          option text = STRING_TOKEN(STR_ADDITIONAL_SET_2),   value = 1, flags = RESET_REQUIRED;
+          option text = STRING_TOKEN(STR_ADDITIONAL_SET_3),   value = 2, flags = RESET_REQUIRED;
+          option text = STRING_TOKEN(STR_ADDITIONAL_SET_4),   value = 3, flags = RESET_REQUIRED;
+        endoneof;
+
+        numeric varid = SETUP_DATA.EwrdWiFiSarTxPowerSet2Limit1,
+          prompt   = STRING_TOKEN(STR_WIFI_SAR_SET2_TX1_PROMPT),
+          help     = STRING_TOKEN(STR_WIFI_SAR_TX_HELP),
+          minimum = 0,
+          maximum = 0xFF,
+          step    = 1,
+          default = 0,
+        endnumeric;
+
+        numeric varid = SETUP_DATA.EwrdWiFiSarTxPowerSet2Limit2,
+          prompt   = STRING_TOKEN(STR_WIFI_SAR_SET2_TX2_PROMPT),
+          help     = STRING_TOKEN(STR_WIFI_SAR_TX_HELP),
+          minimum = 0,
+          maximum = 0xFF,
+          step    = 1,
+          default = 0,
+        endnumeric;
+
+        numeric varid = SETUP_DATA.EwrdWiFiSarTxPowerSet2Limit3,
+          prompt   = STRING_TOKEN(STR_WIFI_SAR_SET2_TX3_PROMPT),
+          help     = STRING_TOKEN(STR_WIFI_SAR_TX_HELP),
+          minimum = 0,
+          maximum = 0xFF,
+          step    = 1,
+          default = 0,
+        endnumeric;
+
+        numeric varid = SETUP_DATA.EwrdWiFiSarTxPowerSet2Limit4,
+          prompt   = STRING_TOKEN(STR_WIFI_SAR_SET2_TX4_PROMPT),
+          help     = STRING_TOKEN(STR_WIFI_SAR_TX_HELP),
+          minimum = 0,
+          maximum = 0xFF,
+          step    = 1,
+          default = 0,
+        endnumeric;
+
+        numeric varid = SETUP_DATA.EwrdWiFiSarTxPowerSet2Limit5,
+          prompt   = STRING_TOKEN(STR_WIFI_SAR_SET2_TX5_PROMPT),
+          help     = STRING_TOKEN(STR_WIFI_SAR_TX_HELP),
+          minimum = 0,
+          maximum = 0xFF,
+          step    = 1,
+          default = 0,
+        endnumeric;
+
+        numeric varid = SETUP_DATA.EwrdWiFiSarTxPowerSet2Limit6,
+          prompt   = STRING_TOKEN(STR_WIFI_SAR_SET2_TX6_PROMPT),
+          help     = STRING_TOKEN(STR_WIFI_SAR_TX_HELP),
+          minimum = 0,
+          maximum = 0xFF,
+          step    = 1,
+          default = 0,
+        endnumeric;
+
+        numeric varid = SETUP_DATA.EwrdWiFiSarTxPowerSet2Limit7,
+          prompt   = STRING_TOKEN(STR_WIFI_SAR_SET2_TX7_PROMPT),
+          help     = STRING_TOKEN(STR_WIFI_SAR_TX_HELP),
+          minimum = 0,
+          maximum = 0xFF,
+          step    = 1,
+          default = 0,
+        endnumeric;
+
+        numeric varid = SETUP_DATA.EwrdWiFiSarTxPowerSet2Limit8,
+          prompt   = STRING_TOKEN(STR_WIFI_SAR_SET2_TX8_PROMPT),
+          help     = STRING_TOKEN(STR_WIFI_SAR_TX_HELP),
+          minimum = 0,
+          maximum = 0xFF,
+          step    = 1,
+          default = 0,
+        endnumeric;
+
+        numeric varid = SETUP_DATA.EwrdWiFiSarTxPowerSet2Limit9,
+          prompt   = STRING_TOKEN(STR_WIFI_SAR_SET2_TX9_PROMPT),
+          help     = STRING_TOKEN(STR_WIFI_SAR_TX_HELP),
+          minimum = 0,
+          maximum = 0xFF,
+          step    = 1,
+          default = 0,
+        endnumeric;
+
+        numeric varid = SETUP_DATA.EwrdWiFiSarTxPowerSet2Limit10,
+          prompt   = STRING_TOKEN(STR_WIFI_SAR_SET2_TX10_PROMPT),
+          help     = STRING_TOKEN(STR_WIFI_SAR_TX_HELP),
+          minimum = 0,
+          maximum = 0xFF,
+          step    = 1,
+          default = 0,
+        endnumeric;
+
+        numeric varid = SETUP_DATA.EwrdWiFiSarTxPowerSet3Limit1,
+          prompt   = STRING_TOKEN(STR_WIFI_SAR_SET3_TX1_PROMPT),
+          help     = STRING_TOKEN(STR_WIFI_SAR_TX_HELP),
+          minimum = 0,
+          maximum = 0xFF,
+          step    = 1,
+          default = 0,
+        endnumeric;
+
+        numeric varid = SETUP_DATA.EwrdWiFiSarTxPowerSet3Limit2,
+          prompt   = STRING_TOKEN(STR_WIFI_SAR_SET3_TX2_PROMPT),
+          help     = STRING_TOKEN(STR_WIFI_SAR_TX_HELP),
+          minimum = 0,
+          maximum = 0xFF,
+          step    = 1,
+          default = 0,
+        endnumeric;
+
+        numeric varid = SETUP_DATA.EwrdWiFiSarTxPowerSet3Limit3,
+          prompt   = STRING_TOKEN(STR_WIFI_SAR_SET3_TX3_PROMPT),
+          help     = STRING_TOKEN(STR_WIFI_SAR_TX_HELP),
+          minimum = 0,
+          maximum = 0xFF,
+          step    = 1,
+          default = 0,
+        endnumeric;
+
+        numeric varid = SETUP_DATA.EwrdWiFiSarTxPowerSet3Limit4,
+          prompt   = STRING_TOKEN(STR_WIFI_SAR_SET3_TX4_PROMPT),
+          help     = STRING_TOKEN(STR_WIFI_SAR_TX_HELP),
+          minimum = 0,
+          maximum = 0xFF,
+          step    = 1,
+          default = 0,
+        endnumeric;
+
+        numeric varid = SETUP_DATA.EwrdWiFiSarTxPowerSet3Limit5,
+          prompt   = STRING_TOKEN(STR_WIFI_SAR_SET3_TX5_PROMPT),
+          help     = STRING_TOKEN(STR_WIFI_SAR_TX_HELP),
+          minimum = 0,
+          maximum = 0xFF,
+          step    = 1,
+          default = 0,
+        endnumeric;
+
+        numeric varid = SETUP_DATA.EwrdWiFiSarTxPowerSet3Limit6,
+          prompt   = STRING_TOKEN(STR_WIFI_SAR_SET3_TX6_PROMPT),
+          help     = STRING_TOKEN(STR_WIFI_SAR_TX_HELP),
+          minimum = 0,
+          maximum = 0xFF,
+          step    = 1,
+          default = 0,
+        endnumeric;
+
+        numeric varid = SETUP_DATA.EwrdWiFiSarTxPowerSet3Limit7,
+          prompt   = STRING_TOKEN(STR_WIFI_SAR_SET3_TX7_PROMPT),
+          help     = STRING_TOKEN(STR_WIFI_SAR_TX_HELP),
+          minimum = 0,
+          maximum = 0xFF,
+          step    = 1,
+          default = 0,
+        endnumeric;
+
+        numeric varid = SETUP_DATA.EwrdWiFiSarTxPowerSet3Limit8,
+          prompt   = STRING_TOKEN(STR_WIFI_SAR_SET3_TX8_PROMPT),
+          help     = STRING_TOKEN(STR_WIFI_SAR_TX_HELP),
+          minimum = 0,
+          maximum = 0xFF,
+          step    = 1,
+          default = 0,
+        endnumeric;
+
+        numeric varid = SETUP_DATA.EwrdWiFiSarTxPowerSet3Limit9,
+          prompt   = STRING_TOKEN(STR_WIFI_SAR_SET3_TX9_PROMPT),
+          help     = STRING_TOKEN(STR_WIFI_SAR_TX_HELP),
+          minimum = 0,
+          maximum = 0xFF,
+          step    = 1,
+          default = 0,
+        endnumeric;
+
+        numeric varid = SETUP_DATA.EwrdWiFiSarTxPowerSet3Limit10,
+          prompt   = STRING_TOKEN(STR_WIFI_SAR_SET3_TX10_PROMPT),
+          help     = STRING_TOKEN(STR_WIFI_SAR_TX_HELP),
+          minimum = 0,
+          maximum = 0xFF,
+          step    = 1,
+          default = 0,
+        endnumeric;
+
+        numeric varid = SETUP_DATA.EwrdWiFiSarTxPowerSet4Limit1,
+          prompt   = STRING_TOKEN(STR_WIFI_SAR_SET4_TX1_PROMPT),
+          help     = STRING_TOKEN(STR_WIFI_SAR_TX_HELP),
+          minimum = 0,
+          maximum = 0xFF,
+          step    = 1,
+          default = 0,
+        endnumeric;
+
+        numeric varid = SETUP_DATA.EwrdWiFiSarTxPowerSet4Limit2,
+          prompt   = STRING_TOKEN(STR_WIFI_SAR_SET4_TX2_PROMPT),
+          help     = STRING_TOKEN(STR_WIFI_SAR_TX_HELP),
+          minimum = 0,
+          maximum = 0xFF,
+          step    = 1,
+          default = 0,
+        endnumeric;
+
+        numeric varid = SETUP_DATA.EwrdWiFiSarTxPowerSet4Limit3,
+          prompt   = STRING_TOKEN(STR_WIFI_SAR_SET4_TX3_PROMPT),
+          help     = STRING_TOKEN(STR_WIFI_SAR_TX_HELP),
+          minimum = 0,
+          maximum = 0xFF,
+          step    = 1,
+          default = 0,
+        endnumeric;
+
+        numeric varid = SETUP_DATA.EwrdWiFiSarTxPowerSet4Limit4,
+          prompt   = STRING_TOKEN(STR_WIFI_SAR_SET4_TX4_PROMPT),
+          help     = STRING_TOKEN(STR_WIFI_SAR_TX_HELP),
+          minimum = 0,
+          maximum = 0xFF,
+          step    = 1,
+          default = 0,
+        endnumeric;
+
+        numeric varid = SETUP_DATA.EwrdWiFiSarTxPowerSet4Limit5,
+          prompt   = STRING_TOKEN(STR_WIFI_SAR_SET4_TX5_PROMPT),
+          help     = STRING_TOKEN(STR_WIFI_SAR_TX_HELP),
+          minimum = 0,
+          maximum = 0xFF,
+          step    = 1,
+          default = 0,
+        endnumeric;
+
+        numeric varid = SETUP_DATA.EwrdWiFiSarTxPowerSet4Limit6,
+          prompt   = STRING_TOKEN(STR_WIFI_SAR_SET4_TX6_PROMPT),
+          help     = STRING_TOKEN(STR_WIFI_SAR_TX_HELP),
+          minimum = 0,
+          maximum = 0xFF,
+          step    = 1,
+          default = 0,
+        endnumeric;
+
+        numeric varid = SETUP_DATA.EwrdWiFiSarTxPowerSet4Limit7,
+          prompt   = STRING_TOKEN(STR_WIFI_SAR_SET4_TX7_PROMPT),
+          help     = STRING_TOKEN(STR_WIFI_SAR_TX_HELP),
+          minimum = 0,
+          maximum = 0xFF,
+          step    = 1,
+          default = 0,
+        endnumeric;
+
+        numeric varid = SETUP_DATA.EwrdWiFiSarTxPowerSet4Limit8,
+          prompt   = STRING_TOKEN(STR_WIFI_SAR_SET4_TX8_PROMPT),
+          help     = STRING_TOKEN(STR_WIFI_SAR_TX_HELP),
+          minimum = 0,
+          maximum = 0xFF,
+          step    = 1,
+          default = 0,
+        endnumeric;
+
+        numeric varid = SETUP_DATA.EwrdWiFiSarTxPowerSet4Limit9,
+          prompt   = STRING_TOKEN(STR_WIFI_SAR_SET4_TX9_PROMPT),
+          help     = STRING_TOKEN(STR_WIFI_SAR_TX_HELP),
+          minimum = 0,
+          maximum = 0xFF,
+          step    = 1,
+          default = 0,
+        endnumeric;
+
+        numeric varid = SETUP_DATA.EwrdWiFiSarTxPowerSet4Limit10,
+          prompt   = STRING_TOKEN(STR_WIFI_SAR_SET4_TX10_PROMPT),
+          help     = STRING_TOKEN(STR_WIFI_SAR_TX_HELP),
+          minimum = 0,
+          maximum = 0xFF,
+          step    = 1,
+          default = 0,
+        endnumeric;
+      endif;
+
+      suppressif TRUE;
+        oneof varid  = SETUP_DATA.WiFiDynamicSarAntennaACurrentSet,
+          prompt   = STRING_TOKEN(STR_WIFI_EXTENDED_SAR_ANTENNA_A_CURRENT_SET_PROMPT),
+          help     = STRING_TOKEN(STR_WIFI_EXTENDED_SAR_CURRENT_SET_PROMPT_HELP),
+          option text = STRING_TOKEN(STR_DEFAULT_OTP_TABLE), value = 0, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+          option text = STRING_TOKEN(STR_ADDITIONAL_SET_1),   value = 1, flags = RESET_REQUIRED;
+          option text = STRING_TOKEN(STR_ADDITIONAL_SET_2),   value = 2, flags = RESET_REQUIRED;
+          option text = STRING_TOKEN(STR_ADDITIONAL_SET_3),   value = 3, flags = RESET_REQUIRED;
+          option text = STRING_TOKEN(STR_ADDITIONAL_SET_4),   value = 4, flags = RESET_REQUIRED;
+        endoneof;
+      endif;
+
+      suppressif TRUE;
+        oneof varid  = SETUP_DATA.WiFiDynamicSarAntennaBCurrentSet,
+          prompt   = STRING_TOKEN(STR_WIFI_EXTENDED_SAR_ANTENNA_B_CURRENT_SET_PROMPT),
+          help     = STRING_TOKEN(STR_WIFI_EXTENDED_SAR_CURRENT_SET_PROMPT_HELP),
+          option text = STRING_TOKEN(STR_DEFAULT_OTP_TABLE), value = 0, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+          option text = STRING_TOKEN(STR_ADDITIONAL_SET_1),   value = 1, flags = RESET_REQUIRED;
+          option text = STRING_TOKEN(STR_ADDITIONAL_SET_2),   value = 2, flags = RESET_REQUIRED;
+          option text = STRING_TOKEN(STR_ADDITIONAL_SET_3),   value = 3, flags = RESET_REQUIRED;
+          option text = STRING_TOKEN(STR_ADDITIONAL_SET_4),   value = 4, flags = RESET_REQUIRED;
+        endoneof;
+      endif;
+
+      text
+      help   = STRING_TOKEN(STR_WGDS_PACKAGE),
+      text   = STRING_TOKEN(STR_WGDS_PACKAGE),
+      flags  = 0,
+      key    = 0;
+      numeric varid = SETUP_DATA.WgdsWiFiSarDeltaGroup1PowerMax1,
+        prompt   = STRING_TOKEN(STR_WIFI_SAR_DELTA_2400MHZ_MAX_GROUP1_PROMPT),
+        help     = STRING_TOKEN(STR_WIFI_SAR_DELTA_HELP),
+        minimum = 0,
+        maximum = 0xFF,
+        step    = 1,
+        default = 0xFF,
+      endnumeric;
+
+      numeric varid = SETUP_DATA.WgdsWiFiSarDeltaGroup1PowerChainA1,
+        prompt   = STRING_TOKEN(STR_WIFI_SAR_DELTA_2400MHZ_CHAIN_A_GROUP1_PROMPT),
+        help     = STRING_TOKEN(STR_WIFI_SAR_DELTA_HELP),
+        minimum = 0,
+        maximum = 0xFF,
+        step    = 1,
+        default = 0,
+      endnumeric;
+
+      numeric varid = SETUP_DATA.WgdsWiFiSarDeltaGroup1PowerChainB1,
+        prompt   = STRING_TOKEN(STR_WIFI_SAR_DELTA_2400MHZ_CHAIN_B_GROUP1_PROMPT),
+        help     = STRING_TOKEN(STR_WIFI_SAR_DELTA_HELP),
+        minimum = 0,
+        maximum = 0xFF,
+        step    = 1,
+        default = 0,
+      endnumeric;
+
+      numeric varid = SETUP_DATA.WgdsWiFiSarDeltaGroup1PowerMax2,
+        prompt   = STRING_TOKEN(STR_WIFI_SAR_DELTA_5200MHZ_MAX_GROUP1_PROMPT),
+        help     = STRING_TOKEN(STR_WIFI_SAR_DELTA_HELP),
+        minimum = 0,
+        maximum = 0xFF,
+        step    = 1,
+        default = 0xFF,
+      endnumeric;
+
+      numeric varid = SETUP_DATA.WgdsWiFiSarDeltaGroup1PowerChainA2,
+        prompt   = STRING_TOKEN(STR_WIFI_SAR_DELTA_5200MHZ_CHAIN_A_GROUP1_PROMPT),
+        help     = STRING_TOKEN(STR_WIFI_SAR_DELTA_HELP),
+        minimum = 0,
+        maximum = 0xFF,
+        step    = 1,
+        default = 0,
+      endnumeric;
+
+      numeric varid = SETUP_DATA.WgdsWiFiSarDeltaGroup1PowerChainB2,
+        prompt   = STRING_TOKEN(STR_WIFI_SAR_DELTA_5200MHZ_CHAIN_B_GROUP1_PROMPT),
+        help     = STRING_TOKEN(STR_WIFI_SAR_TX_HELP),
+        minimum = 0,
+        maximum = 0xFF,
+        step    = 1,
+        default = 0,
+      endnumeric;
+
+      numeric varid = SETUP_DATA.WgdsWiFiSarDeltaGroup2PowerMax1,
+        prompt   = STRING_TOKEN(STR_WIFI_SAR_DELTA_2400MHZ_MAX_GROUP2_PROMPT),
+        help     = STRING_TOKEN(STR_WIFI_SAR_DELTA_HELP),
+        minimum = 0,
+        maximum = 0xFF,
+        step    = 1,
+        default = 0xFF,
+      endnumeric;
+
+      numeric varid = SETUP_DATA.WgdsWiFiSarDeltaGroup2PowerChainA1,
+        prompt   = STRING_TOKEN(STR_WIFI_SAR_DELTA_2400MHZ_CHAIN_A_GROUP2_PROMPT),
+        help     = STRING_TOKEN(STR_WIFI_SAR_DELTA_HELP),
+        minimum = 0,
+        maximum = 0xFF,
+        step    = 1,
+        default = 0,
+      endnumeric;
+
+      numeric varid = SETUP_DATA.WgdsWiFiSarDeltaGroup2PowerChainB1,
+        prompt   = STRING_TOKEN(STR_WIFI_SAR_DELTA_2400MHZ_CHAIN_B_GROUP2_PROMPT),
+        help     = STRING_TOKEN(STR_WIFI_SAR_DELTA_HELP),
+        minimum = 0,
+        maximum = 0xFF,
+        step    = 1,
+        default = 0,
+      endnumeric;
+
+      numeric varid = SETUP_DATA.WgdsWiFiSarDeltaGroup2PowerMax2,
+        prompt   = STRING_TOKEN(STR_WIFI_SAR_DELTA_5200MHZ_MAX_GROUP2_PROMPT),
+        help     = STRING_TOKEN(STR_WIFI_SAR_DELTA_HELP),
+        minimum = 0,
+        maximum = 0xFF,
+        step    = 1,
+        default = 0xFF,
+      endnumeric;
+
+      numeric varid = SETUP_DATA.WgdsWiFiSarDeltaGroup2PowerChainA2,
+        prompt   = STRING_TOKEN(STR_WIFI_SAR_DELTA_5200MHZ_CHAIN_A_GROUP2_PROMPT),
+        help     = STRING_TOKEN(STR_WIFI_SAR_DELTA_HELP),
+        minimum = 0,
+        maximum = 0xFF,
+        step    = 1,
+        default = 0,
+      endnumeric;
+
+      numeric varid = SETUP_DATA.WgdsWiFiSarDeltaGroup2PowerChainB2,
+        prompt   = STRING_TOKEN(STR_WIFI_SAR_DELTA_5200MHZ_CHAIN_B_GROUP2_PROMPT),
+        help     = STRING_TOKEN(STR_WIFI_SAR_DELTA_HELP),
+        minimum = 0,
+        maximum = 0xFF,
+        step    = 1,
+        default = 0,
+      endnumeric;
+
+      numeric varid = SETUP_DATA.WgdsWiFiSarDeltaGroup3PowerMax1,
+        prompt   = STRING_TOKEN(STR_WIFI_SAR_DELTA_2400MHZ_MAX_GROUP3_PROMPT),
+        help     = STRING_TOKEN(STR_WIFI_SAR_DELTA_HELP),
+        minimum = 0,
+        maximum = 0xFF,
+        step    = 1,
+        default = 0xFF,
+      endnumeric;
+
+      numeric varid = SETUP_DATA.WgdsWiFiSarDeltaGroup3PowerChainA1,
+        prompt   = STRING_TOKEN(STR_WIFI_SAR_DELTA_2400MHZ_CHAIN_A_GROUP3_PROMPT),
+        help     = STRING_TOKEN(STR_WIFI_SAR_DELTA_HELP),
+        minimum = 0,
+        maximum = 0xFF,
+        step    = 1,
+        default = 0,
+      endnumeric;
+
+      numeric varid = SETUP_DATA.WgdsWiFiSarDeltaGroup3PowerChainB1,
+        prompt   = STRING_TOKEN(STR_WIFI_SAR_DELTA_2400MHZ_CHAIN_B_GROUP3_PROMPT),
+        help     = STRING_TOKEN(STR_WIFI_SAR_DELTA_HELP),
+        minimum = 0,
+        maximum = 0xFF,
+        step    = 1,
+        default = 0,
+      endnumeric;
+
+      numeric varid = SETUP_DATA.WgdsWiFiSarDeltaGroup3PowerMax2,
+        prompt   = STRING_TOKEN(STR_WIFI_SAR_DELTA_5200MHZ_MAX_GROUP3_PROMPT),
+        help     = STRING_TOKEN(STR_WIFI_SAR_DELTA_HELP),
+        minimum = 0,
+        maximum = 0xFF,
+        step    = 1,
+        default = 0xFF,
+      endnumeric;
+
+      numeric varid = SETUP_DATA.WgdsWiFiSarDeltaGroup3PowerChainA2,
+        prompt   = STRING_TOKEN(STR_WIFI_SAR_DELTA_5200MHZ_CHAIN_A_GROUP3_PROMPT),
+        help     = STRING_TOKEN(STR_WIFI_SAR_DELTA_HELP),
+        minimum = 0,
+        maximum = 0xFF,
+        step    = 1,
+        default = 0,
+      endnumeric;
+
+      numeric varid = SETUP_DATA.WgdsWiFiSarDeltaGroup3PowerChainB2,
+        prompt   = STRING_TOKEN(STR_WIFI_SAR_DELTA_5200MHZ_CHAIN_B_GROUP3_PROMPT),
+        help     = STRING_TOKEN(STR_WIFI_SAR_TX_HELP),
+        minimum = 0,
+        maximum = 0xFF,
+        step    = 1,
+        default = 0,
+      endnumeric;
+
+      oneof varid  = SETUP_DATA.BluetoothSar,
+        prompt   = STRING_TOKEN(STR_BT_SAR_PROMPT),
+        help     = STRING_TOKEN(STR_BT_SAR_HELP),
+        option text = STRING_TOKEN(STR_DISABLED), value = 0, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_ENABLED),  value = 1, flags = RESET_REQUIRED;
+      endoneof;
+
+      suppressif ideqval SETUP_DATA.BluetoothSar == 0;
+        numeric varid = SETUP_DATA.BluetoothSarBr,
+          prompt   = STRING_TOKEN(STR_BT_SAR_BR_MODULATION_PROMPT),
+          help     = STRING_TOKEN(STR_BT_SAR_BR_MODULATION_HELP),
+          minimum = 0,
+          maximum = 0xFF,
+          step    = 1,
+          default = 0,
+        endnumeric;
+
+        numeric varid = SETUP_DATA.BluetoothSarEdr2,
+          prompt   = STRING_TOKEN(STR_BT_SAR_EDR2_MODULATION_PROMPT),
+          help     = STRING_TOKEN(STR_BT_SAR_EDR2_MODULATION_HELP),
+          minimum = 0,
+          maximum = 0xFF,
+          step    = 1,
+          default = 0,
+        endnumeric;
+
+        numeric varid = SETUP_DATA.BluetoothSarEdr3,
+          prompt   = STRING_TOKEN(STR_BT_SAR_EDR3_MODULATION_PROMPT),
+          help     = STRING_TOKEN(STR_BT_SAR_EDR3_MODULATION_HELP),
+          minimum = 0,
+          maximum = 0xFF,
+          step    = 1,
+          default = 0,
+        endnumeric;
+
+        numeric varid = SETUP_DATA.BluetoothSarLe,
+          prompt   = STRING_TOKEN(STR_BT_SAR_LE_MODULATION_PROMPT),
+          help     = STRING_TOKEN(STR_BT_SAR_LE_MODULATION_HELP),
+          minimum = 0,
+          maximum = 0xFF,
+          step    = 1,
+          default = 0,
+        endnumeric;
+
+        numeric varid = SETUP_DATA.BluetoothSarLe2Mhz,
+          prompt   = STRING_TOKEN(STR_BT_SAR_LE_2MHZ_MODULATION_PROMPT),
+          help     = STRING_TOKEN(STR_BT_SAR_LE_2MHZ_MODULATION_HELP),
+          minimum = 0,
+          maximum = 0xFF,
+          step    = 1,
+          default = 0,
+        endnumeric;
+
+        numeric varid = SETUP_DATA.BluetoothSarLeLr,
+          prompt   = STRING_TOKEN(STR_BT_SAR_LE_LR_MODULATION_PROMPT),
+          help     = STRING_TOKEN(STR_BT_SAR_LE_LR_MODULATION_HELP),
+          minimum = 0,
+          maximum = 0xFF,
+          step    = 1,
+          default = 0,
+        endnumeric;
+      endif;
+    endif; // suppressif ideqval SETUP_DATA.WifiEnable == 0;
+
+
+    SEPARATOR
+
+    goto WWAN_OPTIONS_FORM_ID,
+      prompt = STRING_TOKEN(STR_WWAN_CONFIGURATION),
+      help   = STRING_TOKEN(STR_WWAN_HELP);
+  endform;
+
+  // Define form for WWAN related options
+    form formid = AUTO_ID(WWAN_OPTIONS_FORM_ID),
+    title       = STRING_TOKEN(STR_WWAN_CONFIGURATION);
+
+    oneof varid   = SETUP_DATA.WwanEnable,
+      prompt      = STRING_TOKEN(STR_M2_WWAN_DEVICE_PROMPT),
+      help        = STRING_TOKEN(STR_M2_WWAN_DEVICE_HELP),
+      option text = STRING_TOKEN(STR_DISABLED), value = 0, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_ENABLED),  value = 1, flags = RESET_REQUIRED;
+    endoneof;
+
+    grayoutif ideqval SETUP_DATA.WwanEnable == 0;
+      oneof varid   = SETUP_DATA.WwanResetWorkaround,
+        prompt      = STRING_TOKEN(STR_WWAN_RESET_WORKAROUND_PROMPT),
+        help        = STRING_TOKEN(STR_WWAN_RESET_WORKAROUND_HELP),
+        option text = STRING_TOKEN(STR_DISABLED), value = 0, flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_ENABLED),  value = 1, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+      endoneof;
+    endif; // grayoutif ideqval SETUP_DATA.WwanEnable == 0;
+
+  endform;

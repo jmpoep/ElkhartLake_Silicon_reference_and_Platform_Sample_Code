@@ -1,0 +1,212 @@
+/** @file
+
+@copyright
+  INTEL CONFIDENTIAL
+  Copyright 2014 - 2016 Intel Corporation.
+
+  The source code contained or described herein and all documents related to the
+  source code ("Material") are owned by Intel Corporation or its suppliers or
+  licensors. Title to the Material remains with Intel Corporation or its suppliers
+  and licensors. The Material may contain trade secrets and proprietary and
+  confidential information of Intel Corporation and its suppliers and licensors,
+  and is protected by worldwide copyright and trade secret laws and treaty
+  provisions. No part of the Material may be used, copied, reproduced, modified,
+  published, uploaded, posted, transmitted, distributed, or disclosed in any way
+  without Intel's prior express written permission.
+
+  No license under any patent, copyright, trade secret or other intellectual
+  property right is granted to or conferred upon you by disclosure or delivery
+  of the Materials, either expressly, by implication, inducement, estoppel or
+  otherwise. Any license under such intellectual property rights must be
+  express and approved by Intel in writing.
+
+  Unless otherwise agreed by Intel in writing, you may not remove or alter
+  this notice or any other notice embedded in Materials by Intel or
+  Intel's suppliers or licensors in any way.
+
+  This file contains a 'Sample Driver' and is licensed as such under the terms
+  of your license agreement with Intel or your vendor. This file may be modified
+  by the user, subject to the additional terms of the license agreement.
+
+@par Specification
+**/
+
+form formid = AUTO_ID(PCI_FORM_ID),
+  title     = STRING_TOKEN(STR_PCI_FORM);
+
+  SUBTITLE(STRING_TOKEN(STR_PCI_SETTINGS))
+  SEPARATOR
+
+  // Display PCI Bus Driver Version. 
+  text
+    help  = STRING_TOKEN(STR_PCI_FORM_HELP),
+    text  = STRING_TOKEN(STR_PCI_DRIVER_VER_PROMPT),
+    text  = STRING_TOKEN(STR_PCI_DRIVER_VER),
+    flags = 0,
+    key   = 0;
+
+  // UINT8   OpRomPrompt; // Legacy\ [EFI Compatible]
+  grayoutif ideqval SYSTEM_ACCESS.Access == SYSTEM_PASSWORD_USER OR NOT ideqval SETUP_DATA.CsmControl == EFI_CSM_CONTROL_ALWAYS_ON;
+    oneof varid   = SETUP_DATA.OpRomPost,
+      prompt      = STRING_TOKEN(STR_PCI_OPTION_ROM_POST),
+      help        = STRING_TOKEN(STR_PCI_OPTION_ROM_POST_HELP),
+      option text = STRING_TOKEN(STR_PCI_LEGACY), value = 0, flags = RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_PCI_EFI), value = 1, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+    endoneof;
+  endif; // grayoutif
+
+  // UINT8   ExternalDma; // Allow\ Don't Allow
+  grayoutif ideqval SYSTEM_ACCESS.Access == SYSTEM_PASSWORD_USER;
+    oneof varid   = PCH_SETUP.ExternalDma,
+      prompt      = STRING_TOKEN(STR_EXTERNAL_DMA_ALLOWED),
+      help        = STRING_TOKEN(STR_EXTERNAL_DMA_ALLOWED_HELP),
+      option text = STRING_TOKEN(STR_NO), value = 0, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_YES), value = 1, flags = RESET_REQUIRED;
+    endoneof;
+  endif; // grayoutif
+
+  grayoutif ideqval SYSTEM_ACCESS.Access == SYSTEM_PASSWORD_USER;
+    oneof varid   = PCI_BUS_SETUP.InstallExtOpRom,
+      prompt      = STRING_TOKEN(STR_PCI_INSTALL_EXT_OPROM),
+      help        = STRING_TOKEN(STR_PCI_INSTALL_EXT_OPROM_HELP),
+      option text = STRING_TOKEN(STR_DISABLED), value = 0, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_EXT_STORAGE_OPROM), value = 1, flags = RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_EXT_OTHER_OPROM), value = 2, flags = RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_EXT_BOTH_OPROM), value = 3, flags = RESET_REQUIRED;
+    endoneof;
+  endif; // grayoutif
+
+  // UINT8   PciLatency; // [32]\ 64 \ 96 \ 128 \ 160 \ 192 \ 224 \ 248
+  grayoutif ideqval SYSTEM_ACCESS.Access == SYSTEM_PASSWORD_USER;
+    oneof varid   = SETUP_DATA.PciLatency,
+      prompt      = STRING_TOKEN(STR_PCI_LATENCY_PROMPT),
+      help        = STRING_TOKEN(STR_PCI_LATENCY_HELP),
+      option text = STRING_TOKEN(STR_PCI_32), value = 32, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_PCI_64), value = 64, flags = RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_PCI_96), value = 96, flags = RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_PCI_128), value = 128, flags = RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_PCI_160), value = 160, flags = RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_PCI_192), value = 192, flags = RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_PCI_224), value = 224, flags = RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_PCI_248), value = 248, flags = RESET_REQUIRED;
+    endoneof;
+  endif; // grayoutif
+
+#if PCI_X_SUPPORT
+  SEPARATOR
+  SUBTITLE(STRING_TOKEN(STR_PCIX))
+
+  // UINT8   PciXLatency; // 32 \[64]\ 96 \ 128 \ 160 \ 192 \ 224 \ 248
+  grayoutif ideqval SYSTEM_ACCESS.Access == SYSTEM_PASSWORD_USER;
+    oneof varid   = SETUP_DATA.PciXLatency,
+      prompt      = STRING_TOKEN(STR_PCIX_LATENCY_PROMPT),
+      help        = STRING_TOKEN(STR_PCI_LATENCY_HELP),
+      option text = STRING_TOKEN(STR_PCI_32), value = 32, flags = RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_PCI_64), value = 64, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_PCI_96), value = 96, flags = RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_PCI_128), value = 128, flags = RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_PCI_160), value = 160, flags = RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_PCI_192), value = 192, flags = RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_PCI_224), value = 224, flags = RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_PCI_248), value = 248, flags = RESET_REQUIRED;
+    endoneof;
+  endif; // grayoutif
+#endif //PCI_X_SUPPORT
+
+#if PCI_EXPRESS_SUPPORT
+#if PCI_EXPRESS_INIT_SUPPORT
+  // PCI Express Device Settings: [] - default
+  SEPARATOR
+  SUBTITLE(STRING_TOKEN(STR_PCIE_DEVICE))
+
+  // UINT8   RelaxedOrdering; // [Disable]\ Enable
+  grayoutif ideqval SYSTEM_ACCESS.Access == SYSTEM_PASSWORD_USER;
+    oneof varid   = SETUP_DATA.RelaxedOrdering,
+      prompt      = STRING_TOKEN(STR_PCIE_RELAXEDORDERING_PROMPT),
+      help        = STRING_TOKEN(STR_PCIE_RELAXEDORDERING_HELP),
+      option text = STRING_TOKEN(STR_DISABLED), value = 0, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_ENABLED), value = 1, flags = RESET_REQUIRED;
+    endoneof;
+  endif; // grayoutif
+
+  // UINT8   ExtTagField; // [Disable]\ Enable
+  grayoutif ideqval SYSTEM_ACCESS.Access == SYSTEM_PASSWORD_USER;
+    oneof varid   = SETUP_DATA.ExtTagField,
+      prompt      = STRING_TOKEN(STR_PCIE_EXTTAGFLD_PROMPT),
+      help        = STRING_TOKEN(STR_PCIE_EXTTAGFLD_HELP),
+      option text = STRING_TOKEN(STR_DISABLED), value = 0, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_ENABLED), value = 1, flags = RESET_REQUIRED;
+    endoneof;
+  endif; // grayoutif
+
+  // UINT8   NoSnoop; // Disable \[Enable]
+  grayoutif ideqval SYSTEM_ACCESS.Access == SYSTEM_PASSWORD_USER;
+    oneof varid   = SETUP_DATA.NoSnoop,
+      prompt      = STRING_TOKEN(STR_PCIE_NOSNOOP_PROMPT),
+      help        = STRING_TOKEN(STR_PCIE_NOSNOOP_HELP),
+      option text = STRING_TOKEN(STR_DISABLED), value = 0, flags = RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_ENABLED), value = 1, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+    endoneof;
+  endif; // grayoutif
+
+  // UINT8   MaxPayload // [Auto]\ 128 \ 256 \ 512 \ 1024 \ 2048 \ 4096 (in bytes)
+  grayoutif ideqval SYSTEM_ACCESS.Access == SYSTEM_PASSWORD_USER;
+    oneof varid   = SETUP_DATA.MaxPayload,
+      prompt      = STRING_TOKEN(STR_PCIE_MAXPAYLOAD_PROMPT),
+      help        = STRING_TOKEN(STR_PCIE_MAXPAYLOAD_HELP),
+      option text = STRING_TOKEN(STR_AUTO), value = 55, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_MP128), value = 0, flags = RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_MP256), value = 1, flags = RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_MP512), value = 2, flags = RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_MP1024), value = 3, flags = RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_MP2048), value = 4, flags = RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_MP4096), value = 5, flags = RESET_REQUIRED;
+    endoneof;
+  endif; // grayoutif
+
+  // UINT8   MaxReadRequest // [Auto]\ 128 \ 256 \ 512 \ 1024 \ 2048 \ 4096 (in bytes)
+  grayoutif ideqval SYSTEM_ACCESS.Access == SYSTEM_PASSWORD_USER;
+    oneof varid   = SETUP_DATA.MaxReadRequest,
+      prompt      = STRING_TOKEN(STR_PCIE_MAXREADREQUEST_PROMPT),
+      help        = STRING_TOKEN(STR_PCIE_MAXREADREQUEST_HELP),
+      option text = STRING_TOKEN(STR_AUTO), value = 55, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_MP128), value = 0, flags = RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_MP256), value = 1, flags = RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_MP512), value = 2, flags = RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_MP1024), value = 3, flags = RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_MP2048), value = 4, flags = RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_MP4096), value = 5, flags = RESET_REQUIRED;
+    endoneof;
+  endif; // grayoutif
+
+  // PCI Express Link settings: [] - default
+  SEPARATOR
+  SUBTITLE(STRING_TOKEN(STR_PCIE_LINK))
+
+  // UINT8   AspmMode; // [Disabled]\ Auto \ Force L0
+  grayoutif ideqval SYSTEM_ACCESS.Access == SYSTEM_PASSWORD_USER;
+    oneof varid   = SETUP_DATA.AspmMode,
+      prompt      = STRING_TOKEN(STR_PCIE_ASPM_PROMPT),
+      help        = STRING_TOKEN(STR_PCIE_ASPM_HELP),
+      option text = STRING_TOKEN(STR_DISABLED), value = 0, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_AUTO), value = 1, flags = RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_FORCE_L0), value = 2, flags = RESET_REQUIRED;
+    endoneof;
+  endif; // grayoutif
+
+  SUBTITLE(STRING_TOKEN(STR_PCIE_LINK_WARN3))
+  SUBTITLE(STRING_TOKEN(STR_PCIE_LINK_WARN4))
+
+  // UINT8   ExtendedSynch // [Disable]\ Enable
+  grayoutif ideqval SYSTEM_ACCESS.Access == SYSTEM_PASSWORD_USER;
+    oneof varid   = SETUP_DATA.ExtendedSynch,
+      prompt      = STRING_TOKEN(STR_PCIE_EXTD_SYNCH_PROMPT),
+      help        = STRING_TOKEN(STR_PCIE_EXTD_SYNCH_HELP),
+      option text = STRING_TOKEN(STR_DISABLED), value = 0, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_ENABLED), value = 1, flags = RESET_REQUIRED;
+    endoneof;
+  endif; // grayoutif
+#endif // PCI_EXPRESS_INIT_SUPPORT
+#endif // PCI_EXPRESS_SUPPORT
+
+endform;

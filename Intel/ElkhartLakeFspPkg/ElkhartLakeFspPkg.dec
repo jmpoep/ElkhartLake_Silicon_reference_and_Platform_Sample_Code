@@ -1,0 +1,117 @@
+## @file
+#  Component description file for the platform specific modules.
+#
+# @copyright
+#  INTEL CONFIDENTIAL
+#  Copyright 2016 - 2019 Intel Corporation.
+#
+#  The source code contained or described herein and all documents related to the
+#  source code ("Material") are owned by Intel Corporation or its suppliers or
+#  licensors. Title to the Material remains with Intel Corporation or its suppliers
+#  and licensors. The Material may contain trade secrets and proprietary and
+#  confidential information of Intel Corporation and its suppliers and licensors,
+#  and is protected by worldwide copyright and trade secret laws and treaty
+#  provisions. No part of the Material may be used, copied, reproduced, modified,
+#  published, uploaded, posted, transmitted, distributed, or disclosed in any way
+#  without Intel's prior express written permission.
+#
+#  No license under any patent, copyright, trade secret or other intellectual
+#  property right is granted to or conferred upon you by disclosure or delivery
+#  of the Materials, either expressly, by implication, inducement, estoppel or
+#  otherwise. Any license under such intellectual property rights must be
+#  express and approved by Intel in writing.
+#
+#  Unless otherwise agreed by Intel in writing, you may not remove or alter
+#  this notice or any other notice embedded in Materials by Intel or
+#  Intel's suppliers or licensors in any way.
+#
+#  This file contains an 'Intel Peripheral Driver' and is uniquely identified as
+#  "Intel Reference Module" and is licensed for Intel CPUs and chipsets under
+#  the terms of your license agreement with Intel or your vendor. This file may
+#  be modified by the user, subject to additional terms of the license agreement.
+#
+# @par Specification
+##
+
+[Defines]
+DEC_SPECIFICATION = 0x00010005
+PACKAGE_NAME = ElkhartLakeFspPkg
+PACKAGE_VERSION = 1.02
+PACKAGE_GUID = AFEE9781-0DC2-4DF4-9387-50F3D30F2F72
+
+[Includes]
+Include
+
+[Guids]
+##
+## GUID defined in package
+##
+gElkhartLakeFspPkgTokenSpaceGuid  = { 0x860c6fd0, 0x3b98, 0x4c3a, { 0xbf, 0xd2, 0x19, 0xa8, 0xc6, 0x48, 0x3e, 0x7d }}
+gFspCompatibliltyFvGuid       = { 0xb6da8044, 0x458a, 0x421f, { 0xb5, 0x69, 0x8b, 0x50, 0x0d, 0x94, 0x81, 0xa8 }}
+gFspSiliconFvGuid             = { 0x1b5c27fe, 0xf01c, 0x4fbc, { 0xae, 0xae, 0x34, 0x1b, 0x2e, 0x99, 0x2a, 0x17 }}
+gFspTscFrequencyGuid          = { 0x0e3b622a, 0xedbb, 0x4e30, { 0x93, 0x60, 0x69, 0x5c, 0xd4, 0xb3, 0x20, 0xc9 }}
+gFspInfoGuid                  = { 0x067e0f25, 0x374f, 0x47c2, { 0x17, 0x92, 0x86, 0xdc, 0xdb, 0xc4, 0x8a, 0xc9 }}
+#
+# gCpuInitMpLibHobGuid come from UefiCpuPkg\Library\MpInitLib\MpLib.h
+#
+gCpuInitMpLibHobGuid          = { 0x58eb6a19, 0x3699, 0x4c68, { 0xa8, 0x36, 0xda, 0xcd, 0x8e, 0xdc, 0xad, 0x4a }}
+
+[PcdsFixedAtBuild]
+gElkhartLakeFspPkgTokenSpaceGuid.PcdFlashFvFsptBase|0xFFF80000|UINT32|0x00000002
+gElkhartLakeFspPkgTokenSpaceGuid.PcdFlashFvFsptSize|0x00040000|UINT32|0x00000003
+gElkhartLakeFspPkgTokenSpaceGuid.PcdFlashFvFspmBase|0xFFF80000|UINT32|0x00000005
+gElkhartLakeFspPkgTokenSpaceGuid.PcdFlashFvFspmSize|0x00040000|UINT32|0x00000006
+gElkhartLakeFspPkgTokenSpaceGuid.PcdFlashFvFspsBase|0xFFF80000|UINT32|0x00000008
+gElkhartLakeFspPkgTokenSpaceGuid.PcdFlashFvFspsSize|0x00040000|UINT32|0x00000009
+gElkhartLakeFspPkgTokenSpaceGuid.PcdFspHeaderRevision|0x03|UINT8|0x0000000E
+
+gElkhartLakeFspPkgTokenSpaceGuid.PcdFspImageIdString|0x245053464C484524|UINT64|0x00000010  #$EHLFSP$
+gElkhartLakeFspPkgTokenSpaceGuid.PcdMrcDebugMsg|0x00|UINT8|0x00000011
+
+gElkhartLakeFspPkgTokenSpaceGuid.PcdFlashFvFspBase|0x00000000|UINT32|0x00000012
+gElkhartLakeFspPkgTokenSpaceGuid.PcdFspImageAttributes|0x0001|UINT16|0x00000013 #BIT0 Graphics supported, BIT1 Dispatch mode support
+gElkhartLakeFspPkgTokenSpaceGuid.PcdFspComponentAttributes|0x0000|UINT16|0x00000014 #Bits[15:12] - 0001b: FSP-T, 0010b: FSP-M, 0011b: FSP-S
+
+##
+## FSP Binary versions
+##
+gElkhartLakeFspPkgTokenSpaceGuid.PcdFspVersionRevision        |8|UINT8|0x00000015
+gElkhartLakeFspPkgTokenSpaceGuid.PcdFspVersionBuild           |0x30|UINT8|0x00000016
+gElkhartLakeFspPkgTokenSpaceGuid.PcdStatusCodeFlags           |0x82|UINT8|0x00000017
+
+## This PCD specifies Master of TraceHub device
+gElkhartLakeFspPkgTokenSpaceGuid.PcdTraceHubDebugLibMaster |0x0|UINT32|0x00000018 # FSPO-0011
+## This PCD specifies Channel of TraceHub device
+gElkhartLakeFspPkgTokenSpaceGuid.PcdTraceHubDebugLibChannel|0x0|UINT32|0x00000019 # FSPO-0011
+
+## LPC Io Decode PCDs
+gElkhartLakeFspPkgTokenSpaceGuid.PcdLpcIoDecodeRange|0x0000|UINT16|0x00000020
+gElkhartLakeFspPkgTokenSpaceGuid.PcdLpcIoEnableDecoding|0x0001|UINT16|0x0000001A
+## Serial Port PCDs
+gElkhartLakeFspPkgTokenSpaceGuid.PcdFspSerialBaudRate|115200|UINT32|0x0000001B
+gElkhartLakeFspPkgTokenSpaceGuid.PcdFspSerialRegisterBase|0x03F8|UINT64|0x0000001C
+gElkhartLakeFspPkgTokenSpaceGuid.PcdFspSerialLineControl|0x03|UINT8|0x0000001D
+gElkhartLakeFspPkgTokenSpaceGuid.PcdFspSerialFifoControl|0x07|UINT8|0x0000001E
+gElkhartLakeFspPkgTokenSpaceGuid.PcdFspSerialDetectCable|FALSE|BOOLEAN|0x0000001F
+gElkhartLakeFspPkgTokenSpaceGuid.PcdFspSerialUseHardwareFlowControl|FALSE|BOOLEAN|0x00000021
+
+[PcdsFixedAtBuild, PcdsPatchableInModule]
+##
+## MdeModulePkg
+##
+
+
+[PcdsFixedAtBuild]
+gElkhartLakeFspPkgTokenSpaceGuid.PcdMiniBiosEnable|FALSE|BOOLEAN|0xF0000001
+gElkhartLakeFspPkgTokenSpaceGuid.PcdCfgRebuild|FALSE|BOOLEAN|0xF0000002
+gElkhartLakeFspPkgTokenSpaceGuid.PcdFspPerformanceEnable|FALSE|BOOLEAN|0xF0000003
+gElkhartLakeFspPkgTokenSpaceGuid.PcdSymbolInReleaseEnable|TRUE|BOOLEAN|0xF0000004
+gElkhartLakeFspPkgTokenSpaceGuid.PcdMonoStatusCode|FALSE|BOOLEAN|0xF0000005
+
+[Ppis]
+gFspDebugServicePpiGuid       = { 0x835f3942, 0x1545, 0x414b, { 0x94, 0x59, 0xbf, 0x07, 0x2f, 0xa9, 0xa2, 0x89 }}
+gFspGlobalDataInitPpiGuid     = { 0xa9b114c4, 0xc16e, 0x4b4b, { 0x8d, 0x25, 0xdc, 0x0a, 0x97, 0xb6, 0x44, 0x91 }} # To be moved to IntelFsp2Pkg.dec
+gEfiReadyToInstallPciEnumerationCompleteProtocolGuid    = { 0x84E3F112, 0x3C91, 0x476C, { 0xA0, 0x61, 0xE3, 0x3F, 0xA0, 0x8C, 0xCA, 0xF8 }}
+gEfiReadyToInstallEventReadyToBootGuid                  = { 0xDB0F224F, 0x0D43, 0x4D77, { 0x86, 0x21, 0x96, 0xBB, 0xD4, 0xAD, 0x5C, 0x91 }}
+gFspReadyToInstallEventEndOfFirmwareGuid                = { 0xD8D9A0E1, 0xC34E, 0x4FDB, { 0x8C, 0xCF, 0x10, 0x51, 0x5B, 0xE4, 0x76, 0x5D }}
+gEndOfFspS3NotifyGuid                                   = { 0x4AF40FFA, 0x60CB, 0x4A9F, { 0xA0, 0xAA, 0x0A, 0x66, 0xC0, 0x13, 0xBA, 0xF0 }}

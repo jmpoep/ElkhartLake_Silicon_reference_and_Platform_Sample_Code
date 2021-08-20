@@ -1,0 +1,97 @@
+/**@file
+
+ @copyright
+  INTEL CONFIDENTIAL
+  Copyright 2009 - 2016 Intel Corporation.
+
+  The source code contained or described herein and all documents related to the
+  source code ("Material") are owned by Intel Corporation or its suppliers or
+  licensors. Title to the Material remains with Intel Corporation or its suppliers
+  and licensors. The Material may contain trade secrets and proprietary and
+  confidential information of Intel Corporation and its suppliers and licensors,
+  and is protected by worldwide copyright and trade secret laws and treaty
+  provisions. No part of the Material may be used, copied, reproduced, modified,
+  published, uploaded, posted, transmitted, distributed, or disclosed in any way
+  without Intel's prior express written permission.
+
+  No license under any patent, copyright, trade secret or other intellectual
+  property right is granted to or conferred upon you by disclosure or delivery
+  of the Materials, either expressly, by implication, inducement, estoppel or
+  otherwise. Any license under such intellectual property rights must be
+  express and approved by Intel in writing.
+
+  Unless otherwise agreed by Intel in writing, you may not remove or alter
+  this notice or any other notice embedded in Materials by Intel or
+  Intel's suppliers or licensors in any way.
+
+  This file contains a 'Sample Driver' and is licensed as such under the terms
+  of your license agreement with Intel or your vendor. This file may be modified
+  by the user, subject to the additional terms of the license agreement.
+
+@par Specification
+**/
+
+//
+// Name:	HWMON.UNI
+//
+// Description:	Hardware Monitor Form String Definitions
+//
+//**********************************************************************
+/=#
+#include "VFR.uni"
+//HW monitor Settings
+#string STR_HWMON_PROMPT                        #language en-US "NCT6776F Hardware Monitor."
+#string STR_HWMON_PROMPT_HELP                   #language en-US "Display Temperature, Fan Speed and Voltages."
+#string STR_HWMON_FORM                          #language en-US "Hardware Monitor"
+#string STR_HWMON_FORM_HELP                     #language en-US "View Hardware Parameters."
+
+#string STR_CPU_FAN_HELP                        #language en-US "Help on CPU Fan"
+#string STR_CPU_FAN_TEXT                        #language en-US "CPU Fan Speed"
+#string STR_CPU_FAN_VALUE                       #language en-US " "
+#string STR_SYS_FAN_HELP                        #language en-US "Help on System Fan"
+#string STR_SYS_FAN_TEXT                        #language en-US "System Fan Speed"
+#string STR_SYS_FAN_VALUE                       #language en-US " "
+#string STR_AUX_FAN_HELP                        #language en-US "Help on Auxiliary Fan"
+#string STR_AUX_FAN_TEXT                        #language en-US "Auxiliary Fan Speed"
+#string STR_AUX_FAN_VALUE                       #language en-US " "
+#string STR_CPU_TEMP_HELP                       #language en-US "Help on CPU Temperature"
+#string STR_CPU_TEMP_TEXT                       #language en-US "CPU Temperature"
+#string STR_CPU_TEMP_VALUE                      #language en-US " "
+#string STR_SYS_TEMP_HELP                       #language en-US "Help on System Temperature"
+#string STR_SYS_TEMP_TEXT                       #language en-US "System Temperature"
+#string STR_SYS_TEMP_VALUE                      #language en-US " "
+#string STR_AUX_TEMP_HELP                       #language en-US "Help on Auxiliary Temperature"
+#string STR_AUX_TEMP_TEXT                       #language en-US "Auxiliary Temperature"
+#string STR_AUX_TEMP_VALUE                      #language en-US " "
+#string STR_3VCC_HELP                           #language en-US "Help on 3VCC input"
+#string STR_3VCC_TEXT                           #language en-US "3VCC Voltage"
+#string STR_3VCC_VALUE                          #language en-US " "
+#string STR_AVCC_HELP                           #language en-US "Help on AVCC input"
+#string STR_AVCC_TEXT                           #language en-US "AVCC Voltage"
+#string STR_AVCC_VALUE                          #language en-US " "
+#string STR_VCORE_HELP                          #language en-US "Help on CPU VCORE input"
+#string STR_VCORE_TEXT                          #language en-US "CPU VCORE Voltage"
+#string STR_VCORE_VALUE                         #language en-US " "
+#string STR_VIN0_HELP                           #language en-US "Help on VIN0 input"
+#string STR_VIN0_TEXT                           #language en-US "12V input"
+#string STR_VIN0_VALUE                          #language en-US " "
+#string STR_VIN1_HELP                           #language en-US "Help on VIN1 input"
+#string STR_VIN1_TEXT                           #language en-US "5V source"
+#string STR_VIN1_VALUE                          #language en-US " "
+#string STR_VIN2_HELP                           #language en-US "Help on VIN2 input"
+#string STR_VIN2_TEXT                           #language en-US "1.05V source"
+#string STR_VIN2_VALUE                          #language en-US " "
+#string STR_VIN3_HELP                           #language en-US "Help on VIN3 input"
+#string STR_VIN3_TEXT                           #language en-US "DIMM Voltage"
+#string STR_VIN3_VALUE                          #language en-US " "
+
+//Generic 
+#string STR_SETTINGS_HELP                       #language en-US "Select an optimal settings for Super IO Device."
+#string STR_AUTO                                #language en-US "Auto"
+#string STR_NCT_LPT_CHANGE_CONFIG               #language en-US "Change Settings"
+#string STR_NCT_COMA_CHANGE_CONFIG              #language en-US "Change Settings"
+#string STR_NCT_COMB_CHANGE_CONFIG              #language en-US "Change Settings"
+#string STR_CURRENT_CONFIG                      #language en-US "Device Settings"
+#string STR_NCT_LPT_SELECT_MODE                 #language en-US "Device Mode"
+#string STR_ENABLED                             #language en-US "Enabled"
+#string STR_DISABLED                            #language en-US "Disabled"

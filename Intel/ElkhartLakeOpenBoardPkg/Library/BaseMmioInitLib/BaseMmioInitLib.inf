@@ -1,0 +1,52 @@
+## @file
+# Component information file for MMIO Init Library
+#
+# Copyright (c) 2018, Intel Corporation. All rights reserved.<BR>
+#
+# This program and the accompanying materials are licensed and made available under
+# the terms and conditions of the BSD License which accompanies this distribution.
+# The full text of the license may be found at
+# http://opensource.org/licenses/bsd-license.php
+#
+# THE PROGRAM IS DISTRIBUTED UNDER THE BSD LICENSE ON AN "AS IS" BASIS,
+# WITHOUT WARRANTIES OR REPRESENTATIONS OF ANY KIND, EITHER EXPRESS OR IMPLIED.
+#
+##
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = BaseMmioInitLib
+  FILE_GUID                      = 75ADFA4D-1F37-49AB-A3F5-05EE7D7452B7
+  MODULE_TYPE                    = BASE
+  VERSION_STRING                 = 1.0
+  LIBRARY_CLASS                  = MmioInitLib
+
+[LibraryClasses]
+  BaseLib
+  DebugLib
+  IoLib
+  HobLib
+
+[Packages]
+  MinPlatformPkg/MinPlatformPkg.dec
+  MdePkg/MdePkg.dec
+  ClientOneSiliconPkg/SiPkg.dec
+  ElkhartLakeOpenBoardPkg/OpenBoardPkg.dec
+
+[Sources]
+  BaseMmioInitLib.c
+
+[Pcd]
+  gEfiMdePkgTokenSpaceGuid.PcdPciExpressBaseAddress
+
+  gMinPlatformPkgTokenSpaceGuid.PcdPciExpressRegionLength
+  gMinPlatformPkgTokenSpaceGuid.PcdLocalApicAddress
+  gMinPlatformPkgTokenSpaceGuid.PcdLocalApicMmioSize
+
+  gBoardModuleTokenSpaceGuid.PcdMchBaseAddress
+  gBoardModuleTokenSpaceGuid.PcdMchMmioSize
+
+  gBoardModuleTokenSpaceGuid.PcdDmiBaseAddress
+  gBoardModuleTokenSpaceGuid.PcdDmiMmioSize
+  gBoardModuleTokenSpaceGuid.PcdEpBaseAddress
+  gBoardModuleTokenSpaceGuid.PcdEpMmioSize

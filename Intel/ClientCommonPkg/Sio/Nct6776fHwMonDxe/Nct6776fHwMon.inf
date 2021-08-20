@@ -1,0 +1,66 @@
+### @file
+# Component description file for  hardware monitor initialization. This
+# driver implementation uses published Nct6776f API to produce
+# NCT6776f initialization.
+#
+# Copyright (C) 2013 - 2015, Intel Corporation. All rights reserved.<BR>
+# This software and associated documentation (if any) is furnished
+# under a license and may only be used or copied in accordance with
+# the terms of the license. Except as permitted by the license, no
+# part of this software or documentation may be reproduced, stored in
+# a retrieval system, or transmitted in any form or by any means
+# without the express written consent of Intel Corporation.
+# This file contains 'Framework Code' and is licensed as such under
+# the terms of your license agreement with Intel or your vendor. This
+# file may not be modified, except as allowed by additional terms of
+# your license agreement.
+#
+# Module Name:
+#  Nct6776fHwMon.inf
+#
+# @par Specification Reference:
+#
+# @par Glossary:
+###
+
+
+[Defines]
+  INF_VERSION                    = 0x00010017
+  BASE_NAME                      = NuvotonNct6776f
+  FILE_GUID                      = 95256EFC-D101-4510-B5E9-AD3813D5F8D8
+  VERSION_STRING                 = 1.0
+  MODULE_TYPE                    = DXE_DRIVER
+  ENTRY_POINT                    = NctHwMonEntryPoint
+#
+# The following information is for reference only and not required by the build tools.
+#
+# VALID_ARCHITECTURES = IA32 X64 IPF EBC
+#
+
+[LibraryClasses]
+  BaseLib
+  UefiLib
+  DebugLib
+  MemoryAllocationLib
+  PcdLib
+  DevicePathLib
+  IoLib
+  UefiDriverEntryPoint
+  TimerLib
+
+[Packages]
+  MdePkg/MdePkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+  ClientCommonPkg/ClientCommonPkg.dec
+
+[Sources]
+  NctHwMon.c
+  NctHwMonRegs.h
+  HwMonInit.c
+  HwMonInit.h
+
+[Protocols]
+  gNct6776fHwMonProtocolGuid
+
+[Depex]
+  gNct6776fHwMonProtocolGuid ## CONSUMES

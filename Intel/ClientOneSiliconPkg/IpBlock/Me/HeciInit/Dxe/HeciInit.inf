@@ -1,0 +1,112 @@
+## @file
+# Component description file for Heci DXE driver
+#
+# @copyright
+#  INTEL CONFIDENTIAL
+#  Copyright 2007 - 2020 Intel Corporation.
+#
+#  The source code contained or described herein and all documents related to the
+#  source code ("Material") are owned by Intel Corporation or its suppliers or
+#  licensors. Title to the Material remains with Intel Corporation or its suppliers
+#  and licensors. The Material may contain trade secrets and proprietary and
+#  confidential information of Intel Corporation and its suppliers and licensors,
+#  and is protected by worldwide copyright and trade secret laws and treaty
+#  provisions. No part of the Material may be used, copied, reproduced, modified,
+#  published, uploaded, posted, transmitted, distributed, or disclosed in any way
+#  without Intel's prior express written permission.
+#
+#  No license under any patent, copyright, trade secret or other intellectual
+#  property right is granted to or conferred upon you by disclosure or delivery
+#  of the Materials, either expressly, by implication, inducement, estoppel or
+#  otherwise. Any license under such intellectual property rights must be
+#  express and approved by Intel in writing.
+#
+#  Unless otherwise agreed by Intel in writing, you may not remove or alter
+#  this notice or any other notice embedded in Materials by Intel or
+#  Intel's suppliers or licensors in any way.
+#
+#  This file contains an 'Intel Peripheral Driver' and is uniquely identified as
+#  "Intel Reference Module" and is licensed for Intel CPUs and chipsets under
+#  the terms of your license agreement with Intel or your vendor. This file may
+#  be modified by the user, subject to additional terms of the license agreement.
+#
+# @par Specification Reference:
+#
+##
+
+
+[Defines]
+INF_VERSION = 0x00010017
+BASE_NAME = HeciInit
+FILE_GUID = 55E76644-78A5-4a82-A900-7126A5798892
+VERSION_STRING = 1.0
+MODULE_TYPE = DXE_DRIVER
+ENTRY_POINT = InitializeHeci
+
+
+[LibraryClasses]
+PciSegmentLib
+DxeMeLib
+MbpDataLib
+MeChipsetLib
+MeShowBufferLib
+BaseMemoryLib
+MemoryAllocationLib
+DebugLib
+UefiBootServicesTableLib
+UefiDriverEntryPoint
+UefiLib
+DxeServicesTableLib
+PerformanceLib
+S3BootScriptLib
+TimerLib
+HobLib
+HeciInitLib
+PchInfoLib
+PostCodeLib
+PmcPrivateLib
+PmcPrivateLibWithS3
+MeFwStsLib
+ReportStatusCodeLib
+BootMediaLib
+
+[Packages]
+MdePkg/MdePkg.dec
+ClientOneSiliconPkg/SiPkg.dec
+
+[Pcd]
+gSiPkgTokenSpaceGuid.PcdFwStsSmbiosType
+gSiPkgTokenSpaceGuid.PcdFspWrapperEnable
+
+[Sources]
+HeciInit.c
+HeciFlow.c
+MeInit.c
+FwStsSmbios.c
+EndOfPost.c
+MeHeciReset.c
+MeReadyToBoot.c
+
+[Protocols]
+gHeciProtocolGuid                              ## PRODUCES
+gAmtReadyToBootProtocolGuid                    ## CONSUMES
+gEfiSmbiosProtocolGuid                         ## CONSUMES
+gWdtProtocolGuid                               ## CONSUMES
+gHeciFlowProtocolGuid                          ## PRODUCES
+gEdkiiPlatformSpecificResetHandlerProtocolGuid ## CONSUMES
+gMeSendEopInFspProtocolGuid                    ## CONSUMES
+gMeCoreBiosDoneProtocolGuid                    ## PRODUCES
+
+[Guids]
+gMePlatformReadyToBootGuid                     ## CONSUMES
+gEfiEndOfDxeEventGroupGuid                     ## CONSUMES
+gEfiEventExitBootServicesGuid                  ## CONSUMES
+gEfiEventLegacyBootGuid                        ## CONSUMES
+gMeBiosPayloadHobGuid                          ## CONSUMES
+gMeFwHobGuid                                   ## CONSUMES
+gPchConfigHobGuid                              ## CONSUMES
+
+[Depex]
+gEfiPciRootBridgeIoProtocolGuid AND
+gDxeMePolicyGuid AND
+gEfiPciHostBridgeResourceAllocationProtocolGuid ## This is to ensure that PCI IO resource has been prepared and available for this driver to allocate.

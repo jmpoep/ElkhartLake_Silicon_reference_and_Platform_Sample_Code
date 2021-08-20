@@ -1,0 +1,41 @@
+{
+  "FmpGuid": "A7EE90B1-FB4A-4478-B868-367EE9EC97E2",
+  "Version": 1,
+  "FV" :
+  {
+    "FvGuid": "775F2E50-7441-4DAD-B71E-5DBD5AAC57A6",
+    "FfsFiles":
+    [
+      {
+        "FileGuid": "4DB2A373-C936-4544-AA6D-8A194AA9CA7F",
+        "Compression": false,
+        "Data" :
+        [
+            [ "a_oob_prov_state", "DECIMAL", 4, 0 ],
+            [ "a_oob_device_id_size", "DECIMAL", 4, 18],
+            [ "a_oob_device_id", "STRING", 512, "ehl-cbr-sb-capsule" ],
+            [ "a_oob_token_id_size", "DECIMAL", 4, 16],
+            [ "a_oob_token_id", "STRING", 512, "3sqXDVKxPT0TBCs1" ],
+            [ "a_oob_cloud_type_size", "DECIMAL", 4, 5],
+            [ "a_oob_cloud_type", "STRING", 16, "Telit" ],
+            [ "a_oob_cloud_ host_url_size", "DECIMAL", 4, 13],
+            [ "a_oob_cloud_host_url", "STRING", 512, "54.175.125.23" ],
+            [ "a_oob_cloud_host_port", "DECIMAL", 4, 8883 ],
+            [ "a_proxy_host_url_size", "DECIMAL", 4, 21],
+            [ "a_proxy_host_url", "STRING", 512, "proxy-chain.intel.com" ],
+            [ "a_proxy_host_port", "DECIMAL", 4, 911 ],
+            [ "a_bios_uefi_password_size", "DECIMAL", 4, 8],
+            [ "a_bios_uefi_password", "STRING", 512, "intel123" ]
+        ]
+      },
+      {
+        "FileGuid": "2F4DE35A-0D52-44FC-ABF3-75B8AA51F434",
+        "Compression": false,
+        "Data" :
+        [
+            [ "a_oob_root_ca", "FILE", 1250, "telit.pem"]
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,120 @@
+## @file
+#  Provide FSP wrapper Silicon policy update functionality.
+#
+# Copyright (c) 2017 - 2019, Intel Corporation. All rights reserved.<BR>
+#
+# This program and the accompanying materials are licensed and made available under
+# the terms and conditions of the BSD License which accompanies this distribution.
+# The full text of the license may be found at
+# http://opensource.org/licenses/bsd-license.php
+#
+# THE PROGRAM IS DISTRIBUTED UNDER THE BSD LICENSE ON AN "AS IS" BASIS,
+# WITHOUT WARRANTIES OR REPRESENTATIONS OF ANY KIND, EITHER EXPRESS OR IMPLIED.
+#
+##
+
+################################################################################
+#
+# Defines Section - statements that will be processed to create a Makefile.
+#
+################################################################################
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = SiliconPolicyUpdateLibFsp
+  FILE_GUID                      = 4E83003B-49A9-459E-AAA6-1CA3C6D04FB2
+  MODULE_TYPE                    = PEIM
+  VERSION_STRING                 = 1.0
+  LIBRARY_CLASS                  = SiliconPolicyUpdateLib
+
+
+#
+# The following information is for reference only and not required by the build tools.
+#
+#  VALID_ARCHITECTURES           = IA32 X64
+#
+
+################################################################################
+#
+# Sources Section - list of files that are required for the build to succeed.
+#
+################################################################################
+
+[Sources]
+  PeiSiliconPolicyUpdatePreMem.c
+  PeiSiliconPolicyUpdatePostMem.c
+  PeiSiliconPolicyUpdateLate.c
+
+  PeiCpuPolicyUpdatePreMem.c
+  PeiPchPolicyUpdatePostMem.c
+  PeiSaPolicyUpdatePreMem.c
+  PeiMiscPolicyUpdatePreMem.c
+
+################################################################################
+#
+# Package Dependency Section - list of Package files that are required for
+#                              this module.
+#
+################################################################################
+
+[Packages]
+  MdePkg/MdePkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+  IntelFsp2Pkg/IntelFsp2Pkg.dec
+  IntelFsp2WrapperPkg/IntelFsp2WrapperPkg.dec
+  ClientOneSiliconPkg/SiPkg.dec
+  MinPlatformPkg/MinPlatformPkg.dec
+  ElkhartLakeFspBinPkg/ElkhartLakeFspBinPkg.dec
+  ElkhartLakeBoardPkg/BoardPkg.dec
+
+[LibraryClasses.IA32]
+  DebugLib
+  PcdLib
+  PreSiliconEnvDetectLib
+
+[Pcd]
+  gBoardModuleTokenSpaceGuid.PcdMrcSpdData00
+  gBoardModuleTokenSpaceGuid.PcdMrcSpdData01
+  gBoardModuleTokenSpaceGuid.PcdMrcSpdData10
+  gBoardModuleTokenSpaceGuid.PcdMrcSpdData11
+  gBoardModuleTokenSpaceGuid.PcdMrcSpdDataSize
+  gBoardModuleTokenSpaceGuid.PcdMrcSpdAddressTable0
+  gBoardModuleTokenSpaceGuid.PcdMrcSpdAddressTable1
+  gBoardModuleTokenSpaceGuid.PcdMrcSpdAddressTable2
+  gBoardModuleTokenSpaceGuid.PcdMrcSpdAddressTable3
+  gBoardModuleTokenSpaceGuid.PcdMrcSpdAddressTable4
+  gBoardModuleTokenSpaceGuid.PcdMrcSpdAddressTable5
+  gBoardModuleTokenSpaceGuid.PcdMrcSpdAddressTable6
+  gBoardModuleTokenSpaceGuid.PcdMrcSpdAddressTable7
+  gBoardModuleTokenSpaceGuid.PcdMrcSpdAddressTable8
+  gBoardModuleTokenSpaceGuid.PcdMrcSpdAddressTable9
+  gBoardModuleTokenSpaceGuid.PcdMrcSpdAddressTable10
+  gBoardModuleTokenSpaceGuid.PcdMrcSpdAddressTable11
+  gBoardModuleTokenSpaceGuid.PcdMrcSpdAddressTable12
+  gBoardModuleTokenSpaceGuid.PcdMrcSpdAddressTable13
+  gBoardModuleTokenSpaceGuid.PcdMrcSpdAddressTable14
+  gBoardModuleTokenSpaceGuid.PcdMrcSpdAddressTable15
+  gBoardModuleTokenSpaceGuid.PcdCpuRatio
+  gBoardModuleTokenSpaceGuid.PcdBiosGuard
+  gBoardModuleTokenSpaceGuid.PcdStackBase
+  gBoardModuleTokenSpaceGuid.PcdStackSize
+  gBoardModuleTokenSpaceGuid.PcdUsb20OverCurrentPinPort0
+  gBoardModuleTokenSpaceGuid.PcdUsb20OverCurrentPinPort1
+  gBoardModuleTokenSpaceGuid.PcdUsb20OverCurrentPinPort2
+  gBoardModuleTokenSpaceGuid.PcdUsb20OverCurrentPinPort3
+  gBoardModuleTokenSpaceGuid.PcdUsb20OverCurrentPinPort4
+  gBoardModuleTokenSpaceGuid.PcdUsb20OverCurrentPinPort5
+  gBoardModuleTokenSpaceGuid.PcdUsb20OverCurrentPinPort6
+  gBoardModuleTokenSpaceGuid.PcdUsb20OverCurrentPinPort7
+  gBoardModuleTokenSpaceGuid.PcdUsb20OverCurrentPinPort8
+  gBoardModuleTokenSpaceGuid.PcdUsb20OverCurrentPinPort9
+  gBoardModuleTokenSpaceGuid.PcdUsb20OverCurrentPinPort10
+  gBoardModuleTokenSpaceGuid.PcdUsb20OverCurrentPinPort11
+  gBoardModuleTokenSpaceGuid.PcdUsb20OverCurrentPinPort12
+  gBoardModuleTokenSpaceGuid.PcdUsb20OverCurrentPinPort13
+  gBoardModuleTokenSpaceGuid.PcdUsb20OverCurrentPinPort14
+  gBoardModuleTokenSpaceGuid.PcdUsb20OverCurrentPinPort15
+  gBoardModuleTokenSpaceGuid.PcdSataPortsEnable0
+  gBoardModuleTokenSpaceGuid.PcdNvsBufferPtr
+  gBoardModuleTokenSpaceGuid.PcdCleanMemory
+  gSiPkgTokenSpaceGuid.PcdTsegSize
+

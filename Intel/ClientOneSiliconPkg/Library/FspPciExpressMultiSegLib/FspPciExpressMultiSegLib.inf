@@ -1,0 +1,47 @@
+## @file
+#  Instance of PCI Express Library using the 256 MB or 512 MB PCI Express MMIO window.
+#
+#  PCI Express Library that uses the 256 MB or 512MB PCI Express MMIO window to perform
+#  PCI Configuration cycles. Layers on top of an I/O Library instance.
+#
+#  Copyright (c) 2018, Intel Corporation. All rights reserved.<BR>
+#
+#  This program and the accompanying materials
+#  are licensed and made available under the terms and conditions of the BSD License
+#  which accompanies this distribution. The full text of the license may be found at
+#  http://opensource.org/licenses/bsd-license.php.
+#  THE PROGRAM IS DISTRIBUTED UNDER THE BSD LICENSE ON AN "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR REPRESENTATIONS OF ANY KIND, EITHER EXPRESS OR IMPLIED.
+#
+#
+##
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = FspPciExpressMultiSegLib
+  MODULE_UNI_FILE                = FspPciExpressMultiSegLib.uni
+  FILE_GUID                      = 0C84DEE3-5707-4CB0-B028-2C4370654292
+  MODULE_TYPE                    = BASE
+  VERSION_STRING                 = 1.0
+  LIBRARY_CLASS                  = PciExpressLib
+
+#
+#  VALID_ARCHITECTURES           = IA32 X64 IPF EBC
+#
+
+[Sources]
+  PciExpressLib.c
+
+[Packages]
+  MdePkg/MdePkg.dec
+  ClientOneSiliconPkg/SiPkg.dec
+
+[LibraryClasses]
+  BaseLib
+  PcdLib
+  DebugLib
+  IoLib
+
+[Pcd]
+  gSiPkgTokenSpaceGuid.PcdSiPciExpressBaseAddress  ## CONSUMES
+

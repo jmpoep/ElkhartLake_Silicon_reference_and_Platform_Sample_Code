@@ -1,0 +1,133 @@
+/**@file
+
+ @copyright
+  INTEL CONFIDENTIAL
+  Copyright 2009 - 2017 Intel Corporation.
+
+  The source code contained or described herein and all documents related to the
+  source code ("Material") are owned by Intel Corporation or its suppliers or
+  licensors. Title to the Material remains with Intel Corporation or its suppliers
+  and licensors. The Material may contain trade secrets and proprietary and
+  confidential information of Intel Corporation and its suppliers and licensors,
+  and is protected by worldwide copyright and trade secret laws and treaty
+  provisions. No part of the Material may be used, copied, reproduced, modified,
+  published, uploaded, posted, transmitted, distributed, or disclosed in any way
+  without Intel's prior express written permission.
+
+  No license under any patent, copyright, trade secret or other intellectual
+  property right is granted to or conferred upon you by disclosure or delivery
+  of the Materials, either expressly, by implication, inducement, estoppel or
+  otherwise. Any license under such intellectual property rights must be
+  express and approved by Intel in writing.
+
+  Unless otherwise agreed by Intel in writing, you may not remove or alter
+  this notice or any other notice embedded in Materials by Intel or
+  Intel's suppliers or licensors in any way.
+
+  This file contains a 'Sample Driver' and is licensed as such under the terms
+  of your license agreement with Intel or your vendor. This file may be modified
+  by the user, subject to the additional terms of the license agreement.
+
+@par Specification
+**/
+
+//
+// Name:	SIO.UNI
+//
+// Description:	SIO Form String Definitions
+//
+//**********************************************************************
+/=#
+#include "VFR.uni"
+#string STR_NAT_SIO_FORM                        #language en-US "Super IO NAT87393V Configuration"
+#string STR_SIO_FORM_HELP                       #language en-US "System Super IO Chip Parameters"
+#string STR_SIO_PROMPT                          #language en-US "Super IO Chip"
+#string STR_NAT87393                            #language en-US "NAT 87393"
+
+//
+//Floppy Settings
+//
+#string STR_NAT_FLOPPY_FORM                     #language en-US "Floppy Disk Controller Configuration"
+#string STR_NAT_FLOPPY_FORM_HELP                #language en-US "Set Parameters of Floppy Disk Controller (FDC)."
+#string STR_NAT_FLOPPY_PROMPT                   #language en-US "Floppy Disk Controller"
+#string STR_NAT_FLOPPY_PROMPT_HELP              #language en-US "Enable or Disable Floppy Disk Controller."
+#string STR_NAT_FLOPPY_MODE_HELP                #language en-US "Change Mode of Floppy Disk Controller. Select <Read Write> mode for Normal operation. Select <Write Protect> mode for Readonly operation."
+#string STR_NAT_FLOPPY_MODE1                    #language en-US "Read Write"
+#string STR_NAT_FLOPPY_MODE2                    #language en-US "Write Protect"
+#string STR_NAT_FLOPPY_CONFIG_VALUE             #language en-US "    Unkown    "
+
+#string STR_NAT_FLOPPY_SETTINGS1                #language en-US "IO=3F0h; IRQ=6; DMA=2"
+#string STR_NAT_FLOPPY_SETTINGS2                #language en-US "IO=3F0h; IRQ=3,4,5,6,7,10,12; DMA=1,2,3;"
+#string STR_NAT_FLOPPY_SETTINGS3                #language en-US "IO=370h; IRQ=3,4,5,6,7,10,12; DMA=1,2,3;"
+
+//Serial 0/1 Settings
+#string STR_SERIAL0_FORM                        #language en-US "Serial Port 0 Configuration"
+#string STR_SERIAL0_FORM_HELP                   #language en-US "Set Parameters of Serial Port 0 (COMA)."
+#string STR_SERIAL1_FORM                        #language en-US "Serial Port 1 Configuration"
+#string STR_SERIAL1_FORM_HELP                   #language en-US "Set Parameters of Serial Port 1 (COMB)."
+#string STR_NAT_SERIAL_PROMPT                   #language en-US "Serial Port"
+#string STR_SERIAL_PROMPT_HELP                  #language en-US "Enable or Disable Serial Port (COM)."
+#string STR_SERIAL_MODE1                        #language en-US "Normal"
+#string STR_SERIAL_MODE2                        #language en-US "High Speed"
+#string STR_SERIAL_MODE_HELP                    #language en-US "Change the Serial Port mode. Select <High Speed> or <Normal mode> mode."
+#string STR_NAT_SERIAL0_CONFIG_VALUE            #language en-US "    Unkown    "
+#string STR_SERIAL1_CONFIG_VALUE                #language en-US "    Unkown    "
+
+#string STR_NAT_SERIAL_SETTINGS1                #language en-US "IO=2E8h; IRQ=3;"
+#string STR_NAT_SERIAL_SETTINGS2                #language en-US "IO=3F8h; IRQ=3,4,5,6,7,10,11,12;"
+#string STR_NAT_SERIAL_SETTINGS3                #language en-US "IO=2F8h; IRQ=3,4,5,6,7,10,11,12;"
+#string STR_NAT_SERIAL_SETTINGS4                #language en-US "IO=3E8h; IRQ=3,4,5,6,7,10,11,12;"
+#string STR_NAT_SERIAL_SETTINGS5                #language en-US "IO=2E8h; IRQ=3,4,5,6,7,10,11,12;"
+
+
+//Parallel Settings
+#string STR_PARALLEL_FORM                       #language en-US "Parallel Port Configuration"
+#string STR_PARALLEL_FORM_HELP                  #language en-US "Set Parameters of Parallel Port (LPT/LPTE)."
+
+#string STR_NAT_PARALLEL_PROMPT                 #language en-US "Parallel Port"
+#string STR_PARALLEL_PROMPT_HELP                #language en-US "Enable or Disable Parallel Port (LPT/LPTE)."
+
+#string STR_PARALLEL_MODE1                      #language en-US "STD Printer Mode"
+#string STR_PARALLEL_MODE2                      #language en-US "SPP Mode"
+#string STR_PARALLEL_MODE3                      #language en-US "EPP-1.9"
+#string STR_PARALLEL_MODE4                      #language en-US "EPP-1.7"
+#string STR_PARALLEL_MODE5                      #language en-US "ECP Mode"
+#string STR_PARALLEL_MODE6                      #language en-US "ECP and EPP 1.9 Mode"
+#string STR_PARALLEL_MODE7                      #language en-US "ECP and EPP 1.7 Mode"
+#string STR_NAT_PARALLEL_CONFIG_VALUE           #language en-US "    Unkown    "
+#string STR_PARALLEL_CONFIG_VALUE               #language en-US "Reset Required"
+#string STR_PARALLEL_MODE_HELP                  #language en-US "Change the Printer Port mode."
+
+
+#string STR_PARALLEL_SETTINGS1                  #language en-US "IO=378h; IRQ=7;"
+#string STR_PARALLEL_SETTINGS2                  #language en-US "IO=278h; IRQ=7;"
+#string STR_PARALLEL_SETTINGS3                  #language en-US "IO=3BCh; IRQ=7;"
+#string STR_PARALLEL_SETTINGS4                  #language en-US "IO=378h; IRQ=5;"
+#string STR_PARALLEL_SETTINGS5                  #language en-US "IO=278h; IRQ=5;"
+#string STR_PARALLEL_SETTINGS6                  #language en-US "IO=3BCh; IRQ=5;"
+
+#string STR_PARALLELECP_SETTINGS1               #language en-US "IO=378h; IRQ=7; DMA=3;"
+#string STR_PARALLELECP_SETTINGS2               #language en-US "IO=278h; IRQ=7; DMA=1,2,3;"
+#string STR_PARALLELECP_SETTINGS3               #language en-US "IO=378h; IRQ=5; DMA=1,2,3;"
+
+
+#string STR_PARALLELEPP_SETTINGS1               #language en-US "IO=378h; IRQ=7;"
+#string STR_PARALLELEPP_SETTINGS2               #language en-US "IO=278h; IRQ=7;"
+#string STR_PARALLELEPP_SETTINGS3               #language en-US "IO=378h; IRQ=5;"
+#string STR_PARALLELEPP_SETTINGS4               #language en-US "IO=278h; IRQ=5;"
+
+
+//PME Settings
+#string STR_PME_WAKE_FROM_KEY                   #language en-US "Wake on Specific Key"
+
+
+//Generic 
+#string STR_SETTINGS_HELP                       #language en-US "Select an optimal settings for Super IO Device."
+#string STR_AUTO                                #language en-US "Auto"
+#string STR_NAT_COM_CHANGE_CONFIG               #language en-US "Change Settings"
+#string STR_NAT_LPT_CHANGE_CONFIG               #language en-US "Change Settings"
+#string STR_CURRENT_CONFIG                      #language en-US "Device Settings"
+#string STR_NAT_COM_SELECT_MODE                 #language en-US "Device Mode"
+#string STR_NAT_LPT_SELECT_MODE                 #language en-US "Device Mode"
+#string STR_ENABLED                             #language en-US "Enabled"
+#string STR_DISABLED                            #language en-US "Disabled"

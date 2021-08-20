@@ -1,0 +1,202 @@
+/**@file
+
+ @copyright
+  INTEL CONFIDENTIAL
+  Copyright 2012 - 2017 Intel Corporation.
+
+  The source code contained or described herein and all documents related to the
+  source code ("Material") are owned by Intel Corporation or its suppliers or
+  licensors. Title to the Material remains with Intel Corporation or its suppliers
+  and licensors. The Material may contain trade secrets and proprietary and
+  confidential information of Intel Corporation and its suppliers and licensors,
+  and is protected by worldwide copyright and trade secret laws and treaty
+  provisions. No part of the Material may be used, copied, reproduced, modified,
+  published, uploaded, posted, transmitted, distributed, or disclosed in any way
+  without Intel's prior express written permission.
+
+  No license under any patent, copyright, trade secret or other intellectual
+  property right is granted to or conferred upon you by disclosure or delivery
+  of the Materials, either expressly, by implication, inducement, estoppel or
+  otherwise. Any license under such intellectual property rights must be
+  express and approved by Intel in writing.
+
+  Unless otherwise agreed by Intel in writing, you may not remove or alter
+  this notice or any other notice embedded in Materials by Intel or
+  Intel's suppliers or licensors in any way.
+
+  This file contains a 'Sample Driver' and is licensed as such under the terms
+  of your license agreement with Intel or your vendor. This file may be modified
+  by the user, subject to the additional terms of the license agreement.
+
+@par Specification
+**/
+
+//
+// Name:	Setup.uni
+//
+// Description:	Setup strings
+//
+//**********************************************************************
+/=#
+#include "VFR.uni"
+
+//Main
+#string STR_MAIN                               #language en-US "Platform Information Menu"
+#string STR_MAIN_HELP                          #language en-US "This selection displays important platform information."
+#string STR_LANGUAGE_HELP                      #language en-US "Choose the system default language."
+#string STR_LANGUAGE_PROMPT                    #language en-US "System Language"
+#string STR_BIOS                               #language en-US "BIOS Information"
+#string STR_BIOS_VENDOR_NAME                   #language en-US "BIOS Vendor"
+#string STR_BIOS_VENDOR_VALUE                  #language en-US "N/A" //dynamically updated
+#string STR_BIOS_CORE_VERSION_NAME             #language en-US "Core Version"
+#string STR_BIOS_CORE_VERSION_VALUE            #language en-US "N/A" //dynamically updated
+#string STR_BIOS_CLIENT_SILICON_VERSION_NAME   #language en-US "Client Silicon Version"
+#string STR_BIOS_CLIENT_SILICON_VERSION_VALUE  #language en-US "N/A" //dynamically updated
+#string STR_BIOS_VERSION_NAME                  #language en-US "Project Version"
+#string STR_BIOS_VERSION_VALUE                 #language en-US "N/A" //dynamically updated
+#string STR_BIOS_DATE_NAME                     #language en-US "Build Date"
+#string STR_BIOS_DATE_VALUE                    #language en-US "N/A" //dynamically updated
+#string STR_DATE                               #language en-US "System Date"
+#string STR_DATE_HELP                          #language en-US "Set the Date. Use 'Right/Left' to switch between Date elements."
+#string STR_TIME                               #language en-US "System Time"
+#string STR_TIME_HELP                          #language en-US "Set the Time. Use 'Right/Left' to switch between Time elements."
+#string STR_ACCESS_LEVEL                       #language en-US "Access Level"
+#string STR_ACCESS_USER                        #language en-US "User"
+#string STR_ACCESS_ADMIN                       #language en-US "Administrator"
+#string STR_FSP_INFO                           #language en-US "FSP Information"
+#string STR_FPS_VERSION_HELP                   #language en-US "FSP version information"
+#string STR_FSP_VERSION_STRING                 #language en-US "FSP version"
+#string STR_FSP_VERSION_VALUE                  #language en-US "N/A"
+#string STR_RC_VERSION_HELP                    #language en-US "RC version information"
+#string STR_RC_VERSION_STRING                  #language en-US "RC version"
+#string STR_RC_VERSION_VALUE                   #language en-US "N/A"
+#string STR_BUILD_DATE_HELP                    #language en-US "Build Date information"
+#string STR_BUILD_DATE_STRING                  #language en-US "Build Date"
+#string STR_BUILD_DATE_VALUE                   #language en-US "N/A"
+
+//Advanced
+#string STR_ADVANCED                           #language en-US "Intel Advanced Menu"
+#string STR_ADVANCED_HELP                      #language en-US "Intel Advanced Menu Settings"
+
+//Chipset
+#string STR_CHIPSET                            #language en-US "Chipset"
+#string STR_CHIPSET_HELP                       #language en-US "Chipset Settings"
+
+//Boot
+#string STR_BOOT                               #language en-US "Boot Configuration"
+#string STR_BOOT_CFG_MENU                      #language en-US "Boot Configuration Menu"
+#string STR_BOOT_HELP                          #language en-US "System Boot Settings"
+#string STR_NORMAL_BOOT                        #language en-US "Normal Boot"
+#string STR_QUIET_BOOT                         #language en-US "Quiet Boot"
+#string STR_SILENT_BOOT                        #language en-US "Silent Boot"
+#string STR_DISPLAY_BOOT_MODE                  #language en-US "Display Boot Mode"
+#string STR_DISPLAY_BOOT_MODE_HELP             #language en-US "Select display boot mode."
+#string STR_QUIET_BOOT_HELP                    #language en-US "Enables/Disables Quiet Boot option."
+#string STR_LAZY_CONIN                         #language en-US "Enable Lazy ConIn"
+#string STR_VIRTUAL_KEYBOARD                   #language en-US "Enable Virtual Keyboard"
+#string STR_VIRTUAL_KEYBOARD_HELP              #language en-US "Enables/Disables Virtual Keyboard in BIOS"
+#string STR_BOOT_FIRST_TO_SHELL                #language en-US "Enforce Shell as the first boot"
+#string STR_BOOT_FIRST_TO_SHELL_HELP           #language en-US "Enforce Shell as the first boot option."
+#string STR_FAST_BOOT                          #language en-US "Fast Boot"
+#string STR_FAST_BOOT_HELP                     #language en-US "Enables/Disables boot with initialization of a minimal set of devices required to launch active boot option. Has no effect for BBS boot options."
+#string STR_FAST_BOOT_WDT                      #language en-US "  Fast Boot WDT"
+#string STR_FAST_BOOT_WDT_HELP                 #language en-US "Enables/Disables Fast Boot WDT (Watch Dog Timer)."
+#string STR_FAST_BOOT_SKIP_HII                 #language en-US "  Skip Setup HII Update"
+#string STR_FAST_BOOT_SKIP_HII_HELP            #language en-US "If Enabled, skip updating HII database strings in setup menu"
+#string STR_FAST_BOOT_CONSOLE_BHVR             #language en-US "  Console Input Behavior"
+#string STR_FAST_BOOT_CONIN_BHVR_HELP          #language en-US "Select how to enumerate console inputs.\n\n- Windows Console: No input consoles will be enumerated.\n\n- PS/2 Console: BIOS will check if PS/2 keyboard is connected or not. If connected, BIOS will only connect to PS/2 keyboard else BIOS will enumerate USB keyboard.\n\n- Reconnect Last Good Input Consoles: Enumerate all Console input devices that were enumerated in previous FULL boot."
+#string STR_PS2_CONSOLE                        #language en-US "PS/2 Console"
+#string STR_LASTCONSOLE                        #language en-US "Reconnect Last Good Input Consoles"
+#string STR_WINDOWS_CONSOLE                    #language en-US "Windows Console"
+#string STR_BOOT_CFG                           #language en-US "Boot Configuration"
+#string STR_BOOT_CFG_HELP                      #language en-US "System Boot Configuration Settings"
+#string STR_BOOT_TIMEOUT                       #language en-US "Setup Prompt Timeout"
+//#string STR_BOOT_TIMEOUT_HELP                  #language en-US "Number of seconds that the firmware will wait before initiating the original default boot selection. A value of 0 indicates that the default boot selection is to be initiated immediately on boot. A value of 65535(0xFFFF) indicates that firmware will wait for user input before booting. This means the default boot selection is not automatically started by the firmware."
+#string STR_BOOT_TIMEOUT_HELP                  #language en-US "Number of seconds to wait for setup activation key. 65535(0xFFFF) means indefinite waiting.  0 means no wait (not recommended)."
+//#string STR_BOOT_TIMEOUT_HELP                  #language en-US "Number of seconds to wait for setup activation key. 0 means no wait(not recommended)."
+#string STR_CSM_BOOTUP_NUMLOCK                 #language en-US "Bootup NumLock State"
+#string STR_CSM_BOOTUP_NUMLOCK_HELP            #language en-US "Select the keyboard NumLock state."
+#string STR_CSM_BOOTUP_NUMLOCK_ON              #language en-US "On"
+#string STR_CSM_BOOTUP_NUMLOCK_OFF             #language en-US "Off"
+#string STR_BOOT_ORDER_SUBTITLE                #language en-US "Boot Option Priorities"
+#string STR_BOOT_ORDER_X                       #language en-US "Boot Option #%d"
+#string STR_BOOT_ORDER_HELP                    #language en-US "Set the system boot order."
+#string STR_ADD_BOOT_OPTION                    #language en-US "Add New Boot Option"
+#string STR_ADD_BOOT_OPTION_HELP               #language en-US "Add a new EFI boot option to the boot order."
+#string STR_DEL_BOOT_OPTION                    #language en-US "Delete Boot Option"
+#string STR_DEL_BOOT_OPTION_HELP               #language en-US "Remove an EFI boot option from the boot order."
+#string STR_SELECT_TO_DEL                      #language en-US "Select one to Delete"
+#string STR_BBS_ORDER_HELP                     #language en-US "Set the order of the legacy devices in this group."
+#string STR_ADD_BOOT_LABEL                     #language en-US "Add boot option"
+#string STR_BOOT_LABEL_HELP                    #language en-US "Create new boot option."
+#string STR_ADD_BOOT_SEL_FS                    #language en-US "Select Filesystem"
+#string STR_BOOT_FS_HELP                       #language en-US "Select one filesystem from the list."
+#string STR_ADD_BOOT_PATH                      #language en-US "Path for boot option"
+#string STR_BOOT_PATH_HELP                     #language en-US "Enter the path to the boot option in the format fs0:\\path\\filename.efi."
+#string STR_SAVE_BOOT_OPTION                   #language en-US "Create"
+
+//Security
+#string STR_SECURITY                           #language en-US "Security"
+#string STR_SECURITY_HELP                      #language en-US "Security Settings"
+
+
+#string STR_SECURITY_BANNER_ONE                #language en-US "Password Description"
+#string STR_SECURITY_BANNER_TWO                #language en-US "If ONLY the Administrator's password is set," 
+#string STR_SECURITY_BANNER_THREE              #language en-US "then this only limits access to Setup and is" 
+#string STR_SECURITY_BANNER_FOUR               #language en-US "only asked for when entering Setup."
+#string STR_SECURITY_BANNER_FIVE               #language en-US "If ONLY the User's password is set, then this"
+#string STR_SECURITY_BANNER_SIX                #language en-US "is a power on password and must be entered to"
+#string STR_SECURITY_BANNER_SEVEN              #language en-US "boot or enter Setup. In Setup, the User will"
+#string STR_SECURITY_BANNER_EIGHT              #language en-US "have Administrator rights."
+
+
+#string STR_ADMIN_PASSWORD                     #language en-US "Setup Administrator Password"
+#string STR_ADMIN_PASSWORD_HELP                #language en-US "Set Setup Administrator Password."
+#string STR_USER_PASSWORD                      #language en-US "User Password"
+#string STR_USER_PASSWORD_HELP                 #language en-US "Set User Password."
+
+//Exit
+#string STR_EXIT                               #language en-US "Save & Exit"
+#string STR_EXIT_HELP                          #language en-US "Save & Exit Options"
+#string STR_SAVE_EXIT                          #language en-US "Save Changes and Exit"
+//#string STR_SAVE_EXIT_HELP                     #language en-US "Exit system setup after saving the changes. System may be reset if it is required to apply new options."
+#string STR_SAVE_EXIT_HELP                     #language en-US "Exit system setup after saving the changes."
+#string STR_DISCARD_EXIT                       #language en-US "Discard Changes and Exit"
+#string STR_DISCARD_EXIT_HELP                  #language en-US "Exit system setup without saving any changes."
+//
+#string STR_SAVE_RESET                         #language en-US "Save Changes and Reset"
+#string STR_SAVE_RESET_HELP                    #language en-US "Reset the system after saving the changes."
+#string STR_DISCARD_RESET                      #language en-US "Discard Changes and Reset"
+#string STR_DISCARD_RESET_HELP                 #language en-US "Reset system setup without saving any changes."
+//
+#string STR_SAVE                               #language en-US "Save Changes"
+#string STR_SAVE_HELP                          #language en-US "Save Changes made so far to any of the setup options."
+#string STR_DISCARD                            #language en-US "Discard Changes"
+#string STR_DISCARD_HELP                       #language en-US "Discard Changes made so far to any of the setup options."
+#string STR_RESTORE_DEFAULTS                   #language en-US "Restore Defaults"
+#string STR_RESTORE_DEFAULTS_HELP              #language en-US "Restore/Load Defaults values for all the setup options."
+#string STR_SAVE_USER_DEFAULTS                 #language en-US "Save as User Defaults"
+#string STR_SAVE_USER_DEFAULTS_HELP            #language en-US "Save the changes made so far as User Defaults."
+#string STR_RESTORE_USER_DEFAULTS              #language en-US "Restore User Defaults"
+#string STR_RESTORE_USER_DEFAULTS_HELP         #language en-US "Restore the User Defaults to all the setup options."
+#string STR_BOOT_OPTIONS                       #language en-US "Boot Override"
+#string STR_EFI_SHELL                          #language en-US "Launch EFI Shell from filesystem device"
+#string STR_EFI_SHELL_HELP                     #language en-US "Attempts to Launch EFI Shell application (Shell.efi) from one of the available filesystem devices."
+#string STR_EFI_SHELL_HELP_X64                 #language en-US "Attempts to Launch EFI Shell application (Shellx64.efi) from one of the available filesystem devices."
+#string STR_EFI_SHELL_HELP_IPF                 #language en-US "Attempts to Launch EFI Shell application (ShellIA64.efi) from one of the available filesystem devices."
+
+// Reset 
+#string STR_RESET                              #language en-US "Reset"
+#string STR_RESET_HELP                         #language en-US "Reset System"
+#string RESET_MAIN                             #language en-US "Reset"
+
+//defaultstore
+
+#string STR_STANDARD_DEFAULT_PROMPT            #language en-US "Standard Default"
+
+// XmlCli
+#string STR_XML_CLI_SUPPORT_PROMPT             #language en-US "Xml Cli Support"
+#string STR_XML_CLI_SUPPORT_HELP               #language en-US "Enable Disable Xml Cli Support in BIOS"
+
+#string STR_PUBLISH_SETUP_PG_PTR_PROMPT        #language en-US "Publish Setup page Pointer"
+#string STR_PUBLISH_SETUP_PG_PTR_HELP          #language en-US "Publish Setup page Pointer in BIOS Knobs section of the Xml File"

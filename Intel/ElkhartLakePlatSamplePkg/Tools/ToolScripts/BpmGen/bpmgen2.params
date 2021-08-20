@@ -1,0 +1,115 @@
+# FILEHEADER
+FileID:	_BPMDEF_
+FileVersion:	1
+ToolVersion:	2
+ToolDate:	20160710
+// Internally signed RSA 2048 / SHA256 {reminder of what this Def file represents}
+# BPM_DEF
+PlatformRules:	EHL Client
+BpmStrutVersion:	0x20
+BpmRevAutoInc:	FALSE
+BpmRevision:	0x01
+BpmRevocation:	1
+AcmRevocation:	2
+NEMPages:	3
+IbbSetCount:	2
+CurrentIbbSet:	0
+//
+# IBB_SET
+IbbSetType: 0:ColdBoot
+IbbSetInclude: TRUE
+PBETValue:	0x0F
+MCHBAR:	0x00000000FEDC0000
+VTD_BAR: 0x00000000FED90000
+//DMA Protection
+DmaProtBase0:	0x00100000
+DmaProtLimit0:	0x00F00000
+DmaProtBase1:	0x00000000000000
+DmaProtLimit1:	0x00000001000000
+IbbFlags: 0x3
+// 	 Bit0 : Enable VT-d;
+// 	 Bit1 : Issue TPM Start-up from Locality 3;
+// 	 Bit2 : Extend Authority Measurements into the Authority PCR;
+// 	 Bit3 : On error: Leave TPM Hierarchies enabled. Cap all PCRs.;
+IbbHashAlgID:	0x0C:SHA384
+IbbEntry:	0xFFFFFFF0
+PostIbbHashAlgID:	0x10:NULL
+PostIBBHashSource:	Calculate
+PostIbbHashFile:	PostIbbDigest.hash
+IbbSegSource:	FIT
+IbbSegFile:
+IbbGuid:	4a4ca1c6-871c-45bb-8801-6910a7aa5807
+//
+// The following illustrates that:
+//	(1) Tool supports multiple IBB Sets
+//	(2) The DEF file can contain optional sections that get excluded from the BPM
+# IBB_SET
+IbbSetType: 1:S3Resume
+IbbSetInclude: FALSE
+PBETValue:	0
+MCHBAR:	0
+VTD_BAR:	0
+//DMA Protection
+DmaProtBase0:	0
+DmaProtLimit0:	0
+DmaProtBase1:	0
+DmaProtLimit1:	0
+IbbFlags: 0x3
+// 	 Bit0 : Enable VT-d;
+// 	 Bit1 : Issue TPM Start-up from Locality 3;
+// 	 Bit2 : Extend Authority Measurements into the Authority PCR;
+// 	 Bit3 : On error: Leave TPM Hierarchies enabled. Cap all PCRs.;
+IbbHashAlgID:	0x0C:SHA384
+IbbEntry:	0xFFFFFFF0
+PostIbbHashAlgID:	0x10:NULL
+PostIBBHashSource:	File
+PostIbbHashFile:	PostIbbDigest.hash
+IbbSegSource:	BIOS
+IbbSegFile:
+IbbGuid:	1BA0062E-C779-4582-8566-336AE8F78F08
+
+//
+# PLATFORM_CONFIG_ELEMENT
+PdReqLocation:	TPM
+// 	Power down request location for CMOS
+CmosIndexRegister:	0x70
+CmosDataRegister:	0x71
+CmosIndexOffset:	255
+CmosBitFieldWidth:	3
+CmosBitFieldPosition:	0
+// 	Power down request location for TPM1.2
+# TPM1.2_LOCATION
+TpmIndexHandle:	0x50000004
+TpmByteOffset:	7
+TpmBitFieldWidth:	3
+TpmBitFieldPosition:	0
+// 	Power down request location for TPM2.0
+# TPM2.0_LOCATION
+TpmIndexHandle:	0x01C10104
+TpmByteOffset:	7
+TpmBitFieldWidth:	3
+TpmBitFieldPosition:	0
+// 	Power down request location for PTT
+# PTT_LOCATION
+TpmIndexHandle: 	0x01C10104
+TpmByteOffset:	7
+TpmBitFieldWidth:	3
+TpmBitFieldPosition:	0
+//
+# PLATFORM_MANUFACTURERS_ELEMENT
+PmdeInclude:	FALSE
+PmdeFile:
+//
+# BPM_SIGNATURE
+BpmSigSource:	Internal
+BpmSigHashAlgID:	0x0C:SHA384
+BpmSigKeyType:	0x01:RSA
+BpmSigScheme:	0x14:RSASSA
+BpmKeySizeBits:	3072
+BpmSigPubKey:	bpm_pubkey.pem
+BpmSigPrivKey:	bpm_privkey.pem
+BpmSigBatch:	ExampleExternalSigning.bat
+BpmSigData:	Bpm2Sign.bin
+BpmSigXSig:	X-SignedBpm.bin
+//
+#EOF

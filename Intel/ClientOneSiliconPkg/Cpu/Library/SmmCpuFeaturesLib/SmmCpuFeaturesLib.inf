@@ -1,0 +1,126 @@
+## @file
+#  Component description file for SMM CPU FEATURES Lib
+#
+# @copyright
+#  INTEL CONFIDENTIAL
+#  Copyright 2014 - 2019 Intel Corporation.
+#
+#  The source code contained or described herein and all documents related to the
+#  source code ("Material") are owned by Intel Corporation or its suppliers or
+#  licensors. Title to the Material remains with Intel Corporation or its suppliers
+#  and licensors. The Material may contain trade secrets and proprietary and
+#  confidential information of Intel Corporation and its suppliers and licensors,
+#  and is protected by worldwide copyright and trade secret laws and treaty
+#  provisions. No part of the Material may be used, copied, reproduced, modified,
+#  published, uploaded, posted, transmitted, distributed, or disclosed in any way
+#  without Intel's prior express written permission.
+#
+#  No license under any patent, copyright, trade secret or other intellectual
+#  property right is granted to or conferred upon you by disclosure or delivery
+#  of the Materials, either expressly, by implication, inducement, estoppel or
+#  otherwise. Any license under such intellectual property rights must be
+#  express and approved by Intel in writing.
+#
+#  Unless otherwise agreed by Intel in writing, you may not remove or alter
+#  this notice or any other notice embedded in Materials by Intel or
+#  Intel's suppliers or licensors in any way.
+#
+#  This file contains an 'Intel Peripheral Driver' and is uniquely identified as
+#  "Intel Reference Module" and is licensed for Intel CPUs and chipsets under
+#  the terms of your license agreement with Intel or your vendor. This file may
+#  be modified by the user, subject to additional terms of the license agreement.
+#
+# @par Specification Reference:
+#
+##
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = SmmCpuFeaturesLib
+  MODULE_UNI_FILE                = SmmCpuFeaturesLib.uni
+  FILE_GUID                      = C462F62F-ACCA-49d1-8C98-3E62212DFB2A
+  MODULE_TYPE                    = DXE_SMM_DRIVER
+  VERSION_STRING                 = 1.0
+  LIBRARY_CLASS                  = SmmCpuFeaturesLib
+  CONSTRUCTOR                    = SmmCpuFeaturesLibConstructor
+
+[Packages]
+  MdePkg/MdePkg.dec
+  UefiCpuPkg/UefiCpuPkg.dec
+  ClientOneSiliconPkg/SiPkg.dec
+
+[Sources]
+  SmmCpuFeaturesLib.c
+  SmramSaveState.c
+  SmmCpuFeatures.h
+  SmramSaveStateMsr.h
+  SmmPpam.h
+  SmmPpam.c
+
+[Sources.X64]
+  X64/SmmFuncsArch.c
+  X64/SmmPpamSupport.c
+  X64/SmiEntry.nasm
+  X64/SmiException.nasm
+
+[LibraryClasses]
+  CpuPlatformLib
+  PcdLib
+  BaseLib
+  BaseMemoryLib
+  SynchronizationLib
+  PciSegmentLib
+  SmmServicesTableLib
+  MemoryAllocationLib
+  LocalApicLib
+  MtrrLib
+  DebugLib
+  UefiBootServicesTableLib
+  DxeServicesLib
+  CpuCommonLib
+  PreSiliconEnvDetectLib
+
+[Guids]
+  gSaDataHobGuid                           ## ALWAYS_CONSUMED
+
+[Protocols]
+  gEfiSmmAccess2ProtocolGuid               ## CONSUMES
+  gEfiMpServiceProtocolGuid                ## CONSUMES
+  gEfiSmmEndOfDxeProtocolGuid              ## CONSUMES
+  gEfiSmMonitorInitProtocolGuid            ## PRODUCES
+
+[Guids]
+  gMsegSmramGuid                           ## SOMETIMES_CONSUMES ## HOB
+
+[FeaturePcd]
+  gUefiCpuPkgTokenSpaceGuid.PcdCpuSmmDebug                         ## CONSUMES
+  gUefiCpuPkgTokenSpaceGuid.PcdCpuSmmStackGuard                    ## CONSUMES
+  gUefiCpuPkgTokenSpaceGuid.PcdCpuSmmFeatureControlMsrLock         ## CONSUMES
+
+[Pcd]
+  gUefiCpuPkgTokenSpaceGuid.PcdCpuMaxLogicalProcessorNumber        ## SOMETIMES_CONSUMES
+  gSiPkgTokenSpaceGuid.PcdCpuSmmProtectedModeEnable                ## CONSUMES
+  gSiPkgTokenSpaceGuid.PcdCpuSmmSmrr2Base                          ## CONSUMES
+  gSiPkgTokenSpaceGuid.PcdCpuSmmSmrr2Size                          ## CONSUMES
+  gSiPkgTokenSpaceGuid.PcdCpuSmmSmrr2CacheType                     ## CONSUMES
+  gSiPkgTokenSpaceGuid.PcdCpuIEDEnabled                            ## CONSUMES
+  gSiPkgTokenSpaceGuid.PcdCpuIEDRamSize                            ## SOMETIMES_CONSUMES
+  gSiPkgTokenSpaceGuid.PcdCpuIEDRamBase                            ## SOMETIMES_CONSUMES
+  gSiPkgTokenSpaceGuid.PcdCpuSmmUseSmmEnableIndication             ## CONSUMES
+  gSiPkgTokenSpaceGuid.PcdCpuSmmMsrSaveStateEnable                 ## CONSUMES
+  gSiPkgTokenSpaceGuid.PcdCpuSmmUseDelayIndication                 ## CONSUMES
+  gSiPkgTokenSpaceGuid.PcdCpuSmmUseBlockIndication                 ## CONSUMES
+  gUefiCpuPkgTokenSpaceGuid.PcdCpuSmmStaticPageTable               ## CONSUMES
+  gUefiCpuPkgTokenSpaceGuid.PcdCpuMsegSize                         ## SOMETIMES_CONSUMES
+  gSiPkgTokenSpaceGuid.PcdPpamEnable                               ## SOMETIMES_CONSUMES
+  gSiPkgTokenSpaceGuid.PcdCpuSmmProcTraceEnable                    ## CONSUMES
+  gUefiCpuPkgTokenSpaceGuid.PcdCpuSmmShadowStackSize
+  gSiPkgTokenSpaceGuid.PcdSmmEntryPointBinFile                     ## SOMETIMES_CONSUMES
+  gSiPkgTokenSpaceGuid.PcdSmmTestRsvMemorySize                     ## SOMETIMES_CONSUMES
+  gEfiMdePkgTokenSpaceGuid.PcdControlFlowEnforcementPropertyMask   ## CONSUMES
+
+[Depex]
+  gEfiVariableArchProtocolGuid AND
+  gEfiSmmAccess2ProtocolGuid AND
+  gEfiMpServiceProtocolGuid
+

@@ -1,0 +1,384 @@
+/** @file
+
+@copyright
+  INTEL CONFIDENTIAL
+  Copyright 2014 - 2019 Intel Corporation.
+
+  The source code contained or described herein and all documents related to the
+  source code ("Material") are owned by Intel Corporation or its suppliers or
+  licensors. Title to the Material remains with Intel Corporation or its suppliers
+  and licensors. The Material may contain trade secrets and proprietary and
+  confidential information of Intel Corporation and its suppliers and licensors,
+  and is protected by worldwide copyright and trade secret laws and treaty
+  provisions. No part of the Material may be used, copied, reproduced, modified,
+  published, uploaded, posted, transmitted, distributed, or disclosed in any way
+  without Intel's prior express written permission.
+
+  No license under any patent, copyright, trade secret or other intellectual
+  property right is granted to or conferred upon you by disclosure or delivery
+  of the Materials, either expressly, by implication, inducement, estoppel or
+  otherwise. Any license under such intellectual property rights must be
+  express and approved by Intel in writing.
+
+  Unless otherwise agreed by Intel in writing, you may not remove or alter
+  this notice or any other notice embedded in Materials by Intel or
+  Intel's suppliers or licensors in any way.
+
+  This file contains a 'Sample Driver' and is licensed as such under the terms
+  of your license agreement with Intel or your vendor. This file may be modified
+  by the user, subject to the additional terms of the license agreement.
+
+@par Specification
+**/
+
+  // Define forms
+    form formid = AUTO_ID(TBT_FORM_ID),
+    title     = STRING_TOKEN(STR_TBT_FORM);
+
+    oneof varid = SETUP_DATA.DiscreteTbtSupport,
+      questionid = AUTO_ID(KEY_DTBT_SUPPORT),
+      prompt   = STRING_TOKEN(STR_DISCRETE_TBT_SUPPORT_PROMPT),
+      help     = STRING_TOKEN(STR_DISCRETE_TBT_SUPPORT_HELP),
+      option text = STRING_TOKEN(STR_DISABLED), value = 0, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_ENABLED), value = 1, flags = RESET_REQUIRED;
+    endoneof;
+
+      oneof varid = SETUP_DATA.IntegratedTbtSupport,
+        questionid = AUTO_ID(KEY_ITBT_SUPPORT),
+        prompt   = STRING_TOKEN(STR_INTEGRATED_TBT_SUPPORT_PROMPT),
+        help     = STRING_TOKEN(STR_INTEGRATED_TBT_SUPPORT_HELP),
+        option text = STRING_TOKEN(STR_DISABLED), value = 0, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_ENABLED), value = 1, flags = RESET_REQUIRED;
+      endoneof;
+    //
+    // Setup Options Common to Discrete Tbt and Integrated Tbt
+    //
+    suppressif ideqval SETUP_DATA.DiscreteTbtSupport == 0
+                                                      AND
+               ideqval SETUP_DATA.IntegratedTbtSupport == 0;
+
+      checkbox varid  = SETUP_DATA.TbtWakeupSupport,
+        prompt   = STRING_TOKEN(STR_TBT_DEVICE_WAKE_UP_SUPPORT_PROMPT),
+        help     = STRING_TOKEN(STR_TBT_DEVICE_WAKE_UP_SUPPORT_HELP),
+        // Flags behavior for checkbox is overloaded so that it equals
+        // a DEFAULT value.  CHECKBOX_DEFAULT = ON, 0 = off
+        flags    = 0 | RESET_REQUIRED,
+        key      = 0,
+      endcheckbox;
+
+      oneof varid = SETUP_DATA.TbtSkipPciOprom,
+        prompt   = STRING_TOKEN(STR_TBT_SKIP_PCI_OPROM_PROMPT),
+        help     = STRING_TOKEN(STR_TBT_SKIP_PCI_OPROM_HELP),
+        option text = STRING_TOKEN(STR_DISABLED), value = 0, flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_ENABLED), value = 1, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+      endoneof;
+
+      oneof varid   = SETUP_DATA.SecurityMode,
+        questionid  = AUTO_ID(TBT_SECURITY_LEVEL_KEY),
+        prompt      = STRING_TOKEN(STR_TBT_SECURITY_LEVEL_PROMPT),
+        help        = STRING_TOKEN(STR_TBT_SECURITY_LEVEL_HELP),
+        option text = STRING_TOKEN(STR_TBT_MODE0), value = 0, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED | INTERACTIVE;
+        option text = STRING_TOKEN(STR_TBT_MODE1), value = 1, flags = RESET_REQUIRED | INTERACTIVE;
+        option text = STRING_TOKEN(STR_TBT_MODE2), value = 2, flags = RESET_REQUIRED | INTERACTIVE;
+        option text = STRING_TOKEN(STR_TBT_MODE3), value = 3, flags = RESET_REQUIRED | INTERACTIVE;
+        option text = STRING_TOKEN(STR_TBT_MODE4), value = 4, flags = RESET_REQUIRED | INTERACTIVE;
+      endoneof;
+
+      suppressif ideqval SETUP_DATA.TbtLegacyModeSupport == 0;
+        oneof varid  = SETUP_DATA.TBTHotSMI,
+          prompt = STRING_TOKEN(STR_PCI_HOT_PLUG_SW_SMI),
+          help = STRING_TOKEN(STR_PCI_HOT_PLUG_SW_SMI_HELP),
+          option text = STRING_TOKEN(STR_DISABLED),   value = 0, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+          option text = STRING_TOKEN(STR_ENABLED),   value = 1, flags = RESET_REQUIRED;
+        endoneof;
+
+        oneof varid  = SETUP_DATA.TBTHotNotify,
+          prompt = STRING_TOKEN(STR_PCI_HOT_PLUG_NOTIFY),
+          help = STRING_TOKEN(STR_PCI_HOT_PLUG_NOTIFY_HELP),
+          option text = STRING_TOKEN(STR_DISABLED),   value = 0, flags = RESET_REQUIRED;
+          option text = STRING_TOKEN(STR_ENABLED),   value = 1, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+        endoneof;
+      endif;
+
+      oneof varid  = SETUP_DATA.TbtVtdBaseSecurity,
+          questionid  = KEY_TBT_VTD_SECURITY_ID,
+          prompt      = STRING_TOKEN(STR_TBT_VTD_SECURITY_SETTINGS),
+          help        = STRING_TOKEN(STR_TBT_VTD_SECURITY_SETTINGS_HELP),
+          flags       = INTERACTIVE,
+          default     = 1, defaultstore = MyStandardDefault,
+          option text = STRING_TOKEN(STR_DISABLED), value = 0, flags = RESET_REQUIRED| INTERACTIVE;
+          option text = STRING_TOKEN(STR_ENABLED), value = 1, flags = DEFAULT | RESET_REQUIRED| RESET_REQUIRED;
+      endoneof;
+    endif; // Options Common to Dtbt and ITbt
+
+    //
+    // Setup Options Specific to DTbt
+    //
+    suppressif ideqval SETUP_DATA.DiscreteTbtSupport == 0;
+       goto DTBT_FORM_ID,
+          prompt = STRING_TOKEN(STR_DISCRETE_TBT_FORM),
+          help = STRING_TOKEN(STR_DISCRETE_TBT_FORM_HELP);
+    endif;
+    //
+    // Setup Options Specific to Integrated Tbt
+    //
+    suppressif ideqval SETUP_DATA.IntegratedTbtSupport == 0;
+
+       goto ITBT_FORM_ID,
+          prompt = STRING_TOKEN(STR_INTEGRATED_TBT_FORM),
+          help = STRING_TOKEN(STR_INTEGRATED_TBT_FORM_HELP);
+    endif;
+    endform;  // TBT_FORM_ID
+
+    //
+    // Form to configure D-TBT
+    //
+    form formid = AUTO_ID(DTBT_FORM_ID),
+    title = STRING_TOKEN(STR_DISCRETE_TBT_FORM);
+
+    SUBTITLE(STRING_TOKEN(STR_DISCRETE_TBT_FORM))
+    SEPARATOR
+    suppressif ideqval SETUP_DATA.DiscreteTbtSupport == 0;
+      oneof varid = SETUP_DATA.TbtUsbOn,
+        questionid = AUTO_ID(KEY_TBT_USB_ON),
+        prompt      = STRING_TOKEN(STR_TBT_USB_ON_PROMPT),
+        help        = STRING_TOKEN(STR_TBT_USB_ON_HELP),
+        option text = STRING_TOKEN(STR_DISABLED), value = 0, flags =  DEFAULT | MANUFACTURING | RESET_REQUIRED | INTERACTIVE;
+        option text = STRING_TOKEN(STR_ENABLED), value = 1, flags =  RESET_REQUIRED | INTERACTIVE;
+      endoneof;
+
+      oneof varid = SETUP_DATA.TbtBootOn,
+        questionid = AUTO_ID(KEY_TBT_BOOT_ON),
+        prompt      = STRING_TOKEN(STR_TBT_BOOT_ON_PROMPT),
+        help        = STRING_TOKEN(STR_TBT_BOOT_ON_HELP),
+        option text = STRING_TOKEN(STR_DISABLED), value = 0, flags =  DEFAULT | MANUFACTURING | RESET_REQUIRED | INTERACTIVE;
+        option text = STRING_TOKEN(STR_ENABLED), value = 1, flags =  RESET_REQUIRED | INTERACTIVE;
+      endoneof;
+
+      oneof varid = SETUP_DATA.TrOsup,
+        prompt      = STRING_TOKEN(STR_TROSUP_PROMPT),
+        help        = STRING_TOKEN(STR_TROSUP_HELP),
+      option text = STRING_TOKEN(STR_DISABLED), value = 0, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED | INTERACTIVE;
+      option text = STRING_TOKEN(STR_ENABLED), value = 1, flags = RESET_REQUIRED | INTERACTIVE;
+      endoneof;
+
+      oneof varid = SETUP_DATA.TbtAcDcSwitch,
+        prompt      = STRING_TOKEN(STR_TBT_ACDC_DYNAMIC_SWITCH_PROMPT),
+        help        = STRING_TOKEN(STR_TBT_ACDC_DYNAMIC_SWITCH_HELP),
+        option text = STRING_TOKEN(STR_DISABLED), value = 0, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED | INTERACTIVE;
+        option text = STRING_TOKEN(STR_ENABLED), value = 1, flags = RESET_REQUIRED | INTERACTIVE;
+      endoneof;
+
+      oneof varid = SETUP_DATA.TbtAcpiRemovalSupport,
+        prompt   = STRING_TOKEN(STR_TBT_ACPI_REMOVAL_SUPPORT_PROMPT),
+        help     = STRING_TOKEN(STR_TBT_ACPI_REMOVAL_SUPPORT_HELP),
+        option text = STRING_TOKEN(STR_DISABLED), value = 0, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_ENABLED), value = 1, flags = RESET_REQUIRED;
+      endoneof;
+
+      checkbox varid  = SETUP_DATA.Gpio3ForcePwr,
+        prompt = STRING_TOKEN(STR_PCI_GPIO3_FORCE_PWR),
+        help = STRING_TOKEN(STR_PCI_GPIO3_FORCE_PWR_HELP),
+        // Flags behavior for checkbox is overloaded so that it equals
+        // a DEFAULT value.  CHECKBOX_DEFAULT = ON, 0 = off
+        flags    = 0 | RESET_REQUIRED,
+         key      = 0,
+      endcheckbox;
+
+      numeric varid = SETUP_DATA.Gpio3ForcePwrDly,
+        prompt    = STRING_TOKEN(STR_PCI_GPIO3_FORCE_PWR_DLY),
+        help      = STRING_TOKEN(STR_PCI_GPIO3_FORCE_PWR_DLY_HELP),
+        flags     = RESET_REQUIRED | INTERACTIVE,
+        minimum   = 1,
+        maximum   = 5000,
+        step      = 0,
+        default   = 200,
+      endnumeric;
+
+     oneof varid  = SETUP_DATA.Gpio5Filter,
+        prompt = STRING_TOKEN(STR_PCI_GPIO5_FILTER),
+        help = STRING_TOKEN(STR_PCI_GPIO5_FILTER_HELP),
+        default = 1, defaultstore = MyStandardDefault,
+        option text = STRING_TOKEN(STR_DISABLED),   value = 0, flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_ENABLED),   value = 1, flags = RESET_REQUIRED;
+      endoneof;
+
+    oneof varid  = SETUP_DATA.TBTSetClkReq,
+    prompt = STRING_TOKEN(STR_PCI_TBT_CLKREQ),
+    help = STRING_TOKEN(STR_PCI_TBT_CLKREQ_HELP),
+    option text = STRING_TOKEN(STR_DISABLED),   value = 0, flags = DEFAULT | MANUFACTURING |RESET_REQUIRED;
+    option text = STRING_TOKEN(STR_ENABLED),   value = 1, flags =  RESET_REQUIRED;
+    endoneof;
+
+    oneof varid  = SETUP_DATA.TbtAspm,
+    prompt = STRING_TOKEN(STR_PCI_TBT_ASPM),
+    help = STRING_TOKEN(STR_PCI_TBT_ASPM_HELP),
+    option text = STRING_TOKEN(STR_DISABLED),   value = 0, flags = DEFAULT | MANUFACTURING |RESET_REQUIRED;
+    option text = STRING_TOKEN(STR_PCIE_ASPM_L0S_STRING),   value = 1, flags =  RESET_REQUIRED;
+    option text = STRING_TOKEN(STR_PCIE_ASPM_L1_STRING),   value = 2, flags =  RESET_REQUIRED;
+    option text = STRING_TOKEN(STR_PCIE_ASPM_L0SL1_STRING),   value = 3, flags =  RESET_REQUIRED;
+    endoneof;
+
+    oneof varid  = SETUP_DATA.TbtLtr,
+    prompt = STRING_TOKEN(STR_PCI_TBT_LTR),
+    help = STRING_TOKEN(STR_PCI_TBT_LTR_HELP),
+    option text = STRING_TOKEN(STR_DISABLED),   value = 0, flags = DEFAULT | MANUFACTURING |RESET_REQUIRED;
+    option text = STRING_TOKEN(STR_ENABLED),   value = 1, flags =  RESET_REQUIRED;
+    endoneof;
+
+   oneof varid  = SETUP_DATA.TbtPtm,
+    prompt = STRING_TOKEN(STR_PCI_TBT_PTM),
+    help = STRING_TOKEN(STR_PCI_TBT_PTM_HELP),
+    option text = STRING_TOKEN(STR_DISABLED),   value = 0, flags = DEFAULT | MANUFACTURING |RESET_REQUIRED;
+    option text = STRING_TOKEN(STR_ENABLED),   value = 1, flags =  RESET_REQUIRED;
+    endoneof;
+
+    oneof varid   = SETUP_DATA.TbtL1SubStates,
+      prompt      = STRING_TOKEN(STR_TBTL1SUB_PROMPT),
+      help        = STRING_TOKEN(STR_TBTL1SUB_HELP),
+      option text = STRING_TOKEN(STR_DISABLED), value = 0, flags = RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_TBTL1SUB_1_STRING), value = 1, flags = RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_TBTL1SUB_1_2_STRING), value = 3, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+    endoneof;
+
+    suppressif NOT ideqval TBT_SETUP_VOLATILE_DATA.DTbtContollersNumber >= 1;
+      goto DTBT_CONTROLLER0_FORM_ID,
+        prompt = STRING_TOKEN(STR_DTBT_CONTROLLER0_FORM),
+        help = STRING_TOKEN(STR_DTBT_CONTROLLER0_FORM);
+    endif;
+    suppressif NOT ideqval TBT_SETUP_VOLATILE_DATA.DTbtContollersNumber >= 2;
+      goto DTBT_CONTROLLER1_FORM_ID,
+        prompt = STRING_TOKEN(STR_DTBT_CONTROLLER1_FORM),
+        help = STRING_TOKEN(STR_DTBT_CONTROLLER1_FORM);
+    endif;
+    goto TBT_OSSELECT_FORM_ID,
+    prompt  = STRING_TOKEN(STR_TBT_OSSELECT_FORM),
+    help    = STRING_TOKEN(STR_TBT_OSSELECT_FORM_HELP);
+    endif; // suppressif ideqval SETUP_DATA.DiscreteTbtSupport == 0;
+    endform;  // DTBT_FORM_ID
+
+    form formid = AUTO_ID(TBT_OSSELECT_FORM_ID),
+    title     = STRING_TOKEN(STR_TBT_OSSELECT_FORM);
+
+      oneof varid  = SETUP_DATA.Win10Support,
+        questionid  = AUTO_ID(KEY_TBT_OS_SELECTOR),
+        prompt      = STRING_TOKEN(STR_WIN10_SUPPORT_PROMPT),
+        help        = STRING_TOKEN(STR_WIN10_SUPPORT_HELP),
+        option text = STRING_TOKEN(STR_PCI_WIN10_SUPPORT_UNKNOWN), value = 2, flags = RESET_REQUIRED | INTERACTIVE;
+        option text = STRING_TOKEN(STR_PCI_WIN10_SUPPORT_ENABLE), value = 1, flags = RESET_REQUIRED | INTERACTIVE;
+        option text = STRING_TOKEN(STR_PCI_WIN10_SUPPORT_DISABLE), value = 0, flags = RESET_REQUIRED | INTERACTIVE;
+      endoneof;
+    endform;
+
+    //
+    // Form to configure Integrated TBT
+    //
+    form formid = AUTO_ID(ITBT_FORM_ID),
+    title = STRING_TOKEN(STR_INTEGRATED_TBT_FORM);
+
+    SUBTITLE(STRING_TOKEN(STR_INTEGRATED_TBT_FORM))
+    SEPARATOR
+    //
+    // Add All Integrated TBT Options Here
+    //
+  oneof varid = SETUP_DATA.OsNativeResourceBalance,
+    prompt   = STRING_TOKEN(STR_OS_NATIVE_RESOURCE_BALANCE_PROMPT),
+    help     = STRING_TOKEN(STR_OS_NATIVE_RESOURCE_BALANCE_HELP),
+    option text = STRING_TOKEN(STR_DISABLED), value = 0, flags = RESET_REQUIRED;
+    option text = STRING_TOKEN(STR_ENABLED), value = 1, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+  endoneof;
+
+    numeric varid = SETUP_DATA.ITbtConnectTopologyTimeoutInMs,
+      prompt      = STRING_TOKEN (STR_ITBT_CONNECTTOPOLOGY_TIMEOUT_PROMPT),
+      help        = STRING_TOKEN (STR_ITBT_CONNECTTOPOLOGY_TIMEOUT_HELP),
+      flags       = RESET_REQUIRED | INTERACTIVE,
+      minimum     = 1,
+      maximum     = 65535,
+      step        = 1,    // Stepping of 0 equates to a manual entering of a value, otherwise it will auto-increment with a left/right arrow
+      default     = 50,    // default timeout value 5 seconds
+    endnumeric;
+
+    numeric varid = SETUP_DATA.ITbtForcePowerOnTimeoutInMs,
+      prompt      = STRING_TOKEN (STR_ITBT_CONTROLLER_FORCEPOWERON_TIMEOUT_PROMPT),
+      help        = STRING_TOKEN (STR_ITBT_CONTROLLER_FORCEPOWERON_TIMEOUT_HELP),
+      flags       = RESET_REQUIRED | INTERACTIVE,
+      minimum     = 1,
+      maximum     = 65535,
+      step        = 1,    // Stepping of 0 equates to a manual entering of a value, otherwise it will auto-increment with a left/right arrow
+      default     = 500,    // default timeout value 500 ms
+    endnumeric;
+
+    oneof varid  = SETUP_DATA.ITbtRtd3,
+      prompt      = STRING_TOKEN (STR_ITBT_RTD3_PROMPT),
+      help        = STRING_TOKEN (STR_ITBT_RTD3_HELP),
+      option text = STRING_TOKEN (STR_DISABLED), value = 0, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+      option text = STRING_TOKEN (STR_ENABLED), value = 1, flags = RESET_REQUIRED;
+    endoneof;
+
+    numeric varid = SETUP_DATA.ITbtRtd3ExitDelay,
+      prompt    = STRING_TOKEN (STR_ITBT_RTD3_EXIT_DELAY_PROMPT),
+      help      = STRING_TOKEN (STR_ITBT_RTD3_EXIT_DELAY_HELP),
+      flags     = RESET_REQUIRED | INTERACTIVE,
+      minimum   = 0,
+      maximum   = 20000,
+      step      = 1,    // Stepping of 0 equates to a manual entering of a value, otherwise it will auto-increment with a left/right arrow
+      default   = 0,
+    endnumeric;
+
+
+    suppressif NOT ideqval TBT_SETUP_VOLATILE_DATA.ITbtRootPortsNumber >= 1;
+      suppressif ideqval SETUP_DATA.ITbtPcieRootPortSupported[0] == 0;
+        goto ITBT_ROOTPORT0_FORM_ID,
+          prompt = STRING_TOKEN(STR_ITBT_ROOTPORT0_FORM),
+          help = STRING_TOKEN(STR_ITBT_ROOTPORT0_FORM);
+      endif;
+    endif;
+    suppressif NOT ideqval TBT_SETUP_VOLATILE_DATA.ITbtRootPortsNumber >= 2;
+      suppressif ideqval SETUP_DATA.ITbtPcieRootPortSupported[1] == 0;
+        goto ITBT_ROOTPORT1_FORM_ID,
+          prompt = STRING_TOKEN(STR_ITBT_ROOTPORT1_FORM),
+          help = STRING_TOKEN(STR_ITBT_ROOTPORT1_FORM);
+      endif;
+    endif;
+    suppressif NOT ideqval TBT_SETUP_VOLATILE_DATA.ITbtRootPortsNumber >= 3;
+      suppressif ideqval SETUP_DATA.ITbtPcieRootPortSupported[2] == 0;
+        goto ITBT_ROOTPORT2_FORM_ID,
+          prompt = STRING_TOKEN(STR_ITBT_ROOTPORT2_FORM),
+          help = STRING_TOKEN(STR_ITBT_ROOTPORT2_FORM);
+      endif;
+    endif;
+    suppressif NOT ideqval TBT_SETUP_VOLATILE_DATA.ITbtRootPortsNumber >= 4;
+      suppressif ideqval SETUP_DATA.ITbtPcieRootPortSupported[3] == 0;
+        goto ITBT_ROOTPORT3_FORM_ID,
+          prompt = STRING_TOKEN(STR_ITBT_ROOTPORT3_FORM),
+          help = STRING_TOKEN(STR_ITBT_ROOTPORT3_FORM);
+      endif;
+    endif;
+    endform; // ITBT_FORM_ID
+
+    #include "TbtStringPool.hfr"
+    #define CONTROLLER_INDEX 0
+      #include "DiscreteTbtOptions.hfr"
+    #undef CONTROLLER_INDEX
+    #define CONTROLLER_INDEX 1
+      #include "DiscreteTbtOptions.hfr"
+    #undef CONTROLLER_INDEX
+
+    // ITBT Root Port Default Enable[01]/Disable[00] Value
+    #define ITBT_ROOTPORT0_DEFAULT_VALUE 1
+    #define ITBT_ROOTPORT1_DEFAULT_VALUE 1
+    #define ITBT_ROOTPORT2_DEFAULT_VALUE 1
+    #define ITBT_ROOTPORT3_DEFAULT_VALUE 1
+
+    #define ROOTPORT_INDEX 0
+      #include "IntegratedTbtOptions.hfr"
+    #undef ROOTPORT_INDEX
+    #define ROOTPORT_INDEX 1
+      #include "IntegratedTbtOptions.hfr"
+    #undef ROOTPORT_INDEX
+    #define ROOTPORT_INDEX 2
+      #include "IntegratedTbtOptions.hfr"
+    #undef ROOTPORT_INDEX
+    #define ROOTPORT_INDEX 3
+      #include "IntegratedTbtOptions.hfr"
+    #undef ROOTPORT_INDEX

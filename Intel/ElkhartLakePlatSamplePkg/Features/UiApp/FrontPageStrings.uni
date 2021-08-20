@@ -1,0 +1,107 @@
+/**@file
+
+    String definitions for BdsPlatform formset.
+
+ @copyright
+  INTEL CONFIDENTIAL
+  Copyright 2004 - 2016 Intel Corporation.
+
+  The source code contained or described herein and all documents related to the
+  source code ("Material") are owned by Intel Corporation or its suppliers or
+  licensors. Title to the Material remains with Intel Corporation or its suppliers
+  and licensors. The Material may contain trade secrets and proprietary and
+  confidential information of Intel Corporation and its suppliers and licensors,
+  and is protected by worldwide copyright and trade secret laws and treaty
+  provisions. No part of the Material may be used, copied, reproduced, modified,
+  published, uploaded, posted, transmitted, distributed, or disclosed in any way
+  without Intel's prior express written permission.
+
+  No license under any patent, copyright, trade secret or other intellectual
+  property right is granted to or conferred upon you by disclosure or delivery
+  of the Materials, either expressly, by implication, inducement, estoppel or
+  otherwise. Any license under such intellectual property rights must be
+  express and approved by Intel in writing.
+
+  Unless otherwise agreed by Intel in writing, you may not remove or alter
+  this notice or any other notice embedded in Materials by Intel or
+  Intel's suppliers or licensors in any way.
+
+  This file contains a 'Sample Driver' and is licensed as such under the terms
+  of your license agreement with Intel or your vendor. This file may be modified
+  by the user, subject to the additional terms of the license agreement.
+
+@par Specification
+**/
+
+
+/=#
+
+#langdef   en-US "English"
+#langdef   fr-FR "Français"
+
+#string STR_FRONT_PAGE_TITLE           #language en-US  "Front Page"
+                                       #language fr-FR  "Front Page"
+#string STR_FRONT_PAGE_COMPUTER_MODEL  #language en-US  ""
+                                       #language fr-FR  ""
+#string STR_FRONT_PAGE_CPU_MODEL       #language en-US  ""
+                                       #language fr-FR  ""
+#string STR_FRONT_PAGE_CPU_SPEED       #language en-US  ""
+                                       #language fr-FR  ""
+#string STR_FRONT_PAGE_MEMORY_SIZE     #language en-US  ""
+                                       #language fr-FR  ""
+#string STR_FRONT_PAGE_BIOS_VERSION    #language en-US  ""
+                                       #language fr-FR  ""
+#string STR_FRONT_PAGE_BANNER_0_LEFT   #language en-US  "Wonder Computer Model 1000Z  Manufactured by Intel®"
+                                       #language fr-FR  "Demander le Modèle d'Ordinateur 1000Z A Fabriqué par Intel®"
+#string STR_FRONT_PAGE_BANNER_0_RIGHT  #language en-US  "OK"
+                                       #language fr-FR  "Bon"
+#string STR_FRONT_PAGE_BANNER_1_LEFT   #language en-US  "2 Pentium® X Xeon processors running at 800Thz"
+                                       #language fr-FR  "2 Pentium® X les processeurs de Xeon courants à 800Thz"
+#string STR_FRONT_PAGE_BANNER_1_RIGHT  #language en-US  "24 TB System RAM"
+                                       #language fr-FR  "24 TB RAM de Système"
+#string STR_FRONT_PAGE_BANNER_2_LEFT   #language en-US  "ACME® EFI BIOS Version 13.5 Release 1039.92"
+                                       #language fr-FR  "ACME® EFI BIOS Version 13.5 Release 1039.92"
+#string STR_FRONT_PAGE_BANNER_3_LEFT   #language en-US  "Serial Number: 1Z123456789MARMAR (Need SMBIOS entries)"
+                                       #language fr-FR  "Numéro de série: 1Z123456789MARMAR (Les entrées de SMBIOS de besoin)"
+#string STR_CONTINUE_PROMPT            #language en-US  "Continue"
+                                       #language fr-FR  "Continuer"
+#string STR_CONTINUE_HELP              #language en-US  "This selection will direct the system to continue the booting process."
+                                       #language fr-FR  "Cette sélection dirigera le système pour continuer au charger de procédé"
+#string STR_LANGUAGE_SELECT            #language en-US  "Select Language"
+                                       #language fr-FR  "Choisir la Langue"
+#string STR_LANGUAGE_SELECT_HELP       #language en-US  "This is the option one adjusts to change the language for the current system"
+                                       #language fr-FR  "Ceci est l'option que celui ajuste changer la langue pour le système actuel"
+#string STR_BOOT_MANAGER               #language en-US  "Boot Manager Menu"
+                                       #language fr-FR  "Charger le Directeur"
+#string STR_BOOT_MANAGER_HELP          #language en-US  "This selection will take you to the Boot Manager Menu."
+                                       #language fr-FR  "Cette sélection vous prendra au Directeur de Botte"
+#string STR_BOOT_MAINT_MANAGER         #language en-US  "Boot Maintenance Manager Menu"
+                                       #language fr-FR  "Boot Maintenance Manager Menu"
+#string STR_BOOT_MAINT_MANAGER_HELP    #language en-US  "This selection will take you to the Boot Maintenance Manager Menu."
+                                       #language fr-FR  "Cette sélection vous prendra au Directeur d'Entretien"
+#string STR_TPV_MANAGER                #language en-US  "TPV EFI Device Manager"
+                                       #language fr-FR  "TPV EFI Device Manager"
+#string STR_TPV_MANAGER_HELP           #language en-US  "This selection will take you to the 3rd Party Vendor EFI Device Manager Menu."
+                                       #language fr-FR  "This selection will take you to the 3rd Party Vendor EFI Device Manager Menu."
+#string STR_TIME_OUT_PROMPT            #language en-US  "Boot process will continue in %d seconds"
+                                       #language fr-FR  "Le procédé de botte continuera dans %d secondes"
+#string STR_MISSING_STRING             #language en-US  "Missing String"
+                                       #language fr-FR  "Missing String"
+#string STR_EMPTY_STRING               #language en-US  ""
+                                       #language fr-FR  ""
+#string STR_RESET_STRING               #language en-US  "Reset"
+                                       #language fr-FR  "Reset"
+#string STR_RESET_STRING_HELP          #language en-US  "This selection will reset the system."
+                                       #language fr-FR  "Reset the current setting."
+#string STR_CONFIRM_RESET_INFO         #language en-US  "Configuration changed. Reset to apply it Now."
+                                       #language fr-FR  "Configuration changed. Reset to apply it Now."
+#string STR_RESET_INPUT                #language en-US  "Press ENTER to reset"
+                                       #language fr-FR  "Press ENTER to reset"
+#string ARE_YOU_SURE_YES               #language en-US  "Y"
+                                       #language fr-FR  "Y"
+#string ARE_YOU_SURE_NO                #language en-US  "N"
+                                       #language fr-FR  "N"
+#string SAVE_CHANGES                   #language en-US  "Changes have not saved. Save Changes and exit?"
+                                       #language fr-FR  "Enregistrer les modifications et quitter?"
+#string ARE_YOU_SURE                   #language en-US  "Press 'Y' to save and exit, 'N' to discard and exit."
+                                       #language fr-FR  "Pressez 'Y' pour sauvegarder et quitter, 'N' de se défaire et de sortie"

@@ -1,0 +1,195 @@
+/** @file
+
+@copyright
+  INTEL CONFIDENTIAL
+  Copyright 2019 Intel Corporation.
+
+  The source code contained or described herein and all documents related to the
+  source code ("Material") are owned by Intel Corporation or its suppliers or
+  licensors. Title to the Material remains with Intel Corporation or its suppliers
+  and licensors. The Material may contain trade secrets and proprietary and
+  confidential information of Intel Corporation and its suppliers and licensors,
+  and is protected by worldwide copyright and trade secret laws and treaty
+  provisions. No part of the Material may be used, copied, reproduced, modified,
+  published, uploaded, posted, transmitted, distributed, or disclosed in any way
+  without Intel's prior express written permission.
+
+  No license under any patent, copyright, trade secret or other intellectual
+  property right is granted to or conferred upon you by disclosure or delivery
+  of the Materials, either expressly, by implication, inducement, estoppel or
+  otherwise. Any license under such intellectual property rights must be
+  express and approved by Intel in writing.
+
+  Unless otherwise agreed by Intel in writing, you may not remove or alter
+  this notice or any other notice embedded in Materials by Intel or
+  Intel's suppliers or licensors in any way.
+
+  This file contains a 'Sample Driver' and is licensed as such under the terms
+  of your license agreement with Intel or your vendor. This file may be modified
+  by the user, subject to the additional terms of the license agreement.
+
+@par Specification
+**/
+
+form formid = AUTO_ID(PCH_PSE_PWM_PIN_MUX_FORM_ID),
+  title     = STRING_TOKEN(STR_PSE_PWM_PIN_MUX_OPTIONS_FORM_TITLE);
+
+  SEPARATOR
+
+  grayoutif ideqval PCH_SETUP.PchPseTgpioPinEnable[29] == 1;
+    checkbox varid  = PCH_SETUP.PchPsePwmPinEnable[0],
+      prompt   = STRING_TOKEN(STR_PSE_GPIO_PWM_PIN0_PROMPT),
+      help     = STRING_TOKEN(STR_PSE_GPIO_PWM_PIN_ASSIGN_HELP),
+      flags    = 0 | RESET_REQUIRED,
+      key      = 0,
+    endcheckbox;
+  endif;
+
+  grayoutif ideqval PCH_SETUP.PchPseUartEnable[3]>= 1 OR
+            ideqval PCH_SETUP.PchPseTgpioPinEnable[30] == 1;
+    checkbox varid  = PCH_SETUP.PchPsePwmPinEnable[1],
+      prompt   = STRING_TOKEN(STR_PSE_GPIO_PWM_PIN1_PROMPT),
+      help     = STRING_TOKEN(STR_PSE_GPIO_PWM_PIN_ASSIGN_HELP),
+      flags    = 0 | RESET_REQUIRED,
+      key      = 0,
+    endcheckbox;
+  endif;
+
+  grayoutif ideqval PCH_SETUP.PchPseSpiEnable[1]>= 1 OR
+            ideqval PCH_SETUP.PchPseTgpioPinEnable[36] == 1;
+    checkbox varid  = PCH_SETUP.PchPsePwmPinEnable[2],
+      prompt   = STRING_TOKEN(STR_PSE_GPIO_PWM_PIN2_PROMPT),
+      help     = STRING_TOKEN(STR_PSE_GPIO_PWM_PIN_ASSIGN_HELP),
+      flags    = 0 | RESET_REQUIRED,
+      key      = 0,
+    endcheckbox;
+  endif;
+
+  grayoutif ideqval PCH_SETUP.PchPseSpiEnable[0]>= 1 OR
+            ideqval PCH_SETUP.PchPseTgpioPinEnable[39] == 1;
+    checkbox varid  = PCH_SETUP.PchPsePwmPinEnable[3],
+      prompt   = STRING_TOKEN(STR_PSE_GPIO_PWM_PIN3_PROMPT),
+      help     = STRING_TOKEN(STR_PSE_GPIO_PWM_PIN_ASSIGN_HELP),
+      flags    = 0 | RESET_REQUIRED,
+      key      = 0,
+    endcheckbox;
+  endif;
+
+  grayoutif ideqval PCH_SETUP.PchPseTgpioPinEnable[41] == 1;
+    checkbox varid  = PCH_SETUP.PchPsePwmPinEnable[4],
+      prompt   = STRING_TOKEN(STR_PSE_GPIO_PWM_PIN4_PROMPT),
+      help     = STRING_TOKEN(STR_PSE_GPIO_PWM_PIN_ASSIGN_HELP),
+      flags    = 0 | RESET_REQUIRED,
+      key      = 0,
+    endcheckbox;
+  endif;
+
+  grayoutif ideqval PCH_SETUP.PchPseTgpioPinEnable[42] == 1;
+    checkbox varid  = PCH_SETUP.PchPsePwmPinEnable[5],
+      prompt   = STRING_TOKEN(STR_PSE_GPIO_PWM_PIN5_PROMPT),
+      help     = STRING_TOKEN(STR_PSE_GPIO_PWM_PIN_ASSIGN_HELP),
+      flags    = 0 | RESET_REQUIRED,
+      key      = 0,
+    endcheckbox;
+  endif;
+
+  grayoutif ideqval PCH_SETUP.PchPseSpiEnable[1]>= 1 OR
+            ideqval PCH_SETUP.PchPseTgpioPinEnable[35] == 1;
+    checkbox varid  = PCH_SETUP.PchPsePwmPinEnable[6],
+      prompt   = STRING_TOKEN(STR_PSE_GPIO_PWM_PIN6_PROMPT),
+      help     = STRING_TOKEN(STR_PSE_GPIO_PWM_PIN_ASSIGN_HELP),
+      flags    = 0 | RESET_REQUIRED,
+      key      = 0,
+    endcheckbox;
+  endif;
+
+  grayoutif ideqval PCH_SETUP.PchPseTgpioPinEnable[55] == 1;
+    checkbox varid  = PCH_SETUP.PchPsePwmPinEnable[7],
+      prompt   = STRING_TOKEN(STR_PSE_GPIO_PWM_PIN7_PROMPT),
+      help     = STRING_TOKEN(STR_PSE_GPIO_PWM_PIN_ASSIGN_HELP),
+      flags    = 0 | RESET_REQUIRED,
+      key      = 0,
+    endcheckbox;
+  endif;
+
+  grayoutif ideqval PCH_SETUP.PchPseTgpioPinEnable[10] == 1 OR
+            ideqval PCH_SETUP.PchPseTgpioPinEnable[44] == 1;
+    checkbox varid  = PCH_SETUP.PchPsePwmPinEnable[8],
+      prompt   = STRING_TOKEN(STR_PSE_GPIO_PWM_PIN8_PROMPT),
+      help     = STRING_TOKEN(STR_PSE_GPIO_PWM_PIN_ASSIGN_HELP),
+      flags    = 0 | RESET_REQUIRED,
+      key      = 0,
+    endcheckbox;
+  endif;
+
+  //grayoutif ideqval PCH_SETUP.PchPseTgpioPinEnable[11] == 1 OR
+  //          ideqval PCH_SETUP.PchPseTgpioPinEnable[17] == 1;
+  grayoutif TRUE; // PSE PWM pin[9] not exposed on platform
+    checkbox varid  = PCH_SETUP.PchPsePwmPinEnable[9],
+      prompt   = STRING_TOKEN(STR_PSE_GPIO_PWM_PIN9_PROMPT),
+      help     = STRING_TOKEN(STR_PSE_GPIO_PWM_PIN_ASSIGN_HELP),
+      flags    = 0 | RESET_REQUIRED,
+      key      = 0,
+    endcheckbox;
+  endif;
+
+  //grayoutif ideqval PCH_SETUP.PchPseI2cEnable[5] >= 1 OR
+  //          ideqval PCH_SETUP.PchPseTgpioPinEnable[18] == 1;
+  grayoutif TRUE; // PSE PWM pin[10] not exposed on platform
+    checkbox varid  = PCH_SETUP.PchPsePwmPinEnable[10],
+      prompt   = STRING_TOKEN(STR_PSE_GPIO_PWM_PIN10_PROMPT),
+      help     = STRING_TOKEN(STR_PSE_GPIO_PWM_PIN_ASSIGN_HELP),
+      flags    = 0 | RESET_REQUIRED,
+      key      = 0,
+    endcheckbox;
+  endif;
+
+  //grayoutif ideqval PCH_SETUP.PchPseI2cEnable[5] >= 1 OR
+  //          ideqval PCH_SETUP.PchPseTgpioPinEnable[46] == 1;
+  grayoutif TRUE; // PSE PWM pin[11] not exposed on platform
+    checkbox varid  = PCH_SETUP.PchPsePwmPinEnable[11],
+      prompt   = STRING_TOKEN(STR_PSE_GPIO_PWM_PIN11_PROMPT),
+      help     = STRING_TOKEN(STR_PSE_GPIO_PWM_PIN_ASSIGN_HELP),
+      flags    = 0 | RESET_REQUIRED,
+      key      = 0,
+    endcheckbox;
+  endif;
+
+  //grayoutif ideqval PCH_SETUP.PchPseTgpioPinEnable[23] == 1;
+  grayoutif TRUE; // PSE PWM pin[12] not exposed on platform
+    checkbox varid  = PCH_SETUP.PchPsePwmPinEnable[12],
+      prompt   = STRING_TOKEN(STR_PSE_GPIO_PWM_PIN12_PROMPT),
+      help     = STRING_TOKEN(STR_PSE_GPIO_PWM_PIN_ASSIGN_HELP),
+      flags    = 0 | RESET_REQUIRED,
+      key      = 0,
+    endcheckbox;
+  endif;
+
+  //grayoutif ideqval PCH_SETUP.PchPseTgpioPinEnable[24] == 1;
+  grayoutif TRUE; // PSE PWM pin[13] not exposed on platform
+    checkbox varid  = PCH_SETUP.PchPsePwmPinEnable[13],
+      prompt   = STRING_TOKEN(STR_PSE_GPIO_PWM_PIN13_PROMPT),
+      help     = STRING_TOKEN(STR_PSE_GPIO_PWM_PIN_ASSIGN_HELP),
+      flags    = 0 | RESET_REQUIRED,
+      key      = 0,
+    endcheckbox;
+  endif;
+
+  grayoutif ideqval PCH_SETUP.PchPseTgpioPinEnable[18] == 1;
+    checkbox varid  = PCH_SETUP.PchPsePwmPinEnable[14],
+      prompt   = STRING_TOKEN(STR_PSE_GPIO_PWM_PIN14_PROMPT),
+      help     = STRING_TOKEN(STR_PSE_GPIO_PWM_PIN_ASSIGN_HELP),
+      flags    = 0 | RESET_REQUIRED,
+      key      = 0,
+    endcheckbox;
+  endif;
+
+  checkbox varid  = PCH_SETUP.PchPsePwmPinEnable[15],
+    prompt   = STRING_TOKEN(STR_PSE_GPIO_PWM_PIN15_PROMPT),
+    help     = STRING_TOKEN(STR_PSE_ECLITE_RESERVED_ASSIGN_HELP),
+    flags    = CHECKBOX_DEFAULT | RESET_REQUIRED,
+    key      = 0,
+    default  = TRUE,
+  endcheckbox;
+
+endform; //End of PCH_PSE_PWM_PIN_MUX_FORM_ID

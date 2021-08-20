@@ -1,0 +1,79 @@
+## @file
+#  Provides ACPI data for platform security discovery
+#  Spec Compliance Info:
+# Intel PSD spec
+#  This driver implements PSD as per definition in PSD spec.
+#
+#@copyright
+#  INTEL CONFIDENTIAL
+#  Copyright 2019 - 2020 Intel Corporation.
+##
+
+[Defines]
+  INF_VERSION                    = 0x00010017
+  BASE_NAME                      = PsdsAcpiDxe
+  FILE_GUID                      = D815413A-D96D-40A6-9F9F-88E09E36FA49
+  MODULE_TYPE                    = DXE_DRIVER
+  VERSION_STRING                 = 1.0
+  ENTRY_POINT                    = AcpiPsdsDxeEntryPoint
+
+[Sources]
+  AcpiPsds.h
+  AcpiPsds.c
+
+[Packages]
+  MdePkg/MdePkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+  UefiCpuPkg/UefiCpuPkg.dec
+  ElkhartLakeBoardPkg/BoardPkg.dec
+  ClientSiliconPkg/ClientSiliconPkg.dec
+  ClientOneSiliconPkg/SiPkg.dec
+  ElkhartLakePlatSamplePkg/PlatformPkg.dec
+
+
+[LibraryClasses]
+  UefiDriverEntryPoint
+  BaseLib
+  DebugLib
+  IoLib
+  PcdLib
+  UefiBootServicesTableLib
+  UefiRuntimeServicesTableLib
+  BaseMemoryLib
+  HobLib
+  AslUpdateLib
+  BoardAcpiTableLib
+  ReportStatusCodeLib
+  DxeMeLib
+  CpuPlatformLib
+  CpuCommonLib
+
+
+
+[Guids]
+  gEfiAcpiTableStorageGuid                      ## CONSUMES
+  gRcAcpiTableStorageGuid                       ## CONSUMES
+  gOcAcpiTableStorageGuid                       ## CONSUMES
+  gEfiGlobalVariableGuid                        ## CONSUMES
+  gEfiHobListGuid                               ## CONSUMES
+  gEfiFileInfoGuid                              ## CONSUMES
+  gMeBiosPayloadHobGuid                         ## CONSUMES
+  gEfiEndOfDxeEventGroupGuid                    ## CONSUMES
+
+
+[Protocols]
+  gEfiAcpiTableProtocolGuid                     ## CONSUMES
+
+[Pcd]
+  gEfiMdeModulePkgTokenSpaceGuid.PcdAcpiDefaultOemTableId       ## SOMETIMES_CONSUMES
+  gEfiMdeModulePkgTokenSpaceGuid.PcdAcpiDefaultOemRevision      ## SOMETIMES_CONSUMES
+  gEfiMdeModulePkgTokenSpaceGuid.PcdAcpiDefaultCreatorId        ## SOMETIMES_CONSUMES
+  gEfiMdeModulePkgTokenSpaceGuid.PcdAcpiDefaultCreatorRevision  ## SOMETIMES_CONSUMES
+  gSiPkgTokenSpaceGuid.PcdEmbeddedEnable                ## CONSUMES
+
+[Depex]
+  gEfiAcpiTableProtocolGuid AND
+  gPlatformNvsAreaProtocolGuid
+
+
+

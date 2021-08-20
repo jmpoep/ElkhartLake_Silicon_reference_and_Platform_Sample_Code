@@ -1,0 +1,118 @@
+/**@file
+
+@copyright
+ Copyright (c) 2010 - 2017 Intel Corporation. All rights reserved
+ This software and associated documentation (if any) is furnished
+ under a license and may only be used or copied in accordance
+ with the terms of the license. Except as permitted by the
+ license, no part of this software or documentation may be
+ reproduced, stored in a retrieval system, or transmitted in any
+ form or by any means without the express written consent of
+ Intel Corporation.
+ This file contains 'Framework Code' and is licensed as such
+ under the terms of your license agreement with Intel or your
+ vendor. This file may not be modified, except as allowed by
+ additional terms of your license agreement.
+
+@par Specification
+**/
+
+
+#ifndef __LEGACY_USB_CONFIG_H__
+#define __LEGACY_USB_CONFIG_H__
+
+#define USB_DRIVER_MAJOR_VER	0x13
+#define UHCI_SUPPORT	1
+#define OHCI_SUPPORT	1
+#define EHCI_SUPPORT	1
+#define XHCI_SUPPORT	1
+#define USB_HOTPLUG_FDD	0
+#define USB_HOTPLUG_HDD	0
+#define USB_HOTPLUG_CDROM	0
+#define HIDE_USB_SUPPORT_SETUP_QUESTION	0
+#define KBC_EMULATION_8MSTD_OVERRIDE	0x19
+#define KEY_REPEAT_DELAY	0x2
+#define KEY_REPEAT_INITIAL_DELAY	0x6
+#define USB_KEYREPEAT_INTERVAL	0
+#define USB_EHCI_HANDOFF_SUPPORT	1
+#define XHCI_EVENT_SERVICE_MODE	0x0
+#define USB_DIFFERENTIATE_IDENTICAL_DEVICE_NAME	0
+#define USB_MASS_STORAGE_DEVICE_NAME	0x0
+#define HIDE_USB_HISPEED_SUPPORT_SETUP_QUESTION	1
+#define USB_INTERRUPT_POLLING_PERIOD	80000
+#define USB_OHCI_HANDOFF_SUPPORT	0
+#define HIDE_USB_XHCI_LEGACY_SUPPORT_SETUP_QUESTION	0
+#define USB_SETUP_VARIABLE_RUNTIME_ACCESS	0
+#define DEFAULT_XHCI_HANDOFF_OPTION	1
+#define USB_STORAGE_DEVICE_RMB_CHECK	1
+#define USB_IRQ_SUPPORT	0
+#define USB_RESET_PORT_POLICY	1
+#define USB_DEV_KBD	1
+#define USB_DEV_MOUSE	1
+#define USB_DEV_HUB	1
+#define USB_DEV_MASS	1
+#define USB_DEV_POINT	1
+#define MEM_PAGE_COUNT	0x8
+#define USB_SEND_COMMAND_TO_KBC	0x60
+#define USB_MOUSE_UPDATE_EBDA_DATA	1
+#define EHCI_64BIT_DATA_STRUCTURE	1
+#define EHCI_ASYNC_BELL_SUPPORT	0
+#define USB_DEV_HID_COUNT	0xf
+#define USB_DEV_HUB_COUNT	0xc
+#define USB_DEV_MASS_COUNT	0x6
+#define USB_DEV_CCID	0
+#define USB_DEV_CCID_COUNT	0x6
+#define USE_T0_T1_PROTOCOL	0x1
+#define CCID_USE_INTERRUPT_INSERTION_REMOVAL	0x1
+#define USB_DEV_UNSUPPORTED	0x10
+#define USB_START_UNIT_BEFORE_MSD_ENUMERATION	0
+#define USB_DEBUG_MESSAGES	0x1
+#define TopDebugLevel	0x3
+#define BottomDebugLevel	0x3
+#define USB_SWSMI	0x31
+#define USB_MASS_EMULATION_NATIVE	1
+#define USB_MASS_EMULATION_FOR_NO_MEDIA	1
+#define MAX_SIZE_FOR_USB_FLOPPY_EMULATION	0x212
+#define REMOVE_USB_STORAGE_FROM_BBS_IF_NO_MEDIA	0
+#define HIGHSPEED_MAX_BULK_DATA_SIZE	0x4000
+#define FULLSPEED_MAX_BULK_DATA_SIZE_PER_FRAME	0x380
+#define EXTRA_CHECK_DEVICE_READY	0
+#define USB_HID_KEYREPEAT_USE_SETIDLE	0x0
+#define USB_EFIMS_DIRECT_ACCESS	0
+#define BOOT_PROTOCOL_SUPPORT	0
+#define CLEAR_USB_KB_BUFFER_AT_READYTOBOOT	0
+#define SKIP_CARD_READER_CONNECT_BEEP_IF_NO_MEDIA	0
+#define PCH_EHCI_OWNERSHIP_CHANGE_MECHANISM	0
+#define LEGACY_USB_DISABLE_FOR_USB_MASS	0
+#define XHCI_COMPLIANCE_MODE_WORKAROUND	1
+#define SHOW_SKIP_PORT_INFORMATION	0
+#define EFI_USB_HC_INTERRUPT_OUT_SUPPORT	1
+#define USB_ACPI_ENABLE_WORKAROUND	1
+#define USB_IAD_PROTOCOL_SUPPORT	0
+#define USB_ISOCTRANSFER_SUPPORT	1
+#define UINT13_SUPPORT	1
+#define USB_I13_DRIVER_VERSION	0x1
+#define USBPEI_SUPPORT	1
+#define UHCI_PEI_SUPPORT	0
+#define OHCI_PEI_SUPPORT	0
+#define PEI_UHCI_IOBASE	0x4000
+#define PEI_UHCI_PCI_DEVICES	{0}
+#define PEI_EHCI_PCI_BDFS	{0x1A0000, 0x1D0000}
+#define PEI_EHCI_MEM_BASE_ADDRESSES	{0xDFFFF000, 0xDFFFFC00}
+#define PEI_OHCI_IOBASE	0xfc087000
+#define PEI_XHCI_MMIOSIZE	0x10000
+#define PEI_USB_RECOVERYREQUEST_RETRIES	0x2
+#define PEI_USB_RECOVERYREQUEST_TIMEOUT	0x1e
+#define PEI_USB_RECOVERYREQUEST_KEY_MODIIFIER_VALUES	8, 4,
+#define PEI_USB_RECOVERYREQUEST_KEY_EFISCANCODE	0x5
+#define PEI_USB_KEYBOARD_NUMLOCK_ON	1
+#define USBR_OHCI_CONTROLLER_PCI_ADDRESS	{0x0, 0x12, 0x0},{0x0, 0x12, 0x1},{0x0, 0x13, 0x0},{0x0, 0x13, 0x1},{0x0, 0x14, 0x5},
+#define USBR_OHCI_CONTROLLER_PCI_REGISTER_VALUE	{ 32, 0x40, 0x300, 0x0 }, { 32, 0xc, 0x2010, 0x0 }, { 32, 0x4, 0x6, 0x0 },
+#define USB_PEI_KEYBOARD_SUPPORT	0
+#define KBC_SUPPORT	1
+#define USB_RUNTIME_DRIVER_IN_SMM	0x2
+#define DEFAULT_USB_EMUL6064_OPTION	0
+#define PEI_XHCI_MMIOBASE	0xfe800000
+
+
+#endif

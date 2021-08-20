@@ -1,0 +1,333 @@
+/** @file
+  The PEI_ATA_PASS_THRU_PPI provides information about an ATA controller and the ability
+  to send ATA Command Blocks to any ATA device attached to that ATA controller.in PEI phase.
+   The information includes the attributes of the ATA controller.
+
+@copyright
+  INTEL CONFIDENTIAL
+  Copyright 2018 Intel Corporation.
+
+  The source code contained or described herein and all documents related to the
+  source code ("Material") are owned by Intel Corporation or its suppliers or
+  licensors. Title to the Material remains with Intel Corporation or its suppliers
+  and licensors. The Material may contain trade secrets and proprietary and
+  confidential information of Intel Corporation and its suppliers and licensors,
+  and is protected by worldwide copyright and trade secret laws and treaty
+  provisions. No part of the Material may be used, copied, reproduced, modified,
+  published, uploaded, posted, transmitted, distributed, or disclosed in any way
+  without Intel's prior express written permission.
+
+  No license under any patent, copyright, trade secret or other intellectual
+  property right is granted to or conferred upon you by disclosure or delivery
+  of the Materials, either expressly, by implication, inducement, estoppel or
+  otherwise. Any license under such intellectual property rights must be
+  express and approved by Intel in writing.
+
+  Unless otherwise agreed by Intel in writing, you may not remove or alter
+  this notice or any other notice embedded in Materials by Intel or
+  Intel's suppliers or licensors in any way.
+
+  This file contains a 'Sample Driver' and is licensed as such under the terms
+  of your license agreement with Intel or your vendor. This file may be modified
+  by the user, subject to the additional terms of the license agreement.
+
+@par Specification Reference:
+**/
+
+#ifndef __PEI_ATA_PASS_THRU_PPI_H__
+#define __PEI_ATA_PASS_THRU_PPI_H__
+
+#define PEI_ATA_PASS_THRU_PPI_GUID \
+  { \
+    0xa0e44ace, 0x9777, 0x4598, { 0x9a, 0xfe, 0x28, 0x8a, 0x83, 0xf4, 0xda, 0x96 } \
+  }
+
+typedef struct _PEI_ATA_PASS_THRU_PPI PEI_ATA_PASS_THRU_PPI;
+
+typedef struct {
+  UINT32 Attributes;
+  UINT32 IoAlign;
+} EFI_ATA_PASS_THRU_MODE;
+
+///
+/// If this bit is set, then the EFI_ATA_PASS_THRU_PROTOCOL interface is for physical
+/// devices on the ATA controller.
+///
+#define EFI_ATA_PASS_THRU_ATTRIBUTES_PHYSICAL   0x0001
+///
+/// If this bit is set, then the EFI_ATA_PASS_THRU_PROTOCOL interface is for logical
+/// devices on the ATA controller.
+///
+#define EFI_ATA_PASS_THRU_ATTRIBUTES_LOGICAL    0x0002
+///
+/// If this bit is set, then the EFI_ATA_PASS_THRU_PROTOCOL interface supports non blocking
+/// I/O. Every EFI_ATA_PASS_THRU_PROTOCOL must support blocking I/O. The support of non-blocking
+/// I/O is optional.
+///
+#define EFI_ATA_PASS_THRU_ATTRIBUTES_NONBLOCKIO 0x0004
+
+typedef struct _EFI_ATA_COMMAND_BLOCK {
+  UINT8 Reserved1[2];
+  UINT8 AtaCommand;
+  UINT8 AtaFeatures;
+  UINT8 AtaSectorNumber;
+  UINT8 AtaCylinderLow;
+  UINT8 AtaCylinderHigh;
+  UINT8 AtaDeviceHead;
+  UINT8 AtaSectorNumberExp;
+  UINT8 AtaCylinderLowExp;
+  UINT8 AtaCylinderHighExp;
+  UINT8 AtaFeaturesExp;
+  UINT8 AtaSectorCount;
+  UINT8 AtaSectorCountExp;
+  UINT8 Reserved2[6];
+} EFI_ATA_COMMAND_BLOCK;
+
+typedef struct _EFI_ATA_STATUS_BLOCK {
+  UINT8 Reserved1[2];
+  UINT8 AtaStatus;
+  UINT8 AtaError;
+  UINT8 AtaSectorNumber;
+  UINT8 AtaCylinderLow;
+  UINT8 AtaCylinderHigh;
+  UINT8 AtaDeviceHead;
+  UINT8 AtaSectorNumberExp;
+  UINT8 AtaCylinderLowExp;
+  UINT8 AtaCylinderHighExp;
+  UINT8 Reserved2;
+  UINT8 AtaSectorCount;
+  UINT8 AtaSectorCountExp;
+  UINT8 Reserved3[6];
+} EFI_ATA_STATUS_BLOCK;
+
+typedef UINT8 EFI_ATA_PASS_THRU_CMD_PROTOCOL;
+
+#define EFI_ATA_PASS_THRU_PROTOCOL_ATA_HARDWARE_RESET 0x00
+#define EFI_ATA_PASS_THRU_PROTOCOL_ATA_SOFTWARE_RESET 0x01
+#define EFI_ATA_PASS_THRU_PROTOCOL_ATA_NON_DATA       0x02
+#define EFI_ATA_PASS_THRU_PROTOCOL_PIO_DATA_IN        0x04
+#define EFI_ATA_PASS_THRU_PROTOCOL_PIO_DATA_OUT       0x05
+#define EFI_ATA_PASS_THRU_PROTOCOL_DMA                0x06
+#define EFI_ATA_PASS_THRU_PROTOCOL_DMA_QUEUED         0x07
+#define EFI_ATA_PASS_THRU_PROTOCOL_DEVICE_DIAGNOSTIC  0x08
+#define EFI_ATA_PASS_THRU_PROTOCOL_DEVICE_RESET       0x09
+#define EFI_ATA_PASS_THRU_PROTOCOL_UDMA_DATA_IN       0x0A
+#define EFI_ATA_PASS_THRU_PROTOCOL_UDMA_DATA_OUT      0x0B
+#define EFI_ATA_PASS_THRU_PROTOCOL_FPDMA              0x0C
+#define EFI_ATA_PASS_THRU_PROTOCOL_RETURN_RESPONSE    0xFF
+
+typedef UINT8 EFI_ATA_PASS_THRU_LENGTH;
+
+#define EFI_ATA_PASS_THRU_LENGTH_BYTES                0x80
+
+
+#define EFI_ATA_PASS_THRU_LENGTH_MASK                 0x70
+#define EFI_ATA_PASS_THRU_LENGTH_NO_DATA_TRANSFER     0x00
+#define EFI_ATA_PASS_THRU_LENGTH_FEATURES             0x10
+#define EFI_ATA_PASS_THRU_LENGTH_SECTOR_COUNT         0x20
+#define EFI_ATA_PASS_THRU_LENGTH_TPSIU                0x30
+
+#define EFI_ATA_PASS_THRU_LENGTH_COUNT                0x0F
+
+typedef struct {
+  ///
+  /// A pointer to the sense data that was generated by the execution of the ATA
+  /// command. It must be aligned to the boundary specified in the IoAlign field
+  /// in the EFI_ATA_PASS_THRU_MODE structure.
+  ///
+  EFI_ATA_STATUS_BLOCK           *Asb;
+  ///
+  /// A pointer to buffer that contains the Command Data Block to send to the ATA
+  /// device specified by Port and PortMultiplierPort.
+  ///
+  EFI_ATA_COMMAND_BLOCK          *Acb;
+  ///
+  /// The timeout, in 100 ns units, to use for the execution of this ATA command.
+  /// A Timeout value of 0 means that this function will wait indefinitely for the
+  /// ATA command to execute. If Timeout is greater than zero, then this function
+  /// will return EFI_TIMEOUT if the time required to execute the ATA command is
+  /// greater than Timeout.
+  ///
+  UINT64                         Timeout;
+  ///
+  /// A pointer to the data buffer to transfer between the ATA controller and the
+  /// ATA device for read and bidirectional commands. For all write and non data
+  /// commands where InTransferLength is 0 this field is optional and may be NULL.
+  /// If this field is not NULL, then it must be aligned on the boundary specified
+  /// by the IoAlign field in the EFI_ATA_PASS_THRU_MODE structure.
+  ///
+  VOID                           *InDataBuffer;
+  ///
+  /// A pointer to the data buffer to transfer between the ATA controller and the
+  /// ATA device for write or bidirectional commands. For all read and non data
+  /// commands where OutTransferLength is 0 this field is optional and may be NULL.
+  /// If this field is not NULL, then it must be aligned on the boundary specified
+  /// by the IoAlign field in the EFI_ATA_PASS_THRU_MODE structure.
+  ///
+  VOID                           *OutDataBuffer;
+  ///
+  /// On input, the size, in bytes, of InDataBuffer. On output, the number of bytes
+  /// transferred between the ATA controller and the ATA device. If InTransferLength
+  /// is larger than the ATA controller can handle, no data will be transferred,
+  /// InTransferLength will be updated to contain the number of bytes that the ATA
+  /// controller is able to transfer, and EFI_BAD_BUFFER_SIZE will be returned.
+  ///
+  UINT32                         InTransferLength;
+  ///
+  /// On Input, the size, in bytes of OutDataBuffer. On Output, the Number of bytes
+  /// transferred between ATA Controller and the ATA device. If OutTransferLength is
+  /// larger than the ATA controller can handle, no data will be transferred,
+  /// OutTransferLength will be updated to contain the number of bytes that the ATA
+  /// controller is able to transfer, and EFI_BAD_BUFFER_SIZE will be returned.
+  ///
+  UINT32                         OutTransferLength;
+  ///
+  /// Specifies the protocol used when the ATA device executes the command.
+  ///
+  EFI_ATA_PASS_THRU_CMD_PROTOCOL Protocol;
+  ///
+  /// Specifies the way in which the ATA command length is encoded.
+  ///
+  EFI_ATA_PASS_THRU_LENGTH       Length;
+} EFI_ATA_PASS_THRU_COMMAND_PACKET;
+
+
+/**
+  Sends an ATA command to an ATA device that is attached to the ATA controller. This function
+  supports both blocking I/O and non-blocking I/O. The blocking I/O functionality is required,
+  and the non-blocking I/O functionality is optional.
+
+  @param[in]     This                A pointer to the EFI_ATA_PASS_THRU_PROTOCOL instance.
+  @param[in]     Port                The port number of the ATA device to send the command.
+  @param[in]     PortMultiplierPort  The port multiplier port number of the ATA device to send the command.
+                                     If there is no port multiplier, then specify 0xFFFF.
+  @param[in,out] Packet              A pointer to the ATA command to send to the ATA device specified by Port
+                                     and PortMultiplierPort.
+  @param[in]     Event               If non-blocking I/O is not supported then Event is ignored, and blocking
+                                     I/O is performed. If Event is NULL, then blocking I/O is performed. If
+                                     Event is not NULL and non blocking I/O is supported, then non-blocking
+                                     I/O is performed, and Event will be signaled when the ATA command completes.
+
+  @retval EFI_SUCCESS                The ATA command was sent by the host. For bi-directional commands,
+                                     InTransferLength bytes were transferred from InDataBuffer. For write and
+                                     bi-directional commands, OutTransferLength bytes were transferred by OutDataBuffer.
+  @retval EFI_BAD_BUFFER_SIZE        The ATA command was not executed. The number of bytes that could be transferred
+                                     is returned in InTransferLength. For write and bi-directional commands,
+                                     OutTransferLength bytes were transferred by OutDataBuffer.
+  @retval EFI_NOT_READY              The ATA command could not be sent because there are too many ATA commands
+                                     already queued. The caller may retry again later.
+  @retval EFI_DEVICE_ERROR           A device error occurred while attempting to send the ATA command.
+  @retval EFI_INVALID_PARAMETER      Port, PortMultiplierPort, or the contents of Acb are invalid. The ATA
+                                     command was not sent, so no additional status information is available.
+
+**/
+typedef
+EFI_STATUS
+(EFIAPI *PEI_ATA_PASS_THRU_PASSTHRU)(
+  IN     PEI_ATA_PASS_THRU_PPI            *This,
+  IN     UINT16                           Port,
+  IN     UINT16                           PortMultiplierPort,
+  IN OUT EFI_ATA_PASS_THRU_COMMAND_PACKET *Packet
+  );
+
+/**
+  Used to retrieve the list of legal port numbers for ATA devices on an ATA controller.
+  These can either be the list of ports where ATA devices are actually present or the
+  list of legal port numbers for the ATA controller. Regardless, the caller of this
+  function must probe the port number returned to see if an ATA device is actually
+  present at that location on the ATA controller.
+
+  The GetNextPort() function retrieves the port number on an ATA controller. If on input
+  Port is 0xFFFF, then the port number of the first port on the ATA controller is returned
+  in Port and EFI_SUCCESS is returned.
+
+  If Port is a port number that was returned on a previous call to GetNextPort(), then the
+  port number of the next port on the ATA controller is returned in Port, and EFI_SUCCESS
+  is returned. If Port is not 0xFFFF and Port was not returned on a previous call to
+  GetNextPort(), then EFI_INVALID_PARAMETER is returned.
+
+  If Port is the port number of the last port on the ATA controller, then EFI_NOT_FOUND is
+  returned.
+
+  @param[in]     This           A pointer to the EFI_ATA_PASS_THRU_PROTOCOL instance.
+  @param[in,out] Port           On input, a pointer to the port number on the ATA controller.
+                                On output, a pointer to the next port number on the ATA
+                                controller. An input value of 0xFFFF retrieves the first port
+                                number on the ATA controller.
+
+  @retval EFI_SUCCESS           The next port number on the ATA controller was returned in Port.
+  @retval EFI_NOT_FOUND         There are no more ports on this ATA controller.
+  @retval EFI_INVALID_PARAMETER Port is not 0xFFFF and Port was not returned on a previous call
+                                to GetNextPort().
+
+**/
+typedef
+EFI_STATUS
+(EFIAPI *PEI_ATA_PASS_THRU_GET_NEXT_PORT)(
+  IN PEI_ATA_PASS_THRU_PPI      *This,
+  IN OUT UINT16                 *Port
+  );
+
+/**
+  Used to retrieve the list of legal port multiplier port numbers for ATA devices on a port of an ATA
+  controller. These can either be the list of port multiplier ports where ATA devices are actually
+  present on port or the list of legal port multiplier ports on that port. Regardless, the caller of this
+  function must probe the port number and port multiplier port number returned to see if an ATA
+  device is actually present.
+
+  The GetNextDevice() function retrieves the port multiplier port number of an ATA device
+  present on a port of an ATA controller.
+
+  If PortMultiplierPort points to a port multiplier port number value that was returned on a
+  previous call to GetNextDevice(), then the port multiplier port number of the next ATA device
+  on the port of the ATA controller is returned in PortMultiplierPort, and EFI_SUCCESS is
+  returned.
+
+  If PortMultiplierPort points to 0xFFFF, then the port multiplier port number of the first
+  ATA device on port of the ATA controller is returned in PortMultiplierPort and
+  EFI_SUCCESS is returned.
+
+  If PortMultiplierPort is not 0xFFFF and the value pointed to by PortMultiplierPort
+  was not returned on a previous call to GetNextDevice(), then EFI_INVALID_PARAMETER
+  is returned.
+
+  If PortMultiplierPort is the port multiplier port number of the last ATA device on the port of
+  the ATA controller, then EFI_NOT_FOUND is returned.
+
+  @param[in]     This                A pointer to the EFI_ATA_PASS_THRU_PROTOCOL instance.
+  @param[in]     Port                The port number present on the ATA controller.
+  @param[in,out] PortMultiplierPort  On input, a pointer to the port multiplier port number of an
+                                     ATA device present on the ATA controller.
+                                     If on input a PortMultiplierPort of 0xFFFF is specified,
+                                     then the port multiplier port number of the first ATA device
+                                     is returned. On output, a pointer to the port multiplier port
+                                     number of the next ATA device present on an ATA controller.
+
+  @retval EFI_SUCCESS                The port multiplier port number of the next ATA device on the port
+                                     of the ATA controller was returned in PortMultiplierPort.
+  @retval EFI_NOT_FOUND              There are no more ATA devices on this port of the ATA controller.
+  @retval EFI_INVALID_PARAMETER      PortMultiplierPort is not 0xFFFF, and PortMultiplierPort was not
+                                     returned on a previous call to GetNextDevice().
+
+**/
+typedef
+EFI_STATUS
+(EFIAPI *PEI_ATA_PASS_THRU_GET_NEXT_DEVICE)(
+  IN PEI_ATA_PASS_THRU_PPI      *This,
+  IN UINT16                     Port,
+  IN OUT UINT16                 *PortMultiplierPort
+  );
+
+//
+// This PPI contains a set of services to interact with the Ata host controller.
+//
+struct _PEI_ATA_PASS_THRU_PPI {
+  EFI_ATA_PASS_THRU_MODE               *Mode;
+  PEI_ATA_PASS_THRU_PASSTHRU           PassThru;
+  PEI_ATA_PASS_THRU_GET_NEXT_PORT      GetNextPort;
+  PEI_ATA_PASS_THRU_GET_NEXT_DEVICE    GetNextDevice;
+};
+
+extern EFI_GUID gPeiAtaPassThruPpiGuid;
+
+#endif

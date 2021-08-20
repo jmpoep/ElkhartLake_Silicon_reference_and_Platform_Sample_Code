@@ -1,0 +1,37 @@
+## @file
+# Component description file for Status Code PEI module
+#
+#@copyright
+# Copyright (c) 2017 Intel Corporation. All rights reserved
+#  This software and associated documentation (if any) is furnished
+#  under a license and may only be used or copied in accordance
+#  with the terms of the license. Except as permitted by the
+#  license, no part of this software or documentation may be
+#  reproduced, stored in a retrieval system, or transmitted in any
+#  form or by any means without the express written consent of
+#  Intel Corporation.
+#  This file contains a 'Sample Driver' and is licensed as such
+#  under the terms of your license agreement with Intel or your
+#  vendor. This file may be modified by the user, subject to
+#  the additional terms of the license agreement.
+#
+#@par Specification Reference:
+#
+##
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = MonoStatusCodeNull
+  FILE_GUID                      = D30C5117-D254-4FF2-9BE7-95C91AEAC327
+  MODULE_TYPE                    = PEIM
+  VERSION_STRING                 = 1.0
+  LIBRARY_CLASS                  = MonoStatusCodeLib|PEIM PEI_CORE SEC
+
+[Sources]
+  MonoStatusCodeNull.c
+
+[Packages]
+  MdePkg/MdePkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+
+

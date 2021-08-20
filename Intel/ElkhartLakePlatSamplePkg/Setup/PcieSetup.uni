@@ -1,0 +1,61 @@
+/**@file
+
+ @copyright
+  INTEL CONFIDENTIAL
+  Copyright 2018 Intel Corporation.
+
+  The source code contained or described herein and all documents related to the
+  source code ("Material") are owned by Intel Corporation or its suppliers or
+  licensors. Title to the Material remains with Intel Corporation or its suppliers
+  and licensors. The Material may contain trade secrets and proprietary and
+  confidential information of Intel Corporation and its suppliers and licensors,
+  and is protected by worldwide copyright and trade secret laws and treaty
+  provisions. No part of the Material may be used, copied, reproduced, modified,
+  published, uploaded, posted, transmitted, distributed, or disclosed in any way
+  without Intel's prior express written permission.
+
+  No license under any patent, copyright, trade secret or other intellectual
+  property right is granted to or conferred upon you by disclosure or delivery
+  of the Materials, either expressly, by implication, inducement, estoppel or
+  otherwise. Any license under such intellectual property rights must be
+  express and approved by Intel in writing.
+
+  Unless otherwise agreed by Intel in writing, you may not remove or alter
+  this notice or any other notice embedded in Materials by Intel or
+  Intel's suppliers or licensors in any way.
+
+  This file contains a 'Sample Driver' and is licensed as such under the terms
+  of your license agreement with Intel or your vendor. This file may be modified
+  by the user, subject to the additional terms of the license agreement.
+
+@par Specification
+**/
+
+//
+// Name: PchSetup.uni
+//
+// Description: IntelPCH Form String Definitions.
+//
+//**********************************************************************
+/=#
+
+#include "VFR.uni"
+
+#string STR_PCH_PCIE                            #language en-US "PCH PCIE"
+#string STR_CPU_PCIE                            #language en-US "SA PCIE"
+
+//
+// PCH Devices
+//
+#string STR_PCIE_FORM                           #language en-US "PCIE Configuration"
+#string STR_PCIE_FORM_HELP                      #language en-US "PCIE Parameters"
+#string STR_PCIE_IMR_CONFIG                     #language en-US  "IMR Configuration"
+
+#string STR_PCIE_IMR_PROMPT                     #language en-US  "PCIe IMR"
+#string STR_PCIE_IMR_HELP                       #language en-US  "Enable/Disable PCIe IMR"
+#string STR_PCIE_IMR_SIZE_PROMPT                #language en-US  "PCIe IMR Size"
+#string STR_PCIE_IMR_SIZE_HELP                  #language en-US  "PCIe Reserved Memory Size to be requested in MB.\nMaximum value of 1024 MB"
+#string STR_PCIE_IMR_RP_LOCATION_PROMPT         #language en-US  "PCIe RP Location for IMR"
+#string STR_PCIE_IMR_RP_LOCATION_HELP           #language en-US  "Select SA or PCH roor port associated with IMR"
+#string STR_PCIE_RP_IMR_INDEX                   #language en-US  "RP index for IMR"
+#string STR_PCIE_RP_IMR_INDEX_HELP              #language en-US  "Selects which root port will be associated with IMR"

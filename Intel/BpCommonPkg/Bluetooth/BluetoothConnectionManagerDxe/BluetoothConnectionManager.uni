@@ -1,0 +1,120 @@
+//
+// This file contains a 'Sample Driver' and is licensed as such
+// under the terms of your license agreement with Intel or your
+// vendor.  This file may be modified by the user, subject to
+// the additional terms of the license agreement
+//
+/** @file
+ String definitions for BluetoothConfigVfr.vfr
+
+Copyright (c) 2013 - 2017, Intel Corporation. All rights reserved.<BR>
+This software and associated documentation (if any) is furnished
+under a license and may only be used or copied in accordance
+with the terms of the license. Except as permitted by such
+license, no part of this software or documentation may be
+reproduced, stored in a retrieval system, or transmitted in any
+form or by any means without the express written consent of
+Intel Corporation.
+
+**/
+#langdef en-US "English"
+#langdef fr-FR "Francais"
+#string STR_BLUETOOTH_FORM_SET_TITLE         #language en-US  "Bluetooth Configuration"
+                                             #language fr-FR  "Bluetooth Configuration"
+#string STR_BLUETOOTH_FORM_SET_HELP          #language en-US  "Config the Bluetooth parameter"
+                                             #language fr-FR  "Config the Bluetooth parameter"
+#string STR_BLUETOOTH_HOST_CONTROLLER_TITLE  #language en-US  "Bluetooth Host Controller"
+                                             #language fr-FR  "Bluetooth Host Controller"
+#string STR_NULL_STRING                      #language en-US  ""
+                                             #language fr-FR  ""
+#string STR_BLUETOOTH_MANAGEMENT_FORM_TITLE  #language en-US  "Bluetooth Host Controller Management"
+                                             #language fr-FR  "Bluetooth Host Controller Management"
+#string STR_TEXT_ADDRESS_HELP                #language en-US  "Address for this bluetooth host controller"
+                                             #language fr-FR  "Address for this bluetooth host controller"
+#string STR_ADDRESS_STRING                   #language en-US  "Address"
+                                             #language fr-FR  "Address"
+#string STR_ADDRESS_STRING_VALUE             #language en-US  ""
+                                             #language fr-FR  ""
+#string STR_TEXT_NAME_HELP                   #language en-US  "Name for the host controller, valid length from 2 to 19"
+                                             #language fr-FR  "Name for the host controller, valid length from 2 to 19"
+#string STR_NAME_STRING                      #language en-US  "Local Name"
+                                             #language fr-FR  "Local Name"
+#string STR_NAME_STRING_VALUE                #language en-US  ""
+                                             #language fr-FR  ""
+#string STR_TEXT_STATE_HELP                  #language en-US  "State of the remote device: connect or disconnect"
+                                             #language fr-FR  "State of the remote device: connect or disconnect"
+#string STR_STATE_STRING                     #language en-US  "State"
+                                             #language fr-FR  "State"
+#string STR_STATE_STRING_VALUE               #language en-US  " "
+                                             #language fr-FR  " "
+#string STR_CLASS_OPTION_VALUE               #language en-US  " "
+                                             #language fr-FR  " "
+#string STR_REMOTE_ADDRESS_STRING_VALUE      #language en-US  ""
+                                             #language fr-FR  ""
+#string STR_GOTO_DEVICE_MANAGEMENT_FORM      #language en-US  "Device Management"
+                                             #language fr-FR  "Device Management"
+#string STR_GOTO_DEVICE_MANAGEMENT_HELP      #language en-US  "Goto Device Management form"
+                                             #language fr-FR  "Goto Device Management form"
+#string STR_DEVICE_MANAGEMENT_FORM_TITLE     #language en-US  "Bluetooth Management - Device Management"
+                                             #language fr-FR  "Bluetooth Management - Device Management"
+#string STR_PAIRED_DEVICE_STRING             #language en-US  "Paired Device"
+                                             #language fr-FR  "Paired Device"
+#string STR_AVAILABLE_DEVICE_SEARCH_STRING   #language en-US  "Available Device - Searching ..."
+                                             #language fr-FR  "Available Device - Searching ..."
+#string STR_AVAILABLE_DEVICE_FINISH_STRING   #language en-US  "Available Device - Finished"
+                                             #language fr-FR  "Available Device - Finished"
+
+#string STR_AVAILABLE_DEVICE_STRING          #language en-US  "Available Device"
+                                             #language fr-FR  "Available Device"
+
+#string STR_DEVICE_STATUS_CONNECT            #language en-US  " - Connected"
+                                             #language fr-FR  " - Connected"
+
+#string STR_DEVICE_STATUS_NOT_CONNECT        #language en-US  " - Not Connected"
+                                             #language fr-FR  " - Not Connected"
+
+#string STR_DEVICE_ACTION_CONNECT            #language en-US  "Connect"
+                                             #language fr-FR  "Connect"
+
+#string STR_DEVICE_ACTION_CONNECT_HELP       #language en-US  "Connect this device"
+                                             #language fr-FR  "Connect this device"
+
+#string STR_DEVICE_ACTION_DELETE             #language en-US  "Delete"
+                                             #language fr-FR  "Delete"
+
+#string STR_DEVICE_ACTION_DELETE_HELP        #language en-US  "Delete this device from paired device list"
+                                             #language fr-FR  "Delete this device from paired device list"
+
+#string STR_DEVICE_ACTION_NOT_CONNECT        #language en-US  "Disconnect"
+                                             #language fr-FR  "Disconnect"
+#string STR_DEVICE_ACTION_NOT_CONNECT_HELP   #language en-US  "Disconnect this device"
+                                             #language fr-FR  "Disconnect this device"
+#string STR_GOTO_REMOTE_DEVICE_HELP          #language en-US  "Check remote device info."
+                                             #language fr-FR  "Check remote device info."
+
+#string STR_REMOTE_DEVICE_FORM_TITLE         #language en-US  "Remote Device Info"
+                                             #language fr-FR  "Remote Device Info"
+
+#string STR_AVAILABLE_SERVICE                #language en-US  "Available Services:"
+                                             #language fr-FR  "Available Services:"
+#string STR_AVAILABLE_SERVICE_HELP           #language en-US  "Available Services for the remote device"
+                                             #language fr-FR  "Available Services for the remote device"
+
+#string STR_DISCOVERABLE_AUTO_DISABLE        #language en-US  "Discoverable by nearby devices (%d:%02d)"
+                                             #language fr-FR  "Discoverable by nearby devices (%d:%02d)"
+#string STR_DISCOVERABLE_AUTO_DISABLE_HELP   #language en-US  "Discoverable by nearby devices, auto disable after 2 mins"
+                                             #language fr-FR  "Discoverable by nearby devices, auto disable after 2 mins"
+
+#string STR_DO_BONDING                       #language en-US  "Do Bonding?"
+                                             #language fr-FR  "Do Bonding?"
+#string STR_DO_BONDING_HELP                  #language en-US  "Enable bonding when do the connection?"
+                                             #language fr-FR  "Enable bonding when do the connection?"
+
+#string STR_SCAN_STRING                      #language en-US  "SCAN"
+                                             #language fr-FR  "SCAN"
+#string STR_SCANNING_STRING                  #language en-US  "SCANNING ..."
+                                             #language fr-FR  "SCANNING ..."
+#string STR_SCAN_STRING_HELP                 #language en-US  "Begin to scan the remote device"
+                                             #language fr-FR  "Begin to scan the remote device"
+#string STR_SCANNING_STRING_HELP             #language en-US  "Scanning the remote device"
+                                             #language fr-FR  "Scanning the remote device"

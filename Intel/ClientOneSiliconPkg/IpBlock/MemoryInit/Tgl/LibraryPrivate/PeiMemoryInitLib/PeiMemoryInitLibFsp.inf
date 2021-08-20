@@ -1,0 +1,247 @@
+## @file
+# Component description file for PeiMemoryInitLib
+#
+# @copyright
+#  INTEL CONFIDENTIAL
+#  Copyright 1999 - 2019 Intel Corporation.
+#
+#  The source code contained or described herein and all documents related to the
+#  source code ("Material") are owned by Intel Corporation or its suppliers or
+#  licensors. Title to the Material remains with Intel Corporation or its suppliers
+#  and licensors. The Material may contain trade secrets and proprietary and
+#  confidential information of Intel Corporation and its suppliers and licensors,
+#  and is protected by worldwide copyright and trade secret laws and treaty
+#  provisions. No part of the Material may be used, copied, reproduced, modified,
+#  published, uploaded, posted, transmitted, distributed, or disclosed in any way
+#  without Intel's prior express written permission.
+#
+#  No license under any patent, copyright, trade secret or other intellectual
+#  property right is granted to or conferred upon you by disclosure or delivery
+#  of the Materials, either expressly, by implication, inducement, estoppel or
+#  otherwise. Any license under such intellectual property rights must be
+#  express and approved by Intel in writing.
+#
+#  Unless otherwise agreed by Intel in writing, you may not remove or alter
+#  this notice or any other notice embedded in Materials by Intel or
+#  Intel's suppliers or licensors in any way.
+#
+#  This file contains an 'Intel Peripheral Driver' and is uniquely identified as
+#  "Intel Reference Module" and is licensed for Intel CPUs and chipsets under
+#  the terms of your license agreement with Intel or your vendor. This file may
+#  be modified by the user, subject to additional terms of the license agreement.
+#
+# @par Specification Reference:
+#
+##
+
+
+[Defines]
+INF_VERSION = 0x00010017
+BASE_NAME = PeiMemoryInitLib
+FILE_GUID = 3B42EF57-16D3-44CB-8632-9FDB06B41451
+VERSION_STRING = 1.0
+MODULE_TYPE = PEIM
+LIBRARY_CLASS = MemoryInitLib
+#
+# The following information is for reference only and not required by the build tools.
+#
+# VALID_ARCHITECTURES = IA32 X64 IPF
+#
+
+
+
+[BuildOptions]
+MSFT: *_*_*_CC_FLAGS = /Oi /GL- /Gs262144 /Zi /Gm /MAP
+GCC:*_*_IA32_CC_FLAGS = -fno-lto
+
+[LibraryClasses]
+PeimEntryPoint
+BaseMemoryLib
+BaseLib
+IoLib
+DebugLib
+PeiServicesLib
+MemoryAllocationLib
+HobLib
+PcdLib
+PrintLib
+ReportStatusCodeLib
+PeiSaPolicyLib
+ConfigBlockLib
+CpuPlatformLib
+PeiTxtLib
+TxtLib
+PciSegmentLib
+FspCommonLib
+FspPlatformLib
+PchInfoLib
+PreSiliconEnvDetectLib
+FspSiliconCommonLib
+
+[Packages]
+MdePkg/MdePkg.dec
+IntelFsp2Pkg/IntelFsp2Pkg.dec
+UefiCpuPkg/UefiCpuPkg.dec
+ClientOneSiliconPkg/SiPkg.dec
+
+[Pcd]
+gSiPkgTokenSpaceGuid.PcdSiPciExpressBaseAddress
+gIntelFsp2PkgTokenSpaceGuid.PcdFspReservedMemoryLength
+
+[FixedPcd]
+gSiPkgTokenSpaceGuid.PcdMchBaseAddress
+
+[Sources]
+MemoryInit.c
+MemoryTest.c
+Source/Api/MrcApi.h
+Source/Api/MrcBdat.c
+Source/Api/MrcBdat.h
+Source/Api/MrcDebugPrint.c
+Source/Api/MrcDebugPrint.h
+Source/Api/MrcGeneral.c
+Source/Api/MrcGeneral.h
+Source/Api/MrcMemoryScrub.c
+Source/Api/MrcMemoryScrub.h
+Source/Api/MrcSaveRestore.c
+Source/Api/MrcSaveRestore.h
+Source/Api/MrcStartMemoryConfiguration.c
+Source/Api/MrcStartMemoryConfiguration.h
+Source/Chip/MrcChipApi.c
+Source/Chip/MrcChipApi.h
+Source/Chip/DdrIo/MrcDdrIoApi.h
+Source/Chip/DdrIo/MrcDdrIoApiInt.h
+Source/Chip/DdrIo/MrcDdrIoConfig.c
+Source/CPGC/MrcCpgcApi.c
+Source/CPGC/MrcCpgcApi.h
+Source/CPGC/Cpgc20/Cpgc20.h
+Source/CPGC/Cpgc20/Cpgc20Patterns.c
+Source/CPGC/Cpgc20/Cpgc20Patterns.h
+Source/CPGC/Cpgc20/Cpgc20TestCtl.c
+Source/CPGC/Cpgc20/Cpgc20TestCtl.h
+Source/Hal/MrcCpgcOffsets.c
+Source/Hal/MrcCpgcOffsets.h
+Source/Hal/MrcDdrIoDefines.h
+Source/Hal/MrcDdrIoOffsets.c
+Source/Hal/MrcDdrIoOffsets.h
+Source/Hal/MrcHalRegisterAccess.c
+Source/Hal/MrcHalRegisterAccess.h
+Source/Hal/MrcMcOffsets.c
+Source/Hal/MrcMcOffsets.h
+Source/Hal/MrcRegisterCache.c
+Source/Hal/MrcRegisterCache.h
+Source/Include/McAddress.h
+Source/Include/MrcCommandTraining.h
+Source/Include/MrcCommon.h
+Source/Include/MrcCrosser.h
+Source/Include/MrcDdr3.h
+Source/Include/MrcDdr3Registers.h
+Source/Include/MrcDdr4Registers.h
+Source/Include/MrcGears.h
+Source/Include/MrcGlobal.h
+Source/Include/MrcIoControl.h
+Source/Include/MrcMalloc.h
+Source/Include/MrcMcConfiguration.h
+Source/Include/MrcMemoryMap.h
+Source/Include/MrcReset.h
+Source/Include/MrcVersion.h
+Source/MemoryTypes/MrcDdrCommon.c
+Source/MemoryTypes/MrcDdrCommon.h
+Source/MemoryTypes/MrcDdr4.c
+Source/MemoryTypes/MrcDdr4.h
+Source/MemoryTypes/MrcLpddr4.c
+Source/MemoryTypes/MrcLpddr4.h
+Source/MemoryTypes/MrcLpddr4Registers.h
+Source/MemoryTypes/MrcLpddr5.c
+Source/MemoryTypes/MrcLpddr5.h
+Source/MemoryTypes/MrcLpddr5Registers.h
+Source/MemoryTypes/MrcMemoryApi.c
+Source/MemoryTypes/MrcMemoryApi.h
+Source/Include/MrcRegisters/Tigerlake/MrcMcRegisterStructTgl.h
+Source/Include/MrcRegisters/Tigerlake/MrcMcRegisterStructTgl0xxx.h
+Source/Include/MrcRegisters/Tigerlake/MrcMcRegisterStructTgl1xxx.h
+Source/Include/MrcRegisters/Tigerlake/MrcMcRegisterStructTgl2xxx.h
+Source/Include/MrcRegisters/Tigerlake/MrcMcRegisterStructTgl3xxx.h
+Source/Include/MrcRegisters/Tigerlake/MrcMcRegisterStructTgl4xxx.h
+Source/Include/MrcRegisters/Tigerlake/MrcMcRegisterStructTgl5xxx.h
+Source/Include/MrcRegisters/Tigerlake/MrcMcRegisterStructTgl8xxx.h
+Source/Include/MrcRegisters/Tigerlake/MrcMcRegisterStructTgl9xxx.h
+Source/Include/MrcRegisters/Tigerlake/MrcMcRegisterStructTglCxxx.h
+Source/Include/MrcRegisters/Tigerlake/MrcMcRegisterStructTglDxxx.h
+Source/Include/MrcRegisters/Tigerlake/MrcMcRegisterStructTgl1Cxxx.h
+Source/Include/MrcRegisters/Tigerlake/MrcMcRegisterStructTgl1Dxxx.h
+Source/Include/MrcRegisters/Tigerlake/MrcMcRegisterStructTgl11xxx.h
+Source/Include/MrcRegisters/Tigerlake/MrcMcRegisterStructTgl14xxx.h
+Source/Include/MrcRegisters/Tigerlake/MrcMcRegisterStructTgl15xxx.h
+Source/Include/MrcRegisters/Tigerlake/MrcMcRegisterTgl.h
+Source/Include/MrcRegisters/Tigerlake/MrcMcRegisterTgl0xxx.h
+Source/Include/MrcRegisters/Tigerlake/MrcMcRegisterTgl1xxx.h
+Source/Include/MrcRegisters/Tigerlake/MrcMcRegisterTgl2xxx.h
+Source/Include/MrcRegisters/Tigerlake/MrcMcRegisterTgl3xxx.h
+Source/Include/MrcRegisters/Tigerlake/MrcMcRegisterTgl4xxx.h
+Source/Include/MrcRegisters/Tigerlake/MrcMcRegisterTgl5xxx.h
+Source/Include/MrcRegisters/Tigerlake/MrcMcRegisterTgl8xxx.h
+Source/Include/MrcRegisters/Tigerlake/MrcMcRegisterTgl9xxx.h
+Source/Include/MrcRegisters/Tigerlake/MrcMcRegisterTglCxxx.h
+Source/Include/MrcRegisters/Tigerlake/MrcMcRegisterTglDxxx.h
+Source/Include/MrcRegisters/Tigerlake/MrcMcRegisterTgl1Cxxx.h
+Source/Include/MrcRegisters/Tigerlake/MrcMcRegisterTgl1Dxxx.h
+Source/Include/MrcRegisters/Tigerlake/MrcMcRegisterTgl11xxx.h
+Source/Include/MrcRegisters/Tigerlake/MrcMcRegisterTgl14xxx.h
+Source/Include/MrcRegisters/Tigerlake/MrcMcRegisterTgl15xxx.h
+Source/Include/MrcRegisters/Tigerlake/Pci000Tgl.h
+Source/McConfiguration/MrcAddressDecodeConfiguration.c
+Source/McConfiguration/MrcAddressDecodeConfiguration.h
+Source/McConfiguration/MrcPowerModes.c
+Source/McConfiguration/MrcPowerModesUpServer.c
+Source/McConfiguration/MrcPowerModes.h
+Source/McConfiguration/MrcMaintenance.c
+Source/McConfiguration/MrcMaintenance.h
+Source/McConfiguration/MrcRefreshConfiguration.c
+Source/McConfiguration/MrcRefreshConfiguration.h
+Source/McConfiguration/MrcSchedulerParameters.c
+Source/McConfiguration/MrcSchedulerParameters.h
+Source/McConfiguration/MrcTimingConfiguration.c
+Source/McConfiguration/MrcTimingConfiguration.h
+Source/ReadTraining/MrcReadDqDqs.c
+Source/ReadTraining/MrcReadDqDqs.h
+Source/ReadTraining/MrcReadReceiveEnable.c
+Source/ReadTraining/MrcReadReceiveEnable.h
+Source/Services/MrcCommandTraining.c
+Source/Services/MrcCommon.c
+Source/Services/MrcCrosser.c
+Source/Services/MrcDdr3.c
+Source/Services/MrcGears.c
+Source/Services/MrcIoControl.c
+Source/Services/MrcMalloc.c
+Source/Services/MrcMcConfiguration.c
+Source/Services/MrcMemoryMap.c
+Source/Services/MrcReset.c
+Source/SpdProcessing/MrcSpdProcessing.c
+Source/SpdProcessing/MrcSpdProcessing.h
+Source/WriteTraining/MrcWriteDqDqs.c
+Source/WriteTraining/MrcWriteDqDqs.h
+Source/WriteTraining/MrcWriteLeveling.c
+Source/WriteTraining/MrcWriteLeveling.h
+
+[Ppis]
+gSiPolicyPpiGuid ## CONSUMES
+gPeiTxtMemoryUnlockedPpiGuid ## CONSUMES
+gPeiCapsulePpiGuid ## CONSUMES
+gPeiTxtReadyToRunMemoryInitPpiGuid ## CONSUMES
+gFspmArchConfigPpiGuid ## CONSUMES
+
+[Guids]
+gEfiMemoryTypeInformationGuid
+gSaDataHobGuid
+gSiMemoryS3DataGuid                     ## PRODUCES ## HOB
+gSiMemoryInfoDataGuid                   ## PRODUCES ## HOB
+gSiMemoryPlatformDataGuid               ## PRODUCES ## HOB
+gHobUsageDataGuid                       ## PRODUCES ## HOB
+gFspReservedMemoryResourceHobGuid
+gFspReservedMemoryResourceHobTsegGuid
+gFspNonVolatileStorageHobGuid
+gEfiAcpiVariableGuid
+gEfiSmmPeiSmramMemoryReserveGuid
+gFspBootLoaderTolumHobGuid              ## PRODUCES
+gTwoLmPreMemConfigGuid

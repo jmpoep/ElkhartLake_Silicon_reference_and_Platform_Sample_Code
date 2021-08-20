@@ -1,0 +1,8 @@
+PlatformPkgSvPlatRestricted.dsc
+Tools/ToolScripts/BpmGen/bpmgen2_bpm.txt
+Tools/ToolScripts/BpmGen/bpmgen2_km.txt
+ValidationFv.fdf
+ValidationFvDef.fdf
+*NvsAreaDef.h
+*Nvs.asl
+PlatformPkgExtConfig.dsc

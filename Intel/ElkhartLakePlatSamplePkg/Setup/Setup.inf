@@ -1,0 +1,420 @@
+### @file
+#  Component description file for Setup module
+#
+#@copyright
+#  INTEL CONFIDENTIAL
+#  Copyright 1999 - 2019 Intel Corporation.
+#
+#  The source code contained or described herein and all documents related to the
+#  source code ("Material") are owned by Intel Corporation or its suppliers or
+#  licensors. Title to the Material remains with Intel Corporation or its suppliers
+#  and licensors. The Material may contain trade secrets and proprietary and
+#  confidential information of Intel Corporation and its suppliers and licensors,
+#  and is protected by worldwide copyright and trade secret laws and treaty
+#  provisions. No part of the Material may be used, copied, reproduced, modified,
+#  published, uploaded, posted, transmitted, distributed, or disclosed in any way
+#  without Intel's prior express written permission.
+#
+#  No license under any patent, copyright, trade secret or other intellectual
+#  property right is granted to or conferred upon you by disclosure or delivery
+#  of the Materials, either expressly, by implication, inducement, estoppel or
+#  otherwise. Any license under such intellectual property rights must be
+#  express and approved by Intel in writing.
+#
+#  Unless otherwise agreed by Intel in writing, you may not remove or alter
+#  this notice or any other notice embedded in Materials by Intel or
+#  Intel's suppliers or licensors in any way.
+#
+#  This file contains a 'Sample Driver' and is licensed as such under the terms
+#  of your license agreement with Intel or your vendor. This file may be modified
+#  by the user, subject to the additional terms of the license agreement.
+#
+# @par Specification Reference:
+#
+# @par Glossary:
+###
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = Setup
+  FILE_GUID                      = E6A7A1CE-5881-4B49-80BE-69C91811685C
+  MODULE_TYPE                    = DXE_DRIVER
+  VERSION_STRING                 = 1.0
+  ENTRY_POINT                    = SetupEntry
+
+[Sources.common]
+  Setup.uni
+  Main.vfr
+  Advanced.vfr
+  Boot.vfr
+  Setup.c
+  HiiConfigAccess.c
+  BootSetup.c
+
+#Firmware Configuration
+  FwConfig.uni
+
+#Sa
+  SaSetup.uni
+  SaSetup.hfr
+  SaSetup.c
+  SaPcieSetupSinglePortMenu.hfr
+  SaPcieSetupSinglePort.hfr
+  SaPcieStringPool.hfr
+  ItbtPcieSetupSinglePort.hfr
+  ItbtPcieStringPool.hfr
+
+#Pcie
+  PcieSetup.uni
+  PcieSetup.hfr
+
+#Pch
+  PchSetup.uni
+  PchSetup.hfr
+  PchPcieSetupSinglePortMenu.hfr
+  PchPcieSetupSinglePort.hfr
+  PcieEq.hfr
+  PchPcieStringPool.hfr
+  PchSetupPse.hfr
+  PchSetupPsePwm.hfr
+  PchSetupPseTgpio0.hfr
+  PchSetupPseTgpio1.hfr
+  PchPseStringPool.hfr
+  RstSingleCycleRouter.hfr
+  RstStringPool.hfr
+  PchUfsSingleController.hfr
+  PchUfsStringPool.hfr
+  PchSetup.c
+  PchUsbSingleHsPort.hfr
+  PchUsbSingleSsPort.hfr
+  PchUsbSingleHsPortOtg.hfr
+  PchUsbSingleSsPortOtg.hfr
+  PchUsbStringPool.hfr
+
+#CPU
+  CpuSetup.uni
+  CpuSetup.hfr
+  CpuSetup.c
+
+#ME
+  MeSetup.uni
+  MeSetup.hfr
+  MeSetup.c
+  AmtSetup.uni
+  AmtSetup.hfr
+
+#Platform
+  PlatformSetup.uni
+  PlatformSetup.hfr
+  PlatformSetup.c
+
+#add ICC
+  IccSetup.uni
+  IccSetup.hfr
+  IccSetup.c
+
+#OverClockInit
+  OverClockSetup.uni
+  OverClockSetup.hfr
+  OverClockSetup.c
+
+#PciBus
+  PciBusSetup.uni
+  PciBusSetup.hfr
+  PciBusSetup.c
+
+#Acpi
+  AcpiSetup.uni
+  AcpiSetup.hfr
+  AcpiSetup.c
+
+#Connectivity
+  ConnectivitySetup.uni
+  ConnectivitySetup.hfr
+  ConnectivitySetup.c
+
+#Tcg
+  TcgSetup.uni
+  TcgSetup.hfr
+
+#Security
+  SecuritySetup.c
+
+# @note to move these three files to platform from ClientCommonPkg
+
+#PSS
+../Features/BoardReworkCompliance/BoardReworkInformationSetup.c
+../Features/BoardReworkCompliance/BoardReworkInformationSetup.hfr
+../Features/BoardReworkCompliance/BoardReworkInformationSetup.uni
+
+#NatChip
+  SioNat87393VSetup.uni
+  SioNat87393VSetup.hfr
+  SioNat87393VSetup.c
+
+#WPCN381U
+  SioWPCN381USetup.uni
+  SioWPCN381USetup.hfr
+  SioWPCN381USetup.c
+
+#NctChip
+  SioNct6776FSetup.uni
+  SioNct6776FSetup.hfr
+  SioNct6776FSetup.c
+
+#Hhm
+  HhmSetup.uni
+  HhmSetup.hfr
+  EcSetup.c
+  EcVoltage.c
+
+#StatusCode
+  StatusCodeSetup.uni
+  StatusCodeSetup.hfr
+
+#BootTime
+  BootTimeSetup.c
+
+#Debug
+  DebugSetup.c
+  DebugSetup.uni
+  DebugSetup.hfr
+
+#Thunderbolt(TM)
+  TbtSetup.uni
+  TbtStringPool.hfr
+
+#CPU_ICL
+  IntegratedTbtOptions.hfr
+
+  DiscreteTbtOptions.hfr
+  TbtSetup.hfr
+  TbtSetup.c
+
+#S5 Charging
+  UefiCharging.hfr
+  UefiCharging.uni
+
+#Tcc
+  TccSetup.hfr
+  TccSetup.uni
+  TccSetup.c
+
+#TSN
+  PchSetupTsnGbe.hfr
+  TsnGbeSetup.c
+
+#Fusa
+  FusaSetup.hfr
+  FusaSetup.uni
+
+#Fia
+  PchFiaSetupSingleLane.hfr
+  PchFiaStringPool.hfr
+[Packages]
+  BpCommonPkg/BpCommonPkg.dec
+  ClientCommonPkg/ClientCommonPkg.dec
+  ClientSiliconPkg/ClientSiliconPkg.dec
+  ElkhartLakePlatSamplePkg/PlatformPkg.dec
+  ElkhartLakeBoardPkg/BoardPkg.dec
+  ClientOneSiliconPkg/SiPkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+  MdePkg/MdePkg.dec
+  SecurityPkg/SecurityPkg.dec
+  UefiCpuPkg/UefiCpuPkg.dec
+  CryptoPkg/CryptoPkg.dec
+  ElkhartLakeFspBinPkg/ElkhartLakeFspBinPkg.dec
+
+[LibraryClasses]
+  UefiDriverEntryPoint
+  UefiBootServicesTableLib
+  UefiBootServicesTableLib
+  UefiRuntimeServicesTableLib
+  UefiLib
+  BaseMemoryLib
+  MemoryAllocationLib
+  DebugLib
+  DebugPrintErrorLevelLib
+  BiosIdLib
+  HobLib
+  IoLib
+  HiiLib
+  DxeMeLib
+  EcMiscLib
+  CpuPlatformLib
+  CmosAccessLib
+  PlatformNvRamHookLib
+  PttHeciLib
+  SerialPortParameterLib
+  PciSegmentLib
+  BootGuardLib
+  MeFwStsLib
+  DevicePathLib
+  BaseLib
+  GpioLib
+  GbeLib
+  TsnLib
+  TccLib
+  PchPcieRpLib
+  PchInfoLib
+  AslUpdateLib
+  MeChipsetLib
+  GpioExpanderLib
+  RngLib
+  TbtCommonLib
+  DTbtCommonLib
+  DimmInfoLib
+  ConfigBlockLib
+  CpuMailboxLib
+  CnviLib
+  SataLib
+  HashLib
+  TimerLib
+  ReportStatusCodeLib
+  PreSiliconEnvDetectLib
+  CpuRegbarAccessLib
+  BoardIdsLib
+  SpiAccessLib
+  CpuPcieInitCommonLib
+  CpuPcieInfoLib
+  TwoLmLib
+  SciLib
+  PchFiaLib
+
+[Guids]
+  gEfiGlobalVariableGuid                        ## CONSUMES
+  gBootStateGuid                                ## PRODUCES
+  gEfiIfrTianoGuid                              ## CONSUMES
+  gEfiHobListGuid                               ## CONSUMES
+  gEfiEndOfDxeEventGroupGuid                    ## CONSUMES
+  gSetupVariableGuid                            ## PRODUCES
+  gSaSetupVariableGuid                          ## PRODUCES
+  gMeSetupVariableGuid                          ## PRODUCES
+  gCpuSetupVariableGuid                         ## PRODUCES
+  gPchSetupVariableGuid                         ## PRODUCES
+  gSiSetupVariableGuid                          ## PRODUCES
+  gDebugConfigVariableGuid                      ## CONSUMES
+  gIccGuid                                      ## PRODUCES
+  gOsProfileGuid                                ## PRODUCES
+  gSetupEnterGuid                               ## CONSUMES
+  gSystemAccessGuid                             ## PRODUCES
+  gSetupNvramUpdateGuid                         ## PRODUCES
+  gSystemConfigGuid                             ## CONSUMES
+  gMeInfoSetupGuid                              ## CONSUMES
+  gITbtInfoHobGuid                              ## CONSUMES
+  gDTbtInfoHobGuid                              ## CONSUMES
+  gMeDxeConfigGuid                              ## CONSUMES
+  gGraphicsDxeConfigGuid                        ## CONSUMES
+  gPchPcieStorageDetectHobGuid                  ## CONSUMES
+  gPchInfoHobGuid                               ## CONSUMES
+  gChipsetInitHobGuid                           ## CONSUMES
+  gFspInfoGuid                                  ## CONSUMES
+  gWdtPersistentDataGuid                        ## PRODUCES
+  gIpuDataHobGuid                               ## CONSUMES
+  gSaConfigHobGuid
+  gSaPegHobGuid
+  gVmdInfoHobGuid                               ## CONSUMES
+  gTxtInfoHobGuid                               ## CONSUMES
+  gTwoLmInfoHobGuid                             ## CONSUMES
+  gTcssHobGuid                                  ## CONSUMES
+  gTcg2ConfigFormSetGuid                        ## CONSUMES
+  gEfiTpmDeviceInstanceNoneGuid                 ## CONSUMES
+  gEfiTpmDeviceInstanceTpm12Guid
+  gEfiTpmDeviceInstanceTpm20DtpmGuid
+  gOobConfigSectionGuid                         ## CONSUMES
+
+[Protocols]
+  gEfiHiiConfigAccessProtocolGuid               ## PRODUCES
+  gEfiCpuIo2ProtocolGuid                        ## CONSUMES
+  gWdtProtocolGuid                              ## CONSUMES
+  gEfiSmbusHcProtocolGuid                       ## CONSUMES
+  gMemInfoProtocolGuid                          ## CONSUMES
+  gEfiDiskInfoProtocolGuid                      ## CONSUMES
+  gEfiPciIoProtocolGuid                         ## CONSUMES
+  gHeciProtocolGuid                             ## CONSUMES
+  gSaPolicyProtocolGuid                         ## CONSUMES
+  gEfiDxeSmmReadyToLockProtocolGuid             ## CONSUMES
+  gAmtWrapperProtocolGuid                       ## CONSUMES
+  gEfiI2cIoProtocolGuid                         ## CONSUMES
+  gCpuInfoProtocolGuid                          ## CONSUMES
+  gPchSpiProtocolGuid                           ## CONSUMES
+  gEfiSmbiosProtocolGuid                        ## CONSUMES
+  gBdsAllDriversConnectedProtocolGuid           ## CONSUMES
+  gEfiUsbIoProtocolGuid                         ## CONSUMES
+  gEdkiiVariableLockProtocolGuid                ## SOMETIMES_CONSUMES
+  gPlatformConfigChangeProtocolGuid             ## SOMETIMES_PRODUCES
+  gEdkiiPlatformSpecificResetFilterProtocolGuid ## CONSUMES
+  gEfiMpServiceProtocolGuid                     ## CONSUMES
+
+[Pcd]
+  gEfiMdePkgTokenSpaceGuid.PcdPciExpressBaseAddress                      ## CONSUMES
+  gSiPkgTokenSpaceGuid.PcdMchBaseAddress                                 ## CONSUMES
+  gEfiBpCommonPkgTokenSpaceGuid.PcdAcpiDebugEnable                       ## CONSUMES
+  gEfiBpCommonPkgTokenSpaceGuid.PcdAcpiDebugAddress                      ## CONSUMES
+  gPlatformModuleTokenSpaceGuid.PcdDmiBaseAddress                        ## CONSUMES
+  gClientCommonModuleTokenSpaceGuid.PcdBootTime                          ## CONSUMES
+  gClientCommonModuleTokenSpaceGuid.PcdClientCommonVersionMajor          ## CONSUMES
+  gClientCommonModuleTokenSpaceGuid.PcdClientCommonVersionMinor          ## CONSUMES
+  gClientCommonModuleTokenSpaceGuid.PcdClientCommonVersionRevision       ## CONSUMES
+  gClientCommonModuleTokenSpaceGuid.PcdClientCommonVersionBuild          ## CONSUMES
+  gClientCommonModuleTokenSpaceGuid.PcdClientCommonVersionRCRev          ## CONSUMES
+  gClientCommonModuleTokenSpaceGuid.PcdClientCommonVersionRoyalParkBuild ## CONSUMES
+  gClientCommonModuleTokenSpaceGuid.PcdClientCommonVersionString         ## CONSUMES
+  gClientCommonModuleTokenSpaceGuid.PcdSmbiosOemTypeFirmwareVersionInfo  ## CONSUMES
+  gClientSiliconPkgTokenSpaceGuid.PcdClientSiliconVersionMajor           ## CONSUMES
+  gClientSiliconPkgTokenSpaceGuid.PcdClientSiliconVersionMinor           ## CONSUMES
+  gClientSiliconPkgTokenSpaceGuid.PcdClientSiliconVersionRevision        ## CONSUMES
+  gClientSiliconPkgTokenSpaceGuid.PcdClientSiliconVersionBuild           ## CONSUMES
+  gBoardModuleTokenSpaceGuid.PcdGfxCrbDetect
+  gBoardModuleTokenSpaceGuid.PcdDockAttached
+  gBoardModuleTokenSpaceGuid.PcdBoardRev
+  gBoardModuleTokenSpaceGuid.PcdBoardType
+  gBoardModuleTokenSpaceGuid.PcdPlatformType
+  gBoardModuleTokenSpaceGuid.PcdEcPresent
+  gBoardModuleTokenSpaceGuid.PcdEcEnable
+  gBoardModuleTokenSpaceGuid.PcdDTbtControllerNumber
+  gBoardModuleTokenSpaceGuid.PcdITbtRootPortNumber
+
+  gPlatformModuleTokenSpaceGuid.PcdSetupConfigPatchTable
+  gPlatformModuleTokenSpaceGuid.PcdSetupConfigPatchTableSize
+  gPlatformModuleTokenSpaceGuid.PcdSaSetupConfigPatchTable
+  gPlatformModuleTokenSpaceGuid.PcdSaSetupConfigPatchTableSize
+  gPlatformModuleTokenSpaceGuid.PcdCpuSetupConfigPatchTable
+  gPlatformModuleTokenSpaceGuid.PcdCpuSetupConfigPatchTableSize
+  gPlatformModuleTokenSpaceGuid.PcdPchSetupConfigPatchTable
+  gPlatformModuleTokenSpaceGuid.PcdPchSetupConfigPatchTableSize
+  gPlatformModuleTokenSpaceGuid.PcdMeSetupConfigPatchTable
+  gPlatformModuleTokenSpaceGuid.PcdMeSetupConfigPatchTableSize
+  gPlatformModuleTokenSpaceGuid.PcdBoardReworkComplianceBios
+  gPlatformModuleTokenSpaceGuid.PcdBoardReworkCompliancePssChip
+  gPlatformModuleTokenSpaceGuid.PcdDTbtToPcieRegister
+  gPlatformModuleTokenSpaceGuid.PcdPcieToDTbtRegister
+  gBoardModuleTokenSpaceGuid.PcdS5ChargingEnable
+  gSiPkgTokenSpaceGuid.PcdOverclockEnable
+  gPlatformModuleTokenSpaceGuid.PcdTpmEnable
+  gSiPkgTokenSpaceGuid.PcdTxtEnable
+  gSiPkgTokenSpaceGuid.PcdFspWrapperEnable
+  gSiPkgTokenSpaceGuid.PcdAmtEnable                                     ## CONSUMES
+  gPlatformModuleTokenSpaceGuid.PcdUpServerEnable                       ## CONSUMES
+  gPlatformModuleTokenSpaceGuid.PcdNct677FPresent                       ## CONSUMES
+  gPlatformModuleTokenSpaceGuid.PcdNat87393Present                      ## CONSUMES
+  gSiPkgTokenSpaceGuid.PcdEmbeddedEnable                                ## CONSUMES
+  gSiPkgTokenSpaceGuid.PcdITbtToPcieRegister
+  gSiPkgTokenSpaceGuid.PcdPcieToITbtRegister
+  gSiPkgTokenSpaceGuid.PcdBiosGuardEnable
+  gSiPkgTokenSpaceGuid.PcdBfxEnable                                     ## COMSUMES
+  gEfiSecurityPkgTokenSpaceGuid.PcdTpmInstanceGuid       ## PRODUCES
+
+[FixedPcd]
+  gSiPkgTokenSpaceGuid.PcdITbtEnable                              ## CONSUMES
+
+[Depex]
+  gEfiSmbusHcProtocolGuid             AND
+  gMemInfoProtocolGuid                AND
+  gEfiVariableArchProtocolGuid        AND
+  gEfiVariableWriteArchProtocolGuid   AND
+  gEfiHiiDatabaseProtocolGuid         AND
+  gDxePolicyProtocolGuid              AND
+  gPchSpiProtocolGuid                 AND
+  gEfiMpServiceProtocolGuid
+

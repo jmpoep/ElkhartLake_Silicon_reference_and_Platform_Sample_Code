@@ -1,0 +1,45 @@
+## @file
+#  FDF file of TSN Firmware FV
+#
+#@copyright
+#  Copyright (c) 2019 Intel Corporation. All rights reserved
+#  This software and associated documentation (if any) is furnished
+#  under a license and may only be used or copied in accordance
+#  with the terms of the license. Except as permitted by the
+#  license, no part of this software or documentation may be
+#  reproduced, stored in a retrieval system, or transmitted in any
+#  form or by any means without the express written consent of
+#  Intel Corporation.
+#  This file contains a 'Sample Driver' and is licensed as such
+#  under the terms of your license agreement with Intel or your
+#  vendor. This file may be modified by the user, subject to
+#  the additional terms of the license agreement.
+#
+#@par Specification Reference:
+#
+##
+
+[FV.FvPseTsnIpConfig]
+BlockSize          = $(FLASH_BLOCK_SIZE)
+FvAlignment        = 16
+ERASE_POLARITY     = 1
+MEMORY_MAPPED      = TRUE
+STICKY_WRITE       = TRUE
+LOCK_CAP           = TRUE
+LOCK_STATUS        = TRUE
+WRITE_DISABLED_CAP = TRUE
+WRITE_ENABLED_CAP  = TRUE
+WRITE_STATUS       = TRUE
+WRITE_LOCK_CAP     = TRUE
+WRITE_LOCK_STATUS  = TRUE
+READ_DISABLED_CAP  = TRUE
+READ_ENABLED_CAP   = TRUE
+READ_STATUS        = TRUE
+READ_LOCK_CAP      = TRUE
+READ_LOCK_STATUS   = TRUE
+FvNameGuid         = 00F7E131-1185-4790-B393-92F931E4523C
+
+FILE FREEFORM = 40BD5BCD-094F-43B3-8D8D-1D72F850C3CB {
+  SECTION RAW = $(PLATFORM_BOARD_PACKAGE)/Binaries/Tsn/PseTsnIpConfig.bin
+  SECTION UI = "IntelPseTsnIpConfig"
+}

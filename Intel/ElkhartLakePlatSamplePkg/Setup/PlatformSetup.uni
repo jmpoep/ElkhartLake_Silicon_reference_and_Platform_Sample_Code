@@ -1,0 +1,1068 @@
+/**@file
+
+ @copyright
+  INTEL CONFIDENTIAL
+  Copyright 2009 - 2019 Intel Corporation.
+
+  The source code contained or described herein and all documents related to the
+  source code ("Material") are owned by Intel Corporation or its suppliers or
+  licensors. Title to the Material remains with Intel Corporation or its suppliers
+  and licensors. The Material may contain trade secrets and proprietary and
+  confidential information of Intel Corporation and its suppliers and licensors,
+  and is protected by worldwide copyright and trade secret laws and treaty
+  provisions. No part of the Material may be used, copied, reproduced, modified,
+  published, uploaded, posted, transmitted, distributed, or disclosed in any way
+  without Intel's prior express written permission.
+
+  No license under any patent, copyright, trade secret or other intellectual
+  property right is granted to or conferred upon you by disclosure or delivery
+  of the Materials, either expressly, by implication, inducement, estoppel or
+  otherwise. Any license under such intellectual property rights must be
+  express and approved by Intel in writing.
+
+  Unless otherwise agreed by Intel in writing, you may not remove or alter
+  this notice or any other notice embedded in Materials by Intel or
+  Intel's suppliers or licensors in any way.
+
+  This file contains a 'Sample Driver' and is licensed as such under the terms
+  of your license agreement with Intel or your vendor. This file may be modified
+  by the user, subject to the additional terms of the license agreement.
+
+@par Specification
+**/
+
+/=#
+#include "VFR.uni"
+
+//
+// This is for FCE tool to parse and eventually generate the various default values by PlatId.
+//
+
+#string STR_PLATID_PROMPT                             #language en-US  "\x049F"
+
+#string STR_PLATFORM_THERMAL_CONFIG_FORM_TITLE        #language en-US "Platform Thermal Configuration"
+#string STR_PLATFORM_THERMAL_CONFIG_FORM_HELP         #language en-US "Platform Thermal Configuration options"
+
+#string STR_CPU_THERMAL_CONFIG_FORM_TITLE             #language en-US "CPU Thermal Configuration"
+#string STR_CPU_THERMAL_CONFIG_FORM_HELP              #language en-US "CPU Thermal Configuration options"
+
+#string STR_TMRC_CONFIG_FORM_TITLE                    #language en-US "Thermal Memory Reference Code (TMRC) Configuration"
+#string STR_TMRC_CONFIG_FORM_HELP                     #language en-US "Thermal Memory Reference Code (TMRC) Configuration options"
+
+#string STR_DPTF_CONFIG_FORM_TITLE                    #language en-US "DPTF Configuration"
+#string STR_DPTF_CONFIG_FORM_HELP                     #language en-US "DPTF Configuration options"
+
+#string STR_POLICY_CONFIG_FORM_TITLE                  #language en-US "Policy Configuration"
+#string STR_POLICY_CONFIG_FORM_HELP                   #language en-US "Policy Configuration options"
+
+#string STR_HHM_FORM                                  #language en-US "Hardware Health Monitor"
+#string STR_HHM_FORM_HELP                             #language en-US "Monitor the Hardware Health."
+
+#string STR_CHIP_NB_REV_HELP                          #language en-US "GMCH Version"
+#string STR_CHIP_NB_REV_NAME                          #language en-US "GMCH Version"
+#string STR_CHIP_NB_REV_VALUE                         #language en-US "N/A" //dynamically updated
+
+#string STR_CHIP_SB_NAME_HELP                         #language en-US "PCH Name"
+#string STR_CHIP_SB_NAME                              #language en-US "Name"
+#string STR_CHIP_SB_VALUE                             #language en-US "UnKnown" //dynamically updated
+
+#string STR_CHIP_SB_SKU_NAME_HELP                     #language en-US "PCH SKU"
+#string STR_CHIP_SB_SKU_NAME                          #language en-US "PCH SKU"
+#string STR_CHIP_SB_SKU_VALUE                         #language en-US "UnKnown" //dynamically updated
+
+#string STR_CHIP_SB_REV_HELP                          #language en-US "PCH Stepping"
+#string STR_CHIP_SB_REV_NAME                          #language en-US "Stepping"
+#string STR_CHIP_SB_REV_VALUE                         #language en-US "UnKnown" //dynamically updated
+
+#string STR_CHIP_SB_PACKAGE_HELP                      #language en-US "PCH Package"
+#string STR_CHIP_SB_PACKAGE_NAME                      #language en-US "Package"
+#string STR_CHIP_SB_PACKAGE_VALUE                     #language en-US "N/A" //dynamically updated
+
+#string STR_HEBC_VALUE                                #language en-US "HEBC value"
+#string STR_HEBC_VALUE_HELP                           #language en-US "HEBC value 32bit "
+
+#string STR_PLATFORM_TXT_HELP                         #language en-US "Platform/PCH TXT capability"
+#string STR_PLATFORM_TXT_NAME                         #language en-US "TXT Capability of Platform/PCH"
+#string STR_PLATFORM_TXT_VALUE                        #language en-US "Not Supported" //dynamically updated
+
+#string STR_PRODUCTION_TYPE_HELP                      #language en-US "Platform Production Type"
+#string STR_PRODUCTION_TYPE_NAME                      #language en-US "Production Type"
+#string STR_PRODUCTION_TYPE_VALUE                     #language en-US "Not Supported" //dynamically updated
+
+#string STR_PLATFORM_SCI_HELP                         #language en-US "Boot Status of SCI"
+#string STR_PLATFORM_SCI_NAME                         #language en-US "SCI Boot"
+#string STR_PLATFORM_SCI_VALUE                        #language en-US "N/A" //dynamically updated
+
+#string STR_CHIP_HSIO_BASE_REV_HELP                   #language en-US "ChipsetInit Base Revision"
+#string STR_CHIP_HSIO_BASE_REV_NAME                   #language en-US "ChipsetInit Base Revision"
+#string STR_CHIP_HSIO_BASE_REV_VALUE                  #language en-US "Unknown" //dynamically updated
+
+#string STR_CHIP_HSIO_OEM_REV_HELP                    #language en-US "ChipsetInit OEM Revision"
+#string STR_CHIP_HSIO_OEM_REV_NAME                    #language en-US "ChipsetInit OEM Revision"
+#string STR_CHIP_HSIO_OEM_REV_VALUE                   #language en-US "Unknown" //dynamically updated
+
+#string STR_CHIP_EC_REV_HELP                          #language en-US "EC FW Version"
+#string STR_CHIP_EC_REV_NAME                          #language en-US "EC FW Version"
+#string STR_CHIP_EC_REV_VALUE                         #language en-US "N/A" //dynamically updated
+
+#string STR_CHIP_STM_REV_HELP                         #language en-US "STM32 FW Version"
+#string STR_CHIP_STM_REV_NAME                         #language en-US "STM32 FW Version"
+#string STR_CHIP_STM_REV_VALUE                        #language en-US "Not Ready" //dynamically updated
+
+#string STR_ME_FW_SKU_HELP                            #language en-US  "ME Firmware SKU"
+#string STR_ME_FW_SKU_PROMPT                          #language en-US  "ME Firmware SKU"
+#string STR_ME_FW_SKU_VALUE                           #language en-US  "N/A" //dynamically updated
+
+#string STR_ME_FW_REV_HELP                            #language en-US  "ME Firmware Version"
+#string STR_ME_FW_REV_PROMPT                          #language en-US  "ME FW Version"
+#string STR_ME_FW_REV_VALUE                           #language en-US  "N/A" //dynamically updated
+
+#string STR_SPI_DUAL_OUTPUT_FAST_READ_SUPPORT_HELP    #language en-US "Dual Output Fast Read support"
+#string STR_SPI_DUAL_OUTPUT_FAST_READ_SUPPORT_PROMPT  #language en-US "Dual Output Fast Read support"
+#string STR_SPI_DUAL_OUTPUT_FAST_READ_SUPPORT_VALUE   #language en-US "N/A" //dynamically updated
+
+#string STR_SPI_READ_ID_STATUS_CLOCK_FREQUENCY_HELP   #language en-US "Read ID and Read Status Clock Frequency"
+#string STR_SPI_READ_ID_STATUS_CLOCK_FREQUENCY_PROMPT #language en-US "Read ID/Status Clock Freq"
+#string STR_SPI_READ_ID_STATUS_CLOCK_FREQUENCY_VALUE  #language en-US "N/A" //dynamically updated
+
+#string STR_SPI_WRITE_ERASE_CLOCK_FREQUENCY_HELP      #language en-US "Write and Erase Clock Frequency "
+#string STR_SPI_WRITE_ERASE_CLOCK_FREQUENCY_PROMPT    #language en-US "Write and Erase Clock Freq"
+#string STR_SPI_WRITE_ERASE_CLOCK_FREQUENCY_VALUE     #language en-US "N/A" //dynamically updated
+
+#string STR_SPI_FAST_READ_CLOCK_FREQUENCY_HELP        #language en-US "Fast Read Clock Frequency"
+#string STR_SPI_FAST_READ_CLOCK_FREQUENCY_PROMPT      #language en-US "Fast Read Clock Freq"
+#string STR_SPI_FAST_READ_CLOCK_FREQUENCY_VALUE       #language en-US "N/A" //dynamically updated
+
+#string STR_SPI_FAST_READ_SUPPORT_HELP                #language en-US "Fast Read support"
+#string STR_SPI_FAST_READ_SUPPORT_PROMPT              #language en-US "Fast Read support"
+#string STR_SPI_FAST_READ_SUPPORT_VALUE               #language en-US "N/A" //dynamically updated
+
+#string STR_SPI_READ_CLOCK_FREQUENCY_HELP             #language en-US "Read Clock Frequency"
+#string STR_SPI_READ_CLOCK_FREQUENCY_PROMPT           #language en-US "Read Clock Freq"
+#string STR_SPI_READ_CLOCK_FREQUENCY_VALUE            #language en-US "N/A" //dynamically updated
+
+#string STR_SPI_NUMBER_OF_COMPONENTS_HELP             #language en-US "Number of Components"
+#string STR_SPI_NUMBER_OF_COMPONENTS_PROMPT           #language en-US "Number of Components"
+#string STR_SPI_NUMBER_OF_COMPONENTS_VALUE            #language en-US "N/A" //dynamically updated
+
+#string STR_SPI1_DENSITY_HELP                         #language en-US "SPI Component 1 Density"
+#string STR_SPI1_DENSITY_PROMPT                       #language en-US "SPI Component 1 Density"
+#string STR_SPI1_DENSITY_VALUE                        #language en-US "N/A" //dynamically updated
+
+#string STR_SPI0_DENSITY_HELP                         #language en-US "SPI Component 0 Density"
+#string STR_SPI0_DENSITY_PROMPT                       #language en-US "SPI Component 0 Density"
+#string STR_SPI0_DENSITY_VALUE                        #language en-US "N/A" //dynamically updated
+
+#string STR_CHIP_IGFX_VBIOS_REV_HELP                  #language en-US "IGFX VBIOS Version"
+#string STR_CHIP_IGFX_VBIOS_REV_NAME                  #language en-US "IGFX VBIOS Version"
+#string STR_CHIP_IGFX_VBIOS_REV_VALUE                 #language en-US "N/A" //dynamically updated
+
+#string STR_DEKEL_FIRMWARE_VERSION_HELP               #language en-US "Dekel Firmware Version"
+#string STR_DEKEL_FIRMWARE_VERSION_NAME               #language en-US "Dekel Firmware Version"
+#string STR_DEKEL_FIRMWARE_VERSION_VALUE              #language en-US "N/A" //dynamically updated
+
+#string STR_CHIP_IGFX_GOP_REV_HELP                    #language en-US "IGFX GOP Version"
+#string STR_CHIP_IGFX_GOP_REV_NAME                    #language en-US "IGFX GOP Version"
+#string STR_CHIP_IGFX_GOP_REV_VALUE                   #language en-US "N/A" //dynamically updated
+#string STR_MRC_REV_HELP                              #language en-US "Memory RC Version"
+#string STR_MRC_REV_NAME                              #language en-US "Memory RC Version"
+#string STR_MRC_REV_VALUE                             #language en-US "N/A" //dynamically updated
+
+#string STR_THERMAL_REPORTING_PROMPT                  #language en-US "Enable All Thermal Functions"
+#string STR_THERMAL_REPORTING_HELP                    #language en-US "Enable All Thermal Functions" is Enabled it Enables 'Memory Thermal Management','Active Trip Points', 'Critical Trip Points'.Set to disabled for Manual Configuration"
+
+#string STR_THERMAL_CONFIGURATION                     #language en-US "Thermal Configuration"
+#string STR_THERMAL_CONFIGURATION_HELP                #language en-US "Thermal Configuration Parameters"
+
+#string STR_PLATFORM_THERMAL_CONFIGURATION            #language en-US "Platform Thermal Configuration"
+
+#string STR_ENABLED                                   #language en-US "Enabled"
+#string STR_DISABLED                                  #language en-US "Disabled"
+#string STR_OUT_OF_SPEC                               #language en-US "Critical Temp Reporting (Out Of spec)"
+
+//
+// Platform Thermal Configuration
+//
+#string STR_ACPI_ACTIVE_THERMAL_TRIP_POINT_LOW        #language en-US "Active Trip Point 1"
+#string STR_ACPI_ACTIVE_THERMAL_TRIP_POINT_HELP_LOW   #language en-US "This value controls the temperature of the ACPI Active Trip Point 1 - the point in which the OS will turn the processor fan on Active Trip Point 1 Fan Speed."
+#string STR_ACPI_ACTIVE_THERMAL_TRIP_POINT_HIGH       #language en-US "Active Trip Point 0"
+#string STR_ACPI_ACTIVE_THERMAL_TRIP_POINT_HELP_HIGH  #language en-US "This value controls the temperature of the ACPI Active Trip Point 0 - the point in which the OS will turn the processor fan on Active Trip Point 0 Fan Speed."
+#string STR_ACPI_PASSIVE_THERMAL_TRIP_POINT           #language en-US "Passive Trip Point"
+#string STR_ACPI_PASSIVE_THERMAL_TRIP_POINT_HELP      #language en-US "This value controls the temperature of the ACPI Passive Trip Point - the point in which the OS will begin throttling the processor."
+#string STR_ACPI_CRITICAL_THERMAL_TRIP_POINT          #language en-US "Critical Trip Point"
+#string STR_ACPI_CRITICAL_THERMAL_TRIP_POINT_HELP     #language en-US "This value controls the temperature of the ACPI Critical Trip Point - the point in which the OS will shut the system off.\n\nNOTE:  119C is the Plan Of Record (POR) for all Intel mobile processors."
+#string STR_15_C                                      #language en-US "15 C"
+#string STR_23_C                                      #language en-US "23 C"
+#string STR_31_C                                      #language en-US "31 C"
+#string STR_39_C                                      #language en-US "39 C"
+#string STR_47_C                                      #language en-US "47 C"
+#string STR_55_C                                      #language en-US "55 C"
+#string STR_63_C                                      #language en-US "63 C"
+#string STR_71_C                                      #language en-US "71 C"
+#string STR_79_C                                      #language en-US "79 C"
+#string STR_87_C                                      #language en-US "87 C"
+#string STR_95_C                                      #language en-US "95 C"
+#string STR_100_C                                     #language en-US "100 C"
+#string STR_103_C                                     #language en-US "103 C"
+#string STR_111_C                                     #language en-US "111 C"
+#string STR_119_C                                     #language en-US "119 C (POR)"
+#string STR_127_C                                     #language en-US "127 C"
+#string STR_130_C                                     #language en-US "130 C"
+#string STR_POR                                       #language en-US "POR"
+#string STR_0LEN                                      #language en-US ""
+
+#string STR_PPCC_STEP_SIZE                            #language en-US " PPCC Step Size"
+#string STR_PPCC_STEP_SIZE_HELP                       #language en-US "Step size for Turbo power limit (RAPL) control"
+#string STR_500_MW                                    #language en-US "0.5 Watts"
+#string STR_1000_MW                                   #language en-US "1.0 Watts"
+#string STR_1500_MW                                   #language en-US "1.5 Watts"
+#string STR_2000_MW                                   #language en-US "2.0 Watts"
+
+#string STR_ACPI_MIN_POWER_LIMIT_DEFAULT              #language en-US " Minimum Power Limit Default"
+#string STR_ACPI_MAX_POWER_LIMIT_DEFAULT              #language en-US " Maximum Power Limit 1"
+#string STR_ACPI_MIN_POWER_LIMIT0                     #language en-US " Minimum Power Limit (cTDP Nom)"
+#string STR_ACPI_MIN_POWER_LIMIT1                     #language en-US " Minimum Power Limit (cTDP Down)"
+#string STR_ACPI_MIN_POWER_LIMIT2                     #language en-US " Minimum Power Limit (cTDP up)"
+#string STR_ACPI_MIN_POWER_LIMIT_HELP                 #language en-US "This value provides the minimum power limit in the PPCC object for this platform.  Enter the value in milliwatts with 125mw granularity."
+#string STR_ACPI_MIN_POWER_LIMIT0_HELP                #language en-US "This value provides the minimum power limit in the PPCC object for this platform at cTDP Level 0 (Nominal).  Enter the value in milliwatts with 125mw granularity."
+#string STR_ACPI_MIN_POWER_LIMIT1_HELP                #language en-US "This value provides the minimum power limit in the PPCC object for this platform cTDP Level 1 (Down).  Enter the value in milliwatts with 125mw granularity."
+#string STR_ACPI_MIN_POWER_LIMIT2_HELP                #language en-US "This value provides the minimum power limit in the PPCC object for this platform cTDP Level 2 (Up).  Enter the value in milliwatts with 125mw granularity."
+
+#string STR_AC0_FAN_SPEED                             #language en-US "Active Trip Point 0 Fan Speed"
+#string STR_AC0_FAN_SPEED_HELP                        #language en-US "Active Trip Point 0 Fan Speed in percentage. Value must be between 0 (Fan off) - 100 (Max fan speed). This is the speed at which fan will run when Active Trip Point 0 is crossed."
+
+#string STR_AC1_FAN_SPEED                             #language en-US "Active Trip Point 1 Fan Speed"
+#string STR_AC1_FAN_SPEED_HELP                        #language en-US "Active Trip Point 1 Fan Speed in percentage. Value must be between 0 (Fan off) - 100 (Max fan speed). This value must be less than Active Trip Point 0 Fan speed. This is the speed at which fan will run when Active Trip 1 is crossed."
+
+#string STR_ACPI_PASSIVE_TC1_VALUE                    #language en-US "  Passive TC1 Value"
+#string STR_ACPI_PASSIVE_TC1_VALUE_HELP               #language en-US "This value sets the TC1 value for the ACPI Passive Cooling Formula. Range 1 - 16"
+#string STR_ACPI_PASSIVE_TC2_VALUE                    #language en-US "  Passive TC2 Value"
+#string STR_ACPI_PASSIVE_TC2_VALUE_HELP               #language en-US "This value sets the TC2 value for the ACPI Passive Cooling Formula. Range 1 - 16"
+#string STR_ACPI_PASSIVE_TSP_VALUE                    #language en-US "  Passive TSP Value"
+#string STR_ACPI_PASSIVE_TSP_VALUE_HELP               #language en-US "This item sets the TSP value for the ACPI Passive Cooling Formula.  It represents in tenths of a second how often the OS will read the temperature when passive cooling is enabled. Range 2 - 32"
+
+#string STR_DATP_PROMPT                               #language en-US "Active Trip Points"
+#string STR_DATP_HELP                                 #language en-US "Disable Active Trip Points"
+#string STR_DPTP_PROMPT                               #language en-US "Passive Trip Points"
+#string STR_DPTP_HELP                                 #language en-US "Disable Passive Trip Points"
+#string STR_DCTP_PROMPT                               #language en-US "Critical Trip Points"
+#string STR_DCTP_HELP                                 #language en-US "Disable Critical Trip Points"
+#string STR_ME_TR_ENABLED_PROMPT                      #language en-US  "ME SMBus Thermal Reporting"
+#string STR_ME_TR_ENABLED_HELP                        #language en-US  "Enable/Disable ME SMBus Thermal Reporting Configuration"
+
+#string STR_TR_SMBUS_EC_LEN_PROMPT                    #language en-US  "  SMBus Buffer Length"
+#string STR_TR_SMBUS_EC_LEN_HELP                      #language en-US  "SMBus Block Read message length for EC."
+#string STR_SMBUS_EC_MSG_LEN_1_STRING                 #language en-US  "1"
+#string STR_SMBUS_EC_MSG_LEN_2_STRING                 #language en-US  "2"
+#string STR_SMBUS_EC_MSG_LEN_5_STRING                 #language en-US  "5"
+#string STR_SMBUS_EC_MSG_LEN_9_STRING                 #language en-US  "9"
+#string STR_SMBUS_EC_MSG_LEN_10_STRING                #language en-US  "10"
+#string STR_SMBUS_EC_MSG_LEN_14_STRING                #language en-US  "14"
+#string STR_SMBUS_EC_MSG_LEN_20_STRING                #language en-US  "20"
+
+#string STR_TR_SMBUS_EC_PEC_PROMPT                    #language en-US  "  Thermal Reporting EC PEC"
+#string STR_TR_SMBUS_EC_PEC_HELP                      #language en-US  "Enable Packet Error Checking (PEC) for SMBus Block Read"
+
+#string STR_TR_SMBUS_PROMPT                           #language en-US  "  Select slots with TS on DIMM's"
+#string STR_TR_SMBUS_HELP                             #language en-US  "Enable temperature reporting for slots with TS on DIMM. NOTE: SODIMM0 is the one closer to CPU."
+#string STR_00_00_STRING                              #language en-US  "No TS on DIMM"
+#string STR_30_00_STRING                              #language en-US  "TS on DIMM in Slot SODIMM0"
+#string STR_00_34_STRING                              #language en-US  "TS on DIMM in Slot SODIMM1"
+#string STR_30_34_STRING                              #language en-US  "TS on DIMM in Slot SODIMM0 and SODIMM1"
+
+#string STR_THERMAL_DEVICE_ENABLE                     #language en-US "PCH Thermal Device"
+#string STR_THERMAL_DEVICE_ENABLE_HELP                #language en-US "Enable/Disable PCH Thermal Device(D20:F2)"
+#string STR_THERMAL_DEVICE_ENABLE_PCI                 #language en-US "Enabled in PCI mode"
+#string STR_THERMAL_DEVICE_ENABLE_ACPI                #language en-US "Enabled in ACPI mode"
+#string STR_RUN_TIME_INTERFACE                        #language en-US "Run Time Interface"
+#string STR_RUN_TIME_INTERFACE_HELP                   #language en-US "Choose runtime interface for PCH communication"
+#string STR_RUN_TIME_INTERFACE_SMBUS                  #language en-US "EC uses SMBus"
+#string STR_RUN_TIME_INTERFACE_MMIO                   #language en-US "BIOS uses MMIO"
+#string STR_ALERT_ENABLE_LOCK                         #language en-US "Alert Enable Lock"
+#string STR_ALERT_ENABLE_LOCK_HELP                    #language en-US "Lock all Alert Enable settings"
+#string STR_PCH_ALERT                                 #language en-US " PCH Alert"
+#string STR_PCH_ALERT_HELP                            #language en-US "PCH Alert pin enable"
+#string STR_DIMM_ALERT                                #language en-US " DIMM Alert"
+#string STR_DIMM_ALERT_HELP                           #language en-US "DIMM Alert pin enable"
+#string STR_CPU_TEMP_READ                             #language en-US "CPU Temp Read"
+#string STR_CPU_TEMP_READ_HELP                        #language en-US "CPU Temperature Read Enable"
+#string STR_CPU_ENERGY_READ                           #language en-US "CPU Energy Read"
+#string STR_CPU_ENERGY_READ_HELP                      #language en-US "CPU Energy Read Enable"
+#string STR_MCH_TEMP_READ                             #language en-US "MCH Temp Read"
+#string STR_MCH_TEMP_READ_HELP                        #language en-US "MCH Temperature Read Enable"
+#string STR_PCH_TEMP_READ                             #language en-US "PCH Temp Read"
+#string STR_PCH_TEMP_READ_HELP                        #language en-US "PCH Temperature Read Enable"
+#string STR_DIMM1_TS_READ                             #language en-US " DIMM1 TS READ"
+#string STR_DIMM1_TS_READ_HELP                        #language en-US "DIMM1 Thermal Sensor Read Enable"
+#string STR_DIMM2_TS_READ                             #language en-US " DIMM2 TS READ"
+#string STR_DIMM2_TS_READ_HELP                        #language en-US "DIMM2 Thermal Sensor Read Enable"
+#string STR_DIMM3_TS_READ                             #language en-US " DIMM3 TS READ"
+#string STR_DIMM3_TS_READ_HELP                        #language en-US "DIMM3 Thermal Sensor Read Enable"
+#string STR_DIMM4_TS_READ                             #language en-US " DIMM4 TS READ"
+#string STR_DIMM4_TS_READ_HELP                        #language en-US "DIMM4 Thermal Sensor Read Enable"
+#string STR_CPU_TEMP                                  #language en-US "CPU Temp"
+#string STR_CPU_TEMP_HELP                             #language en-US "Fail Safe temp that EC will use if OS is hung"
+#string STR_CPU_FAN_SPEED                             #language en-US "CPU Fan Speed"
+#string STR_CPU_FAN_SPEED_HELP                        #language en-US "Fan speed that EC will use if OS is hung"
+
+//
+// Dynamic Platform Thermal Framework
+//
+#string STR_DPTF_PROMPT                               #language en-US "DPTF"
+#string STR_DPTF_HELP                                 #language en-US "Enable/Disable Intel Dynamic Platform Thermal Framework"
+
+#string STR_DPTF_CONFIG_PROMPT                        #language en-US  "DPTF Configuration"
+#string STR_DPTF_CONFIG_HELP                          #language en-US  "An Integer containing the DPTF Configuration bitmap:   BIT0[Generic UI Access Control](0=enable,1=disable) BIT1[Restricted UI Access Control](0=enable,1=disable) BIT2[shell Access Control](0=enable,1=disable) BIT3[Environment Monitoring Report Control](0=report,1=silent) BIT4[Thermal Mitigation Report Control](0=silent,1=report)  BIT5[Thermal Policy Report Control](0=silent,1=report)"
+
+#string STR_PROC_THERMAL_DEVICE_PROMPT                #language en-US "Processor Thermal Device"
+#string STR_PROC_THERMAL_DEVICE_HELP                  #language en-US "Enable/Disable Processor Thermal Device."
+#string STR_SA_ENABLED                                #language en-US "SA Thermal Device"
+#string STR_CPU_ENABLED                               #language en-US "CPU Thermal Device"
+
+#string STR_DPTF_ACTIVE_THERMAL_TRIP_POINT            #language en-US " Active Thermal Trip Point"
+#string STR_DPTF_ACTIVE_THERMAL_TRIP_POINT_HELP       #language en-US "This value controls the temperature of the ACPI Active Thermal Trip Point.      NOTE: a value of zero will cause the DPTF driver to disable the trip point."
+#string STR_DPTF_PASSIVE_THERMAL_TRIP_POINT           #language en-US " Passive Thermal Trip Point"
+#string STR_DPTF_PASSIVE_THERMAL_TRIP_POINT_HELP      #language en-US "This value controls the temperature of the ACPI Passive Thermal Trip Point.     NOTE: a value of zero will cause the DPTF driver to disable the trip point."
+#string STR_DPTF_CRITICAL_THERMAL_TRIP_POINT          #language en-US " Critical Thermal Trip Point"
+#string STR_DPTF_CRITICAL_THERMAL_TRIP_POINT_HELP     #language en-US "This value controls the temperature of the ACPI Critical Thermal Trip Point.    NOTE: a value of zero will cause the DPTF driver to disable the trip point."
+#string STR_DPTF_CRITICAL_THERMAL_TRIP_POINT_S3       #language en-US " S3/CS Thermal Trip Point"
+#string STR_DPTF_CRITICAL_THERMAL_TRIP_POINT_S3_HELP  #language en-US "This value controls the temperature of the ACPI Critical Thermal Trip Point for entering S3 or CS.         NOTE: a value of zero will cause the DPTF driver to disable the trip point."
+#string STR_DPTF_HOT_THERMAL_TRIP_POINT               #language en-US " Hot Thermal Trip Point"
+#string STR_DPTF_HOT_THERMAL_TRIP_POINT_HELP          #language en-US "This value controls the temperature of the ACPI Hot Thermal Trip Point.            NOTE: a value of zero will cause the DPTF driver to disable the trip point."
+#string STR_DPTF_SAMPLING_PERIOD                      #language en-US " Thermal Sampling Period"
+#string STR_DPTF_SAMPLING_PERIOD_HELP                 #language en-US "The polling interval in 10ths of seconds. A value of 0 tells the driver to use interrupts.                  NOTE: The granularity of the sampling period is 0.1 seconds. For example, if the sampling period is 30 seconds, then _TSP needs to report 300; if the sampling period is 0.5 seconds, then choose 5."
+
+#string STR_LPO_ENABLE                                #language en-US " CLPO Enable"
+#string STR_LPO_ENABLE_HELP                           #language en-US "Instructs the policy to use Active Cores if they are available."
+#string STR_LPO_PSTATE                                #language en-US " CLPO Start PState"
+#string STR_LPO_PSTATE_HELP                           #language en-US "Instructs the policy when to initiate Active Core control if enabled.       Note: 16=LFM"
+#string STR_LPO_STEPSIZE                              #language en-US " CLPO Step Size"
+#string STR_LPO_STEPSIZE_HELP                         #language en-US "Instructs the policy to take away logical processors in the specified percentage steps."
+#string STR_LPO_POWER_SETTING                         #language en-US " CLPO Power Control"
+#string STR_LPO_POWER_SETTING_HELP                    #language en-US "Instructs the policy whether to use Core offlining or SMT offlining if Active core control is enabled to be used in P0 or when power control is applied."
+#string STR_LPO_PERFORMANCE_SETTING                   #language en-US " CLPO Performance Control"
+#string STR_LPO_PERFORMANCE_SETTING_HELP              #language en-US "Instructs the policy whether to use Core offlining or SMT offlining if Active core control is enabled to be used in P1 or when performance control is applied."
+#string STR_SMT_OFF_LINING                            #language en-US "SMT Off lining"
+#string STR_CORE_OFF_LINING                           #language en-US "Core Off lining"
+
+#string STR_PCH_THERMAL_PROMPT                        #language en-US "PCH Thermal Device"
+
+#string STR_CONFIGTDP_PROMPT                          #language en-US " ConfigTDP"
+#string STR_CONFIGTDP_HELP                            #language en-US "Enable/Disable Intel Configurable TDP"
+
+#string STR_PROC_MEMORY_DEVICE_PROMPT                 #language en-US "Memory Device"
+#string STR_PROC_MEMORY_DEVICE_HELP                   #language en-US "Enable/Disable Memory Thermal Device"
+
+#string STR_FAN1_DPTF_PROMPT                          #language en-US "FAN1 Device"
+#string STR_FAN1_DPTF_HELP                            #language en-US "Enable the Fan1 device."
+
+#string STR_PROC_AMBIENT_DEVICE_PROMPT                #language en-US "Ambient Device"
+#string STR_PROC_AMBIENT_DEVICE_HELP                  #language en-US "Enable/Disable Ambient Thermal Device"
+
+#string STR_PROC_SKIN_DEVICE_PROMPT                   #language en-US "Skin Device"
+#string STR_PROC_SKIN_DEVICE_HELP                     #language en-US "Enable/Disable Skin Thermal Device"
+
+#string STR_PROC_EXHAUST_FAN_DEVICE_PROMPT            #language en-US "Exhaust Fan Device"
+#string STR_PROC_EXHAUST_FAN_DEVICE_HELP              #language en-US "Enable/Disable Exhaust Fan Thermal Device"
+
+#string STR_PROC_VR_DEVICE_PROMPT                     #language en-US "VR Device"
+#string STR_PROC_VR_DEVICE_HELP                       #language en-US "Enable/Disable VR Thermal Device"
+
+#string STR_WWAN_SENSOR_DEVICE_PROMPT                 #language en-US "WWAN Sensor Device"
+#string STR_WWAN_SENSOR_DEVICE_HELP                   #language en-US "Enable/Disable WWAN Board Temperature Sensor"
+
+#string STR_CPU_VR_SENSOR_DEVICE_PROMPT               #language en-US "CPU VR Sensor Device"
+#string STR_CPU_VR_SENSOR_DEVICE_HELP                 #language en-US "Enable/Disable CPU VR Board Temperature Sensor"
+
+#string STR_SSD_SENSOR_DEVICE_PROMPT                  #language en-US "SSD Sensor Device"
+#string STR_SSD_SENSOR_DEVICE_HELP                    #language en-US "Enable/Disable SSD Board Temperature Sensor"
+
+#string STR_INLET_FAN_SENSOR_DEVICE_PROMPT            #language en-US "Inlet Fan Sensor Device"
+#string STR_INLET_FAN_SENSOR_DEVICE_HELP              #language en-US "Enable/Disable Board Fan Inlet Temperature Sensor"
+
+#string STR_ACTIVE_POLICY_DPTF_PROMPT                 #language en-US "Active Policy"
+#string STR_ACTIVE_POLICY_DPTF_HELP                   #language en-US "Enable/Disable Active Policy 1.0 or 2.0."
+#string STR_ACTIVE_POLICY_10_DPTF_HELP                #language en-US "Active Policy 1.0"
+#string STR_ACTIVE_POLICY_20_DPTF_HELP                #language en-US "Active Policy 2.0"
+#string STR_PASSIVE_POLICY_DPTF_PROMPT                #language en-US "Passive Policy"
+#string STR_PASSIVE_POLICY_DPTF_HELP                  #language en-US "Enable/Disable Passive Policy 1.0 or 2.0."
+#string STR_PASSIVE_POLICY_10_DPTF_HELP               #language en-US "Passive Policy 1.0"
+#string STR_PASSIVE_POLICY_20_DPTF_HELP               #language en-US "Passive Policy 2.0"
+#string STR_TRT_REVISION_OBJECTS                      #language en-US " TRT Revision"
+#string STR_TRT_REVISION_OBJECTS_HELP                 #language en-US "Select the TRT influence."
+#string STR_TRT_TRADITIONAL                           #language en-US "Traditional"
+#string STR_TRT_PRIORITY                              #language en-US "Priority"
+#string STR_CRITICAL_POLICY_DPTF_PROMPT               #language en-US "Critical Policy"
+#string STR_CRITICAL_POLICY_DPTF_HELP                 #language en-US "Enable/Disable Critical Policy."
+#string STR_RFIM_POLICY_DPTF_PROMPT                    #language en-US "RFI Mitigation Policy"
+#string STR_RFIM_POLICY_DPTF_HELP                      #language en-US "Enable/Disable Radio Frequency Interference Mitigation Policy."
+#string STR_AP_POLICY_DPTF_PROMPT                     #language en-US "Adaptive Performance"
+#string STR_AP_POLICY_DPTF_HELP                       #language en-US "Enable/Disable Adaptive Performance Policy."
+#string STR_VS_POLICY_DPTF_PROMPT                     #language en-US "Virtual Sensor"
+#string STR_VS_POLICY_DPTF_HELP                       #language en-US "Enable/Disable Virtual Sensor Policy."
+#string STR_POWER_BOSS_POLICY_DPTF_PROMPT             #language en-US "Power Boss"
+#string STR_POWER_BOSS_POLICY_DPTF_HELP               #language en-US "Enable/Disable Power Boss Policy."
+#string STR_PID_POLICY_DPTF_PROMPT                    #language en-US "PID Policy "
+#string STR_PID_POLICY_DPTF_HELP                      #language en-US "Enable /Disable PID Policy."
+
+#string STR_DPTF_OEM_DESIGN_VARIABLE_0                #language en-US "Design Variable 0"
+#string STR_DPTF_OEM_DESIGN_VARIABLE_1                #language en-US "Design Variable 1"
+#string STR_DPTF_OEM_DESIGN_VARIABLE_2                #language en-US "Design Variable 2"
+#string STR_DPTF_OEM_DESIGN_VARIABLE_3                #language en-US "Design Variable 3"
+#string STR_DPTF_OEM_DESIGN_VARIABLE_4                #language en-US "Design Variable 4"
+#string STR_DPTF_OEM_DESIGN_VARIABLE_5                #language en-US "Design Variable 5"
+#string STR_DPTF_OEM_DESIGN_VARIABLE_HELP             #language en-US "OEM Design Variable: an integer between 0-255. This allows OEM's to customize DPTF behavior based on platform changes."
+
+#string STR_DISPLAY_DEVICE                            #language en-US "Display participant"
+#string STR_DISPLAY_DEVICE_HELP                       #language en-US "Enable/Disable the Display participant."
+#string STR_DPTF_DISPLAY_HIGH_PROMPT                  #language en-US " Display High Limit"
+#string STR_DPTF_DISPLAY_HIGH_HELP                    #language en-US "Display High Limit - Between 0% to 100%"
+#string STR_DPTF_DISPLAY_LOW_PROMPT                   #language en-US " Display Low Limit"
+#string STR_DPTF_DISPLAY_LOW_HELP                     #language en-US "Display Low Limit - Between 0% to 100%"
+
+#string STR_WRLS_DEVICE                               #language en-US "Wireless participant"
+#string STR_WRLS_DEVICE_HELP                          #language en-US "Enable/Disable the Wireless participant."
+#string STR_WWAN_DEVICE                               #language en-US "WWAN participant"
+#string STR_WWAN_DEVICE_HELP                          #language en-US "Enable/Disable the WWAN participant."
+#string STR_POWER_DEVICE                              #language en-US "Power participant"
+#string STR_POWER_DEVICE_HELP                         #language en-US "Enable/Disable the Power participant."
+#string STR_DPTF_PPPR                                 #language en-US  "DPTF Power Sampling Period"
+#string STR_DPTF_PPPR_HELP                            #language en-US  "This power sampling period for the Power Participant Object."
+#string STR_CAM1_DEVICE                               #language en-US "2D Camera participant"
+#string STR_CAM1_DEVICE_HELP                          #language en-US "Enable/Disable the 2D Camera Participant."
+#string STR_BAT1_DEVICE                               #language en-US "Battery Participant"
+#string STR_BAT1_DEVICE_HELP                          #language en-US "Enable/Disable the Battery Participant."
+#string STR_ICAP_DEVICE                               #language en-US "IVCAM participant"
+#string STR_ICAP_DEVICE_HELP                          #language en-US "Enable/Disable Intel (R) RealSense(TM) 3D Camera(SR300)."
+#string STR_PPCC_OBJECT                               #language en-US "PPCC Object"
+#string STR_PPCC_OBJECT_HELP                          #language en-US "Enable/Disable PPCC object for validation."
+#string STR_PDRT_OBJECT                               #language en-US "PDRT Object"
+#string STR_PDRT_OBJECT_HELP                          #language en-US "Enable/Disable PDRT object for validation."
+#string STR_ARTG_OBJECT                               #language en-US "ARTG Object"
+#string STR_ARTG_OBJECT_HELP                          #language en-US "Enable/Disable ARTG object for validation."
+#string STR_PMAX_OBJECT                               #language en-US "PMAX Object"
+#string STR_PMAX_OBJECT_HELP                          #language en-US "Enable/Disable PMAX object for validation."
+#string STR_OPTIONAL_DPTF_OBJECTS                     #language en-US "Optional Objects"
+#string STR_OPTIONAL_DPTF_OBJECTS_HELP                #language en-US "Enable/Disable PIPR/PAPR for processor participant."
+#string STR_TMP1_OBJECT                               #language en-US "_TMP 1 Object"
+#string STR_TMP1_OBJECT_HELP                          #language en-US "Enable/Disable _TMP 1 object for validation."
+#string STR_TMP2_OBJECT                               #language en-US "_TMP 2 Object"
+#string STR_TMP2_OBJECT_HELP                          #language en-US "Enable/Disable _TMP 2 object for validation."
+#string STR_TMP3_OBJECT                               #language en-US "_TMP 3 Object"
+#string STR_TMP3_OBJECT_HELP                          #language en-US "Enable/Disable _TMP 3 object for validation."
+#string STR_TMP4_OBJECT                               #language en-US "_TMP 4 Object"
+#string STR_TMP4_OBJECT_HELP                          #language en-US "Enable/Disable _TMP 4 object for validation."
+#string STR_TMP5_OBJECT                               #language en-US "_TMP 5 Object"
+#string STR_TMP5_OBJECT_HELP                          #language en-US "Enable/Disable _TMP 5 object for validation."
+#string STR_TMP6_OBJECT                               #language en-US "_TMP 6 Object"
+#string STR_TMP6_OBJECT_HELP                          #language en-US "Enable/Disable _TMP 6 object for validation."
+#string STR_TMP7_OBJECT                               #language en-US "_TMP 7 Object"
+#string STR_TMP7_OBJECT_HELP                          #language en-US "Enable/Disable _TMP 7 object for validation."
+#string STR_TMP8_OBJECT                               #language en-US "_TMP 8 Object"
+#string STR_TMP8_OBJECT_HELP                          #language en-US "Enable/Disable _TMP 8 object for validation."
+#string STR_CHARGER_DEVICE                            #language en-US "Charger participant"
+#string STR_CHARGER_DEVICE_HELP                       #language en-US "Enable/Disable Charger device"
+#string STR_STORAGE_DEVICE                            #language en-US "Storage participant"
+#string STR_STORAGE_DEVICE1                           #language en-US "Storage participant1"
+#string STR_STORAGE_DEVICE2                           #language en-US "Storage participant2"
+#string STR_STORAGE_DEVICE_HELP                       #language en-US "Enable/Disable Storage device"
+#string STR_PCHP_DEVICE                               #language en-US "PCH FIVR Participant"
+#string STR_PCHP_DEVICE_HELP                          #language en-US "Enable/Disable PCH FIVR Participant"
+#string STR_VIRTUAL_SENSOR_DEVICE1                    #language en-US "Virtual Sensor participant 1"
+#string STR_VIRTUAL_SENSOR_DEVICE2                    #language en-US "Virtual Sensor participant 2"
+#string STR_VIRTUAL_SENSOR_DEVICE_HELP                #language en-US "Enable/Disable Virtual Sensor device"
+
+#string STR_SEN1_DEVICE_PROMPT                        #language en-US "Sensor Device 1"
+#string STR_SEN1_DEVICE_HELP                          #language en-US "Enable/Disable Sensor 1 device"
+#string STR_SEN2_DEVICE_PROMPT                        #language en-US "Sensor Device 2"
+#string STR_SEN2_DEVICE_HELP                          #language en-US "Enable/Disable Sensor 2 device"
+#string STR_SEN3_DEVICE_PROMPT                        #language en-US "Sensor Device 3"
+#string STR_SEN3_DEVICE_HELP                          #language en-US "Enable/Disable Sensor 3 device"
+#string STR_SEN4_DEVICE_PROMPT                        #language en-US "Sensor Device 4"
+#string STR_SEN4_DEVICE_HELP                          #language en-US "Enable/Disable Sensor 4 device"
+#string STR_SEN5_DEVICE_PROMPT                        #language en-US "Sensor Device 5"
+#string STR_SEN5_DEVICE_HELP                          #language en-US "Enable/Disable Sensor 5 device"
+#string STR_SEN6_DEVICE_PROMPT                        #language en-US "Sensor Device 6"
+#string STR_SEN6_DEVICE_HELP                          #language en-US "Enable/Disable Sensor 6 device"
+#string STR_SEN7_DEVICE_PROMPT                        #language en-US "Sensor Device 7"
+#string STR_SEN7_DEVICE_HELP                          #language en-US "Enable/Disable Sensor 7 device"
+#string STR_VR_HOTSPOT_DEVICE_HELP                    #language en-US "Enable/Disable VR Hotspot Q50 sensor"
+#string STR_SKIN_HOTSPOT_DEVICE_HELP                  #language en-US "Enable/Disable Skin Hotspot U50 sensor"
+#string STR_PMIC_MCP_SENSOR_DEVICE_HELP               #language en-US "Enable/Disable PMIC-MCP Hotspot Q16 sensor"
+#string STR_SKIN_IR_SENSOR_DEVICE_HELP                #language en-US "Enable/Disable C-Skin Chassis U50 IR sensor"
+#string STR_WWAN_HOTSPOT_SENSOR_DEVICE_HELP           #language en-US "Enable/Disable WWAN hotspot Q6 sensor"
+#string STR_AMBIENT_SENSOR_DEVICE_HELP                #language en-US "Enable/Disable Ambient Hotspot U31"
+
+//
+//Cpu Thermal Configuration
+//
+#string STR_CPU_THERMAL_CONFIGURATION                 #language en-US "Cpu Thermal Configuration"
+#string STR_ENABLEDIGITALTHERMALSENSOR_PROMPT         #language en-US "DTS SMM"
+#string STR_ENABLEDIGITALTHERMALSENSOR_HELP           #language en-US "Disabled: ACPI thermal management uses EC reported temperature values.\nEnabled: ACPI thermal management uses DTS SMM mechanism to obtain CPU temperature values.\nOut of Spec: ACPI Thermal Management uses EC reported temperature values and DTS SMM is used to handle Out of Spec condition."
+
+#string STR_TCC_ACTIVATION_OFFSET_PROMPT              #language en-US "Tcc Activation Offset"
+#string STR_TCC_ACTIVATION_OFFSET_PROMPT_HELP         #language en-US "Offset from factory set Tcc activation temprature at which the Thermal Control Circuit must be activated. Tcc will be activated at: Tcc Activation Temp - Tcc Activation Offset. Tcc Activation Offset range is 0 to 63."
+
+#string STR_TCC_OFFSET_TIME_WINDOW_PROMPT             #language en-US "Tcc Offset Time Window"
+#string STR_TCC_OFFSET_TIME_WINDOW_HELP               #language en-US "Tcc Offset Time Window for Running Average Temperature Limit(RATL) feature. The Tcc offset time window can range from 5ms to 448s."
+
+#string STR_TIMEWINDOW_5MS                            #language en-US "5 ms"
+#string STR_TIMEWINDOW_10MS                           #language en-US "10 ms"
+#string STR_TIMEWINDOW_55MS                           #language en-US "55 ms"
+#string STR_TIMEWINDOW_156MS                          #language en-US "156 ms"
+#string STR_TIMEWINDOW_375MS                          #language en-US "375 ms"
+#string STR_TIMEWINDOW_500MS                          #language en-US "500 ms"
+#string STR_TIMEWINDOW_750MS                          #language en-US "750 ms"
+#string STR_TIMEWINDOW_1S                             #language en-US "1 sec"
+#string STR_TIMEWINDOW_2S                             #language en-US "2 sec"
+#string STR_TIMEWINDOW_3S                             #language en-US "3 sec"
+#string STR_TIMEWINDOW_4S                             #language en-US "4 sec"
+#string STR_TIMEWINDOW_5S                             #language en-US "5 sec"
+#string STR_TIMEWINDOW_6S                             #language en-US "6 sec"
+#string STR_TIMEWINDOW_7S                             #language en-US "7 sec"
+#string STR_TIMEWINDOW_8S                             #language en-US "8 sec"
+#string STR_TIMEWINDOW_10S                            #language en-US "10 sec"
+#string STR_TIMEWINDOW_12S                            #language en-US "12 sec"
+#string STR_TIMEWINDOW_14S                            #language en-US "14 sec"
+#string STR_TIMEWINDOW_16S                            #language en-US "16 sec"
+#string STR_TIMEWINDOW_20S                            #language en-US "20 sec"
+#string STR_TIMEWINDOW_24S                            #language en-US "24 sec"
+#string STR_TIMEWINDOW_28S                            #language en-US "28 sec"
+#string STR_TIMEWINDOW_32S                            #language en-US "32 sec"
+#string STR_TIMEWINDOW_40S                            #language en-US "40 sec"
+#string STR_TIMEWINDOW_48S                            #language en-US "48 sec"
+#string STR_TIMEWINDOW_56S                            #language en-US "56 sec"
+#string STR_TIMEWINDOW_64S                            #language en-US "64 sec"
+#string STR_TIMEWINDOW_80S                            #language en-US "80 sec"
+#string STR_TIMEWINDOW_96S                            #language en-US "96 sec"
+#string STR_TIMEWINDOW_112S                           #language en-US "112 sec"
+#string STR_TIMEWINDOW_128S                           #language en-US "128 sec"
+#string STR_TIMEWINDOW_160S                           #language en-US "160 sec"
+#string STR_TIMEWINDOW_192S                           #language en-US "192 sec"
+#string STR_TIMEWINDOW_224S                           #language en-US "224 sec"
+#string STR_TIMEWINDOW_256S                           #language en-US "256 sec"
+#string STR_TIMEWINDOW_320S                           #language en-US "320 sec"
+#string STR_TIMEWINDOW_384S                           #language en-US "384 sec"
+#string STR_TIMEWINDOW_448S                           #language en-US "448 sec"
+
+
+#string STR_TCC_OFFSET_CLAMP_ENABLE_PROMPT            #language en-US "Tcc Offset Clamp Enable"
+#string STR_TCC_OFFSET_CLAMP_ENABLE_HELP              #language en-US "Tcc Offset Clamp bit Enable for Running Average Temperature Limit(RATL) feature to allow CPU to throttle below P1."
+
+#string STR_TCC_OFFSET_LOCK_ENABLE_PROMPT             #language en-US "Tcc Offset Lock Enable"
+#string STR_TCC_OFFSET_LOCK_ENABLE_HELP               #language en-US "Lock Enable for Running Average Temperature Limit(RATL) feature to lock Temperature Target MSR."
+
+#string STR_PROC_HOT_ENABLE                           #language en-US "Bi-directional PROCHOT#"
+#string STR_PROC_HOT_ENABLE_HELP                      #language en-US "When a processor thermal sensor trips (either core), the PROCHOT# will be driven.\nIf bi-direction is enabled, external agents can drive PROCHOT# to throttle the processor."
+#string STR_PROC_HOT_OUT_ENABLE                       #language en-US "Disable PROCHOT# Output"
+#string STR_PROC_HOT_OUT_ENABLE_HELP                  #language en-US "Enable/Disable PROCHOT# Output"
+
+#string STR_PROC_HOT_LOCK_ENABLE                      #language en-US "PROCHOT Lock "
+#string STR_PROC_HOT_LOCK_ENABLE_HELP                 #language en-US "Enable/Disable PROCHOT Lock"
+
+#string STR_VR_THERMAL_ALERT                          #language en-US "Disable VR Thermal Alert"
+#string STR_VR_THERMAL_ALERT_HELP                     #language en-US "Enable/Disable VR Thermal Alert"
+
+#string STR_PROC_HOT_RESPONSE_ENABLE                  #language en-US "PROCHOT Response"
+#string STR_PROC_HOT_RESPONSE_ENABLE_HELP             #language en-US "Enable/Disable PROCHOT Response"
+
+#string STR_ACPI_TSTATES_ENABLE                       #language en-US "ACPI T-States"
+#string STR_ACPI_TSTATES_ENABLE_HELP                  #language en-US "Enable/Disable ACPI T-States."
+
+//
+// Thermal Memory Reference Code (TMRC)
+//
+#string STR_TMRC_TITLE                                #language en-US "Thermal Memory Reference Code (TMRC)"
+#string STR_TMRC_TMODE_PROMPT                         #language en-US "TMRC Mode"
+#string STR_TMRC_TMODE_HELP                           #language en-US "Select TMRC Mode: Disabled, TM, Catastrophic"
+#string STR_TMRC_TMODE_DISABLED                       #language en-US "Disabled"
+#string STR_TMRC_TMODE_THERMAL_MONITOR                #language en-US "Thermal Monitor"
+#string STR_TMRC_TMODE_CATASTROPHIC                   #language en-US "Catastrophic"
+#string STR_TMRC_TS_ON_DIMM_PROMPT                    #language en-US "TS on DIMM"
+#string STR_TMRC_TS_ON_DIMM_HELP                      #language en-US "Enable/Disable Thermal Sensor on DIMM."
+#string STR_TMRC_TM_LOCK_PROMPT                       #language en-US "TM Lock"
+#string STR_TMRC_TM_LOCK_HELP                         #language en-US "Enable/Disable Thermal Monitor Lock."
+
+//
+//BOARD INFORMATION
+//
+#string STR_BOARD_FORM_SUBTITLE                       #language en-US "Board Information"
+
+#string STR_BOARD_ID_HELP                             #language en-US "Displays the Board ID."
+#string STR_BOARD_ID_STRING                           #language en-US "Board ID"
+#string STR_BOARD_ID_VALUE                            #language en-US "N/A"
+
+#string STR_BOARD_NAME_HELP                           #language en-US "Displays the Board Name."
+#string STR_BOARD_NAME_STRING                         #language en-US "Board Name"
+#string STR_BOARD_NAME_VALUE                          #language en-US "N/A"
+
+#string STR_FAB_ID_HELP                               #language en-US "Displays the Fab ID"
+#string STR_FAB_ID_STRING                             #language en-US "Fab ID"
+#string STR_FAB_ID_VALUE                              #language en-US "N/A"
+
+#string STR_LAN_PHY_REV_HELP                          #language en-US "Displays LAN PHY Revision."
+#string STR_LAN_PHY_REV_STRING                        #language en-US "LAN PHY Revision"
+#string STR_LAN_PHY_REV_VALUE                         #language en-US "N/A"
+
+
+//
+//PROCESSOR INFORMATION
+//
+#string STR_PROCESSOR_HELP                            #language en-US "Displays the Processor Details."
+#string STR_PROCESSOR_STRING                          #language en-US "Name"
+#string STR_PROCESSOR_VALUE                           #language en-US "N/A"
+
+//
+// CPU INFORMATION
+//
+#string STR_CPU_FORM_SUBTITLE                         #language en-US "Processor Information"
+#string STR_CPU_FORM_SUBTITLE                         #language fr "CPU Information"
+
+#string STR_PROCESSOR_VERSION_HELP                    #language en-US "Displays the Processor Type."
+#string STR_PROCESSOR_VERSION_HELP                    #language fr "Displays the Processor Type."
+#string STR_PROCESSOR_VERSION_STRING                  #language en-US "Type"
+#string STR_PROCESSOR_VERSION_STRING                  #language fr "Type de processeur"
+#string STR_PROCESSOR_VERSION_STRING                  #language es "Tipo de procesador"
+#string STR_PROCESSOR_VERSION_VALUE                   #language en-US "N/A"
+
+#string STR_PROCESSOR_SPEED_STRING                    #language en-US "Speed"
+#string STR_PROCESSOR_SPEED_STRING                    #language fr "Vitesse du processeur"
+#string STR_PROCESSOR_SPEED_STRING                    #language es "Velocidad del procesador"
+#string STR_PROCESSOR_SPEED_VALUE                     #language en-US "N/A"
+#string STR_PROCESSOR_SPEED_HELP                      #language en-US "Displays the Processor Speed."
+#string STR_PROCESSOR_SPEED_HELP                      #language fr "Displays the Processor Speed."
+
+#string STR_PROCESSOR_ID_STRING                       #language en-US "ID"
+#string STR_PROCESSOR_ID_STRING                       #language fr "ID"
+#string STR_PROCESSOR_ID_VALUE                        #language en-US "N/A"
+#string STR_PROCESSOR_ID_HELP                         #language en-US "Displays the Processor ID."
+#string STR_PROCESSOR_ID_HELP                         #language fr "Displays the Processor ID."
+
+#string STR_PROCESSOR_STEPPING_STRING                 #language en-US "Stepping"
+#string STR_PROCESSOR_STEPPING_STRING                 #language fr "Stepping"
+#string STR_PROCESSOR_STEPPING_VALUE                  #language en-US "Unknown"
+#string STR_PROCESSOR_STEPPING_HELP                   #language en-US "Displays the Processor Stepping."
+#string STR_PROCESSOR_STEPPING_HELP                   #language fr "Displays the Processor Stepping."
+
+#string STR_PROCESSOR_PACKAGE_STRING                  #language en-US "Package"
+#string STR_PROCESSOR_PACKAGE_STRING                  #language fr "Package"
+#string STR_PROCESSOR_PACKAGE_VALUE                   #language en-US "N/A"
+#string STR_PROCESSOR_PACKAGE_HELP                    #language en-US "Displays the Processor Package."
+#string STR_PROCESSOR_PACKAGE_HELP                    #language fr "Displays the Processor Package."
+
+#string STR_PROCESSOR_MICROCODE_STRING                #language en-US "Microcode Revision"
+#string STR_PROCESSOR_MICROCODE_STRING                #language fr "Microcode Revision"
+#string STR_PROCESSOR_MICROCODE_VALUE                 #language en-US "Not loaded"
+#string STR_PROCESSOR_MICROCODE_HELP                  #language en-US "CPU Microcode Revision"
+#string STR_PROCESSOR_MICROCODE_HELP                  #language fr "CPU Microcode Revision"
+
+#string STR_PROCESSOR_COUNT_STRING                    #language en-US "Number of Processors"
+#string STR_PROCESSOR_COUNT_VALUE                     #language en-US "xCore(s) / yThread(s)"
+#string STR_PROCESSOR_COUNT_HELP                      #language en-US "Displays number of CPU cores."
+
+#string STR_PROCESSOR_GT_STRING                       #language en-US "GT Info"
+#string STR_PROCESSOR_GT_VALUE                        #language en-US "Not Applicable"
+#string STR_PROCESSOR_GT_HELP                         #language en-US "Processor GT Info. Only valid if SNB stepping is D0 or above."
+
+#string STR_EDRAM_SIZE_STRING                         #language en-US "eDRAM Size"
+#string STR_EDRAM_SIZE_VALUE                          #language en-US "N/A"
+#string STR_EDRAM_SIZE_HELP                           #language en-US "eDRAM Size supported by the SKU"
+
+//
+//NB Information
+//
+#string STR_NB_INFORMATION                            #language en-US "UnCore Information"
+#string STR_MEMORY_FREQ_NAME                          #language en-US "Memory Frequency"
+#string STR_MEMORY_FREQ_HELP                          #language en-US "Displays the Frequency of Memory"
+#string STR_MEMORY_FREQ_VALUE                         #language en-US "N/A" // Dynamically updated
+#string STR_MEMORY_SIZE_NAME                          #language en-US "Total Memory"
+#string STR_MEMORY_SIZE_VALUE                         #language en-US "N/A" // Dynamically updated
+#string STR_MEMORY_SIZE_HELP                          #language en-US "Total Memory in the System."
+
+#string STR_SB_INFORMATION                            #language en-US "PCH Information"
+
+//Platform Settings
+#string STR_PLATFORM_SETTINGS_FORM                     #language en-US "Platform Settings"
+#string STR_PLATFORM_SETTINGS_FORM_HELP                #language en-US "Platform related settings"
+#string STR_PLATFORM_SETTINGS_FORM_TITLE               #language en-US "Platform Settings"
+#string STR_PLATFORM_SETTINGS_FORM_TITLE_HELP          #language en-US "Platform related settings"
+//Pmic VCC IO Level
+#string STR_PMIC_VCC_SELECT                            #language en-US "Pmic Vcc IO Level"
+#string STR_PMIC_VCC_SELECT_HELP                       #language en-US "Select the Pmic Vcc IO Voltage Level"
+
+#string STR_PMIC_VCC_105                               #language en-US "1.05V"
+#string STR_PMIC_VCC_1071                              #language en-US "1.071V"
+#string STR_PMIC_VCC_1023                              #language en-US "1.023V"
+#string STR_PMIC_VCC_997                               #language en-US "0.997V"
+#string STR_PMIC_VCC_850                               #language en-US "0.850V"
+#string STR_PMIC_VCC_900                               #language en-US "0.900V"
+#string STR_PMIC_VCC_950                               #language en-US "0.950V"
+#string STR_DISABLE                                    #language en-US "Disable"
+
+//Pmic VDDQ Level
+#string STR_PMIC_VDDQ_SELECT                           #language en-US "Pmic Vddq Level"
+#string STR_PMIC_VDDQ_SELECT_HELP                      #language en-US "Select the Pmic Vddq Voltage Level"
+
+#string STR_PMIC_VDDQ_0                                #language en-US "0"
+#string STR_PMIC_VDDQ_1                                #language en-US "1"
+#string STR_PMIC_VDDQ_2                                #language en-US "2"
+#string STR_PMIC_VDDQ_3                                #language en-US "3"
+#string STR_PMIC_VDDQ_4                                #language en-US "4"
+#string STR_PMIC_VDDQ_5                                #language en-US "5"
+#string STR_PMIC_VDDQ_6                                #language en-US "6"
+#string STR_PMIC_VDDQ_7                                #language en-US "7"
+
+//Pmic SlpS0 VM Support
+#string STR_PMIC_SLPS0_VM_SUPPORT                      #language en-US "Pmic SlpS0 VM Support"
+#string STR_PMIC_SLPS0_VM_SUPPORT_HELP                 #language en-US "Support to auto check Primium PMIC and disable SlpS0 voltage."
+
+// ACPI code for Wireless devices
+#string STR_PSM_ENABLE_PROMPT                          #language en-US "Power Sharing Manager"
+#string STR_PSM_ENABLE_HELP                            #language en-US "Configure the PSM ACPI objects."
+#string STR_PSM_DOMAIN_TYPE1_PROMPT                    #language en-US " Domain Type SPLC 1"
+#string STR_WIFI_DOMAIN_TYPE1_PROMPT                   #language en-US " Domain Type SPLC 1"
+#string STR_PSM_DOMAIN_TYPE2_PROMPT                    #language en-US " Domain Type SPLC 2"
+#string STR_WIFI_DOMAIN_TYPE2_PROMPT                   #language en-US " Domain Type SPLC 2"
+#string STR_PSM_DOMAIN_TYPE3_PROMPT                    #language en-US " Domain Type SPLC 3"
+#string STR_PSM_DOMAIN_TYPE_HELP                       #language en-US "09h: Module(M.2); 07h: WiFi/WLAN; 0Fh: WWAN; 10h WiGig; 14h: RFEM"
+#string STR_PSM_POWER_LIMIT1_PROMPT                    #language en-US " Default Power Limit 1 SPLC"
+#string STR_PSM_TIME_WINDOW1_PROMPT                    #language en-US " Default Time Window 1 SPLC"
+#string STR_PSM_SPLC_POWER_LIMIT2_PROMPT               #language en-US " Default Power Limit 2 SPLC"
+#string STR_PSM_DPLC_DEF_POWER_LIMIT2_PROMPT           #language en-US " Default Power Limit 2 SPLC"
+#string STR_PSM_DPLC_MIN_POWER_LIMIT2_PROMPT           #language en-US " Default Power Limit 2 SPLC"
+#string STR_PSM_DPLC_MAX_POWER_LIMIT2_PROMPT           #language en-US " Default Power Limit 2 SPLC"
+#string STR_PSM_SPLC_TIME_WINDOW2_PROMPT               #language en-US " Default Time Window 2 SPLC"
+#string STR_PSM_DPLC_DEF_TIME_WINDOW2_PROMPT           #language en-US " Default Time Window 2 SPLC"
+#string STR_PSM_DPLC_MAX_TIME_WINDOW2_PROMPT           #language en-US " Default Time Window 2 SPLC"
+
+#string STR_DPLC_DOMAIN_TYPE1_PROMPT                   #language en-US " Domain Type DPLC 1"
+#string STR_DPLC_DOMAIN_PREF1_PROMPT                   #language en-US " Domain Preference DPLC 1"
+#string STR_PSM_DPLC_POWER_LIMIT_INDEX1_PROMPT         #language en-US " Power Limit Index 1 DPLC"
+#string STR_PSM_DPLC_POWER_LIMIT_INDEX_HELP            #language en-US "Index of the specific power limit range information"
+#string STR_PSM_DPLC_DEF_POWER_LIMIT1_PROMPT           #language en-US " Default Power Limit 1 DPLC"
+#string STR_PSM_DPLC_DEF_TIME_WINDOW1_PROMPT           #language en-US " Default Time Window 1 DPLC"
+#string STR_PSM_DPLC_MIN_POWER_LIMIT1_PROMPT           #language en-US " Minimum Power Limit 1 DPLC"
+#string STR_PSM_DPLC_MAX_POWER_LIMIT1_PROMPT           #language en-US " Maximum Power Limit 1 DPLC"
+#string STR_PSM_MAX_TIME_WINDOW1_PROMPT                #language en-US " Maximum Time Window 1 DPLC"
+
+#string STR_DPLC_DOMAIN_TYPE2_PROMPT                   #language en-US " Domain Type DPLC 2"
+#string STR_DPLC_DOMAIN_PREF2_PROMPT                   #language en-US " Domain Preference DPLC 2"
+#string STR_PSM_DPLC_POWER_LIMIT_INDEX2_PROMPT         #language en-US " Power Limit Index 2 DPLC"
+#string STR_PSM_DPLC_DEF_POWER_LIMIT2_PROMPT           #language en-US " Default Power Limit 2 DPLC"
+#string STR_PSM_DPLC_DEF_TIME_WINDOW2_PROMPT           #language en-US " Default Time Window 2 DPLC"
+#string STR_PSM_DPLC_MIN_POWER_LIMIT2_PROMPT           #language en-US " Minimum Power Limit 2 DPLC"
+#string STR_PSM_DPLC_MAX_POWER_LIMIT2_PROMPT           #language en-US " Maximum Power Limit 2 DPLC"
+#string STR_PSM_MAX_TIME_WINDOW2_PROMPT                #language en-US " Maximum Time Window 2 DPLC"
+
+#string STR_USBFN_ENABLE_PROMPT                        #language en-US "Enable FFU Support"
+#string STR_USBFN_ENABLE_HELP                          #language en-US "Enable/Disable FFU Support."
+
+#string STR_PLATFORM_VTIO_FORM                         #language en-US "VTIO"
+#string STR_PLATFORM_VTIO_FORM_HELP                    #language en-US "Configure settings for VTIO"
+#string STR_PLATFORM_VTIO_FORM_TITLE                   #language en-US "VTIO"
+#string STR_VTIO_SUPPORT_PROMPT                        #language en-US "Enable VTIO Support"
+#string STR_VTIO_SUPPORT_HELP                          #language en-US "Enable/Disable VTIO Support."
+#string STR_SDEV_NUMBER_OF_SENSORS_PROMPT              #language en-US "  Number of Sensor Entries"
+#string STR_SDEV_NUMBER_OF_SENSORS_HELP                #language en-US "An array of Sensors Entries"
+#string STR_SDEV_SENSOR_ENTRY_1_PROMPT                 #language en-US "  Sensor Entry 1"
+#string STR_SDEV_SENSOR_ENTRY_2_PROMPT                 #language en-US "  Sensor Entry 2"
+#string STR_SDEV_SENSOR_ENTRY_HELP                     #language en-US "Enter HEX value\n\nBIT[8:7] - Camera type\nBIT[6]   - Plug-N-Play supported\nBIT[5:2] - Port ID\nBIT[1]   - Privacy Enabled Sensor present\nBIT[0]   - Embedded Sensor present\n"
+#string STR_SDEV_CIO2_ENTRY_PROMPT                     #language en-US "Expose CIO2 SDEV Entry"
+#string STR_SDEV_CIO2_ENTRY_HELP                       #language en-US "CIO2 Entry in SDEV table will be exposed based on this option"
+#string STR_SDEV_ISP_ENTRY_PROMPT                      #language en-US "Expose ISP SDEV Entry"
+#string STR_SDEV_ISP_ENTRY_HELP                        #language en-US "ISP Entry in SDEV table will be exposed based on this option"
+#string STR_SDEV_HECI_ENTRY_PROMPT                     #language en-US "Expose HECI SDEV Entry"
+#string STR_SDEV_HECI_ENTRY_HELP                       #language en-US "HECI Entry in SDEV table will be exposed based on this option"
+#string STR_SDEV_SPI1_ENTRY_PROMPT                     #language en-US "Expose SPI1 Dev 1E Fun 2 SDEV Entry"
+#string STR_SDEV_SPI1_ENTRY_HELP                       #language en-US "SPI1 Entry in SDEV table will be exposed based on this option"
+#string STR_SDEV_SPI2_ENTRY_PROMPT                     #language en-US "Expose SPI2 Dev 1E Fun 3 SDEV Entry"
+#string STR_SDEV_SPI2_ENTRY_HELP                       #language en-US "SPI2 Entry in SDEV table will be exposed based on this option"
+#string STR_SDEV_XHCI_ENTRY_PROMPT                     #language en-US "Expose XHCI SDEV Entry"
+#string STR_SDEV_XHCI_ENTRY_HELP                       #language en-US "XHCI Entry in SDEV table will be exposed based on this option"
+#string STR_SDEV_XHCI_NUMBER_OF_DEVICES_PROMPT         #language en-US "  Number of USB Devices"
+#string STR_SDEV_XHCI_NUMBER_OF_DEVICES_HELP           #language en-US "Number of USB Devices"
+#string STR_SDEV_HXCI_DEVICE_1_PROMPT                  #language en-US "  USB Device 1"
+#string STR_SDEV_HXCI_DEVICE_2_PROMPT                  #language en-US "  USB Device 2"
+#string STR_SDEV_HXCI_DEVICE_ATTR_PROMPT               #language en-US "  Attributes"
+#string STR_SDEV_HXCI_DEVICE_ATTR_HELP                 #language en-US "Enter HEX value\n\nBIT[7:1] - Reserved.\nBIT[0]   - USB Composite Device\n0x0 - A single interface USB device\n0x1 - A function on a USB composite device\n"
+#string STR_SDEV_HXCI_DEVICE_ROOT_PORT_NUMBER_PROMPT   #language en-US "  Root Port Number"
+#string STR_SDEV_HXCI_DEVICE_ROOT_PORT_NUMBER_HELP     #language en-US "Root port number on which the secure device is attached to the root hub."
+#string STR_SDEV_HXCI_DEVICE_VID_PROMPT                #language en-US "  VID"
+#string STR_SDEV_HXCI_DEVICE_VID_HELP                  #language en-US "Vendor ID"
+#string STR_SDEV_HXCI_DEVICE_PID_PROMPT                #language en-US "  PID"
+#string STR_SDEV_HXCI_DEVICE_PID_HELP                  #language en-US "Product ID"
+#string STR_SDEV_HXCI_DEVICE_REVISION_PROMPT           #language en-US "  Revision"
+#string STR_SDEV_HXCI_DEVICE_REVISION_HELP             #language en-US "Revision"
+#string STR_SDEV_HXCI_DEVICE_INTERFACE_NUMBER_PROMPT   #language en-US "  Interface Number"
+#string STR_SDEV_HXCI_DEVICE_INTERFACE_NUMBER_HELP     #language en-US "Interface number (0-based) of the interface on the device that this entry corresponds to. This field is considered valid only if the Attributes indicates that the device is a composite device."
+#string STR_SDEV_HXCI_DEVICE_CLASS_PROMPT              #language en-US "  Class"
+#string STR_SDEV_HXCI_DEVICE_CLASS_HELP                #language en-US "Class Number of the secure device"
+#string STR_SDEV_HXCI_DEVICE_SUBCLASS_PROMPT           #language en-US "  Subclass"
+#string STR_SDEV_HXCI_DEVICE_SUBCLASS_HELP             #language en-US "Subclass Number of the secure device"
+#string STR_SDEV_HXCI_DEVICE_PROTOCOL_PROMPT           #language en-US "  Protocol"
+#string STR_SDEV_HXCI_DEVICE_PROTOCOL_HELP             #language en-US "Protocol Number of the secure device"
+#string STR_SDEV_HXCI_DEVICE_PATH_STRING_OFFSET_PROMPT #language en-US "  ACPI Path String Offset"
+#string STR_SDEV_HXCI_DEVICE_PATH_STRING_OFFSET_HELP   #language en-US "Offset for fully qualified ACPI path name of the secure device from the beginning of this table"
+#string STR_SDEV_HXCI_DEVICE_PATH_STRING_LENGTH_PROMPT #language en-US "  ACPI Path String Length"
+#string STR_SDEV_HXCI_DEVICE_PATH_STRING_LENGTH_HELP   #language en-US "Length of fully qualified, null terminated ACPI path name of the secure device, The length includes the NULL terminator."
+#string STR_SDEV_HXCI_DEVICE_PATH_NAME_PROMPT          #language en-US "  ACPI Path Name"
+#string STR_SDEV_HXCI_DEVICE_FW_HASH_255_192_PROMPT    #language en-US "  Firmware Hash [255:192]"
+#string STR_SDEV_HXCI_DEVICE_FW_HASH_191_128_PROMPT    #language en-US "  Firmware Hash [191:128]"
+#string STR_SDEV_HXCI_DEVICE_FW_HASH_127_64_PROMPT     #language en-US "  Firmware Hash [127:64]"
+#string STR_SDEV_HXCI_DEVICE_FW_HASH_63_0_PROMPT       #language en-US "  Firmware Hash [63:0]"
+#string STR_SDEV_HXCI_DEVICE_1_PATH_NAME_HELP          #language en-US "ACPI Path Name. \n The default value is: \\_SB.PC00.XHCI.RHUB.HS00.CRGB"
+#string STR_SDEV_HXCI_DEVICE_2_PATH_NAME_HELP          #language en-US "ACPI Path Name. \n The default value is: \\_SB.PC00.XHCI.RHUB.HS01.CIR"
+
+#string STR_PLATFORM_TCSS_FORM                         #language en-US "TCSS Platform Setting"
+#string STR_PLATFORM_TCSS_FORM_HELP                    #language en-US "Configure TCSS Platform Setting"
+#string STR_PLATFORM_TCSS_FORM_TITLE                   #language en-US "TCSS Platform Setting"
+#string STR_UCM_SELECTION                              #language en-US "USBC connector manager selection"
+#string STR_UCM_SELECTION_HELP                         #language en-US "Select UCSI or UCMC device in ACPI support based on configuration"
+#string STR_UCSI_ENABLED                               #language en-US "Enable UCSI Device"
+#string STR_UCMC_ENABLED                               #language en-US "Enable UCMC Device"
+
+#string STR_AUX_ORI_OVERRIDE                           #language en-US "Aux Ori Override"
+#string STR_AUX_ORI_OVERRIDE_HELP                      #language en-US "Aux Ori Override"
+
+#string STR_TCSS_BIOS_HANDSHAKE                        #language en-US "BIOS-TCSS handshake"
+#string STR_TCSS_BIOS_HANDSHAKE_HELP                   #language en-US "Enable/Disable BIOS TCSS handshake messages.\nDisabled: TCSS handshake disabled \nEnabled: TCSS handshake with either EC or PMC is enabled based on the board ID"
+
+//
+// TCSS: EC <-> BIOS handshake message timeouts
+//
+#string STR_TCSS_USB_CONN_STATUS_TIMEOUT               #language en-US "Timeout for EC USB enumeration message"
+#string STR_TCSS_USB_CONN_STATUS_TIMEOUT_HELP          #language en-US "BIOS-EC handshake message USBC_GetUSBConnStatus timeout value in milli seconds"
+#string STR_TCSS_USBC_SX_ENTRY_TIMEOUT                 #language en-US "Timeout for EC SxEntryWait message"
+#string STR_TCSS_USBC_SX_ENTRY_TIMEOUT_HELP            #language en-US "BIOS-EC handshake message USBC_SxEntryWait timeout value in milli seconds"
+#string STR_TCSS_USBC_SX_EXIT_TIMEOUT                  #language en-US "Timeout for EC SxExitWait message"
+#string STR_TCSS_USBC_SX_EXIT_TIMEOUT_HELP             #language en-US "BIOS-EC handshake message USBC_SxExitWait timeout value in milli seconds"
+
+
+#string STR_RTD3                                       #language en-US "ACPI D3Cold Support"
+#string STR_RTD3_HELP                                  #language en-US "Enable/Disable ACPI D3Cold (RTD3) support"
+#string STR_RTD3_FORM                                  #language en-US "ACPI D3Cold settings"
+#string STR_RTD3_FORM_HELP                             #language en-US "ACPI D3Cold related settings"
+#string STR_RTD3_FORM_TITLE                            #language en-US "ACPI D3Cold settings"
+#string STR_RTD3_FORM_TITLE_HELP                       #language en-US "ACPI D3Cold related settings"
+#string STR_VR_RAMP_DELAY                              #language en-US "VR Ramp up delay"
+#string STR_VR_RAMP_DELAY_HELP                         #language en-US "Delay between subsequent VR ramp ups if they are all Turn ON at the same time"
+#string STR_PEP0                                       #language en-US "PCIE Slot 5 Device Power-on delay in ms"
+#string STR_PEP0_HELP                                  #language en-US "Delay between applying core power and Deasserting PERST#"
+#string STR_AUDIO_DELAY                                #language en-US "Audio Delay"
+#string STR_AUDIO_DELAY_HELP                           #language en-US "Delay after applying power to HD Audio(Realtek) codec device."
+#string STR_AUDIO_CONNECTOR                            #language en-US "Audio Connector"
+#string STR_AUDIO_CONNECTOR_HELP                       #language en-US "Select the Audio Connector Type"
+#string STR_TYPE_C                                     #language en-US "Type C"
+#string STR_STACKED_JACK                               #language en-US "Stacked Jack"
+#string STR_ADSP_DELAY                                 #language en-US "ADSP Delay"
+#string STR_ADSP_DELAY_HELP                            #language en-US "Delay after applying power to ADSP device."
+#string STR_TOUCHPAD                                   #language en-US "TouchPad"
+#string STR_TOUCHPAD_HELP                              #language en-US "Delay after applying power to TouchPad device."
+#string STR_TOUCHPANEL                                 #language en-US "TouchPanel"
+#string STR_TOUCHPANEL_HELP                            #language en-US "Delay in PR _ON after applying power to TouchPanel device."
+#string STR_SENSORHUB                                  #language en-US "SensorHub"
+#string STR_SENSORHUB_HELP                             #language en-US "Delay after applying power to SensorHub device."
+#string STR_RTD3_PSTATE_CAPPING                        #language en-US "P-state Capping"
+#string STR_RTD3_PSTATE_CAPPING_HELP                   #language en-US "Set _PPC and send ACPI notification"
+#string STR_RTD3_ZPODD                                 #language en-US "ZPODD"
+#string STR_RTD3_ZPODD_HELP                            #language en-US "Zero Power ODD option is applicable only for the board with ZPODD support."
+#string STR_RTD3_CAMERA                                #language en-US "RTD3 Camera Support"
+#string STR_RTD3_CAMERA_HELP                           #language en-US "This option enables runtime power management support for camera"
+#string STR_RTD3_WWAN                                  #language en-US "WWAN"
+#string STR_RTD3_WWAN_HELP                             #language en-US "Enable/Disable RTD3 support for WWAN"
+#string STR_WWAN_PCIE_D3_L2                            #language en-US "D3/L2"
+#string STR_WWAN_PCIE_D0_L12                           #language en-US "D0/L1.2"
+#string STR_RTD3_SATAPORT0                             #language en-US "Sata Port 0"
+#string STR_RTD3_SATAPORT1                             #language en-US "Sata Port 1"
+#string STR_RTD3_SATAPORT2                             #language en-US "Sata Port 2"
+#string STR_RTD3_SATAPORT3                             #language en-US "Sata Port 3"
+#string STR_RTD3_SATAPORT4                             #language en-US "Sata Port 4"
+#string STR_RTD3_SATAPORT5                             #language en-US "Sata Port 5"
+#string STR_RTD3_SATAPORT_HELP                         #language en-US "Setup option to control the SATA port RTD3 functionality"
+#string STR_RTD3_SATA_DEVICE_OFF                       #language en-US "SATA Device Power Off Support"
+#string STR_RTD3_SATA_DEVICE_OFF_HELP                  #language en-US "SATA Device Power Off Support"
+#string STR_RTD3_SATA_DYNAMIC                          #language en-US "Dynamic"
+#string STR_RTD3_REMAP_CR1                             #language en-US "PCIe Remapped CR1"
+#string STR_RTD3_REMAP_CR2                             #language en-US "PCIe Remapped CR2"
+#string STR_RTD3_REMAP_CR3                             #language en-US "PCIe Remapped CR3"
+#string STR_RTD3_REMAP_HELP                            #language en-US "PCIe RTD3 setup conflicts with SATA RTD3. Platform specific."
+#string STR_RTD3_WA_GPIO                               #language en-US "WA GPIO"
+#string STR_RTD3_WA_GPIO_HELP                          #language en-US "Steal RTD3 GPIO 77 from SDHC device and use for a PCIE slot"
+#string STR_SLOT_1                                     #language en-US "SLOT 1"
+#string STR_SLOT_6                                     #language en-US "SLOT 6"
+#string STR_RTD3_USB_PORT1                             #language en-US "USB Port 1"
+#string STR_RTD3_USB_PORT2                             #language en-US "USB Port 2"
+#string STR_HIGHSPEED                                  #language en-US "High Speed"
+#string STR_SUPERSPEED                                 #language en-US "Super Speed"
+#string STR_RTD3_USB_PORT_HELP                         #language en-US "USB RTD3 support. Super Speed : USB3.0 devices will be exposed as RTD3 capable. High Speed: USB2.0 devices will be exposed as RTD3 capable. Disabled : USB RTD3 support disabled.\n\n For SawtoothPeak USB Port1(Below) is Superspeed and Port2(Top) is HighSpeed. Check respective board configuration to know about USB port position."
+#string STR_RTD3_CARD_READER                           #language en-US "Card Reader"
+#string STR_RTD3_CARD_READER_HELP                      #language en-US "Enable RTD3 support for Card Reader"
+
+#string STR_XHCI_S0W_SUPPORT                           #language en-US "XHCI S0W Return Value"
+#string STR_XHCI_S0W_SUPPORT_HELP                      #language en-US "Specify XHCI S0W Return Value. Options are: D0 or D3Hot"
+#string STR_D0                                         #language en-US "D0"
+#string STR_D3_HOT                                     #language en-US "D3Hot"
+#string STR_SDCARD_READER_SELECT                       #language en-US "WSB SIP SDCard Reader"
+#string STR_SDCARD_READER_SELECT_HELP                  #language en-US "Enables or Disables SD card reader support on WSB SIP FAB1 board. This option is only for SIP FAB1 board. For Standard WSB board, select Disabled."
+#string STR_RESET_WWAN_WHEN_REBOOT_PROMPT              #language en-US "Reset WWAN when reboot"
+#string STR_RESET_WWAN_WHEN_REBOOT_HELP                #language en-US "According to platform configuration, enable/disable reset WWAN when platform reboot. It controls GPIO84 to low and then high to reset WWLAN device."
+#string STR_WSB_SIP_WHCK_SINGLE_DISPLAY_OBJECT         #language en-US "WHCK Single Computer Display Object"
+#string STR_WSB_SIP_WHCK_SINGLE_DISPLAY_OBJECT_HELP    #language en-US "WHCK test : Single Computer Display Object"
+#string STR_IVCAM_DFU_SUPPORT_PROMPT                  #language en-US "DFU support"
+#string STR_IVCAM_DFU_SUPPORT_HELP                    #language en-US "Enables or Disables 3D Imaging Camera DFU device."
+#string STR_IVCAM_WAKE_SUPPORT_PROMPT                 #language en-US "Wake support"
+#string STR_IVCAM_WAKE_SUPPORT_HELP                   #language en-US "Enables or Disables 3D Imaging Camera as wake capable."
+
+//---------------------------------------------------------------------------
+// Camera type Selection
+//---------------------------------------------------------------------------
+#string STR_DEGREE_0                                   #language en-US "0"
+#string STR_DEGREE_45                                  #language en-US "45"
+#string STR_DEGREE_90                                  #language en-US "90"
+#string STR_DEGREE_135                                 #language en-US "135"
+#string STR_DEGREE_180                                 #language en-US "180"
+#string STR_DEGREE_225                                 #language en-US "225"
+#string STR_DEGREE_270                                 #language en-US "270"
+#string STR_DEGREE_315                                 #language en-US "315"
+
+#string STR_ONBOARD_DEVICE_FORM                        #language en-US "Onboard Device"
+#string STR_ONBOARD_DEVICE_FORM_HELP                   #language en-US "Onboard Device Parameters"
+
+//---------------------------------------------------------------------------
+// Device Configuration
+//---------------------------------------------------------------------------
+#string STR_ONBOARD_DEVICE_SUBTITLE             #language en-US "Onboard Device Configuration"
+#string STR_ONBOARD_VGA_PROMPT                  #language en-US "Onboard IGFX"
+#string STR_ONBOARD_VGA_PROMPT_HELP             #language en-US "Enable/Disable Onboard IGFX."
+#string STR_ONBOARD_LAN_PROMPT                  #language en-US "Onboard Gigabit LAN 0"
+#string STR_ONBOARD_LAN_PROMPT_HELP             #language en-US "Enable/Disable Onboard Gigabit LAN 0."
+#string STR_ONBOARD_LAN2_PROMPT                 #language en-US "Onboard Gigabit LAN 1"
+#string STR_ONBOARD_LAN2_PROMPT_HELP            #language en-US "Enable/Disable Onboard Gigabit LAN 1."
+
+//---------------------------------------------------------------------------
+// PXE Boot Option
+//---------------------------------------------------------------------------
+#string STR_PXE_BOOT_OPTION_SUBTITLE            #language en-US "Pxe Boot Support"
+#string STR_PXE_BOOT_OPTION                     #language en-US "Pxe Boot Option"
+#string STR_PXE_BOOT_OPTION_HELP                #language en-US "Enable or Disable the Pxe Boot Option."
+
+//---------------------------------------------------------------------------
+// OS Profile
+//---------------------------------------------------------------------------
+#string STR_OS_PROFILE                          #language en-US "OS Profile"
+#string STR_OS_PROFILE_HELP                     #language en-US "Used to configure OS-specific setup options in one-click"
+#string STR_OS_PROFILE_PREVIOUS                 #language en-US "Previous OS Profile"
+#string STR_OS_PROFILE_PREVIOUS_HELP            #language en-US "OS Profile value from previous boot"
+
+#string STR_NONE                                #language en-US "None"
+#string STR_ANDROID                             #language en-US "Android"
+#string STR_WINDOWS_CS                          #language en-US "Windows CS"
+
+#string STR_ENABLE_BOOTTIME                     #language en-US "BootTime Log"
+#string STR_ENABLE_BOOTTIME_HELP                #language en-US "Enabled: Display BootTime for OS Booting"
+
+#string STR_CSM_FORM                            #language en-US "CSM Settings"
+#string STR_CSM_FORM_HELP                       #language en-US "System CSM Parameters"
+
+#string STR_CSM_CONTROL_PROMPT                  #language en-US "CSM Control"
+#string STR_CSM_CONTROL_HELP                    #language en-US "Detect Legacy VGA will enable CSM if Gfx device only implements legacy VBIOS (not UEFI GOP), otherwise CSM will be disabled."
+
+#string STR_CSM_CONTROL_OS_CONTROL              #language en-US "OS Control"
+#string STR_CSM_CONTROL_ALWAYS_OFF              #language en-US "Always OFF"
+#string STR_CSM_CONTROL_ALWAYS_ON               #language en-US "Always ON"
+#string STR_CSM_CONTROL_DETECT_LEGACY_VGA       #language en-US "Detect Legacy VGA"
+
+#string STR_HID_EVENT_FILTER_ENABLE             #language en-US "HID Event Filter Driver"
+#string STR_HID_EVENT_FILTER_ENABLE_HELP        #language en-US "Enables/Disables HID Event Filter Driver interface to OS."
+
+#string STR_TRUSTED_DEVICE_SETUP_BOOT           #language en-US "Intel Trusted Device Setup Boot"
+#string STR_TRUSTED_DEVICE_SETUP_BOOT_HELP      #language en-US "Enables/Disables a Intel Trusted Device Setup Boot on the next boot"
+
+#string STR_USB_SSIC_7160_7260_INIT             #language en-US "SSIC_7160_7260_INIT"
+#string STR_USB_SSIC_7160_7260_INIT_HELP        #language en-US "SSIC_7160_7260_INIT"
+
+#string STR_ENABLE_IVYCAM                       #language en-US "Enable IVCAM"
+#string STR_ENABLE_IVYCAM_HELP                  #language en-US "Enables/Disables IVCAM."
+
+#string STR_RTD3_PCIE_NVME                      #language en-US "PCIe NVMe(Port5)"
+#string STR_RTD3_PCIE_NVME_HELP                 #language en-US "Enables/Disables RTD3 support for PCIe NVMe device"
+
+#string STR_RTD3_I2C_TOUCH_PANEL                #language en-US "I2C Touch Panel"
+#string STR_RTD3_I2C_TOUCH_PANEL_HELP           #language en-US "Enables/Disables RTD3 support for I2C touch panel. Don't enable this for iTouch system."
+
+#string STR_SUPER_SPEED_WWAN                    #language en-US "Super Speed WWAN"
+
+#string STR_I2C_SAR_RESET_DELAY                 #language en-US "Delay to wait for WWAN device to be ready before SAR reset."
+#string STR_I2C_SAR_RESET_DELAY_HELP            #language en-US "Value between 0-255 seconds. Default is 8. Will result in Responsiveness impact. "
+
+#string STR_WWAN_ENABLE                         #language en-US "Enable WWAN"
+#string STR_WWAN_ENABLE_HELP                    #language en-US "Enables/Disables M.2 WWAN module. When disabled, BIOS will turn off the power to WWAN module. This will also disable GNSS"
+
+#string STR_MODE_0                              #language en-US "Mode 0"
+#string STR_MODE_1                              #language en-US "Mode 1"
+
+#string STR_SYSTEM_TIME_AND_ALARM               #language en-US "System Time and Alarm Source"
+#string STR_SYSTEM_TIME_AND_ALARM_HELP          #language en-US "Select source of system time and alarm functions. ACPI Time and Alarm (default, legacy RTC disabled) or Legacy RTC support only"
+#string STR_ACPI_TAD                            #language en-US "ACPI Time and Alarm Device"
+#string STR_LEGACY_RTC                          #language en-US "Legacy RTC"
+
+#string STR_SYSTEM_CTR_IOMMU                    #language en-US "Control Iommu Pre-boot Behavior"
+#string STR_SYSTEM_CTR_IOMMU_HELP               #language en-US "Enable IOMMU in Pre-boot environment (If DMAR table is installed in DXE and If VTD_INFO_PPI is installed in PEI.)"
+#string STR_IOMMU_DISABLE                       #language en-US "Disable IOMMU"
+#string STR_IOMMU_BOOT                          #language en-US "Enable IOMMU during boot"
+
+#string STR_ITPXDP_MUX                          #language en-US "Enable xdpclock "
+#string STR_ITPXDP_MUX_HELP                     #language en-US "Enable xdpclock routing on slot1 CMU_ONE_DWORD0 bits muxsel_itpxdp "
+
+#string STR_ENABLE_POWERMETER                   #language en-US "Enable PowerMeter"
+#string STR_ENABLE_POWERMETER_HELP              #language en-US "Enables/Disables PowerMeter.
+
+
+//---------------------------------------------------------------------------
+// PS2 Keyboard and Mouse Profile
+//---------------------------------------------------------------------------
+#string STR_PS2_PROFILE                         #language en-US "PS2 Keyboard and Mouse"
+#string STR_PS2_PROFILE_HELP                    #language en-US "Enables/Disables PS2 Keyboard and Mouse"
+
+#string STR_CHARGING_METHOD                     #language en-US "Charging Method"
+#string STR_CHARGING_METHOD_HELP                #language en-US "Select charging method as Normal Charging or Fast Charging."
+#string STR_CHARGING_NORMAL                     #language en-US "Normal Charging"
+#string STR_CHARGING_FAST                       #language en-US "Fast Charging"
+
+#string STR_SYS_FW_UPDATE_CONFIG_FORM           #language en-US "System Firmware Update Config"
+#string STR_SYS_FW_UPDATE_CONFIG_FORM_HELP      #language en-US "Config settings for System Firmware Update (Capsule Update)"
+#string STR_SYS_FW_UPDATE_CONFIG_FORM_TITLE     #language en-US "System Firmware Update Config"
+#string STR_SYS_FW_UPDATE_LOAD_DEFAULT          #language en-US "Restore Setup Default"
+#string STR_SYS_FW_UPDATE_LOAD_DEFAULT_HELP     #language en-US "Restore Setup default settings after System Firmware Update"
+#string STR_SYS_FW_UPDATE_SKIP_POWER_CHECK      #language en-US "Skip Power Check"
+#string STR_SYS_FW_UPDATE_SKIP_POWER_CHECK_HELP #language en-US "Skip AC/DC Check before System Firmware Update"
+
+//
+// DNX Configuration
+//
+#string STR_PLATFORM_DNX_CONFIG_FORM            #language en-US "Platform DNX Config"
+#string STR_PLATFORM_DNX_CONFIG_FORM_HELP       #language en-US "Config settings for DNX Trigger"
+#string STR_PLATFORM_DNX_CONFIG_FORM_TITLE      #language en-US "Platform DNX Config"
+#string STR_IFWI_DNX                            #language en-US "IFWI DNX"
+#string STR_IFWI_DNX_HELP                       #language en-US "Request CSE to enter into DNX mode to flash the IFWI"
+
+#string STR_ME_SETUP_REVISION                   #language en-US "ME Setup Variable Revision"
+#string STR_ME_SETUP_REVISION_VALUE             #language en-US "N/A"
+
+#string STR_SETUP_DATA_REVISION                 #language en-US "Platform Variable Revision"
+#string STR_SETUP_DATA_REVISION_VALUE           #language en-US "N/A"
+
+#string STR_CPU_SETUP_REVISION                  #language en-US "CPU Setup Variable Revision"
+#string STR_CPU_SETUP_REVISION_VALUE            #language en-US "N/A"
+
+#string STR_SA_SETUP_REVISION                   #language en-US "SA Setup Variable Revision"
+#string STR_SA_SETUP_REVISION_VALUE             #language en-US "N/A"
+
+#string STR_PCH_SETUP_REVISION                  #language en-US "PCH Setup Variable Revision"
+#string STR_PCH_SETUP_REVISION_VALUE            #language en-US "N/A"
+
+#string STR_SI_SETUP_REVISION                   #language en-US "SI Setup Variable Revision"
+#string STR_SI_SETUP_REVISION_VALUE             #language en-US "N/A"
+
+#string STR_SDEV_FLAGS_PROMPT                   #language en-US "  Flags"
+#string STR_SDEV_FLAGS_HELP                     #language en-US "Enter HEX value\n\nBIT[0] - Allow handoff to non-secure OS\n"
