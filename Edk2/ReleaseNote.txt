@@ -1,0 +1,30 @@
+========================================================================================================================
+                      PACKAGES REVISION
+========================================================================================================================
+Link:
+https://github.com/tianocore/edk2.git
+
+Tag:
+edk2-stable201811
+
+========================================================================================================================
+                      SECURITY FIXES (External communication should be handled by PSIRT Comms Team)
+========================================================================================================================
+Embargoed:
+PSIRT-BIOS-ID                 Tiano-HSD  Description
+PSIRT-BIOS-2017-030           222072     FV Alignment in EDK2 Chain-of-Trust Bypass
+PSIRT-BIOS-2017-034           221926     SMM IO Mem Address access issue
+PSIRT-BIOS-2018-003           221612     DNS Packet Size Check
+PSIRT-BIOS-2018-011           222355     Buffer Overflow in BlockIo service for RAM disk
+PSIRT-BIOS-2018-014           222529     Stack Overflow on Corrupted BMP
+PSIRT-BIOS-2018-036           223012     Miss Hostname Checking in EDKII HTTPS Boot
+
+Fixed:
+PSIRT-BIOS-ID                 Tiano-HSD  Description
+PSIRT-BIOS-2017-019           219250     Timestamp zeroing issue on APPEND_WRITE
+PSIRT-BIOS-2017-016, 020-023  221789     Tiano Compress issues
+PSIRT-BIOS-2018-034           223001     Need Spectre Variant1 patch
+PSIRT-BIOS-2018-035           223002     Need Spectre Variant2 patch
+PSIRT-BIOS-2017-025           221474     SMM need mark untested memory to be not-present for SMM communication buffer
+PSIRT-BIOS-2017-032           222980     XHCI stack local stack overflow
+PSIRT-BIOS-2018-026           222683     WiFi admin password memory should be set zero before freed
